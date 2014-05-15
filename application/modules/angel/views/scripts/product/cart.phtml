@@ -1,0 +1,205 @@
+
+
+<div class="content">
+    <div class="container_24">
+        <div class="grid_24">
+            <h1><?php echo $this->title ?></h1><span class="subt">fast shipping service for you</span>
+        </div>
+        <div class="grid_24" id="cart-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col1 cart-photo"></th>
+                        <th class="col2 cart-title">Product</th>
+                        <th class="col3 cart-price">Price</th>
+                        <th class="col4 cart-qty">Qty</th>
+                        <th class="col5 cart-subtotal">Subtotal</th>
+                        <th class="col6 cart-operation"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container_24" id="payinfo">
+        <div class="grid_16">
+            &nbsp;
+        </div>
+        <div class="grid_4">
+            <p>total is</p>
+        </div>
+        <div class="grid_4">
+            <p id="total"></p>
+            <button id="checkout-btn">Checkout Now</button>
+        </div>
+    </div>
+</div>
+<div class="P_tmp">
+    <table>
+        <tr class="cart-list-itm">
+            <td class="col1 cart-photo"></td>
+            <td class="col2 cart-title"></td>
+            <td class="col3 cart-price"></td>
+            <td class="col4 cart-qty"></td>
+            <td class="col5 cart-subtotal"></td>
+            <td class="col6 cart-operation"><button>delete</button></td>
+        </tr>
+    </table>
+    <div class="price" price="0" currency="">
+        <span class="price-str">0</span>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function requestCart() {
+        var query = $.cart.parse();
+        if (!query) {
+            // empty handle
+            return;
+        }
+        var data = new Array();
+        $.each(query, function(k, v) {
+            data.push(k);
+        });
+        var s = data.join('|');
+        data = {query: s};
+
+        $.ajax({
+            url: '<?php echo $this->url(array(), 'cart') ?>',
+            dataType: 'json',
+            type: 'post',
+            data: data,
+            success: function(response) {
+                if (response.code === 200) {
+                    var container = $('#cart-list table tbody');
+                    container.empty();
+                    $.each(response.data, function() {
+                        var $this = this;
+                        var row = $('.P_tmp .cart-list-itm').clone(true);
+                        row.attr('id', $this.id);
+                        var selling_price = $this.selling_price;
+                        var qty = query[$this.id];
+                        $.each(selling_price, function(k, v) {
+                            // set price
+                            var price = $('.P_tmp .price').clone(true);
+                            price.attr('price', v.amount);
+                            price.attr('symbol', v.symbol);
+                            price.find('.price-str').html(v.symbol + v.amount + k);
+                            price.attr('currency', k);
+                            row.find('.cart-price').append(price);
+                            // set subtotal
+                            var subtotal = $('.P_tmp .price').clone(true);
+                            var a = (qty * v.amount).toFixed(2);
+                            subtotal.attr('price', a);
+                            subtotal.attr('symbol', v.symbol);
+                            subtotal.find('.price-str').html(v.symbol + a + k);
+                            subtotal.attr('currency', k);
+                            row.find('.cart-subtotal').append(subtotal);
+                        });
+                        // set photo
+                        row.find('.cart-photo').append($('<img>').attr('src', $this['photo']));
+                        // set qty
+                        var input = $('<input>').attr('type', 'text').attr('maxlength', 2).val(qty);
+                        input.integerInput();
+                        row.find('.cart-qty').append(input);
+                        row.find('.cart-title').append($('<a>').attr('target', '_blank').attr('href', $this.link).html($this.title));
+                        container.append(row);
+                    });
+                    // set payinfo
+                    var tmps = {};
+                    $.each($('#cart-list .cart-list-itm'), function() {
+                        var $this = $(this);
+                        var p = $this.find('.cart-subtotal .price');
+                        $.each($(p), function() {
+                            var $this = $(this);
+                            if (tmps[$this.attr('currency')]) {
+                                tmps[$this.attr('currency')].amount = (parseFloat(tmps[$this.attr('currency')].amount) + parseFloat($this.attr('price'))).toFixed(2);
+                            } else {
+                                tmps[$this.attr('currency')] = {amount: parseFloat($this.attr('price')), symbol: $this.attr('symbol')};
+                            }
+                        });
+                    });
+                    console.log(tmps);
+                    $('#payinfo #total').empty();
+                    $.each(tmps, function(k, v) {
+                        var row = $('.P_tmp .price').clone(true);
+                        row.attr('price', v.amount);
+                        row.attr('currency', k);
+                        row.find('.price-str').html(v.symbol + v.amount + k);
+                        $('#payinfo #total').append(row);
+                    });
+                    $('#payinfo').fadeIn(100);
+                }
+            },
+            complete: function() {
+                $.currency.refresh();
+            }
+        });
+    }
+
+    (function($) {
+        requestCart();
+    })(jQuery);
+</script>
+
+<style>
+    h1 {
+        margin-bottom:0;
+    }
+    .subt {
+        display:inline-block;
+        color:#888;
+        margin-bottom:20px;
+    }
+    #cart-list table {
+        width:100%;
+    }
+    #cart-list table th {
+        background:#F0F0F0;
+        color:#aaa;
+        padding:5px 0;
+        text-align:center;
+    }
+    #cart-list table td {
+        border-bottom:1px solid #eee;
+        padding:15px 0;
+        text-align:center;
+        width: 15%;
+    }
+    #cart-list table .col2 {
+        width:20%;
+    }
+
+    #cart-list table .col6 {
+        text-align:right;
+    }
+    #cart-list .cart-list-itm {
+        padding:20px;
+    }
+    #cart-list .cart-list-itm input[type=text] {
+        height:24px;
+        line-height:24px;
+        padding:0 5px;
+        text-align:center;
+        width:30px;
+    }
+
+    #payinfo {
+        display:none;
+        font-size:15px;
+        padding:20px 0;
+    }
+    #payinfo .grid_4 {
+        text-align:right;
+    }
+    #payinfo #total * {
+        color:#EF3546;
+    }
+    #checkout-btn {
+        background:limegreen;
+        margin-top:20px;
+        padding:10px 20px;
+    }
+</style>

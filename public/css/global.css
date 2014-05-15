@@ -1,0 +1,36 @@
+/*
+Common css
+*/
+.marginbottom10px {
+    margin-bottom:10px !important;
+}
+.marginbottom20px {
+    margin-bottom:20px !important;
+}
+.marginbottom50px {
+    margin-bottom:50px !important;
+}
+.margintop20px {
+    margin-top:20px !important;
+}
+.paddingbox20px {
+    padding:20px !important;
+}
+.green {
+    color:#398439 !important;
+}
+.red {
+    color:#8C0000 !important;
+}
+.white {
+    color:white !important;
+}
+.relative {
+    position:relative !important;
+}
+.hidden {
+    display:none;
+}
+.P_tmp {
+    display:none;
+}

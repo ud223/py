@@ -1,0 +1,307 @@
+<style>
+    ul {
+        margin:0;
+        padding:0;
+    }
+    ul li {
+        margin:0;
+        list-style: none;
+
+    }
+    .curreny-rate {
+        width:80px;
+    }
+    table {
+        font-size:12px;
+        margin:10px 0;
+    }
+    table td.col1, table td.col3, table td.col2, table td.col4 {
+        padding:2px 0;
+        width:90px;
+    }
+    table td.col2, table td.col4 {
+        width:150px;
+    }
+    table td input[type='number'] {
+        background: #F0F0F0;
+        width: 80px;
+    }
+    .input-group-addon {
+        width:80px;
+        text-align:center;
+    }
+    .price {
+        text-align:center;
+    }
+
+    #base-rmb {
+        background:#ffff80;
+        display:inline-block;
+        margin:0 10px;
+        width:150px;
+    }
+    .location-ul, .scale-ul {
+        background:#EEE;
+        border-radius:4px;
+        margin-top:5px;
+        padding:15px;
+    }
+    .location-ul label, .scale-ul label {
+        font-weight:normal;
+    }
+    .location-ul li, .scale-ul li {
+        float:left;
+        margin:0;
+        margin-right:20px;
+    }
+    .scale-ul li {
+        margin-right: 30px;
+    }
+</style>
+<?php
+$model = $this->model;
+?>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="row">
+    <div class="col-md-8">
+
+        <form role="form" method="post">
+            <div class="form-group">
+                <label>商品全称：</label>
+                <input type="text" class="form-control" id="title" name="title" data-toggle="popover" value="<?php echo $model->title ?>">
+            </div>
+            <div class="form-group">
+                <label>商品简称：</label>
+                <input type="text" class="form-control" id="short_title" name="short_title" data-toggle="popover" value="<?php echo $model->short_title ?>">
+            </div>
+            <div class="form-group">
+                <label>商品附标题：</label>
+                <input type="text" class="form-control" id="sub_title" name="sub_title" data-toggle="popover" value="<?php echo $model->sub_title ?>">
+            </div>
+            <div class="form-group">
+                <label>商品唯一编号：</label>
+                <div class="input-group">
+                    <?php
+                    $skuValue = $model->sku;
+                    if ($this->copy) {
+                        $skuValue = "";
+                    }
+                    ?>
+                    
+                    <input type="text" class="form-control" id="sku" name="sku" data-toggle="popover" data-placement="bottom" value="<?php echo $model->sku ?>">
+                    <span class='input-group-btn'>
+                        <input class='btn btn-default' id="is-sku-exist" origin-sku="<?php echo $skuValue ?>" type='button' value='检查可用性'/>
+                        <input type="hidden" name="origin-sku" value="<?php echo $skuValue ?>" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>商品状态：</label>
+                <select id="status" name="status" value="<?php echo $model->status ?>">
+                    <option value="online" selected="selected">在线出售</option>
+                    <option value="soldout">售完</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>商品图片：</label>
+                <?php if($this->imageBroken): ?>
+                <label class="label label-danger">部分图片已被删除，无法显示，请重新设置</label>
+                <?php endif; ?>
+                <div class='panel panel-info'>
+                    <div id="gy-photo" class='panel-body gy-photo'>
+                    </div>
+                </div>
+                <input type="hidden" name="photo" id="photo"/>
+            </div>
+            <div class="form-group">
+                <label>描述：</label>
+                <textarea row="10" class="form-control" id="description" name="description"><?php echo $model->description ?></textarea>
+            </div>
+            <div class="form-group">
+                <label>商品所在地（仓储）：</label>
+                <input type="hidden" id="location" name='location'/>
+                <ul class='location-ul clearfix'>
+                    <?php foreach ($this->location as $key => $val): ?>
+                        <?php
+                        $checked = '';
+                        if (in_array($key, $model->location)) {
+                            $checked = 'checked="checked"';
+                        } else {
+//                            echo $key;exit;
+                        }
+                        ?>
+                        <li>
+                            <input type="checkbox" <?php echo $checked; ?> id="<?php echo $key ?>"/> <label for="<?php echo $key ?>"><?php echo $val; ?>仓储</label>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label>采购价：</label>
+                <input type="number" step="0.01" class="form-control" id="base_price" name="base_price" value="<?php echo $model->base_price ?>">
+            </div>
+            <div class="form-group">
+                <label>售价：</label>
+                <div class="alert alert-info">
+                    <p class="marginbottom10px">
+                        输入人民币金额计算出各货币下售价
+                    </p>
+                    <div>
+                        RMB: <input type="number" step="0.01" id='base-rmb' class="text text-center form-control"/> 元 &nbsp;&nbsp;
+                        <input type="button" id='calculate' value="计算"/>
+
+                        <div class="paddingbox20px">
+                            <table>
+                                <tr>
+                                    <td class="col1"> 
+                                        USD RATE : 
+                                    </td>
+                                    <td class="col2">
+                                        <input type="number" step="0.01" class="curreny-rate text-center form-control" for='price_usd' value="<?php echo $this->currency['usd'] ?>" />
+                                    </td>
+                                    <td class="col3"> 
+                                        GBP RATE : 
+                                    </td>
+                                    <td class="col4">
+                                        <input type="number" step="0.01" class="curreny-rate text-center form-control" for='price_gbp' value="<?php echo $this->currency['gbp'] ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        EUR RATE :
+                                    </td>
+                                    <td>
+                                        <input type="number" step="0.01" class="curreny-rate text-center form-control" for='price_eur' value="<?php echo $this->currency['eur'] ?>" />
+                                    </td>
+                                    <td>
+                                        HKD RATE :
+                                    </td>
+                                    <td>
+                                        <input type="number" step="0.01" class="curreny-rate text-center form-control" for='price_hkd' value="<?php echo $this->currency['hkd'] ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        AUD RATE :
+                                    </td>
+                                    <td>
+                                        <input type="number" step="0.01" class="curreny-rate text-center form-control" for='price_aud' value="<?php echo $this->currency['aud'] ?>" />
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class='clear_20px'>
+                    </div>
+
+                    <?php foreach ($this->currency as $key => $val): ?>
+
+                        <div class="input-group input-group">
+                            <span class="input-group-addon"><?php echo $this->currency_symbol[$key] . ' ' . strtoupper($key) ?></span>
+                            <input type="number" id='price_<?php echo $key ?>' step="0.01" name='price_<?php echo $key ?>' class="form-control price" value="<?php echo $model->selling_price[$key] ?>">
+                        </div>
+
+                    <?php endforeach; ?>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label>商品规格：</label>
+                <ul class='scale-ul clearfix'>
+                    <li>
+                        <label>重量(kg)</label>
+                        <input type="number" step="0.01" class="form-control short-txt" id="scale_weight" name="scale_weight" value="<?php echo $model->scale['weight'] ?>">
+                    </li>
+                    <li>
+                        <label>长(cm)</label>
+                        <input type="number" step="0.01" class="form-control short-txt" id="scale_length" name="scale_length" value="<?php echo $model->scale['length'] ?>">
+                    </li>
+                    <li>
+                        <label>宽(cm)</label>
+                        <input type="number" step="0.01" class="form-control short-txt" id="scale_width" name="scale_width" value="<?php echo $model->scale['width'] ?>">
+                    </li>
+                    <li>
+                        <label>高(cm)</label>
+                        <input type="number" step="0.01" class="form-control short-txt" id="scale_height" name="scale_height" value="<?php echo $model->scale['height'] ?>">
+                    </li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label>商品品牌：</label>
+                <select id="brand" name="brand" value="<?php echo $this->model->brand->id ?>">
+                    <option value="">无品牌</option>
+                    <?php foreach ($this->brand as $b): ?>
+                        <option value="<?php echo $b->id ?>"><?php echo $b->name ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>商品分类：</label>                
+                <select id="category" name="category" value="<?php echo $this->model->category->id ?>">
+                    <option value="">无分类</option>
+                    <?php foreach ($this->category as $c): ?>
+                        <option value="<?php echo $c->id ?>">
+                            <?php
+                            $prefix = "--";
+                            if ($c->level) {
+                                for ($i = 0; $i < $c->level; $i++) {
+                                    $prefix = $prefix . " -- ";
+                                }
+                            }
+                            echo $prefix;
+                            ?>
+                            <?php echo $c->name ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>商品样式：</label>
+                <ul class='scale-ul clearfix'>
+                    <li>
+                        <label>背景颜色</label>
+                        <input type="text" placeholder="#FFFFFF" class="form-control short-txt" id="css_backgroundcolor" name="css_backgroundcolor" value="<?php echo $model->css['backgroundcolor'] ?>">
+                    </li>
+                    <li>
+                        <label>标题文字颜色</label>
+                        <input type="text" placeholder="#444444" class="form-control short-txt" id="css_fontcolor" name="css_fontcolor" value="<?php echo $model->css['fontcolor'] ?>">
+                    </li>
+                    <li>
+                        <label>链接文字颜色</label>
+                        <input type="text" placeholder="#444444" class="form-control short-txt" id="css_linkcolor" name="css_linkcolor" value="<?php echo $model->css['linkcolor'] ?>">
+                    </li>
+                    <li>
+                        <label>价格文字颜色</label>
+                        <input type="text" placeholder="#EF3546" class="form-control short-txt" id="css_pricecolor" name="css_pricecolor" value="<?php echo $model->css['pricecolor'] ?>">
+                    </li>
+                    <li>
+                        <label>购买按钮背景颜色</label>
+                        <input type="text" placeholder="#EF3546" class="form-control short-txt" id="css_buttoncolor" name="css_buttoncolor" value="<?php echo $model->css['buttoncolor'] ?>">
+                    </li>
+                </ul>
+            </div>
+            <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
+
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+
+        $('input[data-toggle="popover"]').popover({animation: false});
+
+        productSaveBtn('<?php echo $this->separator ?>');
+        calculatePrice();
+        isSkuExist('<?php echo $this->url(array(), 'manage-check-sku') ?>');
+
+
+        $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
+        $('#status').setSelectValue();
+        $('#brand').setSelectValue();
+        $('#category').setSelectValue();
+    })(jQuery);
+</script>

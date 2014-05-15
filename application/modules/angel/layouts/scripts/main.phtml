@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>VERYCART | WHERE TO BUY AMAZING</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("reset.css"); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("text.css"); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("960gs.css"); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("open-sans.css"); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("global.css"); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("global.mall.css"); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("sub.css"); ?>" />
+        <link rel="icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" />
+
+        <script type="text/javascript" src="<?php echo $this->jsPath('jquery.1.10.2.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('plugin.js'); ?>"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $.currency.init();
+                $('#cart-total').html($.cart.total());
+            });
+        </script>
+    </head>
+
+    <body>
+        <!-- Top Start -->
+        <div class="wp top clearfix">
+            <div class="container_24">
+                <div class="grid_6">
+                    <a href="#" class="logo l-ft"><img src="/img/logo.png" alt="welcome to sitename"/></a>
+                </div>
+                <div class="grid_10">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search keywords or model #" />
+                    </div>
+                </div>
+                <div class="grid_8">
+                    <div class="info-bar">
+                        <div class="l-ft">
+                            <a href="#">Login</a>
+                        </div>
+                        <span class="vsplr l-ft"></span>
+                        <div class="cart-bar l-ft">
+                            Cart
+                            <a id="cart-total" href="<?php echo $this->url(array(), 'cart') ?>"> 0 </a>
+                        </div>
+                        <span class="vsplr l-ft"></span>
+
+                        <div class="currency-bar l-ft">
+                            <?php foreach ($this->currency as $key => $val): ?>
+                                <a class="price-option" currency="<?php echo $key ?>" currency-symbol="<?php echo $this->currency_symbol[$key] ?>" href="javascript:void(0)"> <?php echo $this->currency_symbol[$key] . ' ' . $key ?> </a>
+                            <?php endforeach; ?>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="grid_24 hot-tags">
+                    <a href="#"> Just Shopping </a>
+                    <span class="vsplr"></span>
+                    <a href="#"> All Categories </a>
+                    <span class="vsplr"></span>
+                    <a href="#"> New Arrivals </a>
+                    <span class="vsplr"></span>
+                    <a href="#"> Apple Accessory </a>
+                    <span class="vsplr"></span>
+                    <a href="#"> Samsung Accessory </a>
+                    <span class="vsplr"></span>
+                    <a href="#"> Kids Gift </a>
+
+                    <div class="addthis-block">
+                        <!-- AddThis Button BEGIN -->
+<!--                        <div class="addthis_toolbox addthis_default_style ">
+                            <a class="addthis_button_preferred_1"></a>
+                            <a class="addthis_button_preferred_2"></a>
+                            <a class="addthis_button_preferred_3"></a>
+                            <a class="addthis_button_preferred_4"></a>
+                            <a class="addthis_button_compact"></a>
+                            <a class="addthis_counter addthis_bubble_style"></a>
+                        </div>
+                        <script type="text/javascript">
+                            var addthis_config = {
+                                "data_track_addressbar": true
+                            };
+                        </script>
+                        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f4a185e7d9e1842"></script>-->
+                        <!-- AddThis Button END -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top End -->
+        <!-- Content Start -->
+        <?php echo $this->layout()->content; ?>
+        <!-- Content End -->
+
+        <!-- Bottom Start -->
+        <div style="background:#F4F4F4;margin-top:20px;padding:20px 0;text-align:center;">
+            <img src="/img/logo.png" />
+        </div>
+        <!-- Bottom End -->
+
+
+
+    </body>
+</html>

@@ -1,0 +1,2 @@
+[07-May-2014 09:23:16 UTC] PHP Fatal error:  Call to a member function url() on a non-object in /var/www/ag/application/modules/angel/controllers/ProductController.php on line 63
+[07-May-2014 09:23:18 UTC] PHP Fatal error:  Call to a member function url() on a non-object in /var/www/ag/application/modules/angel/controllers/ProductController.php on line 63

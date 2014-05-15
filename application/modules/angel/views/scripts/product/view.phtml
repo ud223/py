@@ -1,0 +1,339 @@
+<?php
+$model = $this->model;
+?>
+
+<style>
+<?php
+if ($model->css) {
+    if ($model->css['backgroundcolor']) {
+        ?>
+            .content {
+                background-color:<?php echo $model->css['backgroundcolor']; ?>;
+            }
+            .content #product-main-block {
+                border:none;
+            }
+            .wp.top {
+                border-bottom:0;
+            }
+        <?php
+    }
+    if ($model->css['fontcolor']) {
+        ?>
+            #product-sub-title, #product-title, #product-brand span {
+                color:<?php echo $model->css['fontcolor']; ?>;
+            }
+        <?php
+    }
+    if ($model->css['linkcolor']) {
+        ?>
+            #breadcrumb li a, #product-brand a {
+                color:<?php echo $model->css['linkcolor']; ?> !important;
+            }
+        <?php
+    }
+    if ($model->css['pricecolor']) {
+        ?>
+            #product-purc span {
+                color:<?php echo $model->css['pricecolor']; ?> !important;
+            }
+        <?php
+    }
+    if ($model->css['buttoncolor']) {
+        ?>
+            #add-to-cart {
+                background-color:<?php echo $model->css['buttoncolor']; ?> !important;
+            }
+            #product-sg .s-img-wp.selected {
+                border-color:<?php echo $model->css['buttoncolor']; ?> !important;
+            }
+        <?php
+    }
+}
+?>
+</style>
+
+<input type="hidden" id="product-id" value="<?php echo $model->id ?>"/>
+<div class="content">
+    <div id="product-main-block" class="container_24">
+        <div id="product-pg" class="grid_14">
+            <?php if (count($model->photo) > 1): ?>
+                <?php
+                $path = $this->photoImage($model->photo[0]->name . $model->photo[0]->type, 'large');
+                ?>
+                <button class="lt-arr-btn"></button>
+                <button class="rt-arr-btn"></button>
+            <?php endif; ?>
+            <?php if (count($model->photo)): ?>
+                <?php
+                $path = $this->photoImage($model->photo[0]->name . $model->photo[0]->type, 'large');
+                ?>
+                <a href="javascript:void(0)" id="big-photo-link" class="clearfix">
+                    <img class="big-photo" src="<?php echo $path ?>"/>
+                </a>
+            <?php endif; ?>
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="grid_10">
+            <div class="lpad-30">
+                <ul id="breadcrumb" class="clearfix">
+                    <li>
+                        <a href="/">HOME</a>
+                    </li>
+                    <?php if ($model->category) : ?>
+                        <?php if ($model->category->parent): ?>
+                            <li>
+                                <i class="ico"></i>
+                                <a href="#"><?php echo strtoupper($model->category->parent->name); ?></a>
+                            </li>
+                        <?php endif; ?>
+                        <li>
+                            <i class="ico"></i>
+                            <a href="#"><?php echo strtoupper($model->category->name); ?></a>
+                        </li>
+                    <?php endif; ?>
+
+                </ul>
+
+                <h1 id="product-title"><?php echo $model->title ?></h1>
+                <?php if ($model->brand): ?>
+                    <h2 id="product-brand" class="clearfix">
+                        <span>by</span>
+                        <a href="#" class="bold"><?php echo strtoupper($model->brand->name) ?></a>
+                        <?php if ($model->brand->logo): ?>
+                            <img src="<?php echo $this->photoImage($model->brand->logo->name . $model->brand->logo->type, ''); ?>" id="product-brand-logo"/>
+                        <?php endif; ?>
+                    </h2>
+                <?php endif; ?>
+                <?php if ($model->sub_title): ?>
+                    <p id="product-sub-title">
+                        <?php echo $model->sub_title; ?>
+                    </p>
+                <?php endif; ?>
+
+                <?php if ($model->selling_price): ?>
+                    <div id="product-purc" class="clearfix">
+                        <?php foreach ($model->selling_price as $currency => $price): ?>
+                            <?php
+                            $dot = '.';
+                            $str = strval($price);
+
+
+                            $pos = strripos($str, $dot);
+                            $arr = explode($dot, $str);
+                            ?>
+                            <div class="price" price="<?php echo $price ?>" currency="<?php echo $currency ?>">
+                                <span class="price-symbol"><?php echo $this->currency_symbol[$currency] ?></span>
+                                <span class="price-int"><?php echo $arr[0] ?></span>
+                                <?php if ($pos): ?>
+                                    <span class="price-dec"><?php echo $dot . end($arr) ?></span>
+                                <?php endif; ?>
+                                <span class="price-currency"><?php echo $currency ?></span>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div id="product-buy" class="clearfix">
+                    <div id="set-qty">
+                        <button id="sub-btn"></button>
+                        <input type="text" id="qty" maxlength="2" value="1"/>
+                        <button id="add-btn"></button>
+                    </div>
+
+                    <button id="add-to-cart">
+                        <i class="ico"></i>Add To Cart
+                    </button>
+                    
+                    <button id="view-cart" onclick="location.href='/cart'">
+                        <i class="ico"></i>Added &amp; View Cart
+                    </button>
+                </div>
+                <?php if (count($model->photo)): ?>
+                    <div id="product-sg">
+                        <?php foreach ($model->photo as $p): ?>
+                            <?php
+                            $path = $this->photoImage($p->name . $p->type, 'small');
+                            ?>
+                            <div class='s-img-wp' orig="<?php echo $this->photoImage($p->name . $p->type, '') ?>" large="<?php echo $this->photoImage($p->name . $p->type, 'large') ?>">
+                                <img class="s-img" src="<?php echo $path ?>"/>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container_24 product-blk" id="product-overview">
+    <div class="grid_14 product-blk-unit">
+        <p class="tt">
+            OVERVIEW
+        </p>
+        <div class="ct">
+            <?php echo $model->description ?>
+        </div>
+
+        <?php if ($model->brand): ?>
+            <p class="tt margintop20px bdsprl">
+                ABOUT <?php echo strtoupper($model->brand->name) ?>
+            </p>
+            <div class="ct">
+                <style>
+                    .bdsprl {
+                        border-top:1px solid #E0E0E0;
+                        margin-right:10px;
+                        padding-top:20px;
+                    }
+                    #product-brand-logo-big {
+                        border-radius:200px;
+                        display:block;
+                        float:left;
+                        height:80px;
+                        width:80px;
+                    }
+                    #brand-statement {
+                        float:left;
+                        width:430px
+                    }
+                    #brand-statement dt {
+                        font-weight:bold;
+                    }
+                    #brand-statement dt, #brand-statement dd {
+                        padding-left:20px;
+                    }
+                    #brand-statement dd {
+                        font-size:13px;
+                    }
+                    #brand-statement .btn {
+                        background: transparent;
+                        border: 1px solid #333;
+                        display:inline-block;
+                        color:#333 !important;
+                        font-size:smaller;
+                        margin-top:15px;
+                        padding:0 20px;
+                        text-align:center;
+                    }
+                </style>
+                <?php if ($model->brand->logo): ?>
+                    <a target="_blank" href="#">
+                        <img src="<?php echo $this->photoImage($model->brand->logo->name . $model->brand->logo->type, ''); ?>" id="product-brand-logo-big"/>
+                    </a>
+                <?php endif; ?>
+                <dl id="brand-statement">
+                    <dt>
+                    <a target="_blank" href="#"><?php echo $model->brand->name; ?></a>
+                    </dt>
+                    <dd>
+                        <?php echo $model->brand->description; ?>
+                    </dd>
+                    <dd>
+                        <a href="#" class="btn">VIEW <?php echo $model->brand->name ?> PRODUCT</a>
+                    </dd>
+                </dl>
+                <div class="clear"></div>
+            </div>
+        <?php endif; ?>
+
+
+        <div class="sprl"></div>
+    </div>
+    <div class="grid_10">
+        <p class="tt">
+            SHIPPING &amp; RETURNS
+        </p>
+
+    </div>
+    <div class="clear-30"></div>
+    <div class="grid_24">
+        <p class="tt">
+            CUSTOMER REVIEWS
+        </p>
+        <div id="review-btn-empty">
+            <a href="javascript:void(0)" class="txt">NO REVIEWS YET, WRITE NOW</a> 
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('.big-photo').xCenter();
+        var qty = $('#qty');
+        qty.integerInput();
+        var minus = $('#sub-btn');
+        minus.bind('click', function() {
+            var val = parseInt(qty.val());
+            if (typeof val === 'number' && !isNaN(val)) {
+                val = val - 1;
+                if (val == 0) {
+                    val = 1;
+                }
+                qty.val(val);
+            } else {
+                qty.val(1);
+            }
+        });
+        var plus = $('#add-btn');
+        plus.bind('click', function() {
+            var val = parseInt(qty.val());
+            if (typeof val === 'number' && !isNaN(val)) {
+                val = val + 1;
+                qty.val(val);
+            } else {
+                qty.val(1);
+            }
+        });
+
+        // set gallary selected
+        var __cls1 = 'selected';
+        var __cls2 = '.s-img-wp';
+        var s_img = $(__cls2);
+        if (s_img.length > 0) {
+            $(s_img[0]).addClass(__cls1);
+        }
+
+        s_img.click(function() {
+            var $this = $(this).closest(__cls2);
+            if ($this.hasClass(__cls1)) {
+                return;
+            }
+            $this.siblings(__cls2).removeClass(__cls1);
+            $this.addClass(__cls1);
+
+            var large = $this.attr('large');
+            $('#big-photo-link .big-photo').attr('src', large);
+        });
+
+        $('.rt-arr-btn').click(function() {
+            var s = $(__cls2 + "." + __cls1);
+            var next = s.next(__cls2);
+            if (next.length) {
+                next.click();
+            } else {
+                $(s.siblings(__cls2).get(0)).click();
+            }
+        });
+
+        $('.lt-arr-btn').click(function() {
+            var s = $(__cls2 + "." + __cls1);
+            var prev = s.prev(__cls2);
+            if (prev.length) {
+                prev.click();
+            } else {
+                $(s.siblings(__cls2).get(s.siblings(__cls2).length - 1)).click();
+            }
+        });
+        $('#add-to-cart').click(function() {
+            var __DURATION = 100;
+            $.cart.add($('#product-id').val(), parseInt($('#qty').val()));
+            $('#cart-total').html($.cart.total());
+            $(this).fadeOut(__DURATION, function(){
+                $('#view-cart').fadeIn(__DURATION);
+            });
+            
+        });
+        
+    })(jQuery);
+</script>
