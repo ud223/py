@@ -106,7 +106,7 @@ abstract class Angel_Model_AbstractModel {
         if(!$condition) {
             $new_condition = array_merge($new_condition, $condition);
         }
-        return getBy($return_as_paginator = true, $new_condition);
+        return $this->getBy($return_as_paginator = true, $new_condition);
     }
 
     public function getById($id) {
