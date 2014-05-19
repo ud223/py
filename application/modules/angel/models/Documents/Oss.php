@@ -13,13 +13,16 @@ class Oss extends AbstractDocument{
     protected $owner;
 
     /** @ODM\String */
-    protected $status;                      // OSS文件状态：online, offline
+    protected $status;                          // OSS文件状态：online, offline
     
     /** @ODM\Int */
-    protected $size;                        // 文件大小
+    protected $size;                            // 文件大小
     
     /** @ODM\String */
-    protected $type = '.mp4';               // OSS文件类型
+    protected $type = 'video';                  // OSS文件类型：video, audio
+
+    /** @ODM\String */
+    protected $ext = '.mp4';                    // OSS文件扩展名
 
 }
 

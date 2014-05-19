@@ -82,23 +82,31 @@ abstract class Angel_Model_AbstractModel {
         }
         return $result;
     }
-    
+
+//    public function getByUser($user_id, $return_as_paginator = true, $condition = false) {
+//        $query = $this->_dm->createQueryBuilder($this->_document_class)
+//                        ->field('owner.$id')->equals(new MongoId($user_id));
+//        if (is_array($condition)) {
+//            foreach ($condition as $key => $val) {
+//                $query = $query->field(key)->equals($val);
+//            }
+//        }
+//        $query = $query->sort('created_at', -1);
+//        $result = null;
+//        if ($return_as_paginator) {
+//            $result = $this->paginator($query);
+//        } else {
+//            $result = $query->getQuery()->execute();
+//        }
+//        return $result;
+//    }
+
     public function getByUser($user_id, $return_as_paginator = true, $condition = false) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)
-                        ->field('owner.$id')->equals(new MongoId($user_id));
-        if (is_array($condition)) {
-            foreach ($condition as $key => $val) {
-                $query = $query->field(key)->equals($val);
-            }
+        $new_condition = array('owner.$id' => $user_id);
+        if(!$condition) {
+            $new_condition = array_merge($new_condition, $condition);
         }
-        $query = $query->sort('created_at', -1);
-        $result = null;
-        if ($return_as_paginator) {
-            $result = $this->paginator($query);
-        } else {
-            $result = $query->getQuery()->execute();
-        }
-        return $result;
+        return getBy($return_as_paginator = true, $new_condition);
     }
 
     public function getById($id) {
@@ -112,6 +120,23 @@ abstract class Angel_Model_AbstractModel {
             $result = $obj;
         }
 
+        return $result;
+    }
+
+    public function getBy($return_as_paginator = true, $condition = false) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class);
+        if (is_array($condition)) {
+            foreach ($condition as $key => $val) {
+                $query = $query->field(key)->equals($val);
+            }
+        }
+        $query = $query->sort('created_at', -1);
+        $result = null;
+        if ($return_as_paginator) {
+            $result = $this->paginator($query);
+        } else {
+            $result = $query->getQuery()->execute();
+        }
         return $result;
     }
 
