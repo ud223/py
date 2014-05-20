@@ -25,5 +25,3 @@ class Oss extends AbstractDocument{
     protected $ext = '.mp4';                    // OSS文件扩展名
 
 }
-
-?>

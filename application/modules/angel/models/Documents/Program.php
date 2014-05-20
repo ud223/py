@@ -27,5 +27,3 @@ class Program extends AbstractDocument{
     /** @ODM\String */
     protected $status;                      // 节目状态：online, offline
 }
-
-?>
