@@ -12,8 +12,8 @@ class Angel_Model_Author extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    public function addAuthor($name, $description, $logo, $owner) {
-        $data = array("name" => $name, "description" => $description, "logo" => $logo, "owner" => $owner);
+    public function addAuthor($name, $description, $logo) {
+        $data = array("name" => $name, "description" => $description, "logo" => $logo);
         $result = $this->add($data);
         return $result;
     }
