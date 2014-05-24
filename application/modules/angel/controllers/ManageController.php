@@ -778,8 +778,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $resource[] = array('id' => $r->id,
                 'name' => $r->name,
                 'description' => $r->description,
-                'logo' => $r->logo,
-                'owner' => $r->owner);
+                'logo' => $r->logo);
         }
         // JSON FORMAT
         if ($this->getParam('format') == 'json') {
@@ -807,10 +806,9 @@ class Angel_ManageController extends Angel_Controller_Action {
             } else {
                 $logo = null;
             }
-            $owner = $this->me->getUser();
             $authorModel = $this->getModel('author');
             try {
-                $result = $authorModel->addAuthor($name, $description, $logo, $owner);
+                $result = $authorModel->addAuthor($name, $description, $logo);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }

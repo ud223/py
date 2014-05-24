@@ -8,7 +8,7 @@ class Angel_Model_Author extends Angel_Model_AbstractModel {
 
     public function saveAuthor($id, $name, $description, $logo) {
         $data = array("name" => $name, "description" => $description, "logo" => $logo);
-        $result = $this->save($id, $data, Angel_Exception_Author, Angel_Exception_Author::Author_NOT_FOUND);
+        $result = $this->save($id, $data, Angel_Exception_Author, Angel_Exception_Author::AUTHOR_NOT_FOUND);
         return $result;
     }
 
