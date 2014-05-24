@@ -115,8 +115,6 @@ $model = $this->model;
 
         $('input[data-toggle="popover"]').popover({animation: false});
 
-        programSaveBtn('<?php echo $this->separator ?>');
-
 
         $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
         $('#status').setSelectValue();
