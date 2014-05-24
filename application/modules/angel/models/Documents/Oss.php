@@ -23,5 +23,8 @@ class Oss extends AbstractDocument{
 
     /** @ODM\String */
     protected $ext = '.mp4';                    // OSS文件扩展名
+    
+    /** @ODM\String */
+    protected $description;
 
 }
