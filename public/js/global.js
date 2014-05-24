@@ -1,45 +1,4 @@
 
-/*
- * sku是否可用
- * @param {type} url
- * @returns {integer}
- */
-function isSkuExist(url) {
-    $('#is-sku-exist').click(function() {
-        var okmsg = '该SKU可以使用';
-        var sorrymsg = '抱歉，已经存在，无法使用';
-        var pleasemsg = "请输入SKU值";
-//                $('#sku').attr('data-content', 'content').attr('data-original-title', 'title');
-//                $('#sku').popover('show');
-        var sku = $('#sku').val();
-        if (sku) {
-            var os = $(this).attr('origin-sku');
-            if (sku === os) {
-                alert(okmsg);
-                return;
-            }
-
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                type: 'POST',
-                data: {sku: sku},
-                success: function(response) {
-                    if (response === 1) {
-                        // existing
-                        alert(sorrymsg);
-                    } else {
-                        // not existing
-                        alert(okmsg);
-                    }
-                }
-            });
-        } else {
-            alert(pleasemsg);
-        }
-    });
-}
-
 /* 
  * manage-product-create
  * manage-product-save

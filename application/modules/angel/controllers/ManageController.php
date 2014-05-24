@@ -118,32 +118,13 @@ class Angel_ManageController extends Angel_Controller_Action {
         $this->view->title = "管理员登录";
     }
 
-    public function checkSkuAction() {
-        if ($this->request->isPost()) {
-            $sku = $this->request->getParam('sku');
-            if ($sku) {
-                $sku = strtolower($sku);
-                $productModel = $this->getModel('product');
-                $result = $productModel->isSkuExist($sku);
-                if ($result)
-                    echo 1;
-                else
-                    echo 0;
-            } else {
-                // 空SKU均可使用
-                echo 0;
-            }
-            exit;
-        }
-    }
-
-    public function productListAction() {
+    public function programListAction() {
         $page = $this->request->getParam('page');
         if (!$page) {
             $page = 1;
         }
-        $productModel = $this->getModel('product');
-        $paginator = $productModel->getAll();
+        $programModel = $this->getModel('program');
+        $paginator = $programModel->getAll();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
         $resource = array();
@@ -180,7 +161,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
-    public function productCreateAction() {
+    public function programCreateAction() {
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
         if ($this->request->isPost()) {
@@ -188,7 +169,6 @@ class Angel_ManageController extends Angel_Controller_Action {
             $title = $this->request->getParam('title');
             $short_title = $this->request->getParam('short_title');
             $sub_title = $this->request->getParam('sub_title');
-            $sku = $this->request->getParam('sku');
             $status = $this->request->getParam('status');
             $description = $this->request->getParam('description');
             $photo = $this->decodePhoto();
@@ -202,39 +182,30 @@ class Angel_ManageController extends Angel_Controller_Action {
             $result = false;
             $error = "";
             try {
-                $productModel = $this->getModel('product');
-                $isSkuExist = false;
-                if ($sku) {
-                    $isSkuExist = $productModel->isSkuExist($sku);
-                }
-                if ($isSkuExist) {
-                    $error = "该SKU已经存在，不能重复使用";
-                } else {
-                    $sku = strtolower($sku);
-                    $owner = $this->me->getUser();
-                    $author = null;
-                    if ($authorId) {
-                        $author = $authorModel->getById($authorId);
-                        if (!$author) {
-                            $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound author"');
-                        }
+                $programModel = $this->getModel('program');
+                $owner = $this->me->getUser();
+                $author = null;
+                if ($authorId) {
+                    $author = $authorModel->getById($authorId);
+                    if (!$author) {
+                        $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound author"');
                     }
-                    $category = null;
-                    if ($categoryId) {
-                        $category = $categoryModel->getById($categoryId);
-                        if (!$category) {
-                            $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound category"');
-                        }
-                    }
-                    $result = $productModel->addProduct($title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
                 }
-            } catch (Angel_Exception_Product $e) {
+                $category = null;
+                if ($categoryId) {
+                    $category = $categoryModel->getById($categoryId);
+                    if (!$category) {
+                        $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound category"');
+                    }
+                }
+                $result = $programModel->addProgram($title, $short_title, $sub_title, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
+            } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-product-list-home'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-program-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
@@ -248,7 +219,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
-    public function productSaveAction() {
+    public function programSaveAction() {
         $id = $this->request->getParam('id');
         $copy = $this->request->getParam('copy');
         $authorModel = $this->getModel('author');
@@ -259,7 +230,6 @@ class Angel_ManageController extends Angel_Controller_Action {
             $title = $this->request->getParam('title');
             $short_title = $this->request->getParam('short_title');
             $sub_title = $this->request->getParam('sub_title');
-            $sku = $this->request->getParam('sku');
             $status = $this->request->getParam('status');
             $description = $this->request->getParam('description');
             $photo = $this->decodePhoto();
@@ -274,8 +244,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $error = "";
 
             try {
-                $productModel = $this->getModel('product');
-                $isSkuExist = false;
+                $programModel = $this->getModel('program');
                 $owner = $this->me->getUser();
                 $author = null;
                 if ($authorId) {
@@ -292,38 +261,17 @@ class Angel_ManageController extends Angel_Controller_Action {
                     }
                 }
                 if ($copy) {
-                    // COPY NEW
-                    // Checking Sku Available
-                    $sku = strtolower($sku);
-                    if ($sku) {
-                        $isSkuExist = $productModel->isSkuExist($sku);
-                    }
-                    if ($isSkuExist) {
-                        $error = "该SKU已经存在，不能重复使用";
-                    } else {
-                        $result = $productModel->addProduct($title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
-                    }
+                    $result = $programModel->addProgram($title, $short_title, $sub_title, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
                 } else {
-                    // EDIT
-                    // Checking Sku Available
-                    $sku = strtolower($sku);
-                    $os = $this->request->getParam('origin-sku');
-                    if (!($os && $os == $sku)) {
-                        $isSkuExist = $productModel->isSkuExist($sku);
-                    }
-                    if ($isSkuExist) {
-                        $error = "该SKU已经存在，不能重复使用";
-                    } else {
-                        $result = $productModel->saveProduct($id, $title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
-                    }
+                    $result = $programModel->saveProgram($id, $title, $short_title, $sub_title, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
                 }
-            } catch (Angel_Exception_Product $e) {
+            } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-product-list-home'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-program-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
@@ -336,9 +284,9 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->location = $this->bootstrap_options['stock_location'];
 
             if ($id) {
-                $productModel = $this->getModel('product');
+                $programModel = $this->getModel('program');
                 $photoModel = $this->getModel('photo');
-                $target = $productModel->getById($id);
+                $target = $programModel->getById($id);
                 if (!$target) {
                     $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
                 }
@@ -376,14 +324,14 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
-    public function productRemoveAction() {
+    public function programRemoveAction() {
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
             $id = $this->getParam('id');
             if ($id) {
-                $productModel = $this->getModel('product');
-                $result = $productModel->removeProduct($id);
+                $programModel = $this->getModel('program');
+                $result = $programModel->removeProgram($id);
             }
             echo $result;
             exit;
@@ -447,10 +395,10 @@ class Angel_ManageController extends Angel_Controller_Action {
         $result['linkcolor'] = $this->request->getParam('css_linkcolor');
         $result['pricecolor'] = $this->request->getParam('css_pricecolor');
         $result['buttoncolor'] = $this->request->getParam('css_buttoncolor');
-        
+
         return $result;
     }
-    
+
     public function resultAction() {
         $this->view->error = $this->request->getParam('error');
         $this->view->redirectUrl = $this->request->getParam('redirectUrl');
@@ -769,7 +717,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $page = 1;
         }
         $authorModel = $this->getModel('author');
-        $productModel = $this->getModel('product');
+        $programModel = $this->getModel('program');
         $paginator = $authorModel->getAll();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
@@ -790,7 +738,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->paginator = $paginator;
             $this->view->resource = $resource;
             $this->view->title = "作者列表";
-            $this->view->productModel = $productModel;
+            $this->view->programModel = $programModel;
         }
     }
 
@@ -929,11 +877,11 @@ class Angel_ManageController extends Angel_Controller_Action {
 
     public function categoryListAction() {
         $categoryModel = $this->getModel('category');
-        $productModel = $this->getModel('product');
+        $programModel = $this->getModel('program');
         $root = $categoryModel->getRoot();
         $this->view->title = "分类列表";
         $this->view->categoryModel = $categoryModel;
-        $this->view->productModel = $productModel;
+        $this->view->programModel = $programModel;
         if (count($root)) {
             $resource = array();
             foreach ($root as $r) {

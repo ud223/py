@@ -50,7 +50,7 @@ $model = $this->model;
 ?>
 <h1 class="page-title"><?php echo $this->title ?></h1>
 <div class="btb">
-    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-product-create') ?>">新建商品</a>
+    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-program-create') ?>">新建商品</a>
 </div>
 <div class="row">
     <?php foreach ($this->resource as $p): ?>
@@ -58,7 +58,7 @@ $model = $this->model;
             <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
             <div class="wp">
                 <p><?php echo $p['owner']->email . ' 上传' ?>
-                    <button class="pull-right btn btn-xs btn-danger remove-product">删除</button>
+                    <button class="pull-right btn btn-xs btn-danger remove-program">删除</button>
                 </p>
                 <div class="iwp">
                     <img width="100%" src="<?php echo $p['path'] ?>"/>
@@ -68,10 +68,10 @@ $model = $this->model;
                     <p><i><?php echo $p['sub_title'] ?></i></p>
                 </div>
                 <div class="btn-group">
-                    <a href="<?php echo $this->url(array(), 'manage-product-save') . '?id=' . $p['id'] ?>" class="btn btn-info btn-sm">编辑</a>
-                    <a href="<?php echo $this->url(array(), 'manage-product-save') . '?copy=true&&id=' . $p['id'] ?>" class="btn btn-default btn-sm">复制</a>
+                    <a href="<?php echo $this->url(array(), 'manage-program-save') . '?id=' . $p['id'] ?>" class="btn btn-info btn-sm">编辑</a>
+                    <a href="<?php echo $this->url(array(), 'manage-program-save') . '?copy=true&&id=' . $p['id'] ?>" class="btn btn-default btn-sm">复制</a>
 
-                    <a target="_blank" href="<?php echo $this->url(array('id' => $p['id']), 'product-view') . '/' . $p['title'] ?>" class="btn btn-default btn-sm">预览</a>
+                    <a target="_blank" href="<?php echo $this->url(array('id' => $p['id']), 'program-view') . '/' . $p['title'] ?>" class="btn btn-default btn-sm">预览</a>
                 </div>
             </div>
         </div>
@@ -79,13 +79,13 @@ $model = $this->model;
 </div>
 <div class="row">
     <div class="col-md-12 text-center">
-        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-product-list')); ?>
+        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-program-list')); ?>
     </div>
 </div>
 <script type="text/javascript">
     (function($) {
-        $('.remove-product').click(function() {
-            removeObject($(this), '<?php echo $this->url(array(), 'manage-product-remove') ?>');
+        $('.remove-program').click(function() {
+            removeObject($(this), '<?php echo $this->url(array(), 'manage-program-remove') ?>');
         });
     })(jQuery);
 </script>

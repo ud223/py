@@ -76,15 +76,6 @@
                 <input type="text" class="form-control" id="sub_title" name="sub_title" data-toggle="popover" value="">
             </div>
             <div class="form-group">
-                <label>商品唯一编号：</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="sku" name="sku" data-toggle="popover" data-placement="bottom" value="">
-                    <span class='input-group-btn'>
-                        <input class='btn btn-default' id="is-sku-exist" type='button' value='检查可用性'/>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
                 <label>商品状态：</label>
                 <select id="status" name="status">
                     <option value="online" selected="selected">在线出售</option>
@@ -282,8 +273,7 @@
     (function($) {
         $('input[data-toggle="popover"]').popover({animation: false});
 
-        productSaveBtn('<?php echo $this->separator ?>');
-        isSkuExist('<?php echo $this->url(array(), 'manage-check-sku') ?>');
+        programSaveBtn('<?php echo $this->separator ?>');
 
 //        $('.gy-photo').photoSelector(false, "set save here");
         $('.gy-photo').photoSelector();
