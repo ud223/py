@@ -959,26 +959,70 @@ class Angel_ManageController extends Angel_Controller_Action {
             // POST METHOD
             $name = $this->request->getParam('name');
             $description = $this->request->getParam('description');
+            $status = $this->request->getParam('status');
+            $fsize = $this->request->getParam('fsize');
+            $type = $this->request->getParam('type');
+            $ext = $this->request->getParam('ext');
             $owner = $this->me->getUser();
-            $brandModel = $this->getModel('brand');
+            $ossModel = $this->getModel('oss');
             try {
-                $result = $brandModel->addBrand($name, $description, $owner);
+                $result = $ossModel->addOss($name, $description, $status, $fsize, $type, $ext, $owner);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-brand-list-home'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-oss-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
         } else {
             // GET METHOD
-            $this->view->title = "创建文件分类";
+            $this->view->title = "创建文件";
         }
     }
 
     public function ossSaveAction() {
-        
+        $notFoundMsg = '未找到目标文件';
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->request->getParam('id');
+            $name = $this->request->getParam('name');
+            $description = $this->request->getParam('description');
+            $status = $this->request->getParam('status');
+            $fsize = $this->request->getParam('fsize');
+            $type = $this->request->getParam('type');
+            $ext = $this->request->getParam('ext');
+            $ossModel = $this->getModel('oss');
+            try {
+                $result = $ossModel->saveOss($id, $name, $description, $status, $fsize, $type, $ext);
+            } catch (Angel_Exception_Oss $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-oss-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑文件";
+
+            $id = $this->request->getParam("id");
+            if ($id) {
+                $ossModel = $this->getModel('oss');
+                $target = $ossModel->getById($id);
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+                $this->view->model = $target;
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
     }
 
     public function ossListAction() {
@@ -1012,7 +1056,17 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
 
     public function ossRemoveAction() {
-        
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $ossModel = $this->getModel('oss');
+                $result = $ossModel->remove($id);
+            }
+            echo $result;
+            exit;
+        }
     }
 
 }

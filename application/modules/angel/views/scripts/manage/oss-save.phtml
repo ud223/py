@@ -10,22 +10,28 @@
             </div>
             <div class="form-group">
                 <label>文件描述：</label>
-                <textarea row="10" class="form-control" id="description" name="description"><?php echo $model->description ?></textarea>
+                <textarea row="10" class="form-control" id="description" name="description"><?php echo $this->model->description ?></textarea>
             </div>
             <div class="form-group">
                 <label>OSS文件状态：</label>
-                <select id="status" name="status" value="<?php echo $model->status ?>">
+                <select id="status" name="status" value="<?php echo $this->model->status ?>">
                     <option value="online">在线</option>
                     <option value="offline">下线</option>
                 </select>
             </div>
+            
+            <input type="hidden" id="fsize" name="fsize" value="<?php echo $this->model->fsize ?>"/>
+            
             <div class="form-group">
                 <label>OSS文件类型：</label>
-                <select id="type" name="type" value="<?php echo $model->type ?>">
+                <select id="type" name="type" value="<?php echo $this->model->type ?>">
                     <option value="video">视频</option>
                     <option value="audio">音频</option>
                 </select>
             </div>
+            
+            <input type="hidden" id="ext" name="ext" value="<?php echo $this->model->ext ?>"/>
+            
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
 
         </form>

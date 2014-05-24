@@ -3,20 +3,20 @@ namespace Documents;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
-/** @ODM\EmbeddedDocument */
+/** @ODM\Document */
 class Oss extends AbstractDocument{
     
     /** @ODM\String */
     protected $name;
     
-    /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
-    protected $owner;
-
+    /** @ODM\String */
+    protected $description;
+    
     /** @ODM\String */
     protected $status;                          // OSS文件状态：online, offline
     
     /** @ODM\Int */
-    protected $size;                            // 文件大小
+    protected $fsize;                           // 文件大小
     
     /** @ODM\String */
     protected $type = 'video';                  // OSS文件类型：video, audio
@@ -24,7 +24,7 @@ class Oss extends AbstractDocument{
     /** @ODM\String */
     protected $ext = '.mp4';                    // OSS文件扩展名
     
-    /** @ODM\String */
-    protected $description;
+    /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
+    protected $owner;
 
 }
