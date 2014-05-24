@@ -46,8 +46,8 @@ class Product extends AbstractDocument {
     /** @ODM\Hash */
     protected $scale;
     
-    /** @ODM\ReferenceOne(targetDocument="\Documents\Brand") */
-    protected $brand;
+    /** @ODM\ReferenceOne(targetDocument="\Documents\Author") */
+    protected $author;
     
     /** @ODM\ReferenceOne(targetDocument="\Documents\Category") */
     protected $category;

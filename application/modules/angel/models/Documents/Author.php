@@ -5,7 +5,7 @@ namespace Documents;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** @ODM\Document */
-class Brand extends AbstractDocument {
+class Author extends AbstractDocument {
 
     /** @ODM\String */
     protected $name;
@@ -19,7 +19,5 @@ class Brand extends AbstractDocument {
     /** @ODM\Int */
     protected $view = 0;
 
-    /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
-    protected $owner;
 
 }

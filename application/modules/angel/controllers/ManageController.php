@@ -181,7 +181,7 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
 
     public function productCreateAction() {
-        $brandModel = $this->getModel('brand');
+        $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
         if ($this->request->isPost()) {
             // POST METHOD
@@ -196,7 +196,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $base_price = floatval($this->request->getParam('base_price'));
             $selling_price = $this->getSellingPrice();
             $scale = $this->getScale();
-            $brandId = $this->request->getParam('brand');
+            $authorId = $this->request->getParam('author');
             $categoryId = $this->request->getParam('category');
             $css = $this->getCss();
             $result = false;
@@ -212,11 +212,11 @@ class Angel_ManageController extends Angel_Controller_Action {
                 } else {
                     $sku = strtolower($sku);
                     $owner = $this->me->getUser();
-                    $brand = null;
-                    if ($brandId) {
-                        $brand = $brandModel->getById($brandId);
-                        if (!$brand) {
-                            $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound brand"');
+                    $author = null;
+                    if ($authorId) {
+                        $author = $authorModel->getById($authorId);
+                        if (!$author) {
+                            $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound author"');
                         }
                     }
                     $category = null;
@@ -226,7 +226,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                             $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound category"');
                         }
                     }
-                    $result = $productModel->addProduct($title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $brand, $category, $css);
+                    $result = $productModel->addProduct($title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
                 }
             } catch (Angel_Exception_Product $e) {
                 $error = $e->getDetail();
@@ -243,7 +243,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->title = "创建商品";
             $this->view->separator = $this->SEPARATOR;
             $this->view->location = $this->bootstrap_options['stock_location'];
-            $this->view->brand = $brandModel->getAll();
+            $this->view->author = $authorModel->getAll();
             $this->view->category = $categoryModel->getAll();
         }
     }
@@ -251,7 +251,7 @@ class Angel_ManageController extends Angel_Controller_Action {
     public function productSaveAction() {
         $id = $this->request->getParam('id');
         $copy = $this->request->getParam('copy');
-        $brandModel = $this->getModel('brand');
+        $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
 
         if ($this->request->isPost()) {
@@ -267,7 +267,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $base_price = floatval($this->request->getParam('base_price'));
             $selling_price = $this->getSellingPrice();
             $scale = $this->getScale();
-            $brandId = $this->request->getParam('brand');
+            $authorId = $this->request->getParam('author');
             $categoryId = $this->request->getParam('category');
             $css = $this->getCss();
             $result = false;
@@ -277,10 +277,10 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $productModel = $this->getModel('product');
                 $isSkuExist = false;
                 $owner = $this->me->getUser();
-                $brand = null;
-                if ($brandId) {
-                    $brand = $brandModel->getById($brandId);
-                    if (!$brand) {
+                $author = null;
+                if ($authorId) {
+                    $author = $authorModel->getById($authorId);
+                    if (!$author) {
                         $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound"');
                     }
                 }
@@ -301,7 +301,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                     if ($isSkuExist) {
                         $error = "该SKU已经存在，不能重复使用";
                     } else {
-                        $result = $productModel->addProduct($title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $brand, $category, $css);
+                        $result = $productModel->addProduct($title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
                     }
                 } else {
                     // EDIT
@@ -314,7 +314,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                     if ($isSkuExist) {
                         $error = "该SKU已经存在，不能重复使用";
                     } else {
-                        $result = $productModel->saveProduct($id, $title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $brand, $category, $css);
+                        $result = $productModel->saveProduct($id, $title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
                     }
                 }
             } catch (Angel_Exception_Product $e) {
@@ -342,7 +342,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 if (!$target) {
                     $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
                 }
-                $this->view->brand = $brandModel->getAll();
+                $this->view->author = $authorModel->getAll();
                 $this->view->category = $categoryModel->getAll();
                 if ($copy) {
                     // 复制一个商品
@@ -763,14 +763,14 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
-    public function brandListAction() {
+    public function authorListAction() {
         $page = $this->request->getParam('page');
         if (!$page) {
             $page = 1;
         }
-        $brandModel = $this->getModel('brand');
+        $authorModel = $this->getModel('author');
         $productModel = $this->getModel('product');
-        $paginator = $brandModel->getAll();
+        $paginator = $authorModel->getAll();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
         $resource = array();
@@ -790,12 +790,12 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             $this->view->paginator = $paginator;
             $this->view->resource = $resource;
-            $this->view->title = "品牌列表";
+            $this->view->title = "作者列表";
             $this->view->productModel = $productModel;
         }
     }
 
-    public function brandCreateAction() {
+    public function authorCreateAction() {
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
@@ -808,39 +808,39 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $logo = null;
             }
             $owner = $this->me->getUser();
-            $brandModel = $this->getModel('brand');
+            $authorModel = $this->getModel('author');
             try {
-                $result = $brandModel->addBrand($name, $description, $logo, $owner);
+                $result = $authorModel->addAuthor($name, $description, $logo, $owner);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-brand-list-home'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-author-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
         } else {
             // GET METHOD
-            $this->view->title = "创建品牌分类";
+            $this->view->title = "创建作者分类";
         }
     }
 
-    public function brandRemoveAction() {
+    public function authorRemoveAction() {
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
             $id = $this->getParam('id');
             if ($id) {
-                $brandModel = $this->getModel('brand');
-                $result = $brandModel->remove($id);
+                $authorModel = $this->getModel('author');
+                $result = $authorModel->remove($id);
             }
             echo $result;
             exit;
         }
     }
 
-    public function brandSaveAction() {
-        $notFoundMsg = '未找到目标品牌';
+    public function authorSaveAction() {
+        $notFoundMsg = '未找到目标作者';
 
         if ($this->request->isPost()) {
             $result = 0;
@@ -854,27 +854,27 @@ class Angel_ManageController extends Angel_Controller_Action {
             } else {
                 $logo = null;
             }
-            $brandModel = $this->getModel('brand');
+            $authorModel = $this->getModel('author');
             try {
-                $result = $brandModel->saveBrand($id, $name, $description, $logo);
-            } catch (Angel_Exception_Brand $e) {
+                $result = $authorModel->saveAuthor($id, $name, $description, $logo);
+            } catch (Angel_Exception_Author $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-brand-list-home'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-author-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
         } else {
             // GET METHOD
-            $this->view->title = "编辑品牌";
+            $this->view->title = "编辑作者";
 
             $id = $this->request->getParam("id");
             if ($id) {
-                $brandModel = $this->getModel('brand');
-                $target = $brandModel->getById($id);
+                $authorModel = $this->getModel('author');
+                $target = $authorModel->getById($id);
                 if (!$target) {
                     $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
                 }

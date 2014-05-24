@@ -19,13 +19,13 @@ class Angel_Model_Product extends Angel_Model_AbstractModel {
      * @param array $selling_price
      * @param \Documents\User $owner
      * @param array $scale
-     * @param \Document\Brand $brand
+     * @param \Document\Author $author
      * @param \Document\Category $category
      * @param array $css
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Product 
      */
-    public function addProduct($title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $brand, $category, $css) {
+    public function addProduct($title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css) {
         $result = false;
 
 //        if ($this->isSkuExist($sku)) {
@@ -52,7 +52,7 @@ class Angel_Model_Product extends Angel_Model_AbstractModel {
         $product->selling_price = $selling_price;
         $product->scale = $scale;
         $product->owner = $owner;
-        $product->brand = $brand;
+        $product->author = $author;
         $product->category = $category;
         $product->css = $css;
         try {
@@ -68,9 +68,9 @@ class Angel_Model_Product extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    public function getProductByBrand($brand_id, $return_as_paginator = true) {
+    public function getProductByAuthor($author_id, $return_as_paginator = true) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('brand.$id')->equals(new MongoId($brand_id))
+                ->field('author.$id')->equals(new MongoId($author_id))
                 ->sort('created_at', -1);
         $result = null;
         if ($return_as_paginator) {
@@ -108,13 +108,13 @@ class Angel_Model_Product extends Angel_Model_AbstractModel {
      * @param array $selling_price
      * @param \Documents\User $owner
      * @param array $scale
-     * @param \Document\Brand $brand
+     * @param \Document\Author $author
      * @param \Document\Category $category
      * @param array $css
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Product 
      */
-    public function saveProduct($id, $title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $brand, $category, $css) {
+    public function saveProduct($id, $title, $short_title, $sub_title, $sku, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css) {
         $result = false;
         if (!is_float($base_price)) {
             throw new Angel_Exception_Product(Angel_Exception_Product::PRODUCT_PRICE_INVALID);
@@ -143,7 +143,7 @@ class Angel_Model_Product extends Angel_Model_AbstractModel {
         $product->selling_price = $selling_price;
         $product->scale = $scale;
         $product->owner = $owner;
-        $product->brand = $brand;
+        $product->author = $author;
         $product->category = $category;
         $product->css = $css;
         try {
