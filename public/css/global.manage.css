@@ -15,7 +15,8 @@ form[role='form'] {
     font-family:"microsoft yahei";
 }
 .intlbd {
-    background: #F0F0F0;
+    background: #FFF;
+    box-shadow:inset 0 0 1px rgba(0,0,0,0.4);
     border-top: 3px solid #339bfc;
     padding: 20px;
     text-align:center;
