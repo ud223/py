@@ -225,6 +225,8 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->title = "创建节目";
             $this->view->separator = $this->SEPARATOR;
             $this->view->author = $authorModel->getAll();
+            $this->view->oss_audio = $ossModel->getBy(false, array('type' => 'audio'));
+            $this->view->oss_video = $ossModel->getBy(false, array('type' => 'video'));
             $this->view->category = $categoryModel->getAll();
         }
     }
@@ -313,6 +315,8 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
                 $this->view->author = $authorModel->getAll();
                 $this->view->category = $categoryModel->getAll();
+                $this->view->oss_audio = $ossModel->getBy(false, array('type' => 'audio'));
+                $this->view->oss_video = $ossModel->getBy(false, array('type' => 'video'));
                 if ($copy) {
                     // 复制一个节目
                     $this->view->title = "复制并创建节目";
@@ -693,7 +697,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $id = $this->getParam('id');
             if ($id) {
                 $phototypeModel = $this->getModel('phototype');
-                $result = $phototypeModel->removePhototype($id);
+                $result = $phototypeModel->remove($id);
             }
             echo $result;
             exit;
@@ -966,7 +970,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $this->view->title = "创建文件";
+            $this->view->title = "上传文件";
         }
     }
 
