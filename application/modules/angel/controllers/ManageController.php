@@ -1032,6 +1032,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         foreach ($paginator as $r) {
             $resource[] = array('id' => $r->id,
                 'name' => $r->name,
+                'type' => $r->type,
                 'description' => $r->description);
         }
         // JSON FORMAT

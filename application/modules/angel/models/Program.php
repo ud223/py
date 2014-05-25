@@ -106,9 +106,9 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    public function getProgramByOss($oss_id, $return_as_paginator = true) {
+    public function getProgramByOss($oss_id, $type, $return_as_paginator = true) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('oss.$id')->equals(new MongoId($oss_id))
+                ->field(sprintf('oss_%s.$id', $type))->equals(new MongoId($oss_id))
                 ->sort('created_at', -1);
         $result = null;
         if ($return_as_paginator) {
