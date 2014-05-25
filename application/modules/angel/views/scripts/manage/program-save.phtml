@@ -68,7 +68,7 @@ $model = $this->model;
         <form role="form" method="post">
             <div class="form-group">
                 <label>节目标题：</label>
-                <input type="text" class="form-control" id="title" name="title" data-toggle="popover" value="<?php echo $model->title ?>">
+                <input type="text" class="form-control" id="name" name="name" data-toggle="popover" value="<?php echo $model->name ?>">
             </div>
             <div class="form-group">
                 <label>节目附标题：</label>
@@ -153,12 +153,20 @@ $model = $this->model;
 
         $('input[data-toggle="popover"]').popover({animation: false});
 
-
         $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
         $('#status').setSelectValue();
         $('#author').setSelectValue();
         $('#category').setSelectValue();
         $('#oss_audio').setSelectValue();
         $('#oss_video').setSelectValue();
+        
+        $('#save-btn').click(function() {
+            var save = $('#gy-photo').attr('save');
+            if (!save || save === '{}') {
+                $('#photo').val('');
+            } else {
+                $('#photo').val(save);
+            }
+        });
     })(jQuery);
 </script>

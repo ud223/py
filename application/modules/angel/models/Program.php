@@ -4,6 +4,108 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
 
     protected $_document_class = '\Documents\Program';
 
+    /**
+     * 添加节目
+     * 
+     * @param string $name
+     * @param string $sub_title
+     * @param \Documents\Oss $oss_video
+     * @param \Documents\Oss $oss_audio
+     * @param \Documents\Author $author
+     * @param int $duration
+     * @param string $description
+     * @param array $photo
+     * @param string $status
+     * @param \Documents\Category $category
+     * @param \Documents\User $owner
+     * @return mix - when user registration success, return the user id, otherwise, boolean false
+     * @throws Angel_Exception_Program
+     */
+    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $owner) {
+        $result = false;
+
+        $program = new $this->_document_class();
+        if (is_array($photo)) {
+            foreach ($photo as $p) {
+                $program->addPhoto($p);
+            }
+        }
+        $program->name = $name;
+        $program->sub_title = $sub_title;
+        $program->oss_video = $oss_video;
+        $program->oss_audio = $oss_audio;
+        $program->author = $author;
+        $program->duration = $duration;
+        $program->description = $description;
+        $program->status = $status;
+        $program->category = $category;
+        $program->owner = $owner;
+        try {
+            $this->_dm->persist($program);
+            $this->_dm->flush();
+
+            $result = $program->id;
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_Program(Angel_Exception_Program::ADD_PROGRAM_FAIL);
+        }
+
+        return $result;
+    }
+
+    /**
+     * 编辑节目
+     * @param string $id
+     * @param string $name
+     * @param string $sub_title
+     * @param \Documents\Oss $oss_video
+     * @param \Documents\Oss $oss_audio
+     * @param \Documents\Author $author
+     * @param int $duration
+     * @param string $description
+     * @param array $photo
+     * @param string $status
+     * @param \Documents\Category $category
+     * @return mix - when user registration success, return the user id, otherwise, boolean false
+     * @throws Angel_Exception_Program
+     */
+    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category) {
+        $result = false;
+
+        $program = $this->getById($id);
+        if (!$program) {
+            throw new Angel_Exception_Program(Angel_Exception_Program::PROGRAM_NOT_FOUND);
+        }
+        // 清空图片
+        $program->clearPhoto();
+        // 重新添加图片并保存
+        if (is_array($photo)) {
+            foreach ($photo as $p) {
+                $program->addPhoto($p);
+            }
+        }
+        $program->name = $name;
+        $program->sub_title = $sub_title;
+        $program->oss_video = $oss_video;
+        $program->oss_audio = $oss_audio;
+        $program->author = $author;
+        $program->duration = $duration;
+        $program->description = $description;
+        $program->status = $status;
+        $program->category = $category;
+        try {
+            $this->_dm->persist($program);
+            $this->_dm->flush();
+
+            $result = $program->id;
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_Program(Angel_Exception_Program::SAVE_PROGRAM_FAIL);
+        }
+
+        return $result;
+    }
+
     public function getProgramByOss($oss_id, $return_as_paginator = true) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('oss.$id')->equals(new MongoId($oss_id))
@@ -16,4 +118,18 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         }
         return $result;
     }
+
+    public function getProgramByCategory($category_id, $return_as_paginator = true) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('category.$id')->equals(new MongoId($category_id))
+                ->sort('created_at', -1);
+        $result = null;
+        if ($return_as_paginator) {
+            $result = $this->paginator($query);
+        } else {
+            $result = $query->getQuery()->execute();
+        }
+        return $result;
+    }
+
 }

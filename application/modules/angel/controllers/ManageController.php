@@ -140,10 +140,9 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
             }
 
-            $resource[] = array('title' => $r->title,
+            $resource[] = array('name' => $r->name,
                 'id' => $r->id,
                 'sub_title' => $r->sub_title,
-                'location' => $r->location,
                 'path' => $path,
                 'owner' => $r->owner);
         }
@@ -164,21 +163,19 @@ class Angel_ManageController extends Angel_Controller_Action {
     public function programCreateAction() {
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
+        $ossModel = $this->getModel('oss');
         if ($this->request->isPost()) {
             // POST METHOD
-            $title = $this->request->getParam('title');
-            $short_title = $this->request->getParam('short_title');
+            $name = $this->request->getParam('name');
             $sub_title = $this->request->getParam('sub_title');
+            $ossVideoId = $this->request->getParam('oss_video');
+            $ossAudioId = $this->request->getParam('oss_audio');
+            $authorId = $this->request->getParam('author');
+            $duration = $this->request->getParam('duration');
             $status = $this->request->getParam('status');
             $description = $this->request->getParam('description');
             $photo = $this->decodePhoto();
-            $location = $this->getLocation();
-            $base_price = floatval($this->request->getParam('base_price'));
-            $selling_price = $this->getSellingPrice();
-            $scale = $this->getScale();
-            $authorId = $this->request->getParam('author');
             $categoryId = $this->request->getParam('category');
-            $css = $this->getCss();
             $result = false;
             $error = "";
             try {
@@ -191,6 +188,20 @@ class Angel_ManageController extends Angel_Controller_Action {
                         $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound author"');
                     }
                 }
+                $oss_video = null;
+                if ($ossVideoId) {
+                    $oss_video = $ossModel->getById($ossVideoId);
+                    if (!$oss_video) {
+                        $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound"');
+                    }
+                }
+                $oss_audio = null;
+                if ($ossAudioId) {
+                    $oss_audio = $ossModel->getById($ossAudioId);
+                    if (!$oss_audio) {
+                        $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound"');
+                    }
+                }
                 $category = null;
                 if ($categoryId) {
                     $category = $categoryModel->getById($categoryId);
@@ -198,7 +209,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                         $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound category"');
                     }
                 }
-                $result = $programModel->addProgram($title, $short_title, $sub_title, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
+                $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $owner);
             } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
@@ -213,7 +224,6 @@ class Angel_ManageController extends Angel_Controller_Action {
             // GET METHOD
             $this->view->title = "创建节目";
             $this->view->separator = $this->SEPARATOR;
-            $this->view->location = $this->bootstrap_options['stock_location'];
             $this->view->author = $authorModel->getAll();
             $this->view->category = $categoryModel->getAll();
         }
@@ -224,32 +234,43 @@ class Angel_ManageController extends Angel_Controller_Action {
         $copy = $this->request->getParam('copy');
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
+        $ossModel = $this->getModel('oss');
 
         if ($this->request->isPost()) {
             // POST METHOD
-            $title = $this->request->getParam('title');
-            $short_title = $this->request->getParam('short_title');
+            $name = $this->request->getParam('name');
             $sub_title = $this->request->getParam('sub_title');
+            $ossVideoId = $this->request->getParam('oss_video');
+            $ossAudioId = $this->request->getParam('oss_audio');
+            $authorId = $this->request->getParam('author');
+            $duration = $this->request->getParam('duration');
             $status = $this->request->getParam('status');
             $description = $this->request->getParam('description');
             $photo = $this->decodePhoto();
-            $location = $this->getLocation();
-            $base_price = floatval($this->request->getParam('base_price'));
-            $selling_price = $this->getSellingPrice();
-            $scale = $this->getScale();
-            $authorId = $this->request->getParam('author');
             $categoryId = $this->request->getParam('category');
-            $css = $this->getCss();
             $result = false;
             $error = "";
 
             try {
                 $programModel = $this->getModel('program');
-                $owner = $this->me->getUser();
                 $author = null;
                 if ($authorId) {
                     $author = $authorModel->getById($authorId);
                     if (!$author) {
+                        $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound"');
+                    }
+                }
+                $oss_video = null;
+                if ($ossVideoId) {
+                    $oss_video = $ossModel->getById($ossVideoId);
+                    if (!$oss_video) {
+                        $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound"');
+                    }
+                }
+                $oss_audio = null;
+                if ($ossAudioId) {
+                    $oss_audio = $ossModel->getById($ossAudioId);
+                    if (!$oss_audio) {
                         $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound"');
                     }
                 }
@@ -261,9 +282,10 @@ class Angel_ManageController extends Angel_Controller_Action {
                     }
                 }
                 if ($copy) {
-                    $result = $programModel->addProgram($title, $short_title, $sub_title, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
+                    $owner = $this->me->getUser();
+                    $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $owner);
                 } else {
-                    $result = $programModel->saveProgram($id, $title, $short_title, $sub_title, $status, $description, $photo, $location, $base_price, $selling_price, $owner, $scale, $author, $category, $css);
+                    $result = $programModel->saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category);
                 }
             } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
@@ -281,7 +303,6 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             $this->view->title = "编辑节目";
             $this->view->separator = $this->SEPARATOR;
-            $this->view->location = $this->bootstrap_options['stock_location'];
 
             if ($id) {
                 $programModel = $this->getModel('program');
@@ -331,7 +352,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $id = $this->getParam('id');
             if ($id) {
                 $programModel = $this->getModel('program');
-                $result = $programModel->removeProgram($id);
+                $result = $programModel->remove($id);
             }
             echo $result;
             exit;
@@ -356,18 +377,6 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
-    protected function getLocation() {
-        $paramLocation = $this->request->getParam('location');
-        if ($paramLocation) {
-            $tmp = split($this->SEPARATOR, $paramLocation);
-            if (count($tmp)) {
-                $paramLocation = $tmp;
-                return $paramLocation;
-            }
-        }
-        return false;
-    }
-
     protected function getSellingPrice() {
         $result = array();
         foreach ($this->bootstrap_options['currency'] as $key => $val) {
@@ -376,26 +385,6 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $result[$key] = floatval($price);
             }
         }
-        return $result;
-    }
-
-    protected function getScale() {
-        $result = array();
-        $result['weight'] = $this->request->getParam('scale_weight');
-        $result['height'] = $this->request->getParam('scale_height');
-        $result['width'] = $this->request->getParam('scale_width');
-        $result['length'] = $this->request->getParam('scale_length');
-        return $result;
-    }
-
-    protected function getCss() {
-        $result = array();
-        $result['backgroundcolor'] = $this->request->getParam('css_backgroundcolor');
-        $result['fontcolor'] = $this->request->getParam('css_fontcolor');
-        $result['linkcolor'] = $this->request->getParam('css_linkcolor');
-        $result['pricecolor'] = $this->request->getParam('css_pricecolor');
-        $result['buttoncolor'] = $this->request->getParam('css_buttoncolor');
-
         return $result;
     }
 

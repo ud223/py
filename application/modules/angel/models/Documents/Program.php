@@ -22,6 +22,9 @@ class Program extends AbstractDocument {
     /** @ODM\ReferenceOne(targetDocument="\Documents\Author") */
     protected $author;
 
+    /** @ODM\Int */
+    protected $duration;
+
     /** @ODM\ReferenceOne(targetDocument="\Documents\Category") */
     protected $category;
 
@@ -36,5 +39,19 @@ class Program extends AbstractDocument {
 
     /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
     protected $owner;
+
+    /**
+     * 添加图片
+     */
+    public function addPhoto(\Documents\Photo $p) {
+        $this->photo[] = $p;
+    }
+
+    /**
+     * 清空图片
+     */
+    public function clearPhoto() {
+        $this->photo = array();
+    }
 
 }
