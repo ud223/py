@@ -157,7 +157,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             $this->view->paginator = $paginator;
             $this->view->resource = $resource;
-            $this->view->title = "商品列表";
+            $this->view->title = "节目列表";
         }
     }
 
@@ -211,7 +211,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $this->view->title = "创建商品";
+            $this->view->title = "创建节目";
             $this->view->separator = $this->SEPARATOR;
             $this->view->location = $this->bootstrap_options['stock_location'];
             $this->view->author = $authorModel->getAll();
@@ -277,9 +277,9 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $notFoundMsg = '未找到目标商品';
+            $notFoundMsg = '未找到目标节目';
 
-            $this->view->title = "编辑商品";
+            $this->view->title = "编辑节目";
             $this->view->separator = $this->SEPARATOR;
             $this->view->location = $this->bootstrap_options['stock_location'];
 
@@ -293,8 +293,8 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $this->view->author = $authorModel->getAll();
                 $this->view->category = $categoryModel->getAll();
                 if ($copy) {
-                    // 复制一个商品
-                    $this->view->title = "复制并创建商品";
+                    // 复制一个节目
+                    $this->view->title = "复制并创建节目";
                     $this->view->copy = $copy;
                 }
                 $this->view->model = $target;

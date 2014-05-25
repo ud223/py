@@ -31,7 +31,7 @@ class Angel_Exception_Category extends Angel_Exception_Abstract {
             case self::CATEGORY_NOT_FOUND:
                 return '分类未找到';
             case self::CATEGORY_CANT_BE_REMOVED:
-                return '分类无法删除（可能是由于该分类不为空导致，请移出或删除分类下所有商品后重试）';
+                return '分类无法删除（可能是由于该分类不为空导致，请移出或删除分类下所有节目后重试）';
             case self::CATEGORY_CANT_BE_SELF:
                 return '自己不能作为自己的父类';
             case self::CATEGORY_CANT_BE_PARENT:
