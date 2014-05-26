@@ -4,6 +4,7 @@ class Angel_ManageController extends Angel_Controller_Action {
 
     protected $login_not_required = array(
         'login',
+        'register',
         'logout'
     );
     protected $SEPARATOR = ';';
