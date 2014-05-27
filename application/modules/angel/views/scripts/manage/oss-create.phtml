@@ -13,25 +13,31 @@
                 <textarea row="10" class="form-control" id="description" name="description"></textarea>
             </div>
             <div class="form-group">
-                <label>OSS文件状态：</label>
+                <label>文件状态：</label>
                 <select id="status" name="status">
                     <option value="online">在线</option>
                     <option value="offline">下线</option>
                 </select>
             </div>
-            
+
             <input type="hidden" id="fsize" name="fsize" value="9999"/>
-            
+
             <div class="form-group">
-                <label>OSS文件类型：</label>
+                <label>文件类型：</label>
                 <select id="type" name="type">
                     <option value="video">视频</option>
                     <option value="audio">音频</option>
                 </select>
             </div>
-            
+            <div class="form-group">
+                <label>上传文件：</label>
+                <input type="button" id="oss-file-selector" class="btn" value="选择文件 ..."/> 
+                <input type="button" id="oss-file-go" class="btn btn-success" disabled="true" value='确认上传' />
+                <iframe id="oss-uploader-iframe" src="/oss/oss-ctrl.php" class="hidden"></iframe>
+            </div>
+
             <input type="hidden" id="ext" name="ext" value=".mp4"/>
-            
+
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
 
         </form>
@@ -39,6 +45,33 @@
 </div>
 <script type="text/javascript">
     (function($) {
+        var oss_uploader_iframe = $('#oss-uploader-iframe');
+        var oss_file_go = $('#oss-file-go');
+        
+        $('#oss-file-selector').click(function() {
+            var btn = $(this);
+            var file_input = oss_uploader_iframe.contents().find('body input[type="file"]');
+            file_input.change(function() {
+                var v = file_input.val();
 
+                btn.val(v);
+                if (!v) {
+                    oss_file_go.prop('disabled', true);
+                } else {
+                    oss_file_go.prop('disabled', false);
+                }
+            });
+            file_input.click();
+        });
+
+        $('#oss-file-go').click(function() {
+            var form = oss_uploader_iframe.contents().find('form');
+            form.submit();
+            oss_file_go.prop('disabled', true);
+            oss_uploader_iframe.off('load');
+            oss_uploader_iframe.on('load', function() {
+                oss_file_go.prop('disabled', false);
+            });
+        });
     })(jQuery);
 </script>
