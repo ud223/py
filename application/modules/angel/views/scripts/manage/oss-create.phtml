@@ -1,53 +1,96 @@
 <style>
+    #blk1, #blk2 {
+        margin-bottom:30px;
+        padding-left:90px;
+        position:relative;
+    }
+    #blk1 .cover, #blk2 .cover {
+        background:rgba(255,255,255,0.6);
+        height:100%;
+        position:absolute;
+        width:100%;
+    }
+    #blk1 .cover {
+        display:none
+    }
+    .z-wox {
+        background:#BBB;
+        border-radius:400px;
+        color:#FFF;
+        height:30px;
+        line-height:30px;
+        margin-left:-90px;
+        position:absolute;
+        text-align:center;
+        width:30px;
+    }
+    .z-wox.current {
+        background-color:#4cae4c;
+    }
+    #preview {
+        display:none;
+        margin-bottom:30px;
+        margin-left:90px;
+        padding:10px 40px;
+    }
 </style>
 <h1 class="page-title"><?php echo $this->title ?></h1>
 <div class="row">
     <div class="col-md-8">
         <form role="form" method="post">
-            <div class="form-group">
-                <label>文件名称：</label>
-                <input type="text" class="form-control" id="name" name="name" data-toggle="popover">
+            <div id="blk1">
+                <div class="cover"></div>
+                <div class="z-wox current">1</div>
+                <div class="form-group">
+                    <label>上传文件：</label>
+                    <input type="button" id="oss-file-selector" class="btn btn-warning" value="选择文件 ..."/> 
+                    <input type="button" id="oss-file-go" class="btn btn-success" disabled="true" value='确认上传' />
+                    <iframe id="oss-uploader-iframe" src="/oss/oss-ctrl.php" class="hidden"></iframe>
+                </div>
             </div>
-            <div class="form-group">
-                <label>文件描述：</label>
-                <textarea row="10" class="form-control" id="description" name="description"></textarea>
+            <a href="#" target="_blank" id="preview" class="btn btn-success">预览上传的文件</a>
+            <div id="blk2">
+                <div class="cover"></div>
+                <div class="z-wox">2</div>
+                <div class="form-group">
+                    <label>文件名称：</label>
+                    <input type="text" placeholder="为文件编写名称便于管理" class="form-control" id="name" name="name" data-toggle="popover">
+                </div>
+                <div class="form-group">
+                    <label>文件描述：</label>
+                    <textarea row="10" placeholder="编写描述文字便于信息展示（可选）" class="form-control" id="description" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>文件状态：</label>
+                    <select id="status" name="status">
+                        <option value="online">在线</option>
+                        <option value="offline">下线</option>
+                    </select>
+                </div>
+
+                <input type="hidden" id="key" name="key" value=""/>
+                <input type="hidden" id="fsize" name="fsize" value=""/>
+                <input type="hidden" id="ext" name="ext" value=""/>
+
+                <div class="form-group">
+                    <label>文件类型：</label>
+                    <select id="type" name="type">
+                        <option value="video">视频</option>
+                        <option value="audio">音频</option>
+                    </select>
+                </div>
+                <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
             </div>
-            <div class="form-group">
-                <label>文件状态：</label>
-                <select id="status" name="status">
-                    <option value="online">在线</option>
-                    <option value="offline">下线</option>
-                </select>
-            </div>
-
-            <input type="hidden" id="fsize" name="fsize" value="9999"/>
-
-            <div class="form-group">
-                <label>文件类型：</label>
-                <select id="type" name="type">
-                    <option value="video">视频</option>
-                    <option value="audio">音频</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>上传文件：</label>
-                <input type="button" id="oss-file-selector" class="btn" value="选择文件 ..."/> 
-                <input type="button" id="oss-file-go" class="btn btn-success" disabled="true" value='确认上传' />
-                <iframe id="oss-uploader-iframe" src="/oss/oss-ctrl.php" class="hidden"></iframe>
-            </div>
-
-            <input type="hidden" id="ext" name="ext" value=".mp4"/>
-
-            <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
-
         </form>
+
     </div>
 </div>
 <script type="text/javascript">
     (function($) {
+        var oss_prefix = '<?php echo $this->oss_prefix ?>';
         var oss_uploader_iframe = $('#oss-uploader-iframe');
         var oss_file_go = $('#oss-file-go');
-        
+
         $('#oss-file-selector').click(function() {
             var btn = $(this);
             var file_input = oss_uploader_iframe.contents().find('body input[type="file"]');
@@ -68,9 +111,30 @@
             var form = oss_uploader_iframe.contents().find('form');
             form.submit();
             oss_file_go.prop('disabled', true);
+            $.waiting();
             oss_uploader_iframe.off('load');
             oss_uploader_iframe.on('load', function() {
+                $.endWaiting();
                 oss_file_go.prop('disabled', false);
+                var result = JSON.parse(oss_uploader_iframe.contents().find("#result").html());
+                if (result.code === 200) {
+                    $('#blk1 .cover').show();
+                    $('#blk2 .cover').hide();
+                    $('#name').focus();
+                    oss_file_go.val('文件上传成功');
+                    $('#blk1 .z-wox').removeClass('current');
+                    $('#blk2 .z-wox').addClass('current');
+                    $('#save-btn').addClass('btn-success');
+                    // save value
+                    $('#key').val(result.key);
+                    $('#fsize').val(result.size);
+                    $('#name').val(result.name);
+                    $('#ext').val(result.ext);
+                    $('#type').val(result.type);
+                    $('#preview').css('display', 'inline-block').attr('href', oss_prefix + result.key);
+                } else {
+                    alert("抱歉，上传出错请重试。<br/>错误信息：" + result.message);
+                }
             });
         });
     })(jQuery);

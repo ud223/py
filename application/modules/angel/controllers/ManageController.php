@@ -953,13 +953,14 @@ class Angel_ManageController extends Angel_Controller_Action {
             $name = $this->request->getParam('name');
             $description = $this->request->getParam('description');
             $status = $this->request->getParam('status');
+            $key = $this->request->getParam('key');
             $fsize = $this->request->getParam('fsize');
             $type = $this->request->getParam('type');
             $ext = $this->request->getParam('ext');
             $owner = $this->me->getUser();
             $ossModel = $this->getModel('oss');
             try {
-                $result = $ossModel->addOss($name, $description, $status, $fsize, $type, $ext, $owner);
+                $result = $ossModel->addOss($name, $description, $status, $key, $fsize, $type, $ext, $owner);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
@@ -971,6 +972,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             // GET METHOD
             $this->view->title = "上传文件";
+            $this->view->oss_prefix = $this->bootstrap_options['oss_prefix'];
         }
     }
 
@@ -984,12 +986,13 @@ class Angel_ManageController extends Angel_Controller_Action {
             $name = $this->request->getParam('name');
             $description = $this->request->getParam('description');
             $status = $this->request->getParam('status');
+            $key = $this->request->getParam('key');
             $fsize = $this->request->getParam('fsize');
             $type = $this->request->getParam('type');
             $ext = $this->request->getParam('ext');
             $ossModel = $this->getModel('oss');
             try {
-                $result = $ossModel->saveOss($id, $name, $description, $status, $fsize, $type, $ext);
+                $result = $ossModel->saveOss($id, $name, $description, $status, $key, $fsize, $type, $ext);
             } catch (Angel_Exception_Oss $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
@@ -1003,6 +1006,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             // GET METHOD
             $this->view->title = "编辑文件";
+            $this->view->oss_prefix = $this->bootstrap_options['oss_prefix'];
 
             $id = $this->request->getParam("id");
             if ($id) {

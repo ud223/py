@@ -15,7 +15,10 @@ class Oss extends AbstractDocument{
     /** @ODM\String */
     protected $status;                          // OSS文件状态：online, offline
     
-    /** @ODM\Int */
+    /** @ODM\String */
+    protected $key;                             // 文件key
+        
+    /** @ODM\String */
     protected $fsize;                           // 文件大小
     
     /** @ODM\String */

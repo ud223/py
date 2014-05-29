@@ -1,3 +1,82 @@
+
+// jquery.rotate.js
+(function($) {
+    function initData($el) {
+        var _ARS_data = $el.data('_ARS_data');
+        if (!_ARS_data) {
+            _ARS_data = {rotateUnits: 'deg', scale: 1, rotate: 0};
+            $el.data('_ARS_data', _ARS_data)
+        }
+        ;
+        return _ARS_data
+    }
+    ;
+    function setTransform($el, data) {
+        $el.css('transform', 'rotate(' + data.rotate + data.rotateUnits + ') scale(' + data.scale + ',' + data.scale + ')')
+    }
+    ;
+    $.fn.rotate = function(val) {
+        var $self = $(this), m, data = initData($self);
+        if (typeof val == 'undefined') {
+            return data.rotate + data.rotateUnits
+        }
+        ;
+        m = val.toString().match(/^(-?\d+(\.\d+)?)(.+)?$/);
+        if (m) {
+            if (m[3]) {
+                data.rotateUnits = m[3]
+            }
+            ;
+            data.rotate = m[1];
+            setTransform($self, data)
+        }
+        ;
+        return this
+    };
+    $.fn.scale = function(val) {
+        var $self = $(this), data = initData($self);
+        if (typeof val == 'undefined') {
+            return data.scale
+        }
+        ;
+        data.scale = val;
+        setTransform($self, data);
+        return this
+    };
+    var curProxied = $.fx.prototype.cur;
+    $.fx.prototype.cur = function() {
+        if (this.prop == 'rotate') {
+            return parseFloat($(this.elem).rotate())
+        } else if (this.prop == 'scale') {
+            return parseFloat($(this.elem).scale())
+        }
+        ;
+        return curProxied.apply(this, arguments)
+    };
+    $.fx.step.rotate = function(fx) {
+        var data = initData($(fx.elem));
+        $(fx.elem).rotate(fx.now + data.rotateUnits)
+    };
+    $.fx.step.scale = function(fx) {
+        $(fx.elem).scale(fx.now)
+    };
+    var animateProxied = $.fn.animate;
+    $.fn.animate = function(prop) {
+        if (typeof prop['rotate'] != 'undefined') {
+            var $self, data, m = prop['rotate'].toString().match(/^(([+-]=)?(-?\d+(\.\d+)?))(.+)?$/);
+            if (m && m[5]) {
+                $self = $(this);
+                data = initData($self);
+                data.rotateUnits = m[5]
+            }
+            ;
+            prop['rotate'] = m[1]
+        }
+        ;
+        return animateProxied.apply(this, arguments)
+    }
+})(jQuery);
+
 (function($) {
     var DURATION = 100;
     $.fn.setSelectValue = function(options) {
@@ -470,7 +549,7 @@
         $this.bind('contextmenu', function(e) {
             return false;
         });
-    }
+    };
     $.fn.xCenter = function() {
         var $this = $(this);
         var parent = $this.parent();
@@ -479,227 +558,61 @@
             $this.css('position', 'absolute');
         }
         $this.css('left', (pw - $this.width()) / 2);
-    }
+    };
 
-
-    $.currency = {
-        option: {
-            cookie_name: 'currency',
-            currency_option: {expires: 365, path: '/'},
-            ddl_id: 'currency-ddl',
-            ddl_itm_cls: 'currency-ddl-itm',
-            selector: '.price-option'
-        },
-        init: function(selector) {
-            if (!selector)
-                selector = this.option.selector;
-            // write css
-            var style = "<style>";
-            style += ".price-option {display:none}";
-            style += ".price-option:first-child {display:inline;}";
-            style += "#" + this.option.ddl_id + " {background:#FFF;box-shadow:0 0 10px rgba(0,0,0,0.2);display:none;position:absolute;width:90px;z-index:1}";
-            style += "#" + this.option.ddl_id + " ." + this.option.ddl_itm_cls + " {cursor:pointer;display:block;padding:5px 20px;text-align:center;border-bottom:1px solid #F2F2F2;}";
-            style += "#" + this.option.ddl_id + " ." + this.option.ddl_itm_cls + ":hover {background:#F8F8F8;}";
-            style += "#" + this.option.ddl_id + " ." + this.option.ddl_itm_cls + ".selected {background:#F8F8F8 !important}"
+    /* LOADING (START) */
+    $.waiting = function(msg) {
+        if ($('.rotatedivwrapper').length > 0) {
+            return;
+        }
+        var rotate_style_id = 'rotate-style';
+        if ($('#' + rotate_style_id).length === 0) {
+            var style = "<style id='" + rotate_style_id + "'>";
+            style += ".rotatedivwrapper {background:rgba(0,0,0,0.6);height:100%;left:0;position:fixed;top:0;width:100%;z-index:30;}";
+            style += ".rotatedivwrapper .rotatediv {background:url(/img/loading.png);height:120px;left:50%;margin-left:-60px;margin-top:-60px;position:absolute;top:50%;width:120px;}";
             style += "</style>";
             $('body').append(style);
-            var cookie_name = this.option.cookie_name;
-            var price_option = $(selector);
-            var option = this.option.currency_option;
-            var ddl_id = this.option.ddl_id;
-            var cookie_value = $.cookie(cookie_name);
-            var html = $("<div>").attr('id', ddl_id).addClass('auto-hide');
-            var base_cls = this.option.ddl_itm_cls;
-            $.each(price_option, function() {
-                var item = $(this);
-                var ddl_item = $("<div>").addClass(base_cls).html(item.attr('currency-symbol') + " " + item.attr(cookie_name)).attr(cookie_name, item.attr(cookie_name));
-                ddl_item.click(function() {
-                    // select currency
-                    var $this = $(this).closest('.' + base_cls);
-                    var currency = $this.attr(cookie_name);
-                    $('.price').hide();
-                    $('.price[currency=' + currency + ']').show();
-                    var ddl = $('#' + ddl_id);
-                    if (!$this.hasClass('selected')) {
-                        $.cookie(cookie_name, currency, option);
-                        $this.siblings().removeClass('selected');
-                        $this.addClass('selected');
-                    }
-                    ddl.hide();
-                    price_option.hide();
-                    $(selector + "[currency=" + currency + "]").show();
-                });
-                html.append(ddl_item);
-                // item click
-                item.click(function() {
-                    // toggle ddl board
-                    var $this = $(this);
-                    var x = $this.offset().left;
-                    var y = $this.offset().top + 24;
-                    var ddl = $('#' + ddl_id);
-                    ddl.css('left', x).css('top', y);
-                    ddl.toggle();
-                });
-            });
-            $('body').append(html);
-            this.refresh();
-        },
-        refresh: function() {
-            var cookie_name = this.option.cookie_name;
-            var cookie_value = $.cookie(cookie_name);
-            var currency_ddl_itm = $('#' + this.option.ddl_id + ' .' + this.option.ddl_itm_cls);
-            if (!cookie_value) {
-                // 将第一个置为选中状态
-                currency_ddl_itm.first().click();
-            } else {
-                var target = $('.' + this.option.ddl_itm_cls + '[currency=' + cookie_value + ']');
-                target.addClass('selected');
-                target.click();
-            }
         }
+        var obja = $("<div>").addClass('rotatedivwrapper').append($('<div>').addClass('rotatediv'));
+        $('body').append(obja);
+        var wp = $('.rotatedivwrapper');
+        var wp_w = wp.width();
+        var wp_h = wp.height();
+
+        var x = (($(window).width()) / 2) - (wp_w / 2);
+        var y = ($(window).height() - wp_h) / 2;
+
+        wp.css('left', x);
+        wp.css('top', y);
+
+        $.rotateDiv();
+        var intervalId = window.setInterval("$.rotateDiv()", 500);
+
+        if (msg) {
+            var msgObj = $('<div>').addClass('msg').html(msg);
+            wp.append(msgObj);
+        }
+
+        wp.fadeIn('fast');
+        wp.attr('intid', intervalId);
     };
-    $.initCurrency = function(selector) {
-        if (!selector)
-            selector = '.price-option';
-// write css
-        var style = "<style>";
-        style += ".price-option {display:none}";
-        style += ".price-option:first-child {display:inline;}";
-        style += "#currency-ddl {background:#FFF;box-shadow:0 0 10px rgba(0,0,0,0.2);display:none;position:absolute;width:90px;z-index:1}";
-        style += "#currency-ddl .currency-ddl-itm {cursor:pointer;display:block;padding:5px 20px;text-align:center;border-bottom:1px solid #F2F2F2;}";
-        style += "#currency-ddl .currency-ddl-itm:hover {background:#F8F8F8;}";
-        style += "#currency-ddl .currency-ddl-itm.selected {background:#F8F8F8 !important}"
-        style += "</style>";
-        $('body').append(style);
-        var cookie_name = 'currency';
-        var price_option = $(selector);
-        var option = {expires: 365, path: '/'};
-        var ddl_id = 'currency-ddl';
-        var cookie_value = $.cookie(cookie_name);
-        var html = $("<div>").attr('id', ddl_id).addClass('auto-hide');
-        $.each(price_option, function() {
-            var item = $(this);
-            var ddl_item = $("<div>").addClass("currency-ddl-itm").html(item.attr('currency-symbol') + " " + item.attr(cookie_name)).attr(cookie_name, item.attr(cookie_name));
-            ddl_item.click(function() {
-                // select currency
-                var $this = $(this).closest('.currency-ddl-itm');
-                var currency = $this.attr(cookie_name);
-                $('.price').hide();
-                $('.price[currency=' + currency + ']').show();
-                var ddl = $('#' + ddl_id);
-                if (!$this.hasClass('selected')) {
-                    $.cookie(cookie_name, currency, option);
-                    $this.siblings().removeClass('selected');
-                    $this.addClass('selected');
-                }
-                ddl.hide();
-                price_option.hide();
-                $(selector + "[currency=" + currency + "]").show();
-            });
-            html.append(ddl_item);
-            // item click
-            item.click(function() {
-                // toggle ddl board
-                var $this = $(this);
-                var x = $this.offset().left;
-                var y = $this.offset().top + 24;
-                var ddl = $('#' + ddl_id);
-                ddl.css('left', x).css('top', y);
-                ddl.toggle();
-            });
+    $.rotateDiv = function() {
+        $('.rotatediv').animate({
+            rotate: '+=360deg'
+        }, 500);
+    };
+    $.endWaiting = function() {
+        var wp = $('.rotatedivwrapper');
+        window.clearInterval(wp.attr('intid'));
+        wp.attr('intid', null);
+        wp.fadeOut('fast', function() {
+            wp.remove();
         });
-        $('body').append(html);
-        var currency_ddl_itm = html.find('.currency-ddl-itm');
-        if (!cookie_value) {
-            // 将第一个置为选中状态
-            currency_ddl_itm.first().click();
-        } else {
-            var target = $('.currency-ddl-itm[currency=' + cookie_value + ']');
-            target.addClass('selected');
-            target.click();
-        }
     };
-    $.cart = {
-        option: {
-            cart_name: 'cart',
-            cart_option: {
-                expires: 365,
-                path: '/'
-            }
-        },
-        parse: function() {
-            var c = $.cookie(this.option.cart_name);
-            if (!c)
-                c = "";
-            try {
-                c = JSON.parse(c);
-            } catch (e) {
-                c = {};
-            }
-            return c;
-        },
-        query: function(id) {
-            var c = this.parse();
-            var val = c[id];
-            if (!val) {
-                return false;
-            } else {
-                return val;
-            }
-        },
-        set: function(id, qty) {
-            if (typeof qty === 'number') {
-                var c = this.parse();
-                c[id] = qty;
-                this.write(JSON.stringify(c));
-            } else {
-                return false;
-            }
-        },
-        add: function(id, qty) {
-            if (typeof qty === 'number') {
-                var c = this.parse();
-                var hasIt = false;
-                if (c) {
-                    // update it
-                    $.each(c, function(k, v) {
-                        if (k === id) {
-                            v = v + qty;
-                            if (v > 0) {
-                                c[k] = v;
-                            } else {
-                                delete c[k];
-                            }
-                            hasIt = true;
-                        }
-                    });
-                }
-                if (!hasIt) {
-                    // new one
-                    c[id] = qty;
-                }
-                this.write(JSON.stringify(c));
-            } else {
-                return false;
-            }
-        },
-        write: function(val) {
-            $.cookie(this.option.cart_name, val, this.option.cart_option);
-        },
-        empty: function() {
-            this.write(null);
-        },
-        total: function() {
-            var c = this.parse();
-            var sum = 0;
-            if (c) {
-                $.each(c, function(k, v) {
-                    sum++;
-                });
-            }
-            return sum;
-        }
-    };
+
+    /* LOADING (END) */
+
+
 })(jQuery);
 /*!
  * jQuery Cookie Plugin v1.3.1
@@ -709,8 +622,7 @@
  * Released under the MIT license
  */
 (function(factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as anonymous module.
+    if (typeof define === 'function' && define.amd) {         // AMD. Register as anonymous module.
         define(['jquery'], factory);
     } else {
         // Browser globals.
