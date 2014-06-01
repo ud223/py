@@ -1,0 +1,48 @@
+
+<div id="tv">
+    <div id="tv-header">
+        <div class="wp">
+            <button class="ico watch selected"></button>
+            <span class="spliter"></span>
+            <button class="ico listen"></button>
+            <button class="ico fullscreen"></button>
+        </div>
+    </div>
+    <?php if ($this->video_url): ?>
+        <video id="player" oncontextmenu="return false;" autoplay="true">
+            <source src="<?php $this->video_url ?>"></source>
+        </video>
+    <?php endif; ?>
+    <div id="tv-bottom">
+        <div id="txt-bar">
+            <div class="wp">
+                <span><?php $this->title ?></span>
+                <span id="tv-time">2:45 / 5:35</span>
+            </div>
+        </div>
+        <div class="wp">
+            <div id="prog-bar">
+                <div id="prog-cache-bar">
+                    <div id="prog-load-bar"></div>
+                </div>
+                <button class="ico list" id="tv-list"></button>
+                <span class="spliter"></span>
+                <button class="ico prev" id="tv-prev"></button>
+                <span class="spliter"></span>
+                <button class="ico play" id="tv-play"></button>
+                <span class="spliter"></span>
+                <button class="ico next" id="tv-next"></button>
+                <span class="spliter"></span>
+                <button class="ico refresh" id="tv-refresh"></button>
+                <span class="spliter"></span>
+                <div id="volumn-ctrl">
+                    <button class="ico"></button>
+                    <div id="volumn-holder">
+                        <span id="volumn-prog"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="tv-cv"></div>

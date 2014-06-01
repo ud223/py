@@ -2,76 +2,74 @@
 <html>
     <head>
         <title>芝士电视</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("reset.css"); ?>" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("text.css"); ?>" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("960gs.css"); ?>" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("open-sans.css"); ?>" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("global.css"); ?>" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("global.mall.css"); ?>" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->cssPath("sub.css"); ?>" />
-        <link rel="icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon" />
-
+        <link href="<?php echo $this->cssPath("bootstrap.css"); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->cssPath("global.css"); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->cssPath("global.show.css"); ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="<?php echo $this->jsPath('jquery.1.10.2.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('bootstrap.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo $this->jsPath('plugin.js'); ?>"></script>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+            <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
         <script type="text/javascript">
-            $(document).ready(function() {
-                $.currency.init();
-                $('#cart-total').html($.cart.total());
+            $('document').ready(function() {
+                $('#player').on('error', function() {
+                    console.log('error');
+                });
+                $('#player').on('play', function() {
+                    console.log('play');
+                });
+                $('#player').on('abort', function() {
+                    console.log('abort');
+                });
+                $('#player').on('canplay', function() {
+                    console.log('canplay');
+                });
+                $('#player').on('ended', function() {
+                    console.log('ended');
+                })
+                $('#player').on('waiting', function() {
+                    console.log('waiting');
+                });
+                $('#player').on('playing', function() {
+                    console.log('playing');
+                });
+                // 网速失速
+                $('#player').on('stalled', function() {
+                    console.log('stalled');
+                    var new_one = $('#player').clone(true);
+                    $('#player').after(new_one).remove();
+
+                })
             });
         </script>
     </head>
 
     <body>
-        <!-- Top Start -->
-        <div class="wp top clearfix">
-            <div class="container_24">
-                <div class="grid_6">
-                    <a href="#" class="logo l-ft"><img src="/img/logo.png" alt="welcome to sitename"/></a>
-                </div>
-                <div class="grid_10">
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search keywords or model #" />
-                    </div>
-                </div>
-                <div class="grid_8">
-                    <div class="info-bar">
-                        <div class="l-ft">
-                            <a href="#">Login</a>
-                        </div>
-                        <span class="vsplr l-ft"></span>
-                        <div class="cart-bar l-ft">
-                            Cart
-                            <a id="cart-total" href="<?php echo $this->url(array(), 'cart') ?>"> 0 </a>
-                        </div>
-                        <span class="vsplr l-ft"></span>
+        <div class="container">
+            <div class="header" id="header">
+                <img id="logo" src="/img/logo.png"/>
 
-                        <div class="currency-bar l-ft">
-                            <?php foreach ($this->currency as $key => $val): ?>
-                                <a class="price-option" currency="<?php echo $key ?>" currency-symbol="<?php echo $this->currency_symbol[$key] ?>" href="javascript:void(0)"> <?php echo $this->currency_symbol[$key] . ' ' . $key ?> </a>
-                            <?php endforeach; ?>
-                        </div>
-
+                <div class="pull-right">
+                    <div href="#" id="profile-txt">
+                        <a href="#">王啸</a>
+                        <a href="#" id="profile-logout">sign out</a>
                     </div>
+                    <a href="#" id="profile-img"><img src="http://img.36tr.com/avatar/20140424/53587efbcaaf1_100100.jpg"/></a>
+
                 </div>
-                
             </div>
         </div>
-        <!-- Top End -->
-        <!-- Content Start -->
         <?php echo $this->layout()->content; ?>
-        <!-- Content End -->
-
-        <!-- Bottom Start -->
-        <div style="background:#F4F4F4;margin-top:20px;padding:20px 0;text-align:center;">
-            <img src="/img/logo.png" />
-        </div>
-        <!-- Bottom End -->
-
-
-
     </body>
 </html>
+
+
+

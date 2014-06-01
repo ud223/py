@@ -83,8 +83,8 @@ $model = $this->model;
             </div>
             <div class="form-group">
                 <label>节目图片：</label>
-                <?php if($this->imageBroken): ?>
-                <label class="label label-danger">部分图片已被删除，无法显示，请重新设置</label>
+                <?php if ($this->imageBroken): ?>
+                    <label class="label label-danger">部分图片已被删除，无法显示，请重新设置</label>
                 <?php endif; ?>
                 <div class='panel panel-info'>
                     <div id="gy-photo" class='panel-body gy-photo'>
@@ -114,6 +114,9 @@ $model = $this->model;
                     <?php endforeach; ?>
                 </select>
             </div>
+            <?php if ($model->oss_video): ?>
+                <a href="<?php echo $this->url(array("id" => $model->oss_video->id), "show-detail") ?>" class="btn btn-success">预览效果</a>
+            <?php endif; ?>
             <div class="form-group">
                 <label>作者：</label>
                 <select id="author" name="author" value="<?php echo $this->model->author->id ?>">
@@ -159,7 +162,7 @@ $model = $this->model;
         $('#category').setSelectValue();
         $('#oss_audio').setSelectValue();
         $('#oss_video').setSelectValue();
-        
+
         $('#save-btn').click(function() {
             var save = $('#gy-photo').attr('save');
             if (!save || save === '{}') {

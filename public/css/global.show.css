@@ -1,0 +1,396 @@
+body {
+	background-color: #333;
+	background-image: url(../img/bg.png);
+	background-position: center center;
+	font-family: "microsoft yahei";
+}
+a {
+	color: #F0F0F0;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}
+a:link {
+	color: #F0F0F0;
+}
+a:visited {
+	color: #F0F0F0;
+}
+a:hover {
+	color: #BBB;
+	text-decoration: none;
+}
+/*
+Reset the bootstrap css
+*/
+p {
+    margin:0;
+}
+ul {
+    margin:0;
+}
+h1,
+h2,
+h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+
+/*
+ * basic control layout reset
+ *
+ */
+/*input[type="search"] {
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
+ box-sizing: border-box;
+ }
+ input[type="text"] {
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
+ box-sizing: border-box;
+ }
+ input[type="checkbox"], input[type="radio"] {
+ padding: 0;
+ box-sizing: border-box;
+ }*/
+
+/*
+ * util class
+ *
+ */
+
+.red {
+    color: #ef3546;
+}
+.yellow {
+    color: #ffde26;
+}
+.gray {
+    color: #888;
+}
+.white {
+    color: #FFF;
+}
+.bold {
+    font-weight: bold !important;
+}
+.relative {
+    position: relative !important;
+}
+
+.lpad-30 {
+    padding-left: 30px;
+}
+.pad-30 {
+    padding: 30px !important;
+}
+.pad-20 {
+    padding: 20px !important;
+}
+.pad-10 {
+    padding: 10px !important;
+}
+.pad-5 {
+    padding: 5px !important;
+}
+
+.clear, .clear-5, .clear-10, .clear-15, .clear-20, .clear-30, .clear-50 {
+    clear: both;
+    display: block;
+    font-size: 0;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+.clear-5 {
+    height: 5px;
+}
+.clear-10 {
+    height: 10px;
+}
+.clear-15 {
+    height: 15px;
+}
+.clear-20 {
+    height: 20px;
+}
+.clear-30 {
+    height: 30px;
+}
+.clear-50 {
+    height: 50px;
+}
+.clear-line {
+    background: #BBB;
+    clear: both;
+    font-size: 0;
+    height: 1px;
+    margin: 4px 0;
+    width: auto;
+}
+.clearfix {
+    overflow: auto;
+    _height: 1%
+}
+.lf {
+	float:left;
+}
+.rf {
+	float:left;
+}
+/*
+ * page layout
+ *
+ */
+
+
+#header {
+	padding-top: 20px;
+}
+#logo {
+
+}
+#profile-img {
+	background-color: #EEE;
+	border-radius: 100px;
+	box-shadow: 0 1 3px rgba(0,0,0,0.5);
+	display: inline-block;
+	height: 50px;
+	overflow: hidden;
+	width: 50px;
+}
+#profile-img img {
+	height: 50px;
+	width: 50px;
+}
+#profile-img, #profile-txt {
+	float: right;
+	margin-left: 15px;
+}
+#profile-txt {
+	height: 50px;
+	line-height: 20px;
+	position: relative;
+}
+#profile-txt a {
+	display: block;
+	margin-bottom: 5px;
+}
+#profile-logout {
+	background: rgba(0,0,0,0.2);
+	border-radius: 4px;
+	font-size: smaller;
+	padding: 0 8px;
+	text-align: center;
+}
+#tv {
+	background-image: url(../img/bg.png);
+	background-position: center center;
+	border-radius: 10px;
+	border: 2px solid rgba(0,0,0,0.3);
+	box-shadow: 0 0 10px rgba(0,0,0,0.2);
+	height: 527px;
+	left: 50%;
+	margin-left: -360px;
+	margin-top: -240px;
+	overflow: hidden;
+	padding: 0;
+	position: fixed;
+	top: 50%;
+	width: 745px;
+	z-index: 1;
+}
+#tv.fullscreen {
+	height: 100%;
+	left: 0;
+	margin: 0;
+	top: 0;
+	width: 100%;
+	z-index: 100;
+}
+#tv-cv {
+	background: url(../img/cv.png) center center no-repeat;
+	border: 0;
+	display: block;
+	height: 768px;
+	left: 50%;
+	margin: 0;
+	margin-left: -512px;
+	margin-top: -384px;
+	padding: 0;
+	position: fixed;
+	top: 50%;
+	width: 1024px;
+	z-index: 0;
+}
+#tv #player {
+	background: #000;
+	border: none;
+	display: block;
+	height: 417px;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 100%;
+	z-index: 1;
+}
+#tv #tv-header, #tv #tv-bottom {
+	background: url(../img/title-bg.png) center bottom;
+	box-shadow: inset 0 2px 0 rgba(255,255,255,0.1), 0 1px 4px rgba(0,0,0,0.3);
+	border-radius: 8px 8px 0 0;
+	height: 50px;
+	z-index: 5;
+}
+#tv #tv-bottom {
+	border-radius: 0 0 8px 8px;
+	box-shadow: inset 0 2px 0 rgba(255,255,255,0.1);
+	height: 55px;
+	position: relative;
+}
+#tv #tv-header .wp {
+}
+#tv .wp .ico {
+	background-color: transparent;
+	background-image: url(../img/n-icon.png);
+	background-repeat: no-repeat;
+	background-position: left top;
+	border: 0;
+	cursor: pointer;
+	float: left;
+	height: 50px;
+	margin: 0;
+	outline: none;
+	padding: 0;
+	width: 100px;
+}
+#tv .wp .ico:hover {
+	background-color: rgba(0,0,0,0.12);
+}
+#tv .wp .spliter {
+	box-sizing: content-box;
+	background: rgba(0,0,0,0.3);
+	box-shadow: 2px 0 0 rgba(255,255,255,0.06);
+	border-left: 2px solid rgba(255,255,255,0.15);
+	display: inline-block;
+	float: left;
+	height: 50px;
+	width: 2px;
+}
+#tv #tv-header .wp .ico.watch {
+	background-position: left top;
+}
+#tv #tv-header .wp .ico.watch.selected, #tv #tv-header .wp .ico.watch:hover {
+	background-position: -100px top;
+}
+#tv #tv-header .wp .ico.listen {
+	background-position: -200px top;
+}
+#tv #tv-header .wp .ico.listen.selected, #tv #tv-header .wp .ico.listen:hover {
+	background-position: -300px top;
+}
+#tv #tv-header .wp .ico.fullscreen {
+	background-position: -400px top;
+	float: right;
+}
+#tv #tv-header .wp .ico.fullscreen:hover {
+	background-position: -500px top;
+}
+#tv #tv-bottom .wp .ico.list {
+	background-position: 0 -50px;
+}
+#tv #tv-bottom .wp .ico.play {
+	background-position: 0 -100px;
+}
+#tv #tv-bottom .wp .ico.pause {
+	background-position: 0 -100px;
+}
+#tv #tv-bottom .wp .ico.prev {
+	background-position: -200px -100px;
+}
+#tv #tv-bottom .wp .ico.next {
+	background-position: -200px -50px;
+}
+#tv #tv-bottom .wp .ico.refresh {
+	background-position: -100px -50px;
+}
+
+.g {
+	background: -moz-linear-gradient(top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.8) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.6)), color-stop(100%,rgba(0,0,0,0.8))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.8) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.8) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.8) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.8) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a0000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+}
+
+#tv #prog-bar {
+	background: url(../img/bg.png);
+	box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+	height: 5px;
+	width: 100%;
+	z-index: 11;
+}
+#tv #tv-bottom #txt-bar {
+	height: 30px;
+	line-height: 30px;
+	top: -30px;
+	opacity:0.3;
+	position: absolute;
+	width: 100%;
+}
+#tv #tv-bottom:hover #txt-bar {
+	opacity:1;
+}
+#tv #tv-bottom #txt-bar .wp {
+	padding: 0 20px;
+}
+#tv #tv-bottom #txt-bar .wp * {
+	color: #FFF;
+	font-size: 12px;
+	text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+}
+#tv #tv-bottom #txt-bar .wp #tv-time {
+	float: right;
+}
+#tv #prog-bar #prog-cache-bar {
+	background: rgba(0,0,0,0.25);
+	cursor: pointer;
+	height: 100%;
+	width: 60%;
+}
+#tv #prog-bar #prog-cache-bar #prog-load-bar {
+	background: rgba(255,255,21,0.75);
+	height: 100%;
+	width: 30%;
+}
+#tv #volumn-ctrl {
+	float: right;
+}
+#tv #volumn-ctrl .ico {
+	background-position: -325px -50px;
+	width: 50px;
+}
+#tv #volumn-ctrl:hover .ico {
+	background-color: transparent;
+}
+#tv #volumn-holder {
+	background: rgba(0,0,0,0.3);
+	border-radius: 100px;
+	box-shadow: 0 1px 0 rgba(255,255,255,0.1), inset 0 0 3px rgba(0,0,0,0.25);
+	cursor: pointer;
+	float: left;
+	height: 10px;
+	margin: 20px 40px 0 0;
+	overflow: hidden;
+	width: 100px;
+}
+#tv #volumn-holder #volumn-prog {
+	background: url(../img/volumn.png);
+	border-radius: 30px;
+	display: inline-block;
+	float: left;
+	height: 100%;
+	width: 70%;
+}
