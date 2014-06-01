@@ -49,9 +49,6 @@
 
 <script type="text/javascript">
     $('document').ready(function() {
-        $('#player').on('error', function() {
-            console.log('error');
-        });
         $('#player').on('play', function() {
             console.log('play');
         });
@@ -73,6 +70,13 @@
         // 网速失速
         $('#player').on('stalled', function() {
             console.log('stalled');
+            var new_one = $('#player').clone(true);
+            $('#player').after(new_one).remove();
+
+        })
+        // 网速错误
+        $('#player').on('error', function() {
+            console.log('error');
             var new_one = $('#player').clone(true);
             $('#player').after(new_one).remove();
 
