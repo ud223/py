@@ -115,7 +115,7 @@ $model = $this->model;
                 </select>
             </div>
             <?php if ($model->oss_video): ?>
-                <a href="<?php echo $this->url(array("id" => $model->oss_video->id), "show-detail") ?>" class="btn btn-success">预览效果</a>
+                <a href="<?php echo $this->url(array("id" => $model->id), "show-detail") ?>" class="btn btn-success">预览效果</a>
             <?php endif; ?>
             <div class="form-group">
                 <label>作者：</label>

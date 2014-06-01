@@ -10,7 +10,7 @@
     </div>
     <?php if ($this->video_url): ?>
         <video id="player" oncontextmenu="return false;" autoplay="true">
-            <source src="<?php $this->video_url ?>"></source>
+            <source src="<?php echo $this->video_url ?>"></source>
         </video>
     <?php endif; ?>
     <div id="tv-bottom">
