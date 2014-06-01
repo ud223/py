@@ -144,7 +144,9 @@ class Angel_ManageController extends Angel_Controller_Action {
                 'id' => $r->id,
                 'sub_title' => $r->sub_title,
                 'path' => $path,
-                'owner' => $r->owner);
+                'owner' => $r->owner,
+                'oss_video' => $r->oss_video,
+                'oss_audio' => $r->oss_audio);
         }
 
         // JSON FORMAT

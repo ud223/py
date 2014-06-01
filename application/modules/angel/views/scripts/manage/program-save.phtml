@@ -96,6 +96,13 @@ $model = $this->model;
                 <label>描述：</label>
                 <textarea row="10" class="form-control" id="description" name="description"><?php echo $model->description ?></textarea>
             </div>
+
+            <?php if ($model->oss_video || $model->oss_video): ?>
+                <div class="form-group">
+                    <a target="_blank" href="<?php echo $this->url(array("id" => $model->id), "show-detail") ?>" class="btn btn-success"><i class="glyphicon glyphicon-play"></i> 预览</a>
+                </div>
+            <?php endif; ?>
+
             <div class="form-group">
                 <label>音频文件：</label>
                 <select id="oss_audio" name="oss_audio" value="<?php echo $this->model->oss_audio->id ?>">
@@ -114,9 +121,7 @@ $model = $this->model;
                     <?php endforeach; ?>
                 </select>
             </div>
-            <?php if ($model->oss_video): ?>
-                <a href="<?php echo $this->url(array("id" => $model->id), "show-detail") ?>" class="btn btn-success">预览效果</a>
-            <?php endif; ?>
+
             <div class="form-group">
                 <label>作者：</label>
                 <select id="author" name="author" value="<?php echo $this->model->author->id ?>">
