@@ -68,7 +68,6 @@
                 <div class="btn-group">
                     <a href="<?php echo $this->url(array(), 'manage-program-save') . '?id=' . $p['id'] ?>" class="btn btn-info btn-sm">编辑</a>
                     <a href="<?php echo $this->url(array(), 'manage-program-save') . '?copy=true&&id=' . $p['id'] ?>" class="btn btn-default btn-sm">复制</a>
-                    <a href="<?php echo $this->url(array(), 'manage-program-save') . '?copy=true&&id=' . $p['id'] ?>" class="btn btn-default btn-sm">复制</a>
 
                     <?php if ($p['oss_video'] || $p['oss_audio']): ?>
                     <a target="_blank" href="<?php echo $this->url(array("id" => $p['id']), "show-detail") ?>" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-play"></i> 预览</a>
