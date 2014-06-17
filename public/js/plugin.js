@@ -599,7 +599,7 @@
     $.rotateDiv = function() {
         $('.rotatediv').animate({
             rotate: '+=360deg'
-        }, 500);
+        }, 500, 'linear');
     };
     $.endWaiting = function() {
         var wp = $('.rotatedivwrapper');
