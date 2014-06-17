@@ -1,6 +1,12 @@
 /*
 Common css
 */
+.font12px {
+    font-size:12px;
+}
+.font14px {
+    font-size:14px;
+}
 .marginbottom10px {
     margin-bottom:10px !important;
 }
