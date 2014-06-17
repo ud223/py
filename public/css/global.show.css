@@ -1,34 +1,26 @@
 body {
-	background-color: #333;
-	background-position: center center;
-	color: #fff;
-	font-family: "microsoft yahei";
-	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
-}
-.empty-btn {
-	background: none;
-	border: none;
-	box-shadow: none;
-	outline: none;
-	padding: 0;
-	margin: 0;
+    background-color: #333;
+    background-position: center center;
+    color: #fff;
+    font-family: "microsoft yahei";
+    text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 }
 * {
-	outline: none !important;
+    outline: none !important;
 }
 a {
-	color: #F0F0F0;
-	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+    color: #F0F0F0;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 }
 a:link {
-	color: #F0F0F0;
+    color: #F0F0F0;
 }
 a:visited {
-	color: #F0F0F0;
+    color: #F0F0F0;
 }
 a:hover {
-	color: #BBB;
-	text-decoration: none;
+    color: #BBB;
+    text-decoration: none;
 }
 /*
 Reset the bootstrap css
@@ -105,6 +97,17 @@ h3 {
 .pad-5 {
     padding: 5px !important;
 }
+.empty-btn {
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+.unvisiable {
+    visibility:hidden;
+}
 
 .clear, .clear-5, .clear-10, .clear-15, .clear-20, .clear-30, .clear-50 {
     clear: both;
@@ -146,13 +149,13 @@ h3 {
     _height: 1%
 }
 .lf {
-	float:left;
+    float:left;
 }
 .rf {
-	float:left;
+    float:left;
 }
 .text-center {
-	text-align: center;
+    text-align: center;
 }
 /*
  * page layout
@@ -160,642 +163,641 @@ h3 {
  */
 
 .ddl {
-	display: none;
-	margin: 0;
-	padding: 0;
-	position: absolute;
-	top: 100%;
-	right: 100px;
+    display: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    right: 100px;
 }
 .ddl li {
-	display: block;
-	margin: 0 padding :0;
+    display: block;
+    margin: 0;
+    padding :0;
 }
 #tv {
-	background: url(../img/title-bg-flat.png);
-	height: 100%;
-	min-height: 540px;
-	min-width: 960px;
-	position: absolute;
-	top: 0;
-	width: 100%;
+    background: url(../img/title-bg-flat.png);
+    height: 100%;
+    min-height: 540px;
+    min-width: 960px;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 #tv #tv-header, #tv #tv-footer {
-	background: url(../img/title-bg.png) center bottom;
-	border-radius: 5px 5px 0 0;
-	box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 0 12px rgba(0,0,0,0.6);
-	border-bottom: 3px solid #FF0;
-	border-top: 1px solid #333;
-	display: block;
-	height: 75px;
-	position: relative;
+    background: url(../img/title-bg.png) center bottom;
+    border-radius: 5px 5px 0 0;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 0 12px rgba(0,0,0,0.6);
+    border-bottom: 3px solid #FF0;
+    border-top: 1px solid #333;
+    display: block;
+    height: 75px;
+    position: relative;
+    z-index:5;
 }
 #tv #tv-header.fix, #tv #tv-footer {
-	left: 0;
-	position: fixed;
-	top: 0;
-	right: 0;
-	z-index: 100;
+    left: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
 }
 #tv #tv-footer {
-	border: none;
-	border-radius: 0;
-	border-top: 1px solid rgba(0,0,0,0.5);
-	bottom: 0;
-	height: 60px;
-	top: auto;
+    border: none;
+    border-radius: 0;
+    border-top: 1px solid rgba(0,0,0,0.5);
+    bottom: 0;
+    height: 60px;
+    top: auto;
 }
 #tv #tv-header .wp {
-	padding: 10px 15px;
-	overflow: visible;
-	position: relative;
+    padding: 10px 15px;
+    overflow: visible;
+    position: relative;
 }
 #tv #tv-logo {
-	float: left;
-	margin-left: 10px;
+    float: left;
+    margin-left: 10px;
 }
 #tv .spliter {
-	background: url(../img/title-splr.png);
-	bottom: 0;
-	height: 80px;
-	left: 198px;
-	position: absolute;
-	width: 2px;
+    background: url(../img/title-splr.png);
+    bottom: 0;
+    height: 80px;
+    left: 198px;
+    position: absolute;
+    width: 2px;
 }
 #tv #profile-blk {
-	padding-top: 7px;
+    padding-top: 7px;
 }
 #tv #profile-img {
-	background-color: #EEE;
-	border-radius: 100px;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-	display: inline-block;
-	height: 40px;
-	overflow: hidden;
-	width: 40px;
+    background-color: #EEE;
+    border-radius: 100px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    display: inline-block;
+    height: 40px;
+    overflow: hidden;
+    width: 40px;
 }
 #tv #profile-img img {
-	height: 40px;
-	width: 40px;
+    height: 40px;
+    width: 40px;
 }
 #tv #profile-img, #tv #profile-txt {
-	float: right;
-	margin-left: 15px;
+    float: right;
+    margin-left: 15px;
 }
 #tv #profile-txt {
-	display: block;
-	font-size: smaller;
-	height: 40px;
-	line-height: 40px;
-	position: relative;
+    display: block;
+    font-size: smaller;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
 }
 #tv #profile-txt span {
-	float: left;
+    float: left;
 }
 #tv #profile-txt .ico {
-	background-position: -230px -155px;
-	display: block;
-	float: right;
-	height: 40px;
-	width: 40px;
+    background-position: -230px -155px;
+    display: block;
+    float: right;
+    height: 40px;
+    width: 40px;
 }
 #tv #profile-txt a {
-	display: block;
-	float: left;
-	margin-top: 10px;
-	margin-right: 10px;
+    display: block;
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 #tv #tv-header #rt-spliter {
-	background: url(../img/header-splr.png) center center no-repeat;
-	float: right;
-	height: 50px;
-	left: auto;
-	margin: 0 5px;
-	position: relative;
-	top: auto;
+    background: url(../img/header-splr.png) center center no-repeat;
+    float: right;
+    height: 50px;
+    left: auto;
+    margin: 0 5px;
+    position: relative;
+    top: auto;
 }
 #tv .ico {
-	background: url(../img/n-icon.png) left top no-repeat;
-	display: inline-block;
-	height: 50px;
-	width: 100px;
+    background: url(../img/n-icon.png) left top no-repeat;
+    display: inline-block;
+    height: 50px;
+    width: 100px;
 }
 #tv .ico#fullscreen, #tv #refresh {
-	background-position: -427px -5px;
-	float: right;
-	height: 40px;
-	margin-top: 6px;
-	padding: 0;
-	width: 50px;
+    background-position: -427px -5px;
+    float: right;
+    height: 40px;
+    margin-top: 6px;
+    padding: 0;
+    width: 50px;
 }
 #tv .ico#fullscreen:hover, #tv .ico#fullscreen.on {
-	background-position: -527px -5px;
+    background-position: -527px -5px;
 }
 #tv #refresh {
-	font-size: 12px;
-	line-height: 42px;
-	margin-right: 20px;
-	width: auto;
+    font-size: 12px;
+    line-height: 42px;
+    margin-right: 20px;
+    width: auto;
 }
 #tv #refresh .ico {
-	background-position: -127px -54px;
-	float: left;
-	width: 50px;
+    background-position: -127px -54px;
+    float: left;
+    width: 50px;
 }
 #tv #tv-switch {
-	background: rgba(0,0,0,0.25);
-	border-radius: 5px;
-	box-shadow: inset 0 2px 3px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.15);
-	height: 40px;
-	left: 50%;
-	margin-left: -100px;
-	margin-top: -20px;
-	position: absolute;
-	top: 50%;
-	width: 200px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 5px;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.15);
+    height: 40px;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -20px;
+    position: absolute;
+    top: 50%;
+    width: 200px;
 }
 #tv #tv-to-video, #tv #tv-to-audio {
-	background: url(../img/title-bg-sm.png);
-	border-radius: 5px 0 0 5px;
-	border: 1px solid rgba(0,0,0,0.4);
-	box-shadow: 0 0 5px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.2);
-	box-sizing: border-box;
-	cursor: pointer;
-	display: inline-block;
-	float: left;
-	height: 40px;
-	width: 100px;
+    background: url(../img/title-bg-sm.png);
+    border-radius: 5px 0 0 5px;
+    border: 1px solid rgba(0,0,0,0.4);
+    box-shadow: 0 0 5px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.2);
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    height: 40px;
+    width: 100px;
 }
 #tv #tv-to-video.selected, #tv #tv-to-audio.selected {
-	background: none;
-	border: none;
-	box-shadow: none;
-	cursor: default;
+    background: none;
+    border: none;
+    box-shadow: none;
+    cursor: default;
 }
 #tv #tv-to-audio {
-	border-radius: 0 5px 5px 0;
+    border-radius: 0 5px 5px 0;
 }
 #tv #tv-to-video .ico, #tv #tv-to-audio .ico {
-	float: left;
-	height: 39px;
-	margin: 0;
-	padding: 0;
-	width: 99px;
+    float: left;
+    height: 39px;
+    margin: 0;
+    padding: 0;
+    width: 99px;
 }
 #tv #tv-to-video .ico {
-	background-position: left -5px;
+    background-position: left -5px;
 }
 #tv #tv-to-video.selected .ico {
-	background-position: -100px -5px;
+    background-position: -100px -5px;
 }
 #tv #tv-to-video:hover .ico {
-	background-position: -100px -5px;
+    background-position: -100px -5px;
 }
 #tv #tv-to-audio .ico {
-	background-position: -200px -6px;
+    background-position: -200px -6px;
 }
 #tv #tv-to-audio.selected .ico {
-	background-position: -300px -6px;
+    background-position: -300px -6px;
 }
 #tv #tv-to-audio:hover .ico {
-	background-position: -300px -6px;
+    background-position: -300px -6px;
 }
 #tv #tv-footer #tv-prog {
-	background: rgba(0,0,0,0.3);
-	border-radius: 100px;
-	box-shadow: 0 1px 0 rgba(255,255,255,0.15), inset 0 1px 2px rgba(0,0,0,0.2);
-	height: 10px;
-	position: relative;
+    background: rgba(0,0,0,0.3);
+    border-radius: 100px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.15), inset 0 1px 2px rgba(0,0,0,0.2);
+    height: 10px;
+    position: relative;
 }
 #tv #tv-footer #tv-prog #tv-prog-seekbar, #tv #tv-footer #tv-prog #tv-prog-loaded {
-	cursor: pointer;
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 #tv #tv-footer #tv-prog #tv-prog-seekbar {
-	z-index: 5;
+    z-index: 5;
 }
 #tv #tv-footer #tv-prog #tv-prog-loaded {
-	background: url(../img/volume.png);
-	box-shadow: 0 1px 1px rgba(0,0,0,0.5);
-	width: 0;
+    background: url(../img/volume.png);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.5);
+    width: 0;
 }
 #tv .rr {
-	border-radius: 100px;
+    border-radius: 100px;
 }
 #tv #tv-prog-timer, #tv #tv-prog-title {
-	border-radius: 100px;
-	font-size: smaller;
-	position: absolute;
-	right: 0;
-	top: -26px;
+    border-radius: 100px;
+    font-size: smaller;
+    position: absolute;
+    right: 0;
+    top: -26px;
 }
 #tv #tv-prog-title {
-	color: rgba(0,0,0,0.6);
-	font-size: 14px;
-	font-weight: bold;
-	left: 0;
-	right: auto;
-	text-shadow: 0 1px 1px rgba(255,255,255,0.2);
+    color: rgba(0,0,0,0.6);
+    font-size: 14px;
+    font-weight: bold;
+    left: 0;
+    right: auto;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.2);
 }
 #tv #tv-prog-timer #t1 {
-	opacity: 0.9;
+    opacity: 0.9;
 }
 #tv #tv-prog-timer #t2 {
-	opacity: 0.5;
-	margin: 0 8px;
+    opacity: 0.5;
+    margin: 0 8px;
 }
 #tv #tv-prog-timer #t3 {
-	opacity: 0.5;
+    opacity: 0.5;
 }
 #tv #tv-footer-mdbar, #tv #tv-footer-rtbar, #tv #tv-footer-ltbar {
 }
 #tv #tv-footer-rtbar, #tv #tv-footer-ltbar {
-	background-image: url(../img/header-splr.png);
-	background-position: left center;
-	background-repeat: no-repeat;
+    background-image: url(../img/header-splr.png);
+    background-position: left center;
+    background-repeat: no-repeat;
 }
 #tv #tv-footer-ltbar {
-	background-position: right center;
+    background-position: right center;
 }
 #tv #tv-footer-ltbar, #tv #tv-footer-rtbar {
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 200px;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 200px;
 }
 #tv #tv-footer-rtbar {
-	left: auto;
-	right: 0;
-	width: 250px;
+    left: auto;
+    right: 0;
+    width: 250px;
 }
 #tv #tv-footer-mdbar {
-	margin: 0 290px 0 240px;
-	padding-top: 36px;
-	width: auto;
+    margin: 0 290px 0 240px;
+    padding-top: 36px;
+    width: auto;
 }
 #tv #tv-footer-ltbar .wp, #tv #tv-footer-rtbar .wp {
-	padding: 5px 15px 5px 30px;
-	height: 58px;
+    padding: 5px 15px 5px 30px;
+    height: 58px;
 }
 #tv #tv-footer-ltbar .wp .ico, #tv #tv-footer-rtbar .wp .ico {
-	background-color: transparent;
-	background-image: url(../img/n-icon.png);
-	border: none;
-	height: 50px;
-	margin: 0;
-	outline: none;
-	padding: 0;
-	width: 50px;
+    background-color: transparent;
+    background-image: url(../img/n-icon.png);
+    border: none;
+    height: 50px;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    width: 50px;
 }
 #tv #tv-footer-ltbar .wp .ico#play {
-	background-position: -125px -100px;
+    background-position: -125px -100px;
 }
 #tv #tv-footer-ltbar .wp .ico#pause {
-	background-position: -25px -100px;
-	display: none;
+    background-position: -25px -100px;
+    display: none;
 }
 #tv #tv-footer-ltbar .wp .ico#prev {
-	background-position: -230px -100px;
-	width: 40px;
+    background-position: -230px -100px;
+    width: 40px;
 }
 #tv #tv-footer-ltbar .wp .ico#next {
-	background-position: -230px -50px;
-	width: 40px;
+    background-position: -230px -50px;
+    width: 40px;
 }
 
 #tv #volume-ctrl {
-	padding-top: 14px;
+    padding-top: 14px;
 }
 #tv #volume-speaker {
-	background-position: -338px -63px;
-	height: 24px !important;
-	width: 24px !important;
+    background-position: -338px -63px;
+    height: 24px !important;
+    width: 24px !important;
 }
 #tv #volume-speaker.disable {
-	background-position: -438px -63px;
+    background-position: -438px -63px;
 }
 #tv #volume-holder {
-	background: rgba(0,0,0,0.3);
-	border-radius: 100px;
-	box-shadow: 0 1px 0 rgba(255,255,255,0.12);
-	cursor: pointer;
-	height: 10px;
-	margin: 7px 10px;
-	width: 100px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 100px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.12);
+    cursor: pointer;
+    height: 10px;
+    margin: 7px 10px;
+    width: 100px;
 }
 #tv #volume-in {
-	background: url(../img/volume.png);
-	border-radius: 100px;
-	box-shadow: 0 1px 1px rgba(0,0,0,0.5);
-	height: 100%;
-	width: 100%;
+    background: url(../img/volume.png);
+    border-radius: 100px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.5);
+    height: 100%;
+    width: 100%;
 }
 #tv #tv-listbtn {
-	background-position: -25px -50px;
-	float: right;
-	height: 50px;
-	width: 50px;
+    background-position: -25px -50px;
+    float: right;
+    height: 50px;
+    width: 50px;
 }
 #tv .layer {
-	bottom: 0;
-	left: 0;
-	height: 100%;
-	position: absolute;
-	right: 0;
-	top: 0;
-	z-index: 1;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
 }
 #tv #tv-main-container {
 
 }
 #tv #tv-video-player {
-	display: block;
-	height: 100%;
-	width: 100%;
+    display: block;
+    height: 100%;
+    width: 100%;
 }
 #tv #tv-cover {
-	z-index: 2;
+    z-index: 2;
 }
 #tv #tv-fs-play-btn, #tv #tv-fs-pause-btn {
-	background-image: url(../img/fullscreen-icon-flat.png);
-	background-repeat: no-repeat;
-	display: inline-block;
-	height: 200px;
-	left: 50%;
-	margin-left: -100px;
-	margin-top: -100px;
-	position: absolute;
-	top: 50%;
-	width: 200px;
+    background-image: url(../img/fullscreen-icon-flat.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 200px;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+    position: absolute;
+    top: 50%;
+    width: 200px;
 }
 #tv #tv-fs-play-btn {
-	background-position: left -400px;
+    background-position: left -400px;
 }
 #tv #tv-fs-play-btn:hover {
-	background-position: left -600px;
+    background-position: left -600px;
 }
 #tv #tv-fs-pause-btn {
-	background-position: left top;
-	display: none;
+    background-position: left top;
+    display: none;
 }
 #tv #tv-fs-pause-btn:hover {
-	background-position: left -200px;
+    background-position: left -200px;
 }
 #tv #tv-listbar {
-	background: url(../img/bg.png) #333;
-	border: 1px solid rgba(0,0,0,0.5);
-	border-bottom: 0;
-	border-right: 0;
-	border-radius: 8px 0 0 0;
-	box-sizing: content-box;
-	box-shadow: inset 0 0 1px rgba(255,255,255,0.5), 0 0 6px rgba(0,0,0,0.5);
-	bottom: 60px;
-	display: none;
-	height: 400px;
-	overflow: hidden;
-	position: absolute;
-	right: 0;
-	width: 360px;
-	z-index: 0;
+    background: url(../img/bg.png) #333;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-bottom: 0;
+    border-right: 0;
+    border-radius: 8px 0 0 0;
+    box-sizing: content-box;
+    box-shadow: inset 0 0 1px rgba(255,255,255,0.5), 0 0 6px rgba(0,0,0,0.5);
+    bottom: 60px;
+    display: none;
+    height: 400px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    width: 360px;
+    z-index: 0;
 }
 #tv #tv-listbar-title {
-	background: url(../img/title-bg-dark.png) center bottom;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-	border-bottom: 1px solid rgba(0,0,0,0.4);
-	box-sizing: content-box;
-	height: 60px;
+    background: url(../img/title-bg-dark.png) center bottom;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+    box-sizing: content-box;
+    height: 60px;
 }
 #tv #tv-listbar-title .wp {
-	box-shadow: inset 0 0 1px rgba(255,255,255,0.5);
-	border-left: 1px solid rgba(0,0,0,0.5);
-	float: left;
-	height: 100%;
-	width: 300px;
+    box-shadow: inset 0 0 1px rgba(255,255,255,0.5);
+    border-left: 1px solid rgba(0,0,0,0.5);
+    float: left;
+    height: 100%;
+    width: 300px;
 }
 #tv #tv-author-img {
-	display: inline-block;
-	float: left;
+    display: inline-block;
+    float: left;
 }
 #tv #tv-author-img img {
-	height: 60px;
-	width: 60px;
+    height: 60px;
+    width: 60px;
 }
 #tv #tv-special-name {
-	margin-bottom: 3px;
+    margin-bottom: 3px;
 }
 #tv #tv-author-name {
-	font-size: smaller;
+    font-size: smaller;
 }
 #tv #tv-listbar-close {
-	background: url(../img/n-icon.png) -325px -100px no-repeat;
-	float: right;
-	height: 50px;
-	margin-top: 5px;
-	width: 50px;
+    background: url(../img/n-icon.png) -325px -100px no-repeat;
+    float: right;
+    height: 50px;
+    margin-top: 5px;
+    width: 50px;
 }
 #tv #tv-listbar-content {
-	max-height: 320px;
-	overflow: auto;
+    max-height: 320px;
+    overflow: auto;
 }
 #tv #tv-listbar-content .itm {
-	box-sizing: border-box;
-	clear: both;
-	cursor: pointer;
-	display: block;
-	float: left;
-	height: 30px;
-	font-size: 13px;
-	margin: 0;
-	padding: 0;
-	width: 100%;
+    box-sizing: border-box;
+    clear: both;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 30px;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 #tv #tv-listbar-content .itm:last-child {
-	box-shadow: 0 1px 1px rgba(0,0,0,0.4);
-	margin-bottom: 10px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.4);
+    margin-bottom: 10px;
 }
 #tv #tv-listbar-content .itm.selected {
-	background: url(../img/title-bg-sm.png) left bottom !important;
-	border-bottom: 1px solid rgba(0,0,0,0.6);
-	border-top: 1px solid rgba(0,0,0,0.5);
-	box-shadow: inset 0 0 1px rgba(255,255,255,0.3);
+    background: url(../img/title-bg-sm.png) left bottom !important;
+    border-bottom: 1px solid rgba(0,0,0,0.6);
+    border-top: 1px solid rgba(0,0,0,0.5);
+    box-shadow: inset 0 0 1px rgba(255,255,255,0.3);
 }
 #tv #tv-listbar-content .itm.alt {
-	background: rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.07);
 }
 #tv #tv-listbar-content .itm:hover {
-	background: rgba(0,0,0,0.15);
+    background: rgba(0,0,0,0.15);
 }
 #tv #tv-listbar-content .itm .col {
-	display: inline-block;
-	float: left;
-	line-height: 30px;
-	margin: 0 10px;
+    display: inline-block;
+    float: left;
+    line-height: 30px;
+    margin: 0 10px;
 }
 #tv #tv-listbar-content .itm .col2 {
-	opacity: 0.7;
+    opacity: 0.7;
 }
 #tv #tv-listbar-content .itm.selected .col2 {
-	opacity: 1;
+    opacity: 1;
 }
 #tv #tv-listbar-content .itm .col3 {
-	float: right;
-	font-size: 12px;
-	opacity: 0.4;
+    float: right;
+    font-size: 12px;
+    opacity: 0.4;
 }
 #tv #tv-listbar-content .ico {
-	display: block;
-	height: 30px;
-	width: 20px;
+    display: block;
+    height: 30px;
+    width: 20px;
 }
 #tv #tv-listbar-content .ico.play {
-	background-position: -140px -160px;
+    background-position: -140px -160px;
 }
 #tv #tv-listbar-content .ico.pause {
-	background-position: -40px -160px;
+    background-position: -40px -160px;
 }
 #tv #tv-listbar-content .ico.null {
-	background: none;
+    background: none;
 }
 
 #tv #tv-header-ddl {
-	background: url(../img/bg.png);
-	border: 1px solid rgba(0,0,0,0.2);
-	border-radius: 3px;
-	box-shadow: inset 0 0 1px rgba(255,255,255,0.5), 0 0 6px rgba(0,0,0,0.5);
-	display: none;
-	overflow: hidden;
-	right: 70px;
+    background: url(../img/bg.png);
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    box-shadow: inset 0 0 1px rgba(255,255,255,0.5), 0 0 6px rgba(0,0,0,0.5);
+    display: none;
+    overflow: hidden;
+    right: 70px;
 }
 #tv #tv-header-ddl li {
-	font-size: 12px;
-	line-height: 20px;
-	padding: 8px 20px 8px 15px;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 8px 20px 8px 15px;
 }
 #tv #tv-header-ddl li .ico {
-	background-position: -341px -165px;
-	height: 20px;
-	float: left;
-	margin-right: 15px;
-	width: 20px;
+    background-position: -341px -165px;
+    height: 20px;
+    float: left;
+    margin-right: 15px;
+    width: 20px;
 }
 #tv #tv-header-ddl li .ico.list {
-	background-position: -541px -65px;
+    background-position: -541px -65px;
 }
 #tv #tv-header-ddl li .ico.profile {
-	background-position: -440px -164px;
+    background-position: -440px -164px;
 }
 #tv #tv-header-ddl li .txt {
-	display: inline-block;
-	padding-top: 1px;
+    display: inline-block;
+    padding-top: 1px;
 }
 #tv #tv-header-ddl li.hspliter {
-	border-top: 1px solid rgba(0,0,0,0.3);
-	box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+    border-top: 1px solid rgba(0,0,0,0.3);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
 }
 #tv #tv-header-ddl li:hover {
-	background-color: rgba(0,0,0,0.15);
+    background-color: rgba(0,0,0,0.15);
 }
 
 #tv #tv-frame {
-	text-align:center;
+    text-align:center;
 }
 #tv #tv-frame .board {
-	background:url(../img/bg.png);
-	box-shadow:0 2px 8px rgba(0,0,0,0.15);
-	border:2px solid rgba(0,0,0,0.4);
-	border-radius:10px;
-	display:inline-block;
-	margin-top:100px;
-	overflow:hidden;
-	width:360px;
+    background:url(../img/bg.png);
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+    border:2px solid rgba(0,0,0,0.4);
+    border-radius:10px;
+    display:inline-block;
+    margin-top:100px;
+    overflow:hidden;
+    width:360px;
 }
 #tv #tv-frame .board .title, #tv #tv-frame .board > .bottom {
-	border-bottom:1px solid rgba(0,0,0,0.2);
-	box-shadow:0 1px 4px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255,255,255,0.08);
-	color:rgba(255,255,255,0.5);
-	font-size:17px;
-	height:60px;
-	line-height:60px;
-	margin:0;
-	padding:0 30px;
-	text-align:left;
+    border-bottom:1px solid rgba(0,0,0,0.2);
+    box-shadow:0 1px 4px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255,255,255,0.08);
+    color:rgba(255,255,255,0.5);
+    font-size:17px;
+    height:60px;
+    line-height:60px;
+    margin:0;
+    padding:0 30px;
+    text-align:left;
 }
 #tv #tv-frame .board .title a {
-	color:#FF0;
-	float:right;
-	font-size:12px;
+    color:#FF0;
+    float:right;
+    font-size:12px;
 }
 #tv #tv-frame .board > .bottom {
-	font-size:12px;	
+    font-size:12px;	
 }
 #tv #tv-frame .board .content {
-	padding:30px 0 20px 0;
+    padding:30px 0 20px 0;
 }
 #tv #tv-frame .board .content .row, #tv #tv-frame .board .content .half-row {
-	padding-bottom:15px;
+    padding-bottom:15px;
 }
 #tv #tv-frame .board .content .half-row {
-	margin-bottom:5px;
-	padding-left:30px;
-	text-align:left;
+    margin-bottom:5px;
+    padding-left:30px;
+    text-align:left;
 }
 #tv #tv-frame .board .content .half-row label {
-	color:#aaa;
-	font-size:12px;
-	margin:0;
+    color:#aaa;
+    font-size:12px;
+    margin:0;
 }
 #tv #tv-frame .board .content .half-row input[type='checkbox'] {
-	margin-top:4px;
+    margin-top:4px;
 }
 #tv #tv-frame .board .content .row input, #tv #tv-frame .board .content .row button {
-	border:0;
-	border-radius:500px;
-	box-sizing:border-box;
-	box-shadow:0 1px 2px rgba(0,0,0,0.2);
-	height:42px;
-	line-height:20px;
-	margin:0;
-	padding:0 20px;
-	width:300px;
+    border:0;
+    border-radius:500px;
+    box-sizing:border-box;
+    box-shadow:0 1px 2px rgba(0,0,0,0.2);
+    height:42px;
+    line-height:20px;
+    margin:0;
+    padding:0 20px;
+    width:300px;
 }
 #tv #tv-frame .board .content .row input {
-	background:rgba(0,0,0,0.1);
-	box-shadow:0 1px 0 rgba(255,255,255,0.08), inset 0 2px 2px rgba(0,0,0,0.1);
-	color:#FFF;
-	padding-top:11px;
-	padding-bottom:11px;
-	text-shadow:0 2px 2px rgba(0,0,0,0.2);
+    background:rgba(0,0,0,0.1);
+    box-shadow:0 1px 0 rgba(255,255,255,0.08), inset 0 2px 2px rgba(0,0,0,0.1);
+    color:#FFF;
+    padding-top:11px;
+    padding-bottom:11px;
+    text-shadow:0 2px 2px rgba(0,0,0,0.2);
 }
 #tv #tv-frame .board .content .row input:focus {
-	background:rgba(0,0,0,0.24);
+    background:rgba(0,0,0,0.24);
 }
 #tv #tv-frame .board .content .row button {
-	background:#FF0;
-	box-shadow:inset 0 2px 2px rgba(255,255,255,0.2);
-	color:rgba(0,0,0,0.6);
-	font-weight:bold;
-	text-shadow:0 1px 0 rgba(255,255,255,0.5);
+    background:#FF0;
+    box-shadow:inset 0 2px 2px rgba(255,255,255,0.2);
+    color:rgba(0,0,0,0.6);
+    font-weight:bold;
+    text-shadow:0 1px 0 rgba(255,255,255,0.5);
 }
 #tv #tv-frame .board .content .row button:hover {
-	background:#FFD800;
-}
-#tv.solid #refresh, #tv.solid #fullscreen {
-	visibility: hidden;
+    background:#FFD800;
 }
 /*
  *	untitle id & class
  * */
 
 #tvidx01 {
-	color: #888;
-	font-size: smaller;
+    color: #888;
+    font-size: smaller;
 }
 #tvidx02 {
-	float: left;
-	padding: 8px 15px;
+    float: left;
+    padding: 8px 15px;
 }
