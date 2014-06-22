@@ -136,5 +136,62 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         }
         return $result;
     }
+    
+    public function getProgramNotOwn($OwnProgramID) {
+        
+        $query = null;
 
+        if (count($OwnProgramID) < 2 || $OwnProgramID[0] == "") {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->find()->sort('created_at', -1);
+        }
+        else {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($OwnProgramID)->sort('created_at', -1);
+        }
+        
+        $result = null;
+        
+        $result = $query
+                ->getQuery()
+                ->execute();
+        
+        return $result;
+    }
+    
+    public function getProgramBySpecial($SpecialOwnProgram_IDs) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('id')->in($SpecialOwnProgram_IDs)->sort('created_at', -1);
+        
+        $result = null;
+        
+        $result = $query
+                ->getQuery()
+                ->execute();
+        
+        return $result;
+    }
+    
+    public function getAll() {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+        
+        $result = null;
+        
+        $result = $query
+                ->getQuery()
+                ->execute();
+        
+        return $result;
+    }
+
+//    public function getProgramByKeyword($keyword_id,  $return_as_paginator = true) {
+//        $query = $this->_dm->createQueryBuilder($this->_document_class)
+//                ->field(sprintf('oss_%s.$id', $type))->equals(new MongoId($oss_id))
+//                ->sort('created_at', -1);
+//        $result = null;
+//        if ($return_as_paginator) {
+//            $result = $this->paginator($query);
+//        } else {
+//            $result = $query->getQuery()->execute();
+//        }
+//        return $result;
+//    }
 }

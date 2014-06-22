@@ -383,17 +383,6 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
-    protected function getSellingPrice() {
-        $result = array();
-        foreach ($this->bootstrap_options['currency'] as $key => $val) {
-            $price = $this->request->getParam('price_' . $key);
-            if ($price) {
-                $result[$key] = floatval($price);
-            }
-        }
-        return $result;
-    }
-
     public function resultAction() {
         $this->view->error = $this->request->getParam('error');
         $this->view->redirectUrl = $this->request->getParam('redirectUrl');
@@ -870,6 +859,10 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
+//    public function abcdeAction() {
+//        echo 'hahahha';exit;
+//    }
+
     public function categoryListAction() {
         $categoryModel = $this->getModel('category');
         $programModel = $this->getModel('program');
@@ -1066,6 +1059,265 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
             echo $result;
             exit;
+        }
+    }
+
+    public function keywordCreateAction() {
+        $keywordModel = $this->getModel('keyword');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $keycode = $this->request->getParam('keycode');
+            $attributes = $this->request->getParam('attributes');
+
+            try {
+                $result = $keywordModel->addKeyword($keycode, $attributes);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-keyword-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "创建关键词";
+            $this->view->Keywords = $keywordModel->getAll();
+        }
+    }
+
+    public function keywordListAction() {
+        $keywordModel = $this->getModel('keyword');
+        $page = $this->request->getParam('page');
+
+        if (!$page) {
+            $page = 1;
+        }
+
+        $root = $keywordModel->getRoot();
+        $paginator = $keywordModel->getAll();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
+//        if (count($root)) {
+        $resource = array();
+
+        foreach ($root as $r) {
+            $resource[] = array(
+                'id' => $r->id,
+                'keycode' => $r->keycode,
+                'attributes' => $r->attributes
+            );
+        }
+        // JSON FORMAT
+        if ($this->getParam('format') == 'json') {
+            $this->_helper->json(array('data' => $resource,
+                'code' => 200));
+        } else {
+            $this->view->resource = $resource;
+            $this->view->title = "关键词列表";
+            $this->view->paginator = $paginator;
+        }
+//        }
+    }
+
+    public function keywordRemoveAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $keywordModel = $this->getModel('keyword');
+                $result = $keywordModel->remove($id);
+            }
+            // $result;
+            exit;
+        }
+    }
+
+    public function keywordSaveAction() {
+        $notFoundMsg = '未找到目标分类';
+        $keywordModel = $this->getModel('keyword');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->request->getParam('id');
+            $keycode = $this->request->getParam('keycode');
+            $attributes = $this->request->getParam('attributes');
+
+            try {
+                $result = $keywordModel->saveKeyword($id, $keycode, $attributes);
+            } catch (Angel_Exception_Keyword $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-keyword-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑关键词";
+//            $this->view->keywords = $keywordModel->getAll();
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+//                $keywordModel = $this->getModel('keyword');
+                $target = $keywordModel->getById($id);
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+                $this->view->model = $target;
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
+    }
+
+    //--------------------------------------------------------------------
+
+    public function specialCreateAction() {
+        $specialModel = $this->getModel('special');
+        $authorModel = $this->getModel('author');
+        $programModel = $this->getModel('program');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $special_name = $this->request->getParam('special_name');
+            $author_id = $this->request->getParam('author_id');
+            $cover_path = $this->request->getParam('cover_path');
+            $photo = $this->decodePhoto();
+            $own_programs = $this->request->getParam('programs');
+//            echo $own_programs; exit;
+            try {
+                $result = $specialModel->addSpecial($special_name, $author_id, $cover_path, $photo, $own_programs);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-special-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+
+            $result = $specialModel->getRoot();
+            $ownprogram_IDs = "";
+
+            foreach ($result as $special) {
+                if ($ownprogram_IDs != "")
+                    $ownprogram_IDs = $ownprogram_IDs . ",";
+
+                $ownprogram_IDs = $ownprogram_IDs . $special->programs_id;
+            }
+
+            $program_ids = explode(",", $ownprogram_IDs);
+
+            $this->view->title = "创建专辑";
+            $this->view->authors = $authorModel->getAll();
+            $this->view->programs = $programModel->getProgramNotOwn($program_ids);
+        }
+    }
+
+    public function specialListAction() {
+        $specialModel = $this->getModel('special');
+        $page = $this->request->getParam('page');
+
+        if (!$page) {
+            $page = 1;
+        }
+
+        $root = $specialModel->getRoot();
+        $paginator = $specialModel->getAll();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
+//        if (count($root)) {
+        $resource = array();
+
+        foreach ($root as $r) {
+            $resource[] = array(
+                'id' => $r->id,
+                'special_name' => $r->special_name,
+                'author_id' => $r->author_id,
+                'cover_path' => $r->cover_path
+            );
+        }
+        // JSON FORMAT
+        if ($this->getParam('format') == 'json') {
+            $this->_helper->json(array('data' => $resource,
+                'code' => 200));
+        } else {
+            $this->view->resource = $resource;
+            $this->view->title = "专辑列表";
+            $this->view->paginator = $paginator;
+        }
+//        }
+    }
+
+    public function specialRemoveAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $specialModel = $this->getModel('special');
+                $result = $specialModel->remove($id);
+            }
+            // $result;
+            exit;
+        }
+    }
+
+    public function specialSaveAction() {
+        $notFoundMsg = '未找到目标分类';
+        $specialModel = $this->getModel('special');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->request->getParam('id');
+            $special_name = $this->request->getParam('special_name');
+            $author_id = $this->request->getParam('author_id');
+            $cover_path = $this->request->getParam('cover_path');
+            $photo = $this->decodePhoto();
+
+            try {
+                $result = $specialModel->saveSpecial($id, $special_name, $author_id, $cover_path);
+            } catch (Angel_Exception_Special $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-special-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑列表";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                //      $specialModel = $this->getModel('keyword');
+                $target = $specialModel->getById($id);
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+                $this->view->model = $target;
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
         }
     }
 
