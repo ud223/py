@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>芝士电视</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel='stylesheet' href='../css/bootstrap.css' />
+        <link rel='stylesheet' href='../css/global.css' />
+        <link rel='stylesheet' href='../css/global.show.css' />
+        <script type="text/javascript" src="../js/jquery.1.10.2.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/global.js"></script>
+        <style>
+
+        </style>
+        <script type="text/javascript">
+            $('document').ready(function() {
+                $('#profile-txt').click(function() {
+                    $('#tv-header-ddl').clickToggle();
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="tv" class="solid">
+            <div id="tv-header">
+                <div class="wp clearfix">
+                    <div class="clearfix" id="tv-switch">
+                        <span id="tv-to-video" class="selected"><i class="ico"></i></span>
+                        <span id="tv-to-audio"><i class="ico"></i></span>
+                    </div>
+                    <img id="tv-logo" src="../img/logo-sm.png"/>
+                    <a href='javascript:void(0)' id="fullscreen" class="ico"></a>
+                    <div class="spliter" id="rt-spliter"></div>
+                    <div class="pull-right" id="profile-blk">
+                        <a href="javascript:void(0)" id="profile-txt"> <span>王啸</span> <i class="ico"></i> </a>
+                        <a href="javascript:void(0)" id="profile-img"><img src="http://img.36tr.com/avatar/20140424/53587efbcaaf1_100100.jpg"/></a>
+                    </div>
+                    <div class="spliter" id="rt-spliter"></div>
+                    <a href='javascript:void(0)' id="refresh"> <i class="ico"></i> 换一批 </a>
+
+                    <ul id="tv-header-ddl" class="ddl">
+                        <li>
+                            <a href="#"><i class='ico profile'></i> <span class="txt">我的信息</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class='ico list'></i> <span class="txt">查看节目列表</span></a>
+                        </li>
+                        <li class="hspliter">
+                            <a href="#"><i class='ico logout'></i> <span class="txt">退出登录</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="spliter"></div>
+            </div>
+
+            <div id="tv-frame">
+                <div class="board">
+                    <div class="title">
+                        修改密码
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <input type="password" placeholder="当前密码" id="password"/>
+                        </div>
+                        <div class="row">
+                            <input type="password" placeholder="新密码" id="new-password"/>
+                        </div>
+                        <div class="row">
+                            <input type="password" placeholder="再次输入密码" id="re-password"/>
+                        </div>
+
+                        <div class="row">
+                            <button type="button" id="confirm-btn">确认修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -39,7 +39,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $this->registerUser($email, $password, $usertype, $salt, $checkemail);
     }
 
-    protected function registerUser($email, $password, $usertype, $salt, $checkmail) {
+    protected function registerUser($email, $password, $usertype, $salt, $checkemail) {
         $result = false;
         if (empty($email)) {
             throw new Angel_Exception_User(Angel_Exception_User::EMAIL_EMPTY);

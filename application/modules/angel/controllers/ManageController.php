@@ -727,11 +727,17 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
 
     public function authorCreateAction() {
+        $snsOptions = $this->bootstrap_options['sns'];
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
             $name = $this->request->getParam('name');
             $description = $this->request->getParam('description');
+            
+            $intro = array();
+            foreach ($snsOptions as $k=>$v) {
+                $intro[$k] = $this->request->getParam('sns-' . $k);
+            }
             $logo = $this->decodePhoto('logo');
             if (is_array($logo) && count($logo) > 0) {
                 $logo = $logo[0];
@@ -740,7 +746,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
             $authorModel = $this->getModel('author');
             try {
-                $result = $authorModel->addAuthor($name, $description, $logo);
+                $result = $authorModel->addAuthor($name, $description, $intro, $logo);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
@@ -752,6 +758,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             // GET METHOD
             $this->view->title = "创建作者分类";
+            $this->view->snsOptions = $snsOptions;
         }
     }
 
@@ -771,6 +778,7 @@ class Angel_ManageController extends Angel_Controller_Action {
 
     public function authorSaveAction() {
         $notFoundMsg = '未找到目标作者';
+        $snsOptions = $this->bootstrap_options['sns'];
 
         if ($this->request->isPost()) {
             $result = 0;
@@ -779,6 +787,10 @@ class Angel_ManageController extends Angel_Controller_Action {
             $name = $this->request->getParam('name');
             $description = $this->request->getParam('description');
             $logo = $this->decodePhoto('logo');
+            $intro = array();
+            foreach ($snsOptions as $k=>$v) {
+                $intro[$k] = $this->request->getParam('sns-' . $k);
+            }
             if (is_array($logo) && count($logo) > 0) {
                 $logo = $logo[0];
             } else {
@@ -786,7 +798,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
             $authorModel = $this->getModel('author');
             try {
-                $result = $authorModel->saveAuthor($id, $name, $description, $logo);
+                $result = $authorModel->saveAuthor($id, $name, $description, $intro, $logo);
             } catch (Angel_Exception_Author $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
@@ -800,6 +812,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             // GET METHOD
             $this->view->title = "编辑作者";
+            $this->view->snsOptions = $snsOptions;
 
             $id = $this->request->getParam("id");
             if ($id) {

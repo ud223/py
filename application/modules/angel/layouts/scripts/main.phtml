@@ -18,25 +18,60 @@
             <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        
+        <script type="text/javascript">
+            $('document').ready(function() {
+                // ddl init
+                var profile_txt = $('#profile-txt');
+                if (profile_txt.length > 0) {
+                    profile_txt.click(function() {
+                        $('#tv-header-ddl').clickToggle();
+                    });
+                }
+            });
+        </script>
     </head>
 
     <body>
-        <div class="container">
-            <div class="header" id="header">
-                <img id="logo" src="/img/logo.png"/>
 
-                <div class="pull-right">
-                    <div href="#" id="profile-txt">
-                        <a href="#">王啸</a>
-                        <a href="#" id="profile-logout">sign out</a>
+        <div id="tv">
+            <div id="tv-header">
+                <div class="wp clearfix">
+                    <div class="clearfix" id="tv-switch">
+                        <span id="tv-to-video" class="selected"><i class="ico"></i></span>
+                        <span id="tv-to-audio"><i class="ico"></i></span>
                     </div>
-                    <a href="#" id="profile-img"><img src="http://img.36tr.com/avatar/20140424/53587efbcaaf1_100100.jpg"/></a>
+                    <img id="tv-logo" src="../img/logo-sm.png"/>
+                    <a href='javascript:void(0)' id="fullscreen" class="ico unvisiable"></a>
+                    <div class="spliter" id="rt-spliter"></div>
+                    <div class="pull-right" id="profile-blk">
+                        <a href="javascript:void(0)" id="profile-txt"> <span>王啸</span> <i class="ico"></i> </a>
+                        <a href="javascript:void(0)" id="profile-img"><img src="http://img.36tr.com/avatar/20140424/53587efbcaaf1_100100.jpg"/></a>
+                    </div>
+                    <div class="spliter" id="rt-spliter"></div>
+                    <a href='javascript:void(0)' class="unvisiable" id="refresh"> <i class="ico"></i> 换一批 </a>
 
+                    <ul id="tv-header-ddl" class="ddl">
+                        <li>
+                            <a href="<?php echo $this->url(array(), 'reset-password') ?>"><i class='ico profile'></i> <span class="txt">重设密码</span></a>
+                        </li>
+<!--                        <li>
+                            <a href="#"><i class='ico list'></i> <span class="txt">查看节目列表</span></a>
+                        </li>-->
+                        <li class="hspliter">
+                            <a href="#"><i class='ico logout'></i> <span class="txt">退出登录</span></a>
+                        </li>
+                    </ul>
                 </div>
+                <div class="spliter"></div>
             </div>
+
+            <?php echo $this->layout()->content; ?>
         </div>
-        <?php echo $this->layout()->content; ?>
+
+
+
+
+        
     </body>
 </html>
 

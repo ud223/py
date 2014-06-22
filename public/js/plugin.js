@@ -596,10 +596,13 @@
         wp.fadeIn('fast');
         wp.attr('intid', intervalId);
     };
-    $.rotateDiv = function() {
+    $.rotateDiv = function(easing) {
+        if(!easing) {
+            easing = 'linear';
+        }
         $('.rotatediv').animate({
             rotate: '+=360deg'
-        }, 500);
+        }, 500, easing);
     };
     $.endWaiting = function() {
         var wp = $('.rotatedivwrapper');

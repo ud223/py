@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>芝士电视</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel='stylesheet' href='../css/bootstrap.css' />
+        <link rel='stylesheet' href='../css/global.css' />
+        <link rel='stylesheet' href='../css/global.show.css' />
+        <script type="text/javascript" src="../js/jquery.1.10.2.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/global.js"></script>
+        <style>
+        </style>
+        <script type="text/javascript">
+            $('document').ready(function() {
+                // 网速失速
+                $('#player').on('stalled', function() {
+                    console.log('stalled');
+                    var new_one = $('#player').clone(true);
+                    $('#player').after(new_one).remove();
+                });
+                // 网速错误
+                $('#player').on('error', function() {
+                    console.log('error');
+                    var new_one = $('#player').clone(true);
+                    $('#player').after(new_one).remove();
+                });
+                $('#tv-listbtn').click(function() {
+                    $('#tv-listbar').clickToggle();
+                });
+                $('#profile-txt').click(function() {
+                    $('#tv-header-ddl').clickToggle();
+                });
+
+                $('#tv-header').autoToggle();
+                $('#tv-footer').autoToggle({
+                    animationDirection: 'bottom',
+                    beforeDisplay: function() {
+                        $('#tv-cover').show();
+                    },
+                    beforeHide: function() {
+                        if (!document.getElementById("tv-video-player").paused) {
+                            $('#tv-cover').hide();
+                        }
+                    }
+                });
+                $('#tv-video-player').video({
+                    src: 'http://angelhere-cheesetv.oss-cn-beijing.aliyuncs.com/5387f0976e51f.mp4',
+                    onPause: function() {
+                        $('#tv-fs-play-btn').show();
+                        $('#tv-fs-pause-btn').hide();
+                        $('#play').show();
+                        $('#pause').hide();
+                    },
+                    onEnded: function() {
+                        $('#tv-cover').show();
+                    },
+                    onPlay: function() {
+                        $('#tv-fs-play-btn').hide();
+                        $('#tv-fs-pause-btn').show();
+                        $('#play').hide();
+                        $('#pause').show();
+                    }
+                });
+                // play and pause
+                $('#tv-fs-play-btn').click(function() {
+                    $('#play').click();
+                });
+                $('#tv-fs-pause-btn').click(function() {
+                    $('#pause').click();
+                });
+                $('#play').click(function() {
+                    $('#tv-video-player').video("play", function() {
+                        $('#tv-cover').hide();
+                    });
+                });
+                $('#pause').click(function() {
+                    $('#tv-video-player').video("pause", function() {
+                        $('#tv-cover').show();
+                    });
+                });
+                // next program
+                $('#next').click(function() {
+
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="tv">
+            <div id="tv-header" class="fix">
+                <div class="wp clearfix">
+                    <div class="clearfix" id="tv-switch">
+                        <span id="tv-to-video" class="selected"><i class="ico"></i></span>
+                        <span id="tv-to-audio"><i class="ico"></i></span>
+                    </div>
+                    <img id="tv-logo" src="../img/logo-sm.png"/>
+                    <a href='javascript:void(0)' id="fullscreen" class="ico"></a>
+                    <div class="spliter" id="rt-spliter"></div>
+                    <div class="pull-right" id="profile-blk">
+                        <a href="javascript:void(0)" id="profile-txt"> <span>王啸</span> <i class="ico"></i> </a>
+                        <a href="javascript:void(0)" id="profile-img"><img src="http://img.36tr.com/avatar/20140424/53587efbcaaf1_100100.jpg"/></a>
+                    </div>
+                    <div class="spliter" id="rt-spliter"></div>
+                    <a href='javascript:void(0)' id="refresh"> <i class="ico"></i> 换一批 </a>
+
+                    <ul id="tv-header-ddl" class="ddl">
+                        <li>
+                            <a href="#"><i class='ico profile'></i> <span class="txt">我的信息</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class='ico list'></i> <span class="txt">查看节目列表</span></a>
+                        </li>
+                        <li class="hspliter">
+                            <a href="#"><i class='ico logout'></i> <span class="txt">退出登录</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="spliter"></div>
+            </div>
+            <div id="tv-footer">
+                <div id="tv-listbar">
+                    <div id="tv-listbar-title">
+                        <a href="javascript:void(0)" id="tv-author-img"><img src="http://img.36tr.com/avatar/20140424/53587efbcaaf1_100100.jpg"/></a>
+                        <div class="wp">
+                            <div id="tvidx02">
+                                <p id="tv-special-name">
+                                    刘德华2014新专辑
+                                </p>
+                                <span id="tvidx01">By </span><a id="tv-author-name" href="javascript:void(0)">刘德华</a>
+                            </div>
+                            <button class="empty-btn close-btn" id="tv-listbar-close"></button>
+                        </div>
+                    </div>
+                    <div id="tv-listbar-content">
+                        <ul class="itm">
+                            <li class="col col1">
+                                <i class="ico play"></i>
+                            </li>
+                            <li class="col col2">
+                                Enter Sandman
+                            </li>
+                            <li class="col col3">
+                                05:39
+                            </li>
+                        </ul>
+                        <ul class="itm alt">
+                            <li class="col col1">
+                                <i class="ico null"></i>
+                            </li>
+                            <li class="col col2">
+                                Value of true
+                            </li>
+                            <li class="col col3">
+                                12:11
+                            </li>
+                        </ul>
+                        <ul class="itm">
+                            <li class="col col1">
+                                <i class="ico null"></i>
+                            </li>
+                            <li class="col col2">
+                                Element
+                            </li>
+                            <li class="col col3">
+                                02:40
+                            </li>
+                        </ul>
+                        <ul class="itm alt selected">
+                            <li class="col col1">
+                                <i class="ico null"></i>
+                            </li>
+                            <li class="col col2">
+                                Current Animation
+                            </li>
+                            <li class="col col3">
+                                04:10
+                            </li>
+                        </ul>
+                        <ul class="itm">
+                            <li class="col col1">
+                                <i class="ico"></i>
+                            </li>
+                            <li class="col col2">
+                                Nothing else matter
+                            </li>
+                            <li class="col col3">
+                                07:12
+                            </li>
+                        </ul>
+                        <ul class="itm alt">
+                            <li class="col col1">
+                                <i class="ico null"></i>
+                            </li>
+                            <li class="col col2">
+                                Whether to remove
+                            </li>
+                            <li class="col col3">
+                                01:09
+                            </li>
+                        </ul>
+                        <ul class="itm">
+                            <li class="col col1">
+                                <i class="ico null"></i>
+                            </li>
+                            <li class="col col2">
+                                Queued
+                            </li>
+                            <li class="col col3">
+                                00:49
+                            </li>
+                        </ul>
+                        <ul class="itm alt">
+                            <li class="col col1">
+                                <i class="ico null"></i>
+                            </li>
+                            <li class="col col2">
+                                South Single
+                            </li>
+                            <li class="col col3">
+                                15:21
+                            </li>
+                        </ul>
+                        <ul class="itm">
+                            <li class="col col1">
+                                <i class="ico null"></i>
+                            </li>
+                            <li class="col col2">
+                                Orion
+                            </li>
+                            <li class="col col3">
+                                03:32
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="tv-footer-ltbar">
+                    <div class="wp">
+                        <button class="ico pull-left" id="prev"></button>
+                        <button class="ico pull-left" id="play"></button>
+                        <button class="ico pull-left" id="pause"></button>
+                        <button class="ico pull-left" id="next"></button>
+                    </div>
+                </div>
+                <div id="tv-footer-rtbar">
+                    <div class="wp">
+                        <div id="volume-ctrl" class="pull-left">
+                            <button id="volume-speaker" class="ico pull-left"></button>
+                            <div id="volume-holder" class="pull-left">
+                                <div id="volume-in"></div>
+                            </div>
+                        </div>
+                        <button id="tv-listbtn" class="ico"></button>
+                    </div>
+                </div>
+
+                <div id="tv-footer-mdbar">
+
+                    <div id="tv-prog">
+                        <div id="tv-prog-timer">
+                            <span id="t1">--:--</span><span id="t2">/</span><span id="t3">--:--</span>
+                        </div>
+                        <div id="tv-prog-title">
+                            郭德纲讲相声
+                        </div>
+                        <div id="tv-prog-seekbar" class="rr"></div>
+                        <div id="tv-prog-loaded" class="rr"></div>
+                    </div>
+                </div>
+
+                <!-- <div id="tv-footer-rtbar">
+
+                </div> -->
+            </div>
+            <div id="tv-main-container" class="layer">
+                <div id="tv-screen" class="layer text-center">
+                    <video id="tv-video-player" preload oncontextmenu="return false;">
+                        <source>
+                    </video>
+                </div>
+                <div id="tv-cover" class="layer">
+                    <button id="tv-fs-play-btn" class="empty-btn"></button>
+                    <button id="tv-fs-pause-btn" class="empty-btn"></button>
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>
