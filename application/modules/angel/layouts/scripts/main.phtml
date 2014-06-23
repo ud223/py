@@ -1,3 +1,10 @@
+<?php
+$user = null;
+if ($this->me) {
+    $user = $this->me->getUser();
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,10 +50,19 @@
                     <img id="tv-logo" src="../img/logo-sm.png"/>
                     <a href='javascript:void(0)' id="fullscreen" class="ico unvisiable"></a>
                     <div class="spliter" id="rt-spliter"></div>
-                    <div class="pull-right" id="profile-blk">
-                        <a href="javascript:void(0)" id="profile-txt"> <span>王啸</span> <i class="ico"></i> </a>
-                        <a href="javascript:void(0)" id="profile-img"><img src="http://img.36tr.com/avatar/20140424/53587efbcaaf1_100100.jpg"/></a>
-                    </div>
+                    <?php if ($user): ?>
+                        <div class="pull-right" id="profile-blk">
+                            <a href="javascript:void(0)" id="profile-txt"> <span>王啸</span> <i class="ico"></i> </a>
+                            <a href="javascript:void(0)" id="profile-img"><img src="http://img.36tr.com/avatar/20140424/53587efbcaaf1_100100.jpg"/></a>
+                        </div>
+                    <?php else: ?>
+                    <div class="pull-right" id="login-and-register-blk">
+                            <a href="<?php echo $this->url(array(), 'login') ?>">登录</a>
+                            <span> - or - </span>
+                            <a href="<?php echo $this->url(array(), 'register') ?>">注册</a>
+                        </div>
+                    <?php endif; ?>
+
                     <div class="spliter" id="rt-spliter"></div>
                     <a href='javascript:void(0)' class="unvisiable" id="refresh"> <i class="ico"></i> 换一批 </a>
 
@@ -54,11 +70,11 @@
                         <li>
                             <a href="<?php echo $this->url(array(), 'reset-password') ?>"><i class='ico profile'></i> <span class="txt">重设密码</span></a>
                         </li>
-<!--                        <li>
-                            <a href="#"><i class='ico list'></i> <span class="txt">查看节目列表</span></a>
-                        </li>-->
+                        <!--                        <li>
+                                                    <a href="#"><i class='ico list'></i> <span class="txt">查看节目列表</span></a>
+                                                </li>-->
                         <li class="hspliter">
-                            <a href="#"><i class='ico logout'></i> <span class="txt">退出登录</span></a>
+                            <a href="<?php echo $this->url(array(), 'logout') ?>"><i class='ico logout'></i> <span class="txt">退出登录</span></a>
                         </li>
                     </ul>
                 </div>
@@ -71,7 +87,7 @@
 
 
 
-        
+
     </body>
 </html>
 
