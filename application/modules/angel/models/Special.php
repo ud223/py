@@ -15,15 +15,15 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
     protected $_document_class = '\Documents\Special';
     protected $_author_class = '\Documents\Author';
     
-    public function addSpecial($special_name, $author_id, $cover_path, $photo, $programs_id) {
-        $data = array("special_name" => $special_name, "author_id" => $author_id, "cover_path" => $cover_path, "photo" => $photo, "programs_id"=>$programs_id);
+    public function addSpecial($special_name, $author_id, $photo, $programs_id, $category_id) {
+        $data = array("special_name" => $special_name, "author_id" => $author_id, "photo" => $photo, "programs_id"=>$programs_id, "category_id"=>$category_id);
         $result = $this->add($data);
         
         return $result;
     }
 
-    public function saveSpecial($id, $special_name, $author_id, $cover_path, $photo, $programs_id) {
-        $data = array("special_name" => $special_name, "author_id" => $author_id, "cover_path" => $cover_path, "photo" => $photo, "programs_id"=>$programs_id);
+    public function saveSpecial($id, $special_name, $author_id, $photo, $programs_id) {
+        $data = array("special_name" => $special_name, "author_id" => $author_id, "photo" => $photo, "programs_id"=>$programs_id);
         $result = $this->save($id, $data);
         
         return $result;
@@ -59,24 +59,38 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getOwnProgramID() {
-        $OwnPrograms_ID = null;
+    public function getOwnProgramId() {
+        $ownProgramsId = null;
         $result = null;
         $result = $this->_dm->createQueryBuilder($this->_document_class)
             ->getQuery()
             ->execute();
         
         foreach ($result as $special) {
-            if (strpos($OwnPrograms_ID, $special->id) > -1) {
+            if (strpos($ownProgramsId, $special->id) > -1) {
                 continue;
                 
-                if ($OwnPrograms_ID == null)
-                    $OwnPrograms_ID = $OwnPrograms_ID . ",";
+                if ($ownProgramsId == null)
+                    $OwnPrograms_ID = $ownProgramsId . ",";
                 
-                $OwnPrograms_ID = $OwnPrograms_ID . $special->id;
+                $ownProgramsId = $ownProgramsId . $special->id;
             }
         }
         
         return $OwnPrograms_ID;
+    }
+    
+    public function getNotRecommendSpecial($recommend_IDs) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('id')->notIn($recommend_IDs)->sort('created_at', -1);
+        
+        $result = null;
+        
+        $result = $query
+                ->limit(1)
+                ->getQuery()
+                ->execute();
+        
+        return $result;
     }
 }
