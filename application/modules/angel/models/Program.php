@@ -169,18 +169,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         
         return $result;
     }
-    
-    public function getAll() {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-        
-        $result = null;
-        
-        $result = $query
-                ->getQuery()
-                ->execute();
-        
-        return $result;
-    }
+
 
 //    public function getProgramByKeyword($keyword_id,  $return_as_paginator = true) {
 //        $query = $this->_dm->createQueryBuilder($this->_document_class)
