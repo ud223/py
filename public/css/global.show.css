@@ -798,6 +798,12 @@ h3 {
 #tv #tv-frame .board .content .row button:hover {
     background:#FFD800;
 }
+
+
+.sign-gotmsg {
+    margin:0 0 15px 0;
+}
+
 /*
  *	untitle id & class
  * */

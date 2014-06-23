@@ -68,6 +68,10 @@ Plugin Css
     padding:5px 12px;
     text-shadow:none;
 }
+.border-btn.border-btn-lg {
+    font-size:15px;
+    padding:5px 15px;
+}
 .border-btn.border-btn-sm {
     font-size:13px;
     padding:3px 10px;

@@ -223,7 +223,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                     } else if ($userType == 'admin') {
                         $result = $userModel->addManageUser($email, $password, Zend_Session::getId(), false);
                     } else {
-                        throw new Exception("非法请求");
+                        $error = "invalid request";
                     }
                 }
             } catch (Angel_Exception_User $e) {
