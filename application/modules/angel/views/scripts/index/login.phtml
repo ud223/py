@@ -5,15 +5,17 @@
             <a href="<?php echo $this->url(array(), 'register') ?>">10秒注册</a>
         </div>
         <div class="content">
-            <div class="row">
-                <input type="text" placeholder="用户邮箱" id="email"/>
-            </div>
-            <div class="row">
-                <input type="password" placeholder="登录密码" id="password"/>
-            </div>
-            <div class="row">
-                <button type="button" id="confirm-btn">登录</button>
-            </div>
+            <form method="post">
+                <div class="row">
+                    <input type="text" placeholder="用户邮箱" id="email" name="email"/>
+                </div>
+                <div class="row">
+                    <input type="password" placeholder="登录密码" id="password" name="password"/>
+                </div>
+                <div class="row">
+                    <button type="submit" id="confirm-btn">登录</button>
+                </div>
+            </form>
         </div>
         <div class="bottom">
             <a href="<?php echo $this->url(array(), 'forgot-password') ?>">忘记密码？</a>
