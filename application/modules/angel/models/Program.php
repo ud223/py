@@ -21,7 +21,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $owner) {
+    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $owner, $keywords_id) {
         $result = false;
 
         $program = new $this->_document_class();
@@ -40,6 +40,8 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->status = $status;
         $program->category = $category;
         $program->owner = $owner;
+        $program->keywordsId = $keywords_id;
+        
         try {
             $this->_dm->persist($program);
             $this->_dm->flush();
@@ -69,7 +71,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category) {
+    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $keywords_id) {
         $result = false;
 
         $program = $this->getById($id);
@@ -93,6 +95,8 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->description = $description;
         $program->status = $status;
         $program->category = $category;
+        $program->keywordsId = $keywords_id;
+        
         try {
             $this->_dm->persist($program);
             $this->_dm->flush();
@@ -157,7 +161,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getProgramBySpecial($SpecialOwnProgram_IDs) {
+    public function getProgramBySpecialId($SpecialOwnProgram_IDs) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->in($SpecialOwnProgram_IDs)->sort('created_at', -1);
         
