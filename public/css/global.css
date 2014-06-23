@@ -40,3 +40,40 @@ Common css
 .P_tmp {
     display:none;
 }
+
+/*
+Plugin Css
+*/
+
+.paper {
+    border-radius:3px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.1);
+    box-sizing:border-box;
+    line-height:22px;
+    padding:12px;
+}
+.paper.paper-danger {
+    background:#DF4946;
+}
+.paper.paper-success {
+    background:#04CC54;
+}
+
+
+.border-btn {
+    border:2px solid #FFF;
+    border-radius:3px;
+    color:#FFF !important;
+    font-size:14px;
+    padding:5px 12px;
+    text-shadow:none;
+}
+.border-btn.border-btn-sm {
+    font-size:13px;
+    padding:3px 10px;
+}
+.border-btn.border-btn-xs {
+    border-width:1px;
+    font-size:12px;
+    padding:1px 6px;
+}

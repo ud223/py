@@ -234,13 +234,13 @@ class Angel_Controller_Action extends Zend_Controller_Action {
             } else {
                 $this->view->error = $error;
             }
-        } else {
-            // GET METHOD
-            $this->view->title = $pageTitle;
         }
+        // GET METHOD
+        $this->view->title = $pageTitle;
     }
 
     protected function userLogin($defaultRedirectRoute, $pageTitle) {
+        $errorMsg = "登录失败，请重试或 &nbsp;&nbsp;<a href='" . $this->view->url(array(), 'forgot-password') . "' class='border-btn border-btn-xs'>找回密码</a>";
         if ($this->request->isPost()) {
             $email = $this->request->getParam('email');
             if ($email) {
@@ -255,7 +255,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                 $auth = $userModel->auth($email, $password);
 
                 $success = false;
-                $error = "登录失败，请重试或修改密码";
+                $error = $errorMsg;
                 if ($auth['valid'] === true) {
                     $ip = $this->getRealIpAddr();
                     $result = $userModel->updateLoginInfo($auth['msg'], $ip);
@@ -278,14 +278,14 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                 }
                 $this->_redirect($url);
             } else {
-                $this->view->error = "登录失败，请重试或修改密码";
+                $this->view->error = $errorMsg;
             }
         } else {
             if ($this->getParam('register') == 'success') {
                 $this->view->register = 'success';
             }
-            $this->view->title = $pageTitle;
         }
+        $this->view->title = $pageTitle;
     }
 
 }

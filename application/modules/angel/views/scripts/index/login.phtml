@@ -5,6 +5,18 @@
             <a href="<?php echo $this->url(array(), 'register') ?>">10秒注册</a>
         </div>
         <div class="content">
+
+            <?php if ($this->register): ?>
+                <div class="paper paper-success">
+                    <b class="glyphicon glyphicon-ok-sign"></b> 注册成功，请登录芝士电视
+                </div>
+            <?php endif; ?>
+            <?php if ($this->error): ?>
+                <div class="paper paper-danger">
+                    <b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>
+                </div>
+            <?php endif; ?>
+
             <form method="post">
                 <div class="row">
                     <input type="text" placeholder="用户邮箱" id="email" name="email"/>
@@ -22,3 +34,8 @@
         </div>
     </div>
 </div>
+<style>
+    .paper {
+        margin:0 0 15px 0;
+    }
+</style>
