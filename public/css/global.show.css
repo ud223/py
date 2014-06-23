@@ -230,6 +230,14 @@ h3 {
 #tv #profile-blk {
     padding-top: 7px;
 }
+#tv #login-and-register-blk {
+    height:50px;
+    line-height:50px;
+    margin:0 15px;
+}
+#tv #login-and-register-blk span {
+    opacity:0.4;
+}
 #tv #profile-img {
     background-color: #EEE;
     border-radius: 100px;
