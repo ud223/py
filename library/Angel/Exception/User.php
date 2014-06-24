@@ -24,6 +24,7 @@ class Angel_Exception_User extends Angel_Exception_Abstract{
     const PASSWORD_TOO_LONG = 'password_too_long';
     const EMAIL_NOT_EXIST = 'email_not_exist';
     const USERNAME_REQUIRED = 'username_required';
+    const USERNAME_NOT_UNIQUE = 'username_not_unique';
     const PHONE_REQUIRED = 'phone_required';
     
     private static $_user = null;
@@ -79,8 +80,10 @@ class Angel_Exception_User extends Angel_Exception_Abstract{
                 break;
             case self::PASSWORD_TOO_LONG:
                 return '密码太长，不能超过18位';
+                break;
             case self::PASSWORD_TOO_SHORT:
                 return '密码太短，至少需要6位';
+                break;
             case self::PHONE_REQUIRED:
                 return '必须提供一个可供联系的电话号码';
                 break;
@@ -94,7 +97,10 @@ class Angel_Exception_User extends Angel_Exception_Abstract{
                 return '用户身份不正确';
                 break;
             case self::USERNAME_REQUIRED:
-                return '必须提供真实姓名';
+                return '请输入一个用户名';
+                break;
+            case self::USERNAME_NOT_UNIQUE:
+                return '用户名已经存在, 请使用其他用户名';
                 break;
             default:
                 return '用户信息错误';   

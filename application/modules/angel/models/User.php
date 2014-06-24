@@ -55,6 +55,9 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
                 if ($this->isEmailExist($email)) {
                     throw new Angel_Exception_User(Angel_Exception_User::EMAIL_NOT_UNIQUE);
                 }
+                if ($this->isUsernameExist($username)) {
+                    throw new Angel_Exception_User(Angel_Exception_User::USERNAME_NOT_UNIQUE);
+                }
             }
         }
 
@@ -65,7 +68,6 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         $user->salt = $salt;
         $user->user_type = $usertype;
         $user->password = $password;
-        $user->password_src = $password;
         $user->active_bln = true;
         $user->email_validated_bln = !$checkemail;
         $user->validated_bln = false;
@@ -97,21 +99,41 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
      * @param string $email － 需要被检测的email地址
      * @return boolean 
      */
-    public function isEmailExist($email, $return_user_model = false) {
+    public function isEmailExist($email, $return_user_model=false){
         $result = false;
         $user = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('email')->equals($email)
-                ->getQuery()
-                ->getSingleResult();
-
-        if (!empty($user)) {
-            if ($return_user_model) {
+                          ->field('email')->equals($email)
+                          ->getQuery()
+                          ->getSingleResult();
+        
+        if(!empty($user)){
+            if($return_user_model){
                 $result = $user;
-            } else {
+            }
+            else{
                 $result = true;
             }
         }
-
+        
+        return $result;
+    }
+    
+    public function isUsernameExist($username, $return_user_model=false){
+        $result = false;
+        $user = $this->_dm->createQueryBuilder($this->_document_class)
+                          ->field('username')->equals($username)
+                          ->getQuery()
+                          ->getSingleResult();
+        
+        if(!empty($user)){
+            if($return_user_model){
+                $result = $user;
+            }
+            else{
+                $result = true;
+            }
+        }
+        
         return $result;
     }
 
@@ -360,10 +382,10 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         if (is_object($user)) {
             $password = substr(md5(uniqid(time(), true)), rand(0, 16), 8);
             $user->password = $password;
-
             $params = array("username" => $user->username, "password" => $password);
             $router = Zend_Controller_Front::getInstance()->getRouter();
             $params['url'] = $this->_bootstrap_options['site']['domainurl'] . $router->assemble(array(), 'login');
+            Angel_Model_Email::setCompanyName($this->_bootstrap_options['site']['name']);
             $result = Angel_Model_Email::sendEmail($this->_container->get('email'), Angel_Model_Email::EMAIL_FORGOT_PASSWORD, $user->email, $params);
 
             if ($result) {
