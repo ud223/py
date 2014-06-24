@@ -88,3 +88,40 @@ Plugin Css
     font-size:12px;
     padding:1px 6px;
 }
+
+/* RESET POPOVER (START) */
+.popover {
+    background:#333;
+    border-color:#222;
+    border-radius:4px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.05), 0 2px 8px rgba(0,0,0,0.2);
+}
+.popover-title {
+    background:rgba(0,0,0,0.1);
+    border-bottom:none;
+}
+.popover.left .arrow {
+    border-left-color:#222;
+}
+.popover.right .arrow {
+    border-right-color:#222;
+}
+.popover.left .arrow:after {
+    border-left-color:#333;
+}
+.popover.right .arrow:after {
+    border-right-color:#333;
+}
+.popover.top .arrow:after {
+    border-top-color:#333;
+}
+.popover.top .arrow:after {
+    border-top-color:#333;
+}
+.popover.bottom .arrow:after {
+    border-bottom-color:#333;
+}
+.popover.bottom .arrow:after {
+    border-bottom-color:#333;
+}
+/* RESET POPOVER (END) */

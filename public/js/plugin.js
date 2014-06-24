@@ -616,20 +616,13 @@
     /* LOADING (END) */
 
     /* VALIDATOR (START) */
-    $.fn.validator = function(options, content) {
+    $.fn.validator = function(options) {
         var settings = {
-//            type: 'danger',
-//            direction: 'right'
-        }
+//            type: 'danger'
+        };
         $.extend(settings, options);
-//        var accepted_type_class = {danger: 'paper-danger', success: 'paper-success', warning: 'paper-warning'};
-//        var accepted_direction = ['left', 'top', 'right', 'bottom'];
-//        if (!accepted_type_class[settings.type] || !inArray(settings.direction, accepted_direction))
-//            throw 'invalid type for validator';
-//        var container = $('<div>').addClass('paper');
-//        var $this = $(this);
-//        $this.remove('.paper').append(content);
-    }
+        
+    };
     /* VALIDATOR (END) */
 
     /* PAPER (START) */
@@ -649,12 +642,9 @@
             container.addClass(settings.additionalClass);
         var $this = $(this);
         $this.remove('.paper').prepend(container.html(content));
-    }
+    };
     /* PAPER (END) */
 
-    /* TIPPAPER (START) */
-
-    /* TIPPAPER (END) */
 })(jQuery);
 /*!
  * jQuery Cookie Plugin v1.3.1
