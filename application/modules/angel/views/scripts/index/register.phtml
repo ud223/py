@@ -6,11 +6,6 @@
                 <a href="<?php echo $this->url(array(), 'login') ?>">我是会员，直接登录</a>
             </div>
             <div class="content">
-                <?php if ($this->error): ?>
-                    <div class="sign-gotmsg paper paper-danger">
-                        <b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>
-                    </div>
-                <?php endif; ?>
                 <form method="post">
                     <div class="row">
                         <input type="text" autocomplete="off" placeholder="用户邮箱" id="email" name="email"/>
@@ -40,3 +35,8 @@
         padding:0;
     }
 </style>
+<script type='text/javascript'>
+<?php if ($this->error): ?>
+        $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>');
+<?php endif; ?>
+</script>

@@ -6,17 +6,6 @@
         </div>
         <div class="content">
 
-            <?php if ($this->register): ?>
-                <div class="sign-gotmsg paper paper-success">
-                    <b class="glyphicon glyphicon-ok-sign"></b> 注册成功，请登录芝士电视
-                </div>
-            <?php endif; ?>
-            <?php if ($this->error): ?>
-                <div class="sign-gotmsg paper paper-danger">
-                    <b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>
-                </div>
-            <?php endif; ?>
-
             <form method="post">
                 <div class="row">
                     <input type="text" autocomplete="off" placeholder="用户邮箱" id="email" name="email"/>
@@ -34,3 +23,12 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+<?php if ($this->register): ?>
+        $('.content').paper({type: 'success', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-ok-sign"></b> 注册成功，请登录芝士电视');
+<?php endif; ?>
+<?php if ($this->error): ?>
+        $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>');
+<?php endif; ?>
+</script>

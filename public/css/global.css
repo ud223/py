@@ -40,11 +40,13 @@ Common css
 .P_tmp {
     display:none;
 }
-
+button[disabled='disabled'], input[disabled='disabled'] {
+    opacity:0.5;
+}
 /*
 Plugin Css
 */
-
+/* PAPER (START) */
 .paper {
     border-radius:3px;
     box-shadow:0 1px 2px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.1);
@@ -58,7 +60,12 @@ Plugin Css
 .paper.paper-success {
     background:#04CC54;
 }
-
+.paper.paper-warning {
+    background:#FDF26B;
+    color:#C08200;
+    text-shadow:0 1px 0 rgba(255,255,255,0.7);
+}
+/* PAPER (END) */
 
 .border-btn {
     border:2px solid #FFF;

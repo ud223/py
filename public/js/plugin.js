@@ -597,7 +597,7 @@
         wp.attr('intid', intervalId);
     };
     $.rotateDiv = function(easing) {
-        if(!easing) {
+        if (!easing) {
             easing = 'linear';
         }
         $('.rotatediv').animate({
@@ -615,7 +615,46 @@
 
     /* LOADING (END) */
 
+    /* VALIDATOR (START) */
+    $.fn.validator = function(options, content) {
+        var settings = {
+//            type: 'danger',
+//            direction: 'right'
+        }
+        $.extend(settings, options);
+//        var accepted_type_class = {danger: 'paper-danger', success: 'paper-success', warning: 'paper-warning'};
+//        var accepted_direction = ['left', 'top', 'right', 'bottom'];
+//        if (!accepted_type_class[settings.type] || !inArray(settings.direction, accepted_direction))
+//            throw 'invalid type for validator';
+//        var container = $('<div>').addClass('paper');
+//        var $this = $(this);
+//        $this.remove('.paper').append(content);
+    }
+    /* VALIDATOR (END) */
 
+    /* PAPER (START) */
+    $.fn.paper = function(options, content) {
+        var settings = {
+            type: 'default',
+            additionalClass: ''
+        };
+        $.extend(settings, options);
+        var accepted_type_class = {'default': 'paper-default', 'danger': 'paper-danger', 'success': 'paper-success', 'warning': 'paper-warning'};
+        if (!accepted_type_class[settings.type])
+            throw 'invalid type for paper';
+        var container = $('<div>')
+                .addClass('paper')
+                .addClass(accepted_type_class[settings.type]);
+        if(settings.additionalClass)
+            container.addClass(settings.additionalClass);
+        var $this = $(this);
+        $this.remove('.paper').prepend(container.html(content));
+    }
+    /* PAPER (END) */
+
+    /* TIPPAPER (START) */
+
+    /* TIPPAPER (END) */
 })(jQuery);
 /*!
  * jQuery Cookie Plugin v1.3.1

@@ -76,7 +76,16 @@ Number.prototype.timeFormat = function() {
     var result = min + ":" + sec;
     return result;
 };
-
+function inArray(val, arr) {
+    var result = false;
+    for(var k in arr) {
+        if(arr[k] === val) {
+            result = true;
+            break;
+        }
+    }
+    return result;
+}
 (function($) {
 
     $.fn.clickToggle = function(option) {
