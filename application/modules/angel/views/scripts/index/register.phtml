@@ -1,30 +1,28 @@
 <div id="tv-frame">
     <div class="board">
-        <form method="post">
-            <div class="title">
-                <?php echo $this->title; ?>
-                <a href="<?php echo $this->url(array(), 'login') ?>">我是会员，直接登录</a>
-            </div>
-            <div class="content">
-                <form method="post">
-                    <div class="row">
-                        <input type="text" autocomplete="off" placeholder="用户邮箱" id="email" name="email"/>
-                    </div>
-                    <div class="row">
-                        <input type="text" autocomplete="off" placeholder="用户名" id="username" name="username"/>
-                    </div>
-                    <div class="row">
-                        <input type="password" autocomplete="off" placeholder="登录密码" id="password" name="password"/>
-                    </div>
-                    <div class="half-row">
-                        <input type="checkbox" name="is-agree" id="is-aggree"><label for="is-aggree">我已阅读并接受<a href="#">《芝士电视用户协议》</a></label>
-                    </div>
-                    <div class="row">
-                        <button type="submit" id="confirm-btn">注册</button>
-                    </div>
-                </form>
-            </div>
-        </form>
+        <div class="title">
+            <?php echo $this->title; ?>
+            <a href="<?php echo $this->url(array(), 'login') ?>">我是会员，直接登录</a>
+        </div>
+        <div class="content">
+            <form method="post" id="validate-form">
+                <div class="row">
+                    <input type="text" autocomplete="off" placeholder="用户邮箱" id="email" name="email" class="required email" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
+                </div>
+                <div class="row">
+                    <input type="text" autocomplete="off" placeholder="用户名" id="username" name="username" class="required" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
+                </div>
+                <div class="row">
+                    <input type="password" autocomplete="off" placeholder="登录密码" id="password" name="password" class="required" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
+                </div>
+                <div class="half-row">
+                    <input type="checkbox" name="is-agree" id="is-aggree" class="required" data-toggle="popover" data-trigger ="manual" data-placement="left"><label for="is-aggree">我已阅读并接受<a href="#">《芝士电视用户协议》</a></label>
+                </div>
+                <div class="row">
+                    <button type="submit" id="confirm-btn">注册</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <style>
@@ -34,10 +32,44 @@
         margin:0 5px 0 0;
         padding:0;
     }
+    .half-row .popover {
+        
+    }
 </style>
 <script type='text/javascript'>
+    $(document).ready(function() {
 <?php if ($this->error): ?>
-        $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>');
+            $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>');
 <?php endif; ?>
-
+//        $("#validate-form").validate();
+        $("#validate-form").validate({
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 4
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                email: {
+                    remote: {
+                        url: "/isemailcanbeused",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            email: function() {
+                                return $('#email').val();
+                            }
+                        }
+                    }
+                }
+            },
+            messages: {
+                email: {
+                    remote: "该邮箱已经存在，请更换其他邮箱或者直接登录"
+                }
+            }
+        });
+    });
 </script>

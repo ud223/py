@@ -6,12 +6,12 @@
         </div>
         <div class="content">
 
-            <form method="post">
+            <form method="post" id="validate-form">
                 <div class="row">
-                    <input type="text" autocomplete="off" placeholder="用户邮箱" id="email" name="email"/>
+                    <input type="text" autocomplete="off" placeholder="用户邮箱" id="email" name="email" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
                 </div>
                 <div class="row">
-                    <input type="password" autocomplete="off" placeholder="登录密码" id="password" name="password"/>
+                    <input type="password" autocomplete="off" placeholder="登录密码" id="password" name="password" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
                 </div>
                 <div class="row">
                     <button type="submit" id="confirm-btn">登录</button>
@@ -25,10 +25,25 @@
 </div>
 
 <script type="text/javascript">
+    $(document).ready(function() {
 <?php if ($this->register): ?>
-        $('.content').paper({type: 'success', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-ok-sign"></b> 注册成功，请登录芝士电视');
+            $('.content').paper({type: 'success', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-ok-sign"></b> 注册成功，请登录芝士电视');
 <?php endif; ?>
 <?php if ($this->error): ?>
-        $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>');
+            $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>');
 <?php endif; ?>
+    });
+
+    $("#validate-form").validate({
+        rules: {
+            "password": {
+                required: true,
+                minlength: 6
+            },
+            "email": {
+                required: true,
+                email: true
+            }
+        }
+    });
 </script>

@@ -616,13 +616,7 @@
     /* LOADING (END) */
 
     /* VALIDATOR (START) */
-    $.fn.validator = function(options) {
-        var settings = {
-//            type: 'danger'
-        };
-        $.extend(settings, options);
-        
-    };
+
     /* VALIDATOR (END) */
 
     /* PAPER (START) */
@@ -638,7 +632,7 @@
         var container = $('<div>')
                 .addClass('paper')
                 .addClass(accepted_type_class[settings.type]);
-        if(settings.additionalClass)
+        if (settings.additionalClass)
             container.addClass(settings.additionalClass);
         var $this = $(this);
         $this.remove('.paper').prepend(container.html(content));
