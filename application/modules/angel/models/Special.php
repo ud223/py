@@ -132,7 +132,7 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
                 ->execute()
                 ->getSingleResult();
 
-        if (!empty($special))
+        if (!empty($result))
             return false;
         
         return $result;
