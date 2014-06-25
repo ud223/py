@@ -6,27 +6,27 @@
         <form role="form" method="post">
             <div class="form-group">
                 <label>专辑：</label>
-                <input type="text" class="form-control" id="name" name="special_name" data-toggle="popover" value="<?php echo $this->model->special_name ?>">
+                <input type="text" class="form-control" id="name" name="name" data-toggle="popover" value="<?php echo $this->model->name ?>">
             </div>
             <div class="form-group">
                 <label>作者：</label>
-                <!--input type="text" class="form-control" id="description" name="attributes" data-toggle="popover" value="<?php //echo $this->keyword->attributes ?>"-->
-                <select id="author_id">
+                
+                <select id="authorId">
                     <option value="">作者</option>
                     <?php foreach ($this->authors as $author): ?>
-                        <option value="<?php echo $author->id ?>" <?php if ($this->model->author_id == $author->id) { echo "selected='selected'";}  ?>>
+                        <option value="<?php echo $author->id ?>" <?php if ($this->model->authorId == $author->id) { echo "selected='selected'";}  ?>>
                             <?php
                                 echo $author->name;
                             ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
+                
                 <label>分类：</label>
-                <!--input type="text" class="form-control" id="description" name="attributes" data-toggle="popover" value="<?php //echo $this->keyword->attributes ?>"-->
-                <select id="category_id" name="category_id" value="">
+                <select id="categoryId" name="categoryId" value="">
                     <option value="">分类</option>
                     <?php foreach ($this->categorys as $category): ?>
-                        <option value="<?php echo $category->id ?>">
+                        <option value="<?php echo $category->id ?>" <?php if ($this->model->categoryId == $category->id) { echo "selected='selected'"; }  ?>>
                             <?php
                                 echo $category->name;
                             ?>
@@ -34,6 +34,7 @@
                     <?php endforeach; ?>
                 </select>
             </div>
+
             <div class="form-group">
                 <label>专辑图片：</label>
                 <div class='panel panel-info'>
@@ -43,8 +44,9 @@
                 <input type="hidden" name="photo" id="photo"/>
             </div>
             <div class="form-group">
+                <label>节目：</label>
                 <?php foreach ($this->programs as $program): ?>
-                    <input type="checkbox" name="programs[]" value="<?php echo $program->id ?>" <?php if (strpos($this->model->programs_id, $program->id) > -1) { echo "checked='checked'"; } else { echo $this->model->programs_id; } ?>> <?php echo $program->name ?><br>
+                    <input type="checkbox" name="programs[]" value="<?php echo $program->id ?>" <?php if (strpos($this->model->programsId, $program->id) > -1) { echo "checked='checked'"; } ?>> <?php echo $program->name ?><br>
                 <?php endforeach; ?>
             </div>
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
@@ -53,10 +55,15 @@
 </div>
 <script type="text/javascript">
     (function($) {
-       // console.log(<?php //echo $this->model->photo ?>);
-        $('.gy-photo').photoSelector(false, <?php echo json_encode($this->model->photo) ?>);
+        $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
+        
         $('#save-btn').click(function() {
-            
+            var save = $('#gy-photo').attr('save');
+            if (!save || save === '{}') {
+                $('#photo').val('');
+            } else {
+                $('#photo').val(save);
+            }
         });
     })(jQuery);
 </script>

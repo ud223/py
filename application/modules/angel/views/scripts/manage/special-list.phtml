@@ -22,10 +22,10 @@ $model = $this->model;
     <?php foreach ($this->resource as $p): ?>
         <div class="col-md-2 itm">
             <div class="paddingbox20px relative">
-                <p><?php echo $p['special_name'] ?> | <?php echo $p['$author_id'] ?></p>
+                <p><?php echo $p['name'] ?> </p>
                 <div class="btn-group">
                     <a type="button" href="<?php echo $this->url(array(id => $p["id"]), 'manage-special-save') ?>" class="btn btn-info btn-sm">编辑</a>
-                    <button type="button" class="btn btn-danger btn-sm remove-keyword">删除</button>
+                    <button type="button" class="btn btn-danger btn-sm remove-special">删除</button>
                 </div>
                 <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
             </div>
@@ -39,7 +39,7 @@ $model = $this->model;
 </div>
 <script type="text/javascript">
     (function($) {
-        $('.remove-keyword').click(function() {
+        $('.remove-special').click(function() {
             removeObject($(this), '<?php echo $this->url(array(), 'manage-special-remove') ?>');
         });
     })(jQuery);

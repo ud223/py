@@ -97,8 +97,9 @@ $model = $this->model;
                 <textarea row="10" class="form-control" id="description" name="description"><?php echo $model->description ?></textarea>
             </div>
             <div class="form-group">
+                <label>关键词：</label>
                 <?php foreach ($this->keywords as $keyword): ?>
-                    <input type="checkbox" name="keywords[]" value="<?php echo $keyword->id ?>"> <?php echo $keyword->keycode ?><br>
+                    <input type="checkbox" name="keywords[]" value="<?php echo $keyword->id ?>" <?php if (strpos($this->model->keyWordIds, $keyword->id) > -1) { echo "checked='checked'"; } ?>> <?php echo $keyword->name ?><br>
                 <?php endforeach; ?>
             </div>
             <?php if ($model->oss_video || $model->oss_video): ?>
@@ -135,26 +136,6 @@ $model = $this->model;
                     <?php endforeach; ?>
                 </select>
             </div>
-            <div class="form-group">
-                <label>节目分类：</label>                
-                <select id="category" name="category" value="<?php echo $this->model->category->id ?>">
-                    <option value="">无分类</option>
-                    <?php foreach ($this->category as $c): ?>
-                        <option value="<?php echo $c->id ?>">
-                            <?php
-                            $prefix = "--";
-                            if ($c->level) {
-                                for ($i = 0; $i < $c->level; $i++) {
-                                    $prefix = $prefix . " -- ";
-                                }
-                            }
-                            echo $prefix;
-                            ?>
-                            <?php echo $c->name ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
 
         </form>
@@ -168,9 +149,11 @@ $model = $this->model;
         $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
         $('#status').setSelectValue();
         $('#author').setSelectValue();
-        $('#category').setSelectValue();
+//        $('#category').setSelectValue();
         $('#oss_audio').setSelectValue();
         $('#oss_video').setSelectValue();
+        
+  //      $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
 
         $('#save-btn').click(function() {
             var save = $('#gy-photo').attr('save');

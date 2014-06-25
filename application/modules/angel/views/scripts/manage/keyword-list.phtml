@@ -22,7 +22,7 @@ $model = $this->model;
     <?php foreach ($this->resource as $p): ?>
         <div class="col-md-2 itm">
             <div class="paddingbox20px relative">
-                <p><?php echo $p['keycode'] ?> | <?php echo $p['attributes'] ?></p>
+                <p><?php echo $p['name'] ?></p>
                 <div class="btn-group">
                     <a type="button" href="<?php echo $this->url(array(id => $p["id"]), 'manage-keyword-save') ?>" class="btn btn-info btn-sm">编辑</a>
                     <button type="button" class="btn btn-danger btn-sm remove-keyword">删除</button>

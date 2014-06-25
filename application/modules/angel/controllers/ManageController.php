@@ -85,7 +85,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
         $ossModel = $this->getModel('oss');
-        $keywordModel = $this->getModel('keyword');
+        $keyWordModel = $this->getModel('keyword');
         
         if ($this->request->isPost()) {
             // POST METHOD
@@ -98,19 +98,18 @@ class Angel_ManageController extends Angel_Controller_Action {
             $status = $this->request->getParam('status');
             $description = $this->request->getParam('description');
             $photo = $this->decodePhoto();
-            $categoryId = $this->request->getParam('category');
+         //   $categoryId = $this->request->getParam('category');
             
-            $keywordsId = $this->request->getParam('keywords');
+            $keyWordIds = $this->request->getParam('keywords');
+           
+            $tmpKeyWordIds = null;
 
-            $keywords_id = null;
+            foreach ($keyWordIds as $keyWordId) {
+                if ($tmpKeyWordIds != NULL)
+                    $tmpKeyWordIds = $tmpKeyWordIds . ',';
 
-            foreach ($keywordsId as $keywordId) {
-                if ($keywords_id != NULL)
-                    $keywords_id = $keywords_id . ',';
-
-                $keywords_id = $keywords_id . $keywordId;
+                $tmpKeyWordIds = $tmpKeyWordIds . $keyWordId;
             }
-            
             
             $result = false;
             $error = "";
@@ -145,7 +144,9 @@ class Angel_ManageController extends Angel_Controller_Action {
                         $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound category"');
                     }
                 }
-                $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $owner, $keywords_id);
+                 
+                $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $tmpKeyWordIds);
+                
             } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
@@ -158,13 +159,13 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
+            
             $this->view->title = "创建节目";
             $this->view->separator = $this->SEPARATOR;
             $this->view->author = $authorModel->getAll();
             $this->view->oss_audio = $ossModel->getBy(false, array('type' => 'audio'));
-            $this->view->oss_video = $ossModel->getBy(false, array('type' => 'video'));
-            $this->view->category = $categoryModel->getAll();
-            $this->view->keywords = $keywordModel->getAll();
+            $this->view->oss_video = $ossModel->getBy(false, array('type' => 'video'));         
+            $this->view->keywords = $keyWordModel->getAll();
         }
     }
 
@@ -174,9 +175,11 @@ class Angel_ManageController extends Angel_Controller_Action {
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
         $ossModel = $this->getModel('oss');
+        $keyWordModel = $this->getModel('keyword'); 
 
         if ($this->request->isPost()) {
             // POST METHOD
+            
             $name = $this->request->getParam('name');
             $sub_title = $this->request->getParam('sub_title');
             $ossVideoId = $this->request->getParam('oss_video');
@@ -186,19 +189,17 @@ class Angel_ManageController extends Angel_Controller_Action {
             $status = $this->request->getParam('status');
             $description = $this->request->getParam('description');
             $photo = $this->decodePhoto();
-            $categoryId = $this->request->getParam('category');
-            
-            $keywordsId = $this->request->getParam('keywords');
+         //   $categoryId = $this->request->getParam('category');
+            $keyWordIds = $this->request->getParam('keywords');
+            $tmpKeyWordIds = null;
 
-            $keywords_id = null;
+            foreach ($keyWordIds as $keyWordId) {
+                if ($tmpKeyWordIds != NULL)
+                    $tmpKeyWordIds = $tmpKeyWordIds . ',';
 
-            foreach ($keywordsId as $keywordId) {
-                if ($keywords_id != NULL)
-                    $keywords_id = $keywords_id . ',';
-
-                $keywords_id = $keywords_id . $keywordId;
+                $tmpKeyWordIds = $tmpKeyWordIds . $keyWordId;
             }
-            
+             
             $result = false;
             $error = "";
 
@@ -234,9 +235,9 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
                 if ($copy) {
                     $owner = $this->me->getUser();
-                    $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $owner, $keywords_id);
+                    $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $tmpKeyWordIds);
                 } else {
-                    $result = $programModel->saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $keywords_id);
+                    $result = $programModel->saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $tmpKeyWordIds);
                 }
             } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
@@ -254,7 +255,8 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             $this->view->title = "编辑节目";
             $this->view->separator = $this->SEPARATOR;
-
+            $this->view->keywords = $keyWordModel->getAll();
+            
             if ($id) {
                 $programModel = $this->getModel('program');
                 $photoModel = $this->getModel('photo');
@@ -1023,16 +1025,15 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
 
     public function keywordCreateAction() {
-        $keywordModel = $this->getModel('keyword');
+        $keyWordModel = $this->getModel('keyword');
 
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
-            $keycode = $this->request->getParam('keycode');
-            $attributes = $this->request->getParam('attributes');
+            $name = $this->request->getParam('name');
 
             try {
-                $result = $keywordModel->addKeyword($keycode, $attributes);
+                $result = $keyWordModel->addKeyWord($name);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
@@ -1044,31 +1045,28 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             // GET METHOD
             $this->view->title = "创建关键词";
-            $this->view->Keywords = $keywordModel->getAll();
         }
     }
 
     public function keywordListAction() {
-        $keywordModel = $this->getModel('keyword');
+        $keyWordModel = $this->getModel('keyword');
         $page = $this->request->getParam('page');
 
         if (!$page) {
             $page = 1;
         }
 
-        $root = $keywordModel->getRoot();
-        $paginator = $keywordModel->getAll();
+        $root = $keyWordModel->getRoot();
+        $paginator = $keyWordModel->getAll();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
 
-//        if (count($root)) {
         $resource = array();
 
         foreach ($root as $r) {
             $resource[] = array(
                 'id' => $r->id,
-                'keycode' => $r->keycode,
-                'attributes' => $r->attributes
+                'name' => $r->name
             );
         }
         // JSON FORMAT
@@ -1080,7 +1078,6 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->title = "关键词列表";
             $this->view->paginator = $paginator;
         }
-//        }
     }
 
     public function keywordRemoveAction() {
@@ -1088,28 +1085,29 @@ class Angel_ManageController extends Angel_Controller_Action {
             $result = 0;
             // POST METHOD
             $id = $this->getParam('id');
+            
             if ($id) {
-                $keywordModel = $this->getModel('keyword');
-                $result = $keywordModel->remove($id);
+                $keyWordModel = $this->getModel('keyword');
+                $result = $keyWordModel->remove($id);
             }
-            // $result;
+            
+            echo $result;
             exit;
         }
     }
 
     public function keywordSaveAction() {
         $notFoundMsg = '未找到目标分类';
-        $keywordModel = $this->getModel('keyword');
+        $keyWordModel = $this->getModel('keyword');
 
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
             $id = $this->request->getParam('id');
-            $keycode = $this->request->getParam('keycode');
-            $attributes = $this->request->getParam('attributes');
+            $name = $this->request->getParam('name');
 
             try {
-                $result = $keywordModel->saveKeyword($id, $keycode, $attributes);
+                $result = $keyWordModel->saveKeyword($id, $name);
             } catch (Angel_Exception_Keyword $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
@@ -1123,16 +1121,15 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             // GET METHOD
             $this->view->title = "编辑关键词";
-//            $this->view->keywords = $keywordModel->getAll();
-
             $id = $this->request->getParam("id");
 
             if ($id) {
-//                $keywordModel = $this->getModel('keyword');
-                $target = $keywordModel->getById($id);
+                $target = $keyWordModel->getById($id);
+                
                 if (!$target) {
                     $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
                 }
+                
                 $this->view->model = $target;
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
@@ -1151,23 +1148,23 @@ class Angel_ManageController extends Angel_Controller_Action {
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
-            $special_name = $this->request->getParam('special_name');
-            $author_id = $this->request->getParam('author_id');
+            $name = $this->request->getParam('name');
+            $authorId = $this->request->getParam('authorId');
             $photo = $this->decodePhoto();
-            $own_programs = $this->request->getParam('programs');
-            $category_id = $this->request->getParam('category_id');
+            $programIds = $this->request->getParam('programs');
+            $categoryId = $this->request->getParam('categoryId');
 
-            $programs_id = null;
+            $tmpProgramIds = null;
 
-            foreach ($own_programs as $program) {
-                if ($programs_id != NULL)
-                    $programs_id = $programs_id . ',';
+            foreach ($programIds as $programId) {
+                if ($tmpProgramIds != NULL)
+                    $tmpProgramIds = $tmpProgramIds . ',';
 
-                $programs_id = $programs_id . $program;
+                $tmpProgramIds = $tmpProgramIds . $programId;
             }
 
             try {
-                $result = $specialModel->addSpecial($special_name, $author_id, $photo, $programs_id, $category_id);
+                $result = $specialModel->addSpecial($name, $authorId, $photo, $tmpProgramIds, $categoryId);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
@@ -1181,20 +1178,20 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             $result = $specialModel->getRoot();
 
-            $ownprogram_IDs = "";
+            $ownProgramIds = "";
 
             foreach ($result as $special) {
-                if ($ownprogram_IDs != "")
-                    $ownprogram_IDs = $ownprogram_IDs . ",";
+                if ($ownProgramIds != "")
+                    $ownProgramIds = $ownProgramIds . ",";
 
-                $ownprogram_IDs = $ownprogram_IDs . $special->programs_id;
+                $ownProgramIds = $ownProgramIds . $special->programsId;
             }
 
-            $program_ids = explode(",", $ownprogram_IDs);
+            $programIds = explode(",", $ownProgramIds);
 
             $this->view->title = "创建专辑";
             $this->view->authors = $authorModel->getAll();
-            $this->view->programs = $programModel->getProgramNotOwn($program_ids);
+            $this->view->programs = $programModel->getProgramNotOwn($programIds);
             $this->view->categorys = $categoryModel->getRoot();
         }
     }
@@ -1217,11 +1214,11 @@ class Angel_ManageController extends Angel_Controller_Action {
         foreach ($root as $r) {
             $resource[] = array(
                 'id' => $r->id,
-                'special_name' => $r->special_name,
-                'author_id' => $r->author_id,
-                'cover_path' => $r->cover_path
+                'name' => $r->name//,
+               // 'photo' => $r->cover_path
             );
         }
+        
         // JSON FORMAT
         if ($this->getParam('format') == 'json') {
             $this->_helper->json(array('data' => $resource,
@@ -1242,7 +1239,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $specialModel = $this->getModel('special');
                 $result = $specialModel->remove($id);
             }
-            // $result;
+            echo $result;
             exit;
         }
     }
@@ -1258,27 +1255,29 @@ class Angel_ManageController extends Angel_Controller_Action {
             $result = 0;
             // POST METHOD
             $id = $this->request->getParam('id');
-            $special_name = $this->request->getParam('special_name');
-            $author_id = $this->request->getParam('author_id');
+            $name = $this->request->getParam('name');
+            $authorId = $this->request->getParam('authorId');
             $photo = $this->decodePhoto();
-            $own_programs = $this->request->getParam('programs');
+            $programIds = $this->request->getParam('programs');
+            $categoryId = $this->request->getParam('categoryId');
+            
+            $tmpProgramIds = null;
+            
+            foreach ($programIds as $programId) {
+                if ($tmpProgramIds != NULL)
+                    $tmpProgramIds = $tmpProgramIds . ',';
 
-            $programs_id = null;
-
-            foreach ($own_programs as $program) {
-                if ($programs_id != NULL)
-                    $programs_id = $programs_id . ',';
-
-                $programs_id = $programs_id . $program;
+                $tmpProgramIds = $tmpProgramIds . $programId;
             }
-
+           
             try {
-                $result = $specialModel->saveSpecial($special_name, $author_id, $photo, $programs_id);
+                $result = $specialModel->saveSpecial($id, $name, $authorId, $photo, $tmpProgramIds, $categoryId);
             } catch (Angel_Exception_Special $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
+            
             if ($result) {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-special-list-home'));
             } else {
@@ -1291,32 +1290,53 @@ class Angel_ManageController extends Angel_Controller_Action {
             $id = $this->request->getParam("id");
 
             if ($id) {
-                //      $specialModel = $this->getModel('keyword');
+                
                 $target = $specialModel->getById($id);
+                
                 if (!$target) {
                     $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
                 }
 
                 //get all special's programs_id
                 $result = $specialModel->getRoot();
-
-                $ownprogram_IDs = "";
+                
+                $ownProgramIds = "";
 
                 foreach ($result as $special) {
                     if ($special->id == $target->id)
                         continue;
 
-                    if ($ownprogram_IDs != "")
-                        $ownprogram_IDs = $ownprogram_IDs . ",";
+                    if ($ownProgramIds != "")
+                        $ownProgramIds = $ownProgramIds . ",";
 
-                    $ownprogram_IDs = $ownprogram_IDs . $special->programs_id;
+                    $ownProgramIds = $ownProgramIds . $special->programsId;
                 }
 
-                $program_ids = explode(",", $ownprogram_IDs);
+                $programIds = explode(",", $ownProgramIds);
 
                 $this->view->model = $target;
+                $photo = $target->photo;
+                if ($photo) {
+                    $saveObj = array();
+                    foreach ($photo as $p) {
+                        try {
+                            $name = $p->name;
+                        } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                            $this->view->imageBroken = true;
+                            continue;
+                        }
+                        $saveObj[$name] = $this->view->photoImage($p->name . $p->type, 'small');
+                        if (!$p->thumbnail) {
+                            $saveObj[$name] = $this->view->photoImage($p->name . $p->type);
+                        }
+                    }
+                    if (!count($saveObj))
+                        $saveObj = false;
+                    $this->view->photo = $saveObj;
+                }
+                
                 $this->view->authors = $authorModel->getAll();
-                $this->view->programs = $programModel->getProgramNotOwn($program_ids);
+                $this->view->programs = $programModel->getProgramNotOwn($ownProgramIds);
                 $this->view->categorys = $categoryModel->getRoot();
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
@@ -1329,24 +1349,82 @@ class Angel_ManageController extends Angel_Controller_Action {
         $recommendModel = $this->getModel('recommend');
         $programModel = $this->getModel('program');
         $authorModel = $this->getModel('author');
+        $categoryModel = $this->getModel('category');
         
         $time = $this->request->getParam('time');
 
         //获取当前需要推荐的用户ID
-        $user_id = $this->me->getUser()->id;
+        $userId = $this->me->getUser()->id;
         //获取该用户已经推荐过的专辑ID集合
-        $recommend_IDs = $recommendModel->getRecommendIds($user_id);
-        //获取一个没有推荐过的专辑
-        $special = $specialModel->getNotRecommendSpecial($recommend_IDs);
+        $recommends = $recommendModel->getRecommendIds($userId);
+        
+        $special = null;
+        $recommendIds = null;
+        //获取推荐专辑的次数
+        $viewCount = count($recommends);
+ 
+        if ($viewCount <  100) {
+            $recommendIds = "";
+            //获取一个没有推荐过的专辑
+            $specials = $specialModel->getNotRecommendSpecial($recommendIds);
+        }
+        else {
+            //将该用户推荐过的专辑id拼接成 id，id的条件形式
+            foreach ($recommends as $recommend) {
+                if ($recommendIds != "")
+                    $recommendIds = $recommendIds . ",";
+
+                $recommendIds = $recommendIds . $recommend->specialId;
+            }
+            //获取推荐过的专辑集合
+            $tmpSpecials = $specialModel->getByIds($recommendIds);
+            
+            $categoryCount = array();
+            //整理推荐过专辑的集合分类id
+            foreach ($tmpSpecials as $special) {
+                array_push($categoryCount, $special->$categoryId);
+            }
+            
+            $tmpCategoryCount = array_count_values($categroys);
+        
+            $tmpCount = 0;
+            $maxCategory = "";
+            
+            //循环计算推荐最多的专辑ID
+            foreach ($tmpCategoryCount as $categoryCount) {
+                if ($categoryCount[$categoryCount] > $tmpCount) {
+                    $tmpCount = $categoryCount[$categoryCount];
+                    $maxCategory = $categoryCount;
+                }
+            }
+            
+            //得到推荐最多的分类却还未推荐过的专辑
+            $specials = $specialModel->getLikeNotRecommendSpecial($recommendIds, $maxCategory);
+            
+            //如果没有在喜欢的分类中找到还没有推荐的专辑，就任意从未推荐的专辑中找一个专辑
+            if (!$special) {
+                $specials = $specialModel->getNotRecommendSpecial($recommendIds);
+            }
+        }
+        
+        //如果最后都没有找到专辑就推荐最后添加的专辑--极端情况
+        if (!$special) {
+            $specials = $specialModel->getlastOne();
+        }
+        
+        //获取该专辑拥有的节目ID集合
+        $ownProgramIds = explode(",", $special->programsId);
         //获取该专辑节目列表
-        $programs = $programModel->getProgramBySpecialId($special->programs_id);
+        $programs = $programModel->getProgramBySpecialId($ownProgramIds);
+        
         //获取该专辑作者
-        $author = $authorModel->getAuthorById($special->author_id);
-
+        $author = $authorModel->getAuthorById($special->authorId);
+        
         $result = array('author' => $author, 'programs' => $programs, 'special' => $special);
+        
         //保存推荐记录
-        $recommendModel->addRecommend($special->id, $user_id);
-
+        $recommendModel->addRecommend($special->id, $userId);
+        
         return $result;
     }
 

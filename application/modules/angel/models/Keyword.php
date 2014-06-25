@@ -14,15 +14,15 @@
 class Angel_Model_Keyword extends Angel_Model_AbstractModel {
     protected $_document_class = '\Documents\Keyword';
 
-    public function addKeyword($keycode, $attributes) {
-        $data = array("keycode" => $keycode, "attributes" => $attributes);
+    public function addKeyWord($name) {
+        $data = array("name" => $name);
         $result = $this->add($data);
         
         return $result;
     }
 
-    public function saveKeyword($id, $keycode, $attributes) {
-        $data = array("keycode" => $keycode, "attributes" => $attributes);
+    public function saveKeyWord($id, $name) {
+        $data = array("name" => $name);
         $result = $this->save($id, $data);
         
         return $result;
@@ -46,13 +46,13 @@ class Angel_Model_Keyword extends Angel_Model_AbstractModel {
      */
     public function getById($id) {
         $result = false;
-        $keyword = $this->_dm->createQueryBuilder($this->_document_class)
+        $keyWord = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->equals($id)
                 ->getQuery()
                 ->getSingleResult();
 
-        if (!empty($keyword)) {
-            $result = $keyword;
+        if (!empty($keyWord)) {
+            $result = $keyWord;
         }
 
         return $result;

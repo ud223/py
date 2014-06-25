@@ -25,8 +25,12 @@ class Program extends AbstractDocument {
     /** @ODM\Int */
     protected $duration;
 
-    /** @ODM\ReferenceOne(targetDocument="\Documents\Category") */
-    protected $category;
+    //** @ODM\ReferenceOne(targetDocument="\Documents\Category") */
+   // protected $category;
+    
+    
+    /** @ODM\String */
+    protected $keyWordIds;
 
     /** @ODM\String */
     protected $description;

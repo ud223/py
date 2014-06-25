@@ -21,7 +21,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $owner, $keywords_id) {
+    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $keyWordIds) {
         $result = false;
 
         $program = new $this->_document_class();
@@ -38,9 +38,8 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->duration = $duration;
         $program->description = $description;
         $program->status = $status;
-        $program->category = $category;
         $program->owner = $owner;
-        $program->keywordsId = $keywords_id;
+        $program->keyWordIds = $keyWordIds;
         
         try {
             $this->_dm->persist($program);
@@ -71,7 +70,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $keywords_id) {
+    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $keyWordIds) {
         $result = false;
 
         $program = $this->getById($id);
@@ -94,8 +93,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->duration = $duration;
         $program->description = $description;
         $program->status = $status;
-        $program->category = $category;
-        $program->keywordsId = $keywords_id;
+        $program->keyWordIds = $keyWordIds;
         
         try {
             $this->_dm->persist($program);
@@ -141,15 +139,15 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getProgramNotOwn($OwnProgramID) {
+    public function getProgramNotOwn($ownProgramId) {
         
         $query = null;
 
-        if (count($OwnProgramID) < 2 || $OwnProgramID[0] == "") {
+        if (count($ownProgramId) < 1 || $ownProgramId[0] == "") {
             $query = $this->_dm->createQueryBuilder($this->_document_class)->find()->sort('created_at', -1);
         }
         else {
-            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($OwnProgramID)->sort('created_at', -1);
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($ownProgramId)->sort('created_at', -1);
         }
         
         $result = null;
@@ -161,30 +159,13 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getProgramBySpecialId($SpecialOwnProgram_IDs) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('id')->in($SpecialOwnProgram_IDs)->sort('created_at', -1);
-        
-        $result = null;
-        
+    public function getProgramBySpecialId($specialOwnProgramIds) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->in($specialOwnProgramIds)->sort('created_at', -1);
+
         $result = $query
                 ->getQuery()
                 ->execute();
         
         return $result;
     }
-
-
-//    public function getProgramByKeyword($keyword_id,  $return_as_paginator = true) {
-//        $query = $this->_dm->createQueryBuilder($this->_document_class)
-//                ->field(sprintf('oss_%s.$id', $type))->equals(new MongoId($oss_id))
-//                ->sort('created_at', -1);
-//        $result = null;
-//        if ($return_as_paginator) {
-//            $result = $this->paginator($query);
-//        } else {
-//            $result = $query->getQuery()->execute();
-//        }
-//        return $result;
-//    }
 }

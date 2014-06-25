@@ -52,7 +52,9 @@ abstract class Angel_Model_AbstractModel {
     public function save($id, $data, $notFoundException = Exception, $exceptionMessage = "") {
         $result = false;
         if ($data) {
+            
             $target = $this->getById($id);
+            
             if (!$target) {
                 throw new $notFoundException($exceptionMessage);
             }

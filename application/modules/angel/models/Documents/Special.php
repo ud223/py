@@ -8,18 +8,17 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 class Special extends AbstractDocument {
 
     /** @ODM\String */
-    protected $special_name;
+    protected $name;
 
     /** @ODM\String */
-    protected $author_id;
+    protected $authorId;
 
     /** @ODM\ReferenceMany(targetDocument="\Documents\Photo") */
     protected $photo = array();
-    
-    /** @ODM\String */
-    protected $cover_path;
 
     /** @ODM\String */
-    protected $programs_id;
+    protected $programsId;
 
+    /** @ODM\String */
+    protected $categoryId;
 }
