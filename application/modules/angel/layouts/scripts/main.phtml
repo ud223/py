@@ -1,7 +1,9 @@
 <?php
 $user = null;
+$username = "";
 if ($this->me) {
     $user = $this->me->getUser();
+    $username = $user->username;
 }
 ?>
 
@@ -54,8 +56,8 @@ if ($this->me) {
                     <div class="spliter" id="rt-spliter"></div>
                     <?php if ($user): ?>
                         <div class="pull-right" id="profile-blk">
-                            <a href="javascript:void(0)" id="profile-txt"> <span>王啸</span> <i class="ico"></i> </a>
-                            <a href="javascript:void(0)" id="profile-img"><img src="http://img.36tr.com/avatar/20140424/53587efbcaaf1_100100.jpg"/></a>
+                            <a href="javascript:void(0)" id="profile-txt"> <span><?php echo $username ?></span> <i class="ico"></i> </a>
+                            <a href="javascript:void(0)" id="profile-img"><img src="/img/user-default.jpg"/></a>
                         </div>
                     <?php else: ?>
                     <div class="pull-right" id="login-and-register-blk">
@@ -66,7 +68,7 @@ if ($this->me) {
                     <?php endif; ?>
 
                     <div class="spliter" id="rt-spliter"></div>
-                    <a href='javascript:void(0)' class="unvisiable" id="refresh" onclick="getApiData()"> <i class="ico"></i> 换一批 </a>
+                    <a href='javascript:void(0)' class="unvisiable" id="refresh"> <i class="ico"></i> 换一批 </a>
 
                     <ul id="tv-header-ddl" class="ddl">
                         <li>

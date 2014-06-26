@@ -238,14 +238,14 @@
         
         $('#tv-header .unvisiable').removeClass('unvisiable');
         
-        
+        $('#tv-header #refresh').click(getApiData);
         
         
     });
     
     function getApiData() {
         $.ajax({ 
-            url: "<?php echo $this->url(array(), "special-recommend")?>", 
+            url: "<?php echo $this->url(array(), "api-special-recommend")?>", 
             dataType:'json',
             success: function(result){
                 console.log(result);
