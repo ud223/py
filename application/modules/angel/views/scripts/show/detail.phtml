@@ -254,15 +254,27 @@
         getApiData();
     });
     function nextFunc() {
-
+        if(playListCount()) {
+            
+        } else {
+            return;
+        }
     }
     function prevFunc() {
-
+        
     }
     function switchFunc() {
-
+        
     }
-    function getApiData() {
+    function playListCount() {
+        var list_item = $('#tv-listbar-content .list-item');
+        if(list_item.length) {
+            return list_item.length;
+        } else {
+            return false;
+        }
+    }
+    function getApiData(callback) {
         $.ajax({
             url: "<?php echo $this->url(array("uid"=>$_COOKIE["userId"]), "api-special-recommend") ?>",
             dataType: 'json',
@@ -273,7 +285,6 @@
                     $("#tv-author-img").css('background-image', 'url(' + result.data.photo + ')');
                     $("#tv-listbar-content").empty();
                     $.each(result.data.programs, function(k, v) {
-                        console.log(v.oss_video);
                         var item = $(".P_tmp .list-item").clone(true);
                         item.attr('video', v.oss_video);
                         item.attr('audio', v.oss_audio);
@@ -282,8 +293,12 @@
                         item.find('.col3').html(parseInt(v.time).timeFormat());
                         $("#tv-listbar-content").append(item);
                     });
+                    if(typeof callback === 'function') {
+                        callback();
+                    }
                 }
             }
         });
     }
+    
 </script>
