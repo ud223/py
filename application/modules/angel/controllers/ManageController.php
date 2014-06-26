@@ -1465,7 +1465,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
         
         foreach ($programs as $program) {
-            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $program->oss_video, "oss_audio" => $program->oss_audio);
+            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $program->oss_video->key, "oss_audio" => $program->oss_audio->key);
         }
         
    //     $this->_helper->json(array('data' => $result, 'code' => 200));exit;
