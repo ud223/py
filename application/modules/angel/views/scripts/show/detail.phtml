@@ -208,7 +208,6 @@
             }
         });
         $('#tv-video-player').video({
-            src: '<?php echo $this->video_url ?>',
             onPause: function() {
                 $('#tv-fs-play-btn').show();
                 $('#tv-fs-pause-btn').hide();
@@ -249,26 +248,41 @@
 
         $('#tv-header .unvisiable').removeClass('unvisiable');
 
-        $('#tv-header #refresh').click(getApiData);
+        $('#tv-header #refresh').click(function() {
+            getApiData(nextFunc);
+        });
 
-        getApiData();
+        getApiData(nextFunc);
     });
     function nextFunc() {
-        if(playListCount()) {
-            
+        console.log(playListCount());
+        if (playListCount()) {
+            var current = $('#tv-listbar-content .list-item.selected');
+            var first = $($('#tv-listbar-content .list-item').get(0));
+            if (current.length) {
+                var next = current.next('$.list-item');
+                current.removeClass('selected');
+                if (next.length) {
+                    next.addClass('selected');
+                } else {
+                    first.addClass('selected');
+                }
+            } else {
+                first.addClass('selected');
+            }
         } else {
-            return;
+            return false;
         }
     }
     function prevFunc() {
-        
+
     }
     function switchFunc() {
-        
+
     }
     function playListCount() {
         var list_item = $('#tv-listbar-content .list-item');
-        if(list_item.length) {
+        if (list_item.length) {
             return list_item.length;
         } else {
             return false;
@@ -276,7 +290,7 @@
     }
     function getApiData(callback) {
         $.ajax({
-            url: "<?php echo $this->url(array("uid"=>$_COOKIE["userId"]), "api-special-recommend") ?>",
+            url: "<?php echo $this->url(array("uid" => $_COOKIE["userId"]), "api-special-recommend") ?>",
             dataType: 'json',
             success: function(result) {
                 if (result.code === 200) {
@@ -293,12 +307,12 @@
                         item.find('.col3').html(parseInt(v.time).timeFormat());
                         $("#tv-listbar-content").append(item);
                     });
-                    if(typeof callback === 'function') {
+                    if (typeof callback === 'function') {
                         callback();
                     }
                 }
             }
         });
     }
-    
+
 </script>
