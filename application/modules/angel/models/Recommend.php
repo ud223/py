@@ -32,19 +32,7 @@ class Angel_Model_Recommend extends Angel_Model_AbstractModel {
         if (count($result) == 0) {
             return 0;
         }
-        
-//        $specialIds = "";
-//        //将该用户推荐过的专辑id拼接成 id，id的条件形式
-//        foreach ($result as $recommend) {
-//            if ($specialIds != "")
-//                $specialIds = $specialIds . ",";
-//            
-//            $specialIds = $specialIds . $recommend->specialId;
-//        }
 
-        //返回条件形式的id集合
-//        return $specialIds;
-        
         return $result;
     }
 }

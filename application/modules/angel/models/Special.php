@@ -46,9 +46,8 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
 
         $result = $query
                 ->getQuery()
-                ->execute()
                 ->getSingleResult();
-        
+
         return $result;
     }
     
@@ -75,10 +74,8 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
     public function getByIds($ids) {
         
         $result = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('id')->in($id)
-                ->count()
-                ->getQuery();
-
+                ->field('id')->in($id)->getQuery();
+        echo $result->name; exit;
         return $result;
     }
     
@@ -105,22 +102,41 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
     
     public function getNotRecommendSpecial($recommendIds) {
         $query = null;
-       
-        if ($recommendIds == "") {
-            $query = $this->_dm->createQueryBuilder($this->_document_class)
-                ->sort('created_at', -1);
-        }
-        else {
-            $query = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('id')->notIn($recommendIds)->sort('created_at', -1);
-        }
-
-        $result = $query
-                ->getQuery()
-                ->execute()
-                ->getSingleResult();
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+//        if ($recommendIds == "") {
+//            $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+//        }
+//        else {
+//            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($recommendIds)->sort('created_at', -1);
+//        }
         
-        return $result;
+        $result = $query->getQuery();//->getSingleResult();
+        $special = null;
+        $isRecommend = FALSE;
+        
+        foreach ($result as $tmpSpecial) {
+            if (count($result) == count($recommendIds)) {
+                $special = $tmpSpecial;
+                
+                break;
+            }
+            
+            $isRecommend = FALSE;
+            
+            foreach ($recommendIds as $recommendId) {
+                if ($tmpSpecial->id == $recommendId) {
+                    $isRecommend = TRUE;
+                }
+            }
+            
+            if ($isRecommend == FALSE) {
+                $special = $tmpSpecial;
+                
+                return $special;
+            }
+        }
+        
+        return $special;
     }
     
     public function getLikeNotRecommendSpecial($recommendIds, $categoryId) {
@@ -129,7 +145,6 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
 
         $result = $query
                 ->getQuery()
-                ->execute()
                 ->getSingleResult();
 
         if (!empty($result))

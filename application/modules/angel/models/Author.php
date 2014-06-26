@@ -18,6 +18,9 @@ class Angel_Model_Author extends Angel_Model_AbstractModel {
     }
 
     public function getAuthorById($authorId) { 
+        if ($authorId == "")
+            return "";
+        
         $query = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->equals($authorId)->sort('created_at', -1);
         
