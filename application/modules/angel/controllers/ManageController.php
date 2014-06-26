@@ -1220,7 +1220,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         $paginator->setCurrentPageNumber($page);
 
         $resource = array();
-
+        setcookie("userId", "");
         foreach ($root as $r) {
             $resource[] = array(
                 'id' => $r->id,
@@ -1310,22 +1310,33 @@ class Angel_ManageController extends Angel_Controller_Action {
                 //get all special's programs_id
                 $result = $specialModel->getRoot();
                 
+//                $ownProgramIds = "";
+//
+//                foreach ($result as $special) {
+//                    if ($special->id == $target->id)
+//                        continue;
+//
+//                    if ($ownProgramIds != "")
+//                        $ownProgramIds = $ownProgramIds . ",";
+//
+//                    $ownProgramIds = $ownProgramIds . $special->programsId;
+//                }
+//                
+//                $programIds = explode(",", $ownProgramIds);
                 $ownProgramIds = "";
 
                 foreach ($result as $special) {
-                    if ($special->id == $target->id)
-                        continue;
-
                     if ($ownProgramIds != "")
                         $ownProgramIds = $ownProgramIds . ",";
 
                     $ownProgramIds = $ownProgramIds . $special->programsId;
                 }
-
+                
                 $programIds = explode(",", $ownProgramIds);
 
                 $this->view->model = $target;
                 $photo = $target->photo;
+                
                 if ($photo) {
                     $saveObj = array();
                     foreach ($photo as $p) {
@@ -1346,7 +1357,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
                 
                 $this->view->authors = $authorModel->getAll();
-                $this->view->programs = $programModel->getProgramNotOwn($ownProgramIds);
+                $this->view->programs = $programModel->getProgramNotOwn($programIds);
                 $this->view->categorys = $categoryModel->getRoot();
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
@@ -1361,10 +1372,18 @@ class Angel_ManageController extends Angel_Controller_Action {
         $programModel = $this->getModel('program');
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
-        
+
+        //echo $_COOKIE["userId"]; exit;
         //$time = $this->request->getParam('time');
         //获取当前需要推荐的用户ID
         $userId = $this->me->getUser()->id;
+        
+        if ($userId == null || $userId == "") {
+            $userId = $this->request->getParam('userId');
+        }
+        
+ //       $this->_helper->json(array('data' => $this->request->getParam('uid'), 'code' => 200));
+        
         //获取该用户已经推荐过的专辑ID集合
         $recommends = $recommendModel->getRecommendIds($userId);
         

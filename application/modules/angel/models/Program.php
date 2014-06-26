@@ -143,22 +143,18 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getProgramNotOwn($ownProgramId) {
-        
+    public function getProgramNotOwn($ownProgramId) { 
         $query = null;
-
+        
         if (count($ownProgramId) < 1 || $ownProgramId[0] == "") {
             $query = $this->_dm->createQueryBuilder($this->_document_class)->find()->sort('created_at', -1);
         }
         else {
             $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($ownProgramId)->sort('created_at', -1);
         }
-        
-        $result = null;
-        
+
         $result = $query
-                ->getQuery()
-                ->execute();
+                ->getQuery();
         
         return $result;
     }

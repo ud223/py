@@ -59,6 +59,7 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
      */
     public function getById($id) {
         $result = false;
+        
         $special = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->equals($id)
                 ->getQuery()
@@ -67,7 +68,7 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         if (!empty($special)) {
             $result = $special;
         }
-
+        
         return $result;
     }
     
@@ -114,10 +115,18 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         $special = null;
         $isRecommend = FALSE;
         
-        foreach ($result as $tmpSpecial) {
-            if (count($result) == count($recommendIds)) {
-                $special = $tmpSpecial;
+        $specials = array();
+        
+        foreach ($result as $tmp) {
+            $specials[] = $tmp;
+        }
+
+        foreach ($specials as $tmpSpecial) {
+            if (count($result) > count($recommendIds) || $recommendIds[0] == "") {
+                $index = rand(0, count($specials) - 1);
                 
+                $special = $specials[$index];
+  
                 break;
             }
             
@@ -126,9 +135,11 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
             foreach ($recommendIds as $recommendId) {
                 if ($tmpSpecial->id == $recommendId) {
                     $isRecommend = TRUE;
+                    
+                    break;
                 }
             }
-            
+
             if ($isRecommend == FALSE) {
                 $special = $tmpSpecial;
                 
