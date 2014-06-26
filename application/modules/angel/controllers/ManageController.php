@@ -1480,11 +1480,11 @@ class Angel_ManageController extends Angel_Controller_Action {
             $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
         }
         else {
-            $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];;
+            $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
         }
         
         foreach ($programs as $program) {
-            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $program->oss_video->key, "oss_audio" => $program->oss_audio->key);
+            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
         
    //     $this->_helper->json(array('data' => $result, 'code' => 200));exit;
