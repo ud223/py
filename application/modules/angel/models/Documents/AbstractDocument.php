@@ -110,7 +110,49 @@ abstract class AbstractDocument {
         $data['my_name'] = $className;
         return $data;
     }
-
+    
+//    public function toArray($deep = true, $all = false, $visited = array())
+//    {
+//        // disable recursion;
+//        $hash = spl_object_hash($this);
+//        if (in_array($hash, $visited)) {
+//            return '*RECURSION';
+//        }
+//        $visited[] = $hash;
+//
+//        $getpublic = function($obj) { return get_object_vars($obj); };
+//        
+//        $data = ($all) 
+//              ? get_object_vars($this)
+//              : $getpublic($this);
+//
+//        foreach ($data as $key => $value){
+//            if (strpos($key, '_') === 0) {
+//                unset($data[$key]);
+//            }
+//        }
+//
+//        if (is_integer($deep)) 
+//            $deep--;
+//
+//        foreach ($data AS $key => $val) {
+//            if (is_object($val)) {
+//                if ($deep && $val instanceof Collection) {
+//                    $data[$key] = array();
+//                    foreach ($val->toArray() as $rel) {
+//                        $data[$key][] = $rel->toArray($deep, $all, $visited);
+//                    }
+//                } else if ($deep && method_exists($val, 'toArray')) {
+//                    $data[$key] = $val->toArray($deep, $all, $visited);
+//
+//                } else if (!$deep) {
+//                    unset($data[$key]);
+//                }
+//            } 
+//        }
+//        
+//        return $data;
+//    }
 }
 
 ?>

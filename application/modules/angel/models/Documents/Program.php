@@ -27,7 +27,8 @@ class Program extends AbstractDocument {
 
     //** @ODM\ReferenceOne(targetDocument="\Documents\Category") */
    // protected $category;
-    
+    /** @ODM\String */
+    protected $time;
     
     /** @ODM\String */
     protected $keyWordIds;
@@ -46,6 +47,9 @@ class Program extends AbstractDocument {
 
     /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
     protected $owner;
+    
+    /** @ODM\String */
+    protected $captions; 
 
     /**
      * 添加图片
