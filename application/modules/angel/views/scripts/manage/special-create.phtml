@@ -4,19 +4,19 @@
 <div class="row">
     <div class="col-md-8">
         <form role="form" method="post">
-             <div class="form-group">
+            <div class="form-group">
                 <label>专辑：</label>
                 <input type="text" class="form-control" id="special_name" name="name" data-toggle="popover" value="">
             </div>
             <div class="form-group">
                 <label>作者：</label>
-                <!--input type="text" class="form-control" id="description" name="attributes" data-toggle="popover" value="<?php //echo $this->keyword->attributes ?>"-->
+                <!--input type="text" class="form-control" id="description" name="attributes" data-toggle="popover" value="<?php //echo $this->keyword->attributes   ?>"-->
                 <select id="authorId" name="authorId" value="">
                     <option value="">作者</option>
                     <?php foreach ($this->authors as $author): ?>
                         <option value="<?php echo $author->id ?>">
                             <?php
-                                echo $author->name;
+                            echo $author->name;
                             ?>
                         </option>
                     <?php endforeach; ?>
@@ -29,7 +29,7 @@
                     <?php foreach ($this->categorys as $category): ?>
                         <option value="<?php echo $category->id ?>">
                             <?php
-                                echo $category->name;
+                            echo $category->name;
                             ?>
                         </option>
                     <?php endforeach; ?>
@@ -47,11 +47,13 @@
                 <label>选择节目：</label>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                <?php foreach ($this->programs as $program): ?>
-                        <input type="checkbox" name="programs[]" value="<?php echo $program->id ?>" id="<?php echo $program->id ?>"> <label for="<?php echo $program->id ?>"><?php echo $program->name ?></label><br>
-                <?php endforeach; ?>
+                        <?php foreach ($this->programs as $program): ?>
+                            <span class="label label-default pull-left marginright10px">
+                                <input type="checkbox" name="programs[]" value="<?php echo $program->id ?>" id="<?php echo $program->id ?>"> <label for="<?php echo $program->id ?>"><?php echo $program->name ?></label><br>
+                            </span>
+                        <?php endforeach; ?>
                     </div>
-            </div>
+                </div>
             </div>
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
         </form>
@@ -67,6 +69,10 @@
             } else {
                 $('#photo').val(save);
             }
+        });
+        
+        $('input[name="programs[]"]').change(function(){
+            $(this).closest('.label').toggleClass('label-success');
         });
     })(jQuery);
 </script>

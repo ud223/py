@@ -6,7 +6,7 @@ class Angel_HandleController extends Angel_Controller_Action {
 
     public function init() {
         parent::init();
-        $this->_helper->layout->setLayout('ui');
+        $this->_helper->layout->setLayout('handle');
     }
 
     public function errorAction() {
