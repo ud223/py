@@ -38,6 +38,22 @@ if ($this->me) {
                         $('#tv-header-ddl').clickToggle();
                     });
                 }
+                
+                $('.model-switch-btn').click(function(){
+                    var $this = $(this).closest('.model-switch-btn');
+                    if($this.hasClass('selected')) {
+                        return;
+                    }
+                    $('.model-switch-btn').removeClass('selected');
+                    $this.addClass('selected');
+                    var id = $this.attr('id');
+                    if(id.indexOf('video') >= 0) {
+                        // video
+                        
+                    } else {
+                        // audio
+                    }
+                });
             });
         </script>
     </head>
@@ -48,8 +64,8 @@ if ($this->me) {
             <div id="tv-header">
                 <div class="wp clearfix">
                     <div class="clearfix" id="tv-switch">
-                        <span id="tv-to-video" class="selected"><i class="ico"></i></span>
-                        <span id="tv-to-audio"><i class="ico"></i></span>
+                        <span id="tv-to-video" class="selected model-switch-btn"><i class="ico"></i></span>
+                        <span id="tv-to-audio" class="model-switch-btn"><i class="ico"></i></span>
                     </div>
                     <img id="tv-logo" src="../img/logo-sm.png"/>
                     <a href='javascript:void(0)' id="fullscreen" class="ico unvisiable"></a>
