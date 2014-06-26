@@ -1365,8 +1365,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
-    public function specialRecommendAction() {
-        
+    public function specialRecommendAction() {        
         $specialModel = $this->getModel('special');
         $recommendModel = $this->getModel('recommend');
         $programModel = $this->getModel('program');
@@ -1379,6 +1378,8 @@ class Angel_ManageController extends Angel_Controller_Action {
         if ($userId == null || $userId == "") {
             $userId = $this->request->getParam('userId');
         }
+        
+        $curSpecialId = $this->request->getParam('sid');
 
         //获取该用户已经推荐过的专辑ID集合
         $recommends = $recommendModel->getRecommendIds($userId);
@@ -1404,7 +1405,7 @@ class Angel_ManageController extends Angel_Controller_Action {
 //        $this->_helper->json(array('data' => $recommendSpecialIds, 'code' => 200)); exit;
 //        if ($viewCount <  1 || $recommends == 0) {//00
         //获取一个没有推荐过的专辑
-        $special = $specialModel->getNotRecommendSpecial($recommendSpecialIds);
+        $special = $specialModel->getNotRecommendSpecial($recommendSpecialIds, $curSpecialId);
         
  //       $this->_helper->json(array('data' => $special->name, 'code' => 200)); exit;
 //        echo $special->id; exit;
@@ -1482,8 +1483,6 @@ class Angel_ManageController extends Angel_Controller_Action {
         foreach ($programs as $program) {
             $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
-        
-   //     $this->_helper->json(array('data' => $result, 'code' => 200));exit;
         
         //保存推荐记录
         $recommendModel->addRecommend($special->id, $userId);

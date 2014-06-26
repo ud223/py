@@ -101,7 +101,7 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         return $ownProgramsId;
     }
     
-    public function getNotRecommendSpecial($recommendIds) {
+    public function getNotRecommendSpecial($recommendIds, $curSpecialId) {
         
         
         $query = null;
@@ -129,6 +129,33 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
                 $index = rand(0, count($specials) - 1);
                 
                 $special = $specials[$index];
+                
+                if ($curSpecialId != null) {
+                    if ($special->id == $curSpecialId) {
+                        $index = rand(0, count($specials) - 1);
+                
+                        $special = $specials[$index];
+                        
+                        if ($special->id == $curSpecialId) {
+                            $index = rand(0, count($specials) - 1);
+                
+                            $special = $specials[$index];
+                            
+                            if ($special->id == $curSpecialId) {
+                                $index = rand(0, count($specials) - 1);
+
+                                $special = $specials[$index];
+
+                                if ($special->id == $curSpecialId) {
+                                    $index = rand(0, count($specials) - 1);
+
+                                    $special = $specials[$index];
+                            
+                                }
+                            }
+                        }
+                    }
+                }
                 
                 break;
             }
