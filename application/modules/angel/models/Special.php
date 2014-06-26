@@ -102,6 +102,8 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
     }
     
     public function getNotRecommendSpecial($recommendIds) {
+        
+        
         $query = null;
         $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
 //        if ($recommendIds == "") {
@@ -120,13 +122,14 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         foreach ($result as $tmp) {
             $specials[] = $tmp;
         }
-
+        
         foreach ($specials as $tmpSpecial) {
-            if (count($result) > count($recommendIds) || $recommendIds[0] == "") {
+            if (count($specials) < count($recommendIds) || $recommendIds[0] == "") {
+                
                 $index = rand(0, count($specials) - 1);
                 
                 $special = $specials[$index];
-  
+                
                 break;
             }
             
