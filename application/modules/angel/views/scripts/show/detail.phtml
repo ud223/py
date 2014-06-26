@@ -257,7 +257,7 @@
     
     function getApiData() {
         $.ajax({
-            url: "<?php echo $this->url(array(), "api-special-recommend") ?>"+ $.cookie('userId'),
+            url: "<?php echo $this->url(array("uid"=>$_COOKIE["userId"]), "api-special-recommend") ?>",
             dataType: 'json',
             success: function(result) {
                 if (result.code === 200) {
