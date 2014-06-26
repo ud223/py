@@ -257,10 +257,11 @@
     
     function getApiData() {
         $.ajax({
-            url: "<?php echo $this->url(array("uid"=>$_COOKIE["userId"]), "api-special-recommend") ?>",
+            url: "<?php echo $this->url(array("uid"=>$_COOKIE["userId"], "sid"=>$_COOKIE["specialId"]), "api-special-recommend") ?>",
             dataType: 'json',
             success: function(result) {
                 if (result.code === 200) {
+                    $.cookie('specialId', result.data.id);
                     $("#tv-special-name").html(result.data.name);
                     $("#tv-author-name").html(result.data.author);
                     $("#logo").attr('src', result.data.photo);
