@@ -21,7 +21,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $keyWordIds) {
+    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $keyWordIds, $time, $captions) {
         $result = false;
 
         $program = new $this->_document_class();
@@ -40,7 +40,9 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->status = $status;
         $program->owner = $owner;
         $program->keyWordIds = $keyWordIds;
-        
+        $program->time = $time;
+        $program->captions = $captions;
+         
         try {
             $this->_dm->persist($program);
             $this->_dm->flush();
@@ -70,7 +72,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $keyWordIds) {
+    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $keyWordIds, $time, $captions) {
         $result = false;
 
         $program = $this->getById($id);
@@ -94,7 +96,9 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->description = $description;
         $program->status = $status;
         $program->keyWordIds = $keyWordIds;
-        
+        $program->time = $time;
+        $program->captions = $captions;
+
         try {
             $this->_dm->persist($program);
             $this->_dm->flush();

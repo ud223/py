@@ -101,7 +101,14 @@ class Angel_ManageController extends Angel_Controller_Action {
          //   $categoryId = $this->request->getParam('category');
             
             $keyWordIds = $this->request->getParam('keywords');
-           
+            $time = $this->request->getParam('time');
+            $captions = "";
+            $file = $_FILES["captions"];
+
+            if (is_uploaded_file($file["tmp_name"])) {
+                $captions = file_get_contents($file["tmp_name"]);
+            }
+            
             $tmpKeyWordIds = null;
 
             foreach ($keyWordIds as $keyWordId) {
@@ -145,7 +152,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                     }
                 }
                  
-                $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $tmpKeyWordIds);
+                $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $tmpKeyWordIds, $time, $captions);
                 
             } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
@@ -191,6 +198,9 @@ class Angel_ManageController extends Angel_Controller_Action {
             $photo = $this->decodePhoto();
          //   $categoryId = $this->request->getParam('category');
             $keyWordIds = $this->request->getParam('keywords');
+            $time = $this->request->getParam('time');
+            $captions = $this->request->getParam('captions');
+            
             $tmpKeyWordIds = null;
 
             foreach ($keyWordIds as $keyWordId) {
@@ -235,9 +245,9 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
                 if ($copy) {
                     $owner = $this->me->getUser();
-                    $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $tmpKeyWordIds);
+                    $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $tmpKeyWordIds, $time, $captions);
                 } else {
-                    $result = $programModel->saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $tmpKeyWordIds);
+                    $result = $programModel->saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $tmpKeyWordIds, $time, $captions);
                 }
             } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
@@ -1356,76 +1366,103 @@ class Angel_ManageController extends Angel_Controller_Action {
         //获取当前需要推荐的用户ID
         $userId = $this->me->getUser()->id;
         //获取该用户已经推荐过的专辑ID集合
-        $recommends = $recommendModel->getRecommendIds($userId);
-        
-        $special = null;
-        $recommendIds = null;
-        //获取推荐专辑的次数
-        $viewCount = count($recommends);
+//        $recommends = $recommendModel->getRecommendIds($userId);
+//        
+//        $special = null;
+//        $recommendIds = null;
+//        //获取推荐专辑的次数
+//        $viewCount = count($recommends);
+// 
+//        if ($viewCount <  100) {
+//            $recommendIds = "";
+//            //获取一个没有推荐过的专辑
+//            $specials = $specialModel->getNotRecommendSpecial($recommendIds);
+//        }
+//        else {
+//            //将该用户推荐过的专辑id拼接成 id，id的条件形式
+//            foreach ($recommends as $recommend) {
+//                if ($recommendIds != "")
+//                    $recommendIds = $recommendIds . ",";
+//
+//                $recommendIds = $recommendIds . $recommend->specialId;
+//            }
+//            //获取推荐过的专辑集合
+//            $tmpSpecials = $specialModel->getByIds($recommendIds);
+//            
+//            $categoryCount = array();
+//            //整理推荐过专辑的集合分类id
+//            foreach ($tmpSpecials as $special) {
+//                array_push($categoryCount, $special->$categoryId);
+//            }
+//            
+//            $tmpCategoryCount = array_count_values($categroys);
+//        
+//            $tmpCount = 0;
+//            $maxCategory = "";
+//            
+//            //循环计算推荐最多的专辑ID
+//            foreach ($tmpCategoryCount as $categoryCount) {
+//                if ($categoryCount[$categoryCount] > $tmpCount) {
+//                    $tmpCount = $categoryCount[$categoryCount];
+//                    $maxCategory = $categoryCount;
+//                }
+//            }
+//            
+//            //得到推荐最多的分类却还未推荐过的专辑
+//            $specials = $specialModel->getLikeNotRecommendSpecial($recommendIds, $maxCategory);
+//            
+//            //如果没有在喜欢的分类中找到还没有推荐的专辑，就任意从未推荐的专辑中找一个专辑
+//            if (!$special) {
+//                $specials = $specialModel->getNotRecommendSpecial($recommendIds);
+//            }
+//        }
+//        
+//        //如果最后都没有找到专辑就推荐最后添加的专辑--极端情况
+//        if (!$special) {
+//            $specials = $specialModel->getlastOne();
+//        }
+        //test
+        $special = $specialModel->getlastOne();
  
-        if ($viewCount <  100) {
-            $recommendIds = "";
-            //获取一个没有推荐过的专辑
-            $specials = $specialModel->getNotRecommendSpecial($recommendIds);
-        }
-        else {
-            //将该用户推荐过的专辑id拼接成 id，id的条件形式
-            foreach ($recommends as $recommend) {
-                if ($recommendIds != "")
-                    $recommendIds = $recommendIds . ",";
-
-                $recommendIds = $recommendIds . $recommend->specialId;
-            }
-            //获取推荐过的专辑集合
-            $tmpSpecials = $specialModel->getByIds($recommendIds);
-            
-            $categoryCount = array();
-            //整理推荐过专辑的集合分类id
-            foreach ($tmpSpecials as $special) {
-                array_push($categoryCount, $special->$categoryId);
-            }
-            
-            $tmpCategoryCount = array_count_values($categroys);
-        
-            $tmpCount = 0;
-            $maxCategory = "";
-            
-            //循环计算推荐最多的专辑ID
-            foreach ($tmpCategoryCount as $categoryCount) {
-                if ($categoryCount[$categoryCount] > $tmpCount) {
-                    $tmpCount = $categoryCount[$categoryCount];
-                    $maxCategory = $categoryCount;
-                }
-            }
-            
-            //得到推荐最多的分类却还未推荐过的专辑
-            $specials = $specialModel->getLikeNotRecommendSpecial($recommendIds, $maxCategory);
-            
-            //如果没有在喜欢的分类中找到还没有推荐的专辑，就任意从未推荐的专辑中找一个专辑
-            if (!$special) {
-                $specials = $specialModel->getNotRecommendSpecial($recommendIds);
-            }
-        }
-        
-        //如果最后都没有找到专辑就推荐最后添加的专辑--极端情况
-        if (!$special) {
-            $specials = $specialModel->getlastOne();
-        }
-        
         //获取该专辑拥有的节目ID集合
         $ownProgramIds = explode(",", $special->programsId);
+        
         //获取该专辑节目列表
         $programs = $programModel->getProgramBySpecialId($ownProgramIds);
         
         //获取该专辑作者
         $author = $authorModel->getAuthorById($special->authorId);
         
-        $result = array('author' => $author, 'programs' => $programs, 'special' => $special);
+        $result["id"] = $special->id;
+        $result["name"] = $special->name;
+        $result["author"] = $author->name;
+        
+        $photo = null;
+        
+        foreach ($special->photo as $p) {
+            $photo = $p;
+            
+            break;
+        }
+
+        if ($photo != null) {
+            $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
+        }
+        else {
+            $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];;
+        }
+        
+        foreach ($programs as $program) {
+            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $program->oss_video, "oss_audio" => $program->oss_audio);
+        }
         
         //保存推荐记录
-        $recommendModel->addRecommend($special->id, $userId);
-        
-        return $result;
-    }
+//        $recommendModel->addRecommend($special->id, $userId);
 
+        $this->_helper->json(array('data' => $result,
+                'code' => 200
+                ));
+        
+      //  echo json_decode($result); //exit;
+    }
 }

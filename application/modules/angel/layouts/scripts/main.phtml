@@ -66,7 +66,7 @@ if ($this->me) {
                     <?php endif; ?>
 
                     <div class="spliter" id="rt-spliter"></div>
-                    <a href='javascript:void(0)' class="unvisiable" id="refresh"> <i class="ico"></i> 换一批 </a>
+                    <a href='javascript:void(0)' class="unvisiable" id="refresh" onclick="getApiData()"> <i class="ico"></i> 换一批 </a>
 
                     <ul id="tv-header-ddl" class="ddl">
                         <li>
@@ -85,7 +85,7 @@ if ($this->me) {
 
             <?php echo $this->layout()->content; ?>
         </div>
-
+        
 
 
 

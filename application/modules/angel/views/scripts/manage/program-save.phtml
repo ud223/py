@@ -97,6 +97,10 @@ $model = $this->model;
                 <textarea row="10" class="form-control" id="description" name="description"><?php echo $model->description ?></textarea>
             </div>
             <div class="form-group">
+                <label>节目时长：</label>
+                <input type="text" class="form-control" id="time" name="time" data-toggle="popover" value="<?php echo $model->time ?>">
+            </div>
+            <div class="form-group">
                 <label>关键词：</label>
                 <?php foreach ($this->keywords as $keyword): ?>
                     <input type="checkbox" name="keywords[]" value="<?php echo $keyword->id ?>" <?php if (strpos($this->model->keyWordIds, $keyword->id) > -1) { echo "checked='checked'"; } ?>> <?php echo $keyword->name ?><br>
@@ -135,6 +139,10 @@ $model = $this->model;
                         <option value="<?php echo $b->id ?>"><?php echo $b->name ?></option>
                     <?php endforeach; ?>
                 </select>
+            </div>
+            <div class="form-group">
+                <label>字幕：</label>
+                <textarea row="10" class="form-control" id="captions" name="captions"><?php echo $model->captions ?></textarea>
             </div>
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
 
