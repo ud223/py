@@ -13,7 +13,7 @@
             </div>
         </div>
         <div id="tv-listbar-content">
-            <ul class="itm">
+<!--            <ul class="itm">
                 <li class="col col1">
                     <i class="ico play"></i>
                 </li>
@@ -111,7 +111,7 @@
                 <li class="col col3">
                     03:32
                 </li>
-            </ul>
+            </ul>-->
         </div>
     </div>
     <div id="tv-footer-ltbar">
@@ -254,7 +254,15 @@
 
 
     });
-
+    function nextFunc() {
+        
+    }
+    function prevFunc() {
+        
+    }
+    function switchFunc() {
+        
+    }
     function getApiData() {
         $.ajax({
             url: "<?php echo $this->url(array(), "api-special-recommend") ?>",
@@ -267,6 +275,8 @@
                     $("#tv-listbar-content").html("");
                     $.each(result.data.programs, function(k, v) {
                         var item = $(".P_tmp .list-item").clone(true);
+                        item.attr('video', v.oss_video);
+                        item.attr('audio', v.oss_audio);
                         item.attr('id', v.id);
                         item.find('.col2').html(v.name);
                         item.find('.col3').html(parseInt(v.time).timeFormat());

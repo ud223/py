@@ -209,8 +209,12 @@ function inArray(val, arr) {
                 $this.on('ended', setting.onEnded);
             }
         },
-        play: function(callback) {
+        play: function(callback, src) {
             var self = $(this).get(0), setting = $(this).data('setting');
+            if(src) {
+                setting.src = src;
+                $(this).find('source').attr('src', setting.src);
+            }
             self.play();
             if (callback) {
                 callback();
