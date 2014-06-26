@@ -1373,17 +1373,13 @@ class Angel_ManageController extends Angel_Controller_Action {
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
 
-        //echo $_COOKIE["userId"]; exit;
-        //$time = $this->request->getParam('time');
         //获取当前需要推荐的用户ID
         $userId = $this->me->getUser()->id;
         
         if ($userId == null || $userId == "") {
             $userId = $this->request->getParam('userId');
         }
-        
- //       $this->_helper->json(array('data' => $this->request->getParam('uid'), 'code' => 200));
-        
+
         //获取该用户已经推荐过的专辑ID集合
         $recommends = $recommendModel->getRecommendIds($userId);
         
@@ -1399,7 +1395,7 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             $recommendIds = $recommendIds . $recommend->specialId;
         }
-        
+         
         $recommendSpecialIds = "";
         
         if ($recommendIds != "")
@@ -1407,10 +1403,10 @@ class Angel_ManageController extends Angel_Controller_Action {
         
 //        $this->_helper->json(array('data' => $recommendSpecialIds, 'code' => 200)); exit;
 //        if ($viewCount <  1 || $recommends == 0) {//00
-        
         //获取一个没有推荐过的专辑
         $special = $specialModel->getNotRecommendSpecial($recommendSpecialIds);
         
+ //       $this->_helper->json(array('data' => $special->name, 'code' => 200)); exit;
 //        echo $special->id; exit;
         
 //        }
