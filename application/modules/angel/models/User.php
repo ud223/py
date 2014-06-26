@@ -392,6 +392,8 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
                 $this->_dm->persist($user);
                 $this->_dm->flush();
             }
+        } else {
+            throw new Angel_Exception_User(Angel_Exception_User::USER_NOT_FOUND);
         }
 
         return $result;

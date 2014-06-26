@@ -41,8 +41,8 @@ class Angel_IndexController extends Angel_Controller_Action {
 //            $this->_helper->json(($result === false) ? false : true);
 //        }
 //    }
-    
-    
+
+
     public function isEmailCanBeUsedAction() {
         if ($this->request->isXmlHttpRequest() && $this->request->isPost()) {
 
@@ -60,7 +60,7 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function forgotPasswordAction() {
-        if ($this->request->isXmlHttpRequest() && $this->request->isPost()) {
+        if ($this->request->isPost()) {
 
             $email = $this->request->getParam('email');
             $result = false;
@@ -68,10 +68,15 @@ class Angel_IndexController extends Angel_Controller_Action {
                 $userModel = $this->getModel('user');
                 $result = $userModel->forgotPassword($email);
             } catch (Angel_Exception_User $e) {
-                $this->_helper->json(0);
+                $this->view->error = $e->getDetail();
+                $this->view->re_email = $email;
+                $result = false;
             }
-            $this->_helper->json(($result === false) ? 0 : 1);
+            if ($result) {
+                $this->view->send = "success";
+            }
         }
+        $this->view->title = "找回密码";
     }
 
     public function logoutAction() {

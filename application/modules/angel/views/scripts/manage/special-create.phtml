@@ -21,6 +21,8 @@
                         </option>
                     <?php endforeach; ?>
                 </select>
+            </div>
+            <div class="form-group">
                 <label>分类：</label>
                 <select id="categoryId" name="categoryId" value="">
                     <option value="">分类</option>
@@ -42,10 +44,14 @@
                 <input type="hidden" name="photo" id="photo"/>
             </div>
             <div class="form-group">
-                <label>节目：</label>
+                <label>选择节目：</label>
+                <div class="panel panel-default">
+                    <div class="panel-body">
                 <?php foreach ($this->programs as $program): ?>
-                    <input type="checkbox" name="programs[]" value="<?php echo $program->id ?>"> <?php echo $program->name ?><br>
+                        <input type="checkbox" name="programs[]" value="<?php echo $program->id ?>" id="<?php echo $program->id ?>"> <label for="<?php echo $program->id ?>"><?php echo $program->name ?></label><br>
                 <?php endforeach; ?>
+                    </div>
+            </div>
             </div>
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
         </form>

@@ -240,7 +240,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     }
 
     protected function userLogin($defaultRedirectRoute, $pageTitle) {
-        $errorMsg = "登录失败，请重试或 &nbsp;&nbsp;<a href=\"" . $this->view->url(array(), 'forgot-password') . "\" class=\"border-btn border-btn-xs\">找回密码</a>";
+        $errorMsg = "登录失败，请重试或";
         if ($this->request->isPost()) {
             $email = $this->request->getParam('email');
             if ($email) {
