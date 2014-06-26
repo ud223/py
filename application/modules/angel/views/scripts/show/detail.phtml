@@ -24,7 +24,7 @@
                     05:39
                 </li>
             </ul>
-            <ul class="itm alt">
+            <ul class="itm">
                 <li class="col col1">
                     <i class="ico null"></i>
                 </li>
@@ -46,7 +46,7 @@
                     02:40
                 </li>
             </ul>
-            <ul class="itm alt selected">
+            <ul class="itm selected">
                 <li class="col col1">
                     <i class="ico null"></i>
                 </li>
@@ -68,7 +68,7 @@
                     07:12
                 </li>
             </ul>
-            <ul class="itm alt">
+            <ul class="itm">
                 <li class="col col1">
                     <i class="ico null"></i>
                 </li>
@@ -90,7 +90,7 @@
                     00:49
                 </li>
             </ul>
-            <ul class="itm alt">
+            <ul class="itm">
                 <li class="col col1">
                     <i class="ico null"></i>
                 </li>
@@ -164,7 +164,19 @@
     </div>
 </div>
 
-
+<div class="P_tmp">
+        <ul class="list-item itm">
+            <li class="col col1">
+                <i class="ico null"></i>
+            </li>
+            <li class="col col2">
+                
+            </li>
+            <li class="col col3">
+                time here
+            </li>
+        </ul>
+</div>
 
 <script type="text/javascript">
     $('document').ready(function() {
@@ -235,27 +247,32 @@
         $('#next').click(function() {
 
         });
-        
+
         $('#tv-header .unvisiable').removeClass('unvisiable');
+
+        $('#tv-header #refresh').click(getApiData);
+
+
     });
     
     function getApiData() {
-        $.ajax({ 
-            url: "http://localhost/api/recommend/get/"+ $.cookie('userId'), 
-            dataType:'json',
-            success: function(result){
-                console.log(result);
-
-                $("#tv-special-name").html(result.data.name);
-                $("#tv-author-name").html(result.data.author);
-                $("#logo").attr('src', result.data.photo);
-                $("#tv-listbar-content").html("");
-                
-                $.each(result.data.programs, function(i, item) {
-                    $("#tv-listbar-content").append(
-                        '<ul class="itm"><li class="col col1"><i class="ico play"></i></li><li class="col col2">'+ item.name +'</li><li class="col col3">'+ parseInt(item.time).timeFormat() +'</li></ul>'
-                    );
-                });
+        $.ajax({
+            url: "<?php echo $this->url(array(), "api-special-recommend") ?>"+ $.cookie('userId'),
+            dataType: 'json',
+            success: function(result) {
+                if (result.code === 200) {
+                    $("#tv-special-name").html(result.data.name);
+                    $("#tv-author-name").html(result.data.author);
+                    $("#logo").attr('src', result.data.photo);
+                    $("#tv-listbar-content").html("");
+                    $.each(result.data.programs, function(k, v) {
+                        var item = $(".P_tmp .list-item").clone(true);
+                        item.attr('id', v.id);
+                        item.find('.col2').html(v.name);
+                        item.find('.col3').html(parseInt(v.time).timeFormat());
+                        $("#tv-listbar-content").append(item);
+                    });
+                }
             }
         });
     }

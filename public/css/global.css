@@ -7,6 +7,16 @@ Common css
 .font14px {
     font-size:14px;
 }
+
+.marginright10px {
+    margin-right:10px !important;
+}
+.marginright20px {
+    margin-right:20px !important;
+}
+.marginright50px {
+    margin-right:50px !important;
+}
 .marginbottom10px {
     margin-bottom:10px !important;
 }
