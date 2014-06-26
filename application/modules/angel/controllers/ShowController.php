@@ -23,6 +23,14 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $this->view->audio_url = $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key;
             }
         }
+        
+        if (!$this->request->isPost()) {
+            if ($_COOKIE["userId"] == null|| $_COOKIE["userId"] == "") {
+                $guidModel = $this->getModel('guid');
+
+                setcookie('userId', $guidModel->toString());
+            }
+        }
     }
 
 }
