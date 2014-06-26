@@ -51,6 +51,9 @@
     <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-program-create') ?>">新建节目</a>
 </div>
 <div class="row">
+    <?php
+    $c = 0;
+    ?>
     <?php foreach ($this->resource as $p): ?>
         <div class="col-md-3 itm">
             <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
@@ -70,12 +73,16 @@
                     <a href="<?php echo $this->url(array(), 'manage-program-save') . '?copy=true&&id=' . $p['id'] ?>" class="btn btn-default btn-sm">复制</a>
 
                     <?php if ($p['oss_video'] || $p['oss_audio']): ?>
-                    <a target="_blank" href="<?php echo $this->url(array("id" => $p['id']), "show-detail") ?>" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-play"></i> 预览</a>
+                        <a target="_blank" href="<?php echo $this->url(array("id" => $p['id']), "show-detail") ?>" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-play"></i> 预览</a>
                     <?php endif; ?>
-                    
+
                 </div>
             </div>
         </div>
+        <?php $c ++; ?>
+        <?php if ($c % 4 == 0): ?>
+            <div class="clearfix"></div>
+        <?php endif; ?>
     <?php endforeach; ?>
 </div>
 <div class="row">

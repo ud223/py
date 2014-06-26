@@ -1431,7 +1431,6 @@ class Angel_ManageController extends Angel_Controller_Action {
 //        }
         //如果最后都没有找到专辑就推荐最后添加的专辑--极端情况          
         if (empty($special)) {
-            echo '1'; exit;
             $special = $specialModel->getlastOne();
         }
         
