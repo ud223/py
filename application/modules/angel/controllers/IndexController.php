@@ -2,7 +2,7 @@
 
 class Angel_IndexController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('index', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
+    protected $login_not_required = array('index', 'home', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
 
     public function init() {
         parent::init();
