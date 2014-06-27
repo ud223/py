@@ -223,6 +223,16 @@ function inArray(val, arr) {
                 callback();
             }
         },
+        restart: function(callback, src) {
+            var self = $(this).get(0), setting = $(this).data('setting');
+            setting.src = src;
+            $(this).find('source').attr('src', src);
+            self.load();
+            self.play();
+            if (callback) {
+                callback();
+            }
+        },
         update: function(option) {
             var self = $(this).get(0), setting = $(this).data('setting');
             $.extend(setting, option);
@@ -292,7 +302,6 @@ function inArray(val, arr) {
                 }
             }
             $(this).data('fullscreen', !isFullscreen);
-
         }
     };
     /*

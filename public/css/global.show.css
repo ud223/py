@@ -592,12 +592,12 @@ h3 {
     width: 300px;
 }
 #tv #tv-author-img {
+    background-size:cover;
+    background-position:center center;
     display: inline-block;
     float: left;
-}
-#tv #tv-author-img img {
-    height: 60px;
-    width: 60px;
+    height:60px;
+    width:60px;
 }
 #tv #tv-special-name {
     margin-bottom: 3px;
