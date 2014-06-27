@@ -1,0 +1,259 @@
+<div id="tv-footer">
+    <div id="tv-listbar">
+        <div id="tv-listbar-title">
+            <a href="javascript:void(0)" id="tv-author-img"></a>
+            <div class="wp">
+                <div id="tvidx02">
+                    <p id="tv-special-name">
+                    </p>
+                    <span id="tvidx01">By </span><a id="tv-author-name" href="javascript:void(0)"></a>
+                </div>
+                <button class="empty-btn close-btn" id="tv-listbar-close"></button>
+            </div>
+        </div>
+        <div id="tv-listbar-content">
+        </div>
+    </div>
+    <div id="tv-footer-ltbar">
+        <div class="wp">
+            <button class="ico" id="prev" class="pull-left"></button>
+            <button class="ico" id="play" class="pull-left"></button>
+            <button class="ico" id="pause" class="pull-left"></button>
+            <button class="ico" id="next" class="pull-left"></button>
+        </div>
+    </div>
+    <div id="tv-footer-rtbar">
+        <div class="wp">
+            <div id="volume-ctrl" class="pull-left">
+                <button id="volume-speaker" class="ico pull-left"></button>
+                <div id="volume-holder" class="pull-left">
+                    <div id="volume-in"></div>
+                </div>
+            </div>
+            <button id="tv-listbtn" class="ico"></button>
+        </div>
+    </div>
+
+    <div id="tv-footer-mdbar">
+
+        <div id="tv-prog">
+            <div id="tv-prog-timer">
+                <span id="t1">--:--</span><span id="t2">/</span><span id="t3">--:--</span>
+            </div>
+            <div id="tv-prog-title">
+            </div>
+            <div id="tv-prog-seekbar" class="rr"></div>
+            <div id="tv-prog-loaded" class="rr"></div>
+        </div>
+    </div>
+</div>
+<div id="tv-main-container" class="layer">
+    <div id="tv-screen" class="layer text-center">
+        <video id="tv-video-player" preload oncontextmenu="return false;">
+            <source>
+        </video>
+        <audio id="tv-audio-player" preload oncontextmenu="return false;">
+            <source>
+        </audio>
+    </div>
+    <div id="tv-cover" class="layer">
+        <button id="tv-fs-play-btn" class="empty-btn"></button>
+        <button id="tv-fs-pause-btn" class="empty-btn"></button>
+    </div>
+</div>
+
+<div class="P_tmp">
+    <ul class="list-item itm">
+        <li class="col col1">
+            <i class="ico null"></i>
+        </li>
+        <li class="col col2 tv-current-title">
+
+        </li>
+        <li class="col col3">
+            time here
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $('document').ready(function() {
+        // 网速失速
+        $('#player').on('stalled', function() {
+            console.log('stalled');
+            var new_one = $('#player').clone(true);
+            $('#player').after(new_one).remove();
+        });
+        // 网速错误
+        $('#player').on('error', function() {
+            console.log('error');
+            var new_one = $('#player').clone(true);
+            $('#player').after(new_one).remove();
+        });
+        $('#tv-listbtn').click(function() {
+            $('#tv-listbar').clickToggle();
+        });
+
+        $('#tv-header').autoToggle();
+        $('#tv-footer').autoToggle({
+            animationDirection: 'bottom',
+            beforeDisplay: function() {
+                $('#tv-cover').show();
+            },
+            beforeHide: function() {
+                if (!document.getElementById("tv-video-player").paused) {
+                    $('#tv-cover').hide();
+                }
+            }
+        });
+        $('#tv-video-player').video({
+            onPause: function() {
+                $('#tv-fs-play-btn').show();
+                $('#tv-fs-pause-btn').hide();
+                $('#play').show();
+                $('#pause').hide();
+            },
+            onEnded: function() {
+                $('#tv-cover').show();
+                nextFunc();
+            },
+            onPlay: function() {
+                $('#tv-fs-play-btn').hide();
+                $('#tv-fs-pause-btn').show();
+                $('#play').hide();
+                $('#pause').show();
+            }
+        });
+        // play and pause
+        $('#tv-fs-play-btn').click(function() {
+            $('#play').click();
+        });
+        $('#tv-fs-pause-btn').click(function() {
+            $('#pause').click();
+        });
+        $('#play').click(function() {
+            $('#tv-video-player').video("play", function() {
+                $('#tv-cover').hide();
+            });
+        });
+        $('#pause').click(function() {
+            $('#tv-video-player').video("pause", function() {
+                $('#tv-cover').show();
+            });
+        });
+        // next program
+        $('#next').click(function() {
+            nextFunc()
+        });
+        // prev program
+        $('#prev').click(function() {
+            prevFunc();
+        });
+        $('#tv-header .unvisiable').removeClass('unvisiable');
+
+        $('#tv-header #refresh').click(function() {
+            getApiData(nextFunc);
+        });
+
+        getApiData(nextFunc);
+    });
+    function nextFunc() {
+        if (playListCount()) {
+            var selected = null;
+            var current = $('#tv-listbar-content .list-item.selected');
+            var first = $($('#tv-listbar-content .list-item').get(0));
+            if (current.length) {
+                var next = current.next('.list-item');
+                current.removeClass('selected');
+                if (next.length) {
+                    next.addClass('selected');
+                    selected = next;
+                } else {
+                    first.addClass('selected');
+                    selected = first;
+                }
+            } else {
+                first.addClass('selected');
+                selected = first;
+            }
+            var video_url = selected.attr('video');
+            var audio_url = selected.attr('audio');
+            var title = selected.find('.tv-current-title').html();
+            $('#tv-video-player').video("restart", function() {
+                $('#tv-cover').hide();
+                $('#tv-prog-title').html(title);
+            }, video_url);
+        } else {
+            return false;
+        }
+    }
+    function prevFunc() {
+        if (playListCount()) {
+            var selected = null;
+            var current = $('#tv-listbar-content .list-item.selected');
+            var last = $($('#tv-listbar-content .list-item').get($('#tv-listbar-content .list-item').length - 1));
+            if (current.length) {
+                var prev = current.prev('.list-item');
+                current.removeClass('selected');
+                if (prev.length) {
+                    prev.addClass('selected');
+                    selected = prev;
+                } else {
+                    last.addClass('selected');
+                    selected = last;
+                }
+            } else {
+                last.addClass('selected');
+                selected = last;
+            }
+            var video_url = selected.attr('video');
+            var audio_url = selected.attr('audio');
+            var title = selected.find('.tv-current-title').html();
+            $('#tv-video-player').video("restart", function() {
+                $('#tv-cover').hide();
+                $('#tv-prog-title').html(title);
+            }, video_url);
+        } else {
+            return false;
+        }
+    }
+    function switchFunc() {
+
+    }
+    function playListCount() {
+        var list_item = $('#tv-listbar-content .list-item');
+        if (list_item.length) {
+            return list_item.length;
+        } else {
+            return false;
+        }
+    }
+    function getApiData(callback) {
+        $.ajax({
+            url: "<?php echo $this->url(array("uid"=>$_COOKIE["userId"], "sid"=>$_COOKIE["specialId"]), "api-special-recommend") ?>",
+            dataType: 'json',
+            success: function(result) {
+                if (result.code === 200) {
+                    $.cookie('specialId', result.data.id);
+                    $("#tv-special-name").html(result.data.name);
+                    $("#tv-author-name").html(result.data.author);
+                    $("#tv-author-img").css('background-image', 'url(' + result.data.photo + ')');
+                    $("#tv-listbar-content").empty();
+                    $.each(result.data.programs, function(k, v) {
+                        var item = $(".P_tmp .list-item").clone(true);
+                        item.attr('video', v.oss_video);
+                        item.attr('audio', v.oss_audio);
+                        item.attr('id', v.id);
+                        item.find('.col2').html(v.name);
+                        item.find('.col3').html(parseInt(v.time).timeFormat());
+                        $("#tv-listbar-content").append(item);
+                    });
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                }
+            }
+        });
+    }
+
+</script>

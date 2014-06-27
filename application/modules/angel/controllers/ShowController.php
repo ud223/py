@@ -35,4 +35,18 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
     }
 
+    
+    
+    public function playAction() {
+        
+        if (!$this->request->isPost()) {
+            if ($_COOKIE["userId"] == null|| $_COOKIE["userId"] == "") {
+                $guidModel = $this->getModel('guid');
+
+                setcookie('userId', $guidModel->toString());
+            }
+            
+            setcookie('specialId', '123456');
+        }
+    }
 }
