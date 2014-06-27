@@ -78,6 +78,13 @@
                                 <li><a href="<?php echo $this->url(array(), 'manage-author-create') ?>">添加作者</a></li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">关键词管理 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-keyword-list-home') ?>">关键词列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-keyword-create') ?>">添加关键词</a></li>
+                            </ul>
+                        </li>
 
                     </ul>
                     <?php if(isset($this->me)): ?>
