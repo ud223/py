@@ -12,8 +12,10 @@
         <div class="bdrow">
             <input type="text" autocomplete="off" placeholder="用户邮箱" id="email" name="email" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
         </div>
-        <div class="bdrow">
-            <button type="submit" id="confirm-btn">发送邮件</button>
+        <div class="bdrow" id="btn-bd">
+            <button type="button" id="confirm-btn">立即订阅</button>
+        </div>
+        <div class="bdrow" id="result-bd">
         </div>
     </form>
 </div>
@@ -33,5 +35,25 @@
                 }
             }
         });
+        $("#confirm-btn").click(function() {
+            var result = $('#validate-form').valid();
+            if (result) {
+                $.ajax({
+                    url: '<?php echo $this->url(array(), "home") ?>',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {email: $('#email').val()},
+                    success: function(response) {
+                        if(response) {
+                            $('#result-bd').paper({type: 'success'}, '<b class="glyphicon glyphicon-ok-sign"></b> 订阅成功，请时刻关注您的邮箱（有可能出现在垃圾箱），一大波精彩芝士电视正在向您走来！');
+                            $('#btn-bd').remove();
+                        } else {
+                            $('#result-bd').paper({type: 'danger'}, '<b class="glyphicon glyphicon-minus-sign"></b> 抱歉，订阅未能成功，请刷新页面后重试！');
+                        }
+                    }
+                });
+            }
+        });
+        $('#email').focus();
     });
 </script>
