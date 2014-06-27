@@ -53,7 +53,6 @@
             <source>
         </video>
         <audio id="tv-audio-player" preload oncontextmenu="return false;">
-            <source>
         </audio>
     </div>
     <div id="tv-cover" class="layer">
@@ -90,10 +89,10 @@
             var new_one = $('#player').clone(true);
             $('#player').after(new_one).remove();
         });
+
         $('#tv-listbtn').click(function() {
             $('#tv-listbar').clickToggle();
         });
-
         $('#tv-header').autoToggle();
         $('#tv-footer').autoToggle({
             animationDirection: 'bottom',
@@ -124,7 +123,7 @@
                 $('#pause').show();
             }
         });
-        // play and pause
+        // play and pause and next and prev
         $('#tv-fs-play-btn').click(function() {
             $('#play').click();
         });
@@ -141,14 +140,14 @@
                 $('#tv-cover').show();
             });
         });
-        // next program
         $('#next').click(function() {
             nextFunc()
         });
-        // prev program
         $('#prev').click(function() {
             prevFunc();
         });
+
+        // 显示“换一批”按钮
         $('#tv-header .unvisiable').removeClass('unvisiable');
 
         $('#tv-header #refresh').click(function() {
@@ -157,66 +156,58 @@
 
         getApiData(nextFunc);
     });
+    function playFunc(target) {
+        target.addClass('selected').find('.ico').removeClass('null').addClass('play');
+        target.siblings('.list-item').removeClass('selected').find('.ico').addClass('null');
+        var video_url = target.attr('video');
+        var audio_url = target.attr('audio');
+        var title = target.find('.tv-current-title').html();
+        $('#tv-video-player').video("restart", function() {
+            $('#tv-cover').hide();
+            $('#tv-prog-title').html(title);
+        }, video_url);
+    }
     function nextFunc() {
         if (playListCount()) {
-            var selected = null;
-            var current = $('#tv-listbar-content .list-item.selected');
-            var first = $($('#tv-listbar-content .list-item').get(0));
-            if (current.length) {
-                var next = current.next('.list-item');
-                current.removeClass('selected');
-                if (next.length) {
-                    next.addClass('selected');
-                    selected = next;
-                } else {
-                    first.addClass('selected');
-                    selected = first;
-                }
-            } else {
-                first.addClass('selected');
-                selected = first;
-            }
-            var video_url = selected.attr('video');
-            var audio_url = selected.attr('audio');
-            var title = selected.find('.tv-current-title').html();
-            $('#tv-video-player').video("restart", function() {
-                $('#tv-cover').hide();
-                $('#tv-prog-title').html(title);
-            }, video_url);
+            playFunc(_getSelectedItem('next'));
         } else {
             return false;
         }
     }
     function prevFunc() {
         if (playListCount()) {
-            var selected = null;
-            var current = $('#tv-listbar-content .list-item.selected');
-            var last = $($('#tv-listbar-content .list-item').get($('#tv-listbar-content .list-item').length - 1));
-            if (current.length) {
-                var prev = current.prev('.list-item');
-                current.removeClass('selected');
-                if (prev.length) {
-                    prev.addClass('selected');
-                    selected = prev;
-                } else {
-                    last.addClass('selected');
-                    selected = last;
-                }
-            } else {
-                last.addClass('selected');
-                selected = last;
-            }
-            var video_url = selected.attr('video');
-            var audio_url = selected.attr('audio');
-            var title = selected.find('.tv-current-title').html();
-            $('#tv-video-player').video("restart", function() {
-                $('#tv-cover').hide();
-                $('#tv-prog-title').html(title);
-            }, video_url);
+            playFunc(_getSelectedItem('prev'));
         } else {
             return false;
         }
     }
+
+    function _getSelectedItem(direction) {
+        var selected = null;
+        var current = $('#tv-listbar-content .list-item.selected');
+        var jumpOne;
+        if (direction === 'next') {
+            jumpOne = $($('#tv-listbar-content .list-item').get(0));
+        } else if (direction === 'prev') {
+            jumpOne = $($('#tv-listbar-content .list-item').get($('#tv-listbar-content .list-item').length - 1));
+        }
+        if (current.length) {
+            var one;
+            if (direction === 'next')
+                one = current.next('.list-item');
+            else if (direction === 'prev')
+                one = current.prev('.list-item');
+            if (one.length) {
+                selected = one;
+            } else {
+                selected = jumpOne;
+            }
+        } else {
+            selected = jumpOne;
+        }
+        return selected;
+    }
+
     function switchFunc() {
 
     }
@@ -230,7 +221,7 @@
     }
     function getApiData(callback) {
         $.ajax({
-            url: "<?php echo $this->url(array("uid"=>$_COOKIE["userId"], "sid"=>$_COOKIE["specialId"]), "api-special-recommend") ?>",
+            url: "<?php echo $this->url(array("uid" => $_COOKIE["userId"], "sid" => $_COOKIE["specialId"]), "api-special-recommend") ?>",
             dataType: 'json',
             success: function(result) {
                 if (result.code === 200) {
@@ -239,13 +230,16 @@
                     $("#tv-author-name").html(result.data.author);
                     $("#tv-author-img").css('background-image', 'url(' + result.data.photo + ')');
                     $("#tv-listbar-content").empty();
-                    $.each(result.data.programs, function(k, v) {
+                    $.each(result.data.programs, function() {
                         var item = $(".P_tmp .list-item").clone(true);
-                        item.attr('video', v.oss_video);
-                        item.attr('audio', v.oss_audio);
-                        item.attr('id', v.id);
-                        item.find('.col2').html(v.name);
-                        item.find('.col3').html(parseInt(v.time).timeFormat());
+                        item.click(function() {
+                            playFunc($(this).closest('.list-item'));
+                        });
+                        item.attr('video', this.oss_video);
+                        item.attr('audio', this.oss_audio);
+                        item.attr('id', this.id);
+                        item.find('.col2').html(this.name);
+                        item.find('.col3').html(parseInt(this.time).timeFormat());
                         $("#tv-listbar-content").append(item);
                     });
                     if (typeof callback === 'function') {
