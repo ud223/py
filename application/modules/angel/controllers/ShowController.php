@@ -30,8 +30,6 @@ class Angel_ShowController extends Angel_Controller_Action {
 
                 setcookie('userId', $guidModel->toString());
             }
-            
-            setcookie('specialId', '123456');
         }
     }
 
