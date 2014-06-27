@@ -13,10 +13,10 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     /**
-     * 登陆 
+     * 登录
      */
     public function loginAction() {
-        $this->userLogin('forgot-password', "登录芝士电视");
+        $this->userLogin('show-play', "登录芝士电视");
     }
 
     /**
