@@ -750,23 +750,23 @@ h3 {
 #tv #tv-frame .board .content {
     padding:30px 0 20px 0;
 }
-#tv #tv-frame .board .content .row, #tv #tv-frame .board .content .half-row {
+#tv #tv-frame .bdrow, #tv #tv-frame .half-row {
     padding-bottom:15px;
 }
-#tv #tv-frame .board .content .half-row {
+#tv #tv-frame .half-row {
     margin-bottom:5px;
     padding-left:30px;
     text-align:left;
 }
-#tv #tv-frame .board .content .half-row label {
+#tv #tv-frame .half-row label {
     color:#aaa;
     font-size:12px;
     margin:0;
 }
-#tv #tv-frame .board .content .half-row input[type='checkbox'] {
+#tv #tv-frame .half-row input[type='checkbox'] {
     margin-top:4px;
 }
-#tv #tv-frame .board .content .row input, #tv #tv-frame .board .content .row button {
+#tv #tv-frame .bdrow input, #tv #tv-frame .bdrow button {
     border:0;
     border-radius:500px;
     box-sizing:border-box;
@@ -777,7 +777,7 @@ h3 {
     padding:0 20px;
     width:300px;
 }
-#tv #tv-frame .board .content .row input {
+#tv #tv-frame .bdrow input {
     background:rgba(0,0,0,0.1);
     box-shadow:0 1px 0 rgba(255,255,255,0.08), inset 0 2px 2px rgba(0,0,0,0.1);
     color:#FFF;
@@ -785,17 +785,17 @@ h3 {
     padding-bottom:11px;
     text-shadow:0 2px 2px rgba(0,0,0,0.2);
 }
-#tv #tv-frame .board .content .row input:focus {
+#tv #tv-frame .bdrow input:focus {
     background:rgba(0,0,0,0.24);
 }
-#tv #tv-frame .board .content .row button {
+#tv #tv-frame .bdrow button {
     background:#FF0;
     box-shadow:inset 0 2px 2px rgba(255,255,255,0.2);
     color:rgba(0,0,0,0.6);
     font-weight:bold;
     text-shadow:0 1px 0 rgba(255,255,255,0.5);
 }
-#tv #tv-frame .board .content .row button:hover {
+#tv #tv-frame .bdrow button:hover {
     background:#FFD800;
 }
 

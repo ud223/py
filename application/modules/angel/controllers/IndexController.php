@@ -2,7 +2,7 @@
 
 class Angel_IndexController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('index', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
+    protected $login_not_required = array('index', 'subscribe', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
 
     public function init() {
         parent::init();
@@ -10,6 +10,23 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function indexAction() {
         $this->_forward('login');
+    }
+
+    public function subscribeAction() {
+        if ($this->request->isXmlHttpRequest() && $this->request->isPost()) {
+            try {
+                $email = $this->request->getParam("email");
+                $subscribeModel = $this->getModel('subscribe');
+                $subscribeModel->addSubscribe($email);
+                echo 1;
+                exit;
+            } catch (Angel_Exception_User $e) {
+                echo 0;
+                exit;
+            }
+        } else {
+            
+        }
     }
 
     /**
