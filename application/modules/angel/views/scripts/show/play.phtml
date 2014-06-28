@@ -220,8 +220,22 @@
         }
     }
     function getApiData(callback) {
+
+    <?php
+        $url = "";//$this->url(array("uid" => $_COOKIE["userId"]), "api-special-recommend-home");
+        
+        if ($_COOKIE["specialId"]) {
+            $url = $this->url(array("uid" => $_COOKIE["userId"], "sid" => $_COOKIE["specialId"]), "api-special-recommend");
+        }
+        else {
+            $url = $this->url(array("uid" => $_COOKIE["userId"], "sid" => "none"), "api-special-recommend");
+        }
+    ?>
+
+        var url = "<?php echo $url ?>";
+
         $.ajax({
-            url: "<?php echo $this->url(array("uid" => $_COOKIE["userId"], "sid" => $_COOKIE["specialId"]), "api-special-recommend") ?>",
+            url: url,
             dataType: 'json',
             success: function(result) {
                 if (result.code === 200) {
