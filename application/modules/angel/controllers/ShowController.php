@@ -52,7 +52,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $programModel = $this->getModel('program');
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
-
+        echo '1';exit;
         //获取当前需要推荐的用户ID
         $userId = $this->me->getUser()->id;
         
