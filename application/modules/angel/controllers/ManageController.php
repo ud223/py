@@ -1188,26 +1188,41 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             $result = $specialModel->getRoot();
 
-            $ownProgramIds = "";
+//            $ownProgramIds = "";
+//            
+//            foreach ($result as $special) {       
+//                if ($ownProgramIds != "")
+//                    $ownProgramIds = $ownProgramIds . ",";
+//
+//                $ownProgramIds = $ownProgramIds . $special->programsId;
+//            }
+//            
+//            $programIds = "";
+//            
+//            if ($ownProgramIds != "") {
+//                $programIds = explode(",", $ownProgramIds);
+//            
+//                foreach ($programIds as $programId) {
+//                    if ($programId == null || $programId == "") {
+//                        unset($programId[$programId]);
+//                    }
+//                }
+//            }
             
-            foreach ($result as $special) {       
+            $ownProgramIds = "";
+
+            foreach ($result as $special) {
+                if ($special->programsId == null || $special->programsId == "") {
+                    continue;
+                }
+
                 if ($ownProgramIds != "")
                     $ownProgramIds = $ownProgramIds . ",";
 
                 $ownProgramIds = $ownProgramIds . $special->programsId;
             }
-            
-            $programIds = "";
-            
-            if ($ownProgramIds != "") {
-                $programIds = explode(",", $ownProgramIds);
-            
-                foreach ($programIds as $programId) {
-                    if ($programId == null || $programId == "") {
-                        unset($programId[$programId]);
-                    }
-                }
-            }
+
+            $programIds = explode(",", $ownProgramIds);
             
             $this->view->title = "创建专辑";
             $this->view->authors = $authorModel->getAll();
