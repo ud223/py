@@ -16,7 +16,7 @@
 
     $.fn.rotate = function(val) {
         var $self = $(this), m, data = initData($self);
-        if (typeof val == 'undefined') {
+        if (typeof val === 'undefined') {
             return data.rotate + data.rotateUnits;
         }
         m = val.toString().match(/^(-?\d+(\.\d+)?)(.+)?$/);
@@ -607,9 +607,6 @@
 
     /* LOADING (END) */
 
-    /* VALIDATOR (START) */
-
-    /* VALIDATOR (END) */
 
     /* PAPER (START) */
     $.fn.paper = function(options, content) {
@@ -631,6 +628,201 @@
     };
     /* PAPER (END) */
 
+    /* VIDEO (START) */
+    var videoMethods = {
+        init: function(option) {
+            var setting = {
+                src: 'default path',
+                total: "#t3",
+                current: "#t1",
+                seekbar: "#tv-prog-seekbar",
+                loaded: "#tv-prog-loaded",
+                progress: "#tv-prog",
+                speakerButton: "#volume-speaker",
+                volumeBar: "#volume-holder",
+                fullscreenButton: "#fullscreen",
+                container: "#tv",
+                onPlay: false,
+                onPause: false,
+                onEnded: false
+            };
+            var $this = $(this);
+            var self = $this.get(0);
+            $.extend(setting, option);
+//            $this.data('setting', setting);
+            // save setting
+            var hidden = $('.video-value-host');
+            hidden.data('setting', setting);
+
+            $this.find('source').attr('src', setting.src);
+            $this.video('update');
+            var xClick = function(obj) {
+                var x = event.clientX - $(obj).offset().left;
+                var w = $(obj).width();
+                var perc = Math.ceil(x / w * 100);
+                if (perc >= 99) {
+                    perc = 99;
+                }
+                return perc;
+            };
+            $(setting.seekbar).on('click', function() {
+                $this.video('seek', xClick(this));
+            });
+            $(setting.speakerButton).on('click', function() {
+                $this.video('switchSpeaker');
+            });
+            $(setting.volumeBar).on('click', function() {
+                $this.video('adjustVolume', xClick(this));
+            });
+            $(setting.fullscreenButton).click(function() {
+                $this.video("fullscreen");
+                $(this).toggleClass('on');
+            });
+            if (setting.onPlay && typeof (setting.onPlay) === 'function') {
+                $this.on('play', setting.onPlay);
+            }
+            if (setting.onPause && typeof (setting.onPause) === 'function') {
+                $this.on('pause', setting.onPause);
+            }
+            if (setting.onEnded && typeof (setting.onEnded) === 'function') {
+                $this.on('ended', setting.onEnded);
+            }
+        },
+        setting: function(key, val) {
+            var hidden = $('.video-value-host');
+            var _setting = hidden.data('setting');
+            if (key && val) {
+                // save key value
+                _setting[key] = val;
+                hidden.data('setting', _setting);
+            } else if (key) {
+                // read key
+                return _setting[key];
+            } else {
+                // read setting
+                return _setting;
+            }
+        },
+        play: function(callback) {
+            var self = $(this).get(0);
+            self.play();
+            if (callback) {
+                callback();
+            }
+        },
+        pause: function(callback) {
+            var self = $(this).get(0);
+            self.pause();
+            if (callback) {
+                callback();
+            }
+        },
+        restart: function(callback, src) {
+            var self = $(this).get(0);
+            $(this).video('setting', 'src', src);
+            $(this).find('source').attr('src', src);
+            self.load();
+            self.play();
+            if (callback) {
+                callback();
+            }
+        },
+        update: function() {
+            var self = $(this).get(0);
+            var update_id = setInterval(function() {
+                // update buffer
+                var setting = $(self).video('setting');
+                var currentTag = $(setting.current);
+                var totalTag = $(setting.total);
+                // update time
+                if (self.duration) {
+                    currentTag.html(self.currentTime.timeFormat());
+                    totalTag.html(self.duration.timeFormat());
+                    $(setting.loaded).css('width', (self.currentTime / self.duration) * 100 + '%');
+                }
+            }, 200);
+            $('body').data('update_id', update_id);
+        },
+        seek: function(perc) {
+            var self = $(this).get(0);
+            self.currentTime = self.duration * (perc / 100);
+        },
+        switchSpeaker: function() {
+            var self = $(this).get(0), setting = $(this).video('setting');
+            self.muted = !self.muted;
+            $(setting.speakerButton).toggleClass('disable');
+            if (self.muted) {
+                $($(setting.volumeBar).children().get(0)).css('width', 0);
+            } else {
+                var w = self.volume * 100 + "%";
+                $($(setting.volumeBar).children().get(0)).css('width', w);
+            }
+        },
+        adjustVolume: function(perc) {
+            var self = $(this).get(0), setting = $(this).video('setting');
+            self.muted = false;
+            $(setting.speakerButton).removeClass('disable');
+            var v = Math.ceil(perc / 10);
+            if (v < 1) {
+                v = 1;
+            }
+            var w = v * 10 + "%";
+            v = v / 10;
+            self.volume = v;
+            $($(setting.volumeBar).children().get(0)).css('width', w);
+        },
+        fullscreen: function() {
+            if (!$(this).data('fullscreen'))
+                $(this).data('fullscreen', false);
+            var setting = $(this).video('setting');
+            var docElm = $(setting.container).get(0);
+
+            var isFullscreen = $(this).data('fullscreen');
+            if (isFullscreen) {
+                if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                } else if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                }
+            } else {
+                if (docElm.requestFullscreen) {
+                    docElm.requestFullscreen();
+                } else if (docElm.mozRequestFullScreen) {
+                    docElm.mozRequestFullScreen();
+                } else if (docElm.webkitRequestFullScreen) {
+                    docElm.webkitRequestFullScreen();
+                }
+            }
+            $(this).data('fullscreen', !isFullscreen);
+        }
+    };
+    /*
+     * 启动方法
+     * @param {type} method     传递字符串，将被识别为方法名; 传递对象，将作为init方法的参数（一般是option）, 并调用init方法
+     * @returns {unresolved}
+     */
+    $.fn.video = function(method) {
+        var target = this;
+        if (target.get(0).tagName != "VIDEO" && target.get(0).tagName != "AUDIO") {
+            target = $(target.find('video').get(0));
+        }
+
+        if (videoMethods[method]) {
+            return videoMethods[method].apply(target, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'object' || !method) {
+            if ($('.video-value-host').length === 0) {
+                var html = $("<input>").attr('type', 'hidden').attr('class', 'video-value-host');
+                $('body').append(html);
+            }
+
+            return videoMethods.init.apply(target, arguments);
+        } else {
+            $.error('The method ' + method + ' does not exist in $.uploadify');
+        }
+    };
+    /* VIDEO (END) */
 })(jQuery);
 /*!
  * jQuery Cookie Plugin v1.3.1

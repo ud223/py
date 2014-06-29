@@ -49,9 +49,10 @@ if ($this->me) {
                     var id = $this.attr('id');
                     if(id.indexOf('video') >= 0) {
                         // video
-                        
+                        $('#tv-screen, #tv-cover').css('left', 0).css('position', 'absolute');
                     } else {
                         // audio
+                        $('#tv-screen, #tv-cover').css('left', 1000000).css('position', 'fixed');
                     }
                 });
             });
