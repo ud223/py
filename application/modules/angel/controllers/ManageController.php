@@ -1189,16 +1189,26 @@ class Angel_ManageController extends Angel_Controller_Action {
             $result = $specialModel->getRoot();
 
             $ownProgramIds = "";
-
-            foreach ($result as $special) {
+            
+            foreach ($result as $special) {       
                 if ($ownProgramIds != "")
                     $ownProgramIds = $ownProgramIds . ",";
 
                 $ownProgramIds = $ownProgramIds . $special->programsId;
             }
-
-            $programIds = explode(",", $ownProgramIds);
-
+            
+            $programIds = "";
+            
+            if ($ownProgramIds != "") {
+                $programIds = explode(",", $ownProgramIds);
+            
+                foreach ($programIds as $programId) {
+                    if ($programId == null || $programId == "") {
+                        unset($programId[$programId]);
+                    }
+                }
+            }
+            
             $this->view->title = "创建专辑";
             $this->view->authors = $authorModel->getAll();
             $this->view->programs = $programModel->getProgramNotOwn($programIds);
@@ -1326,6 +1336,10 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $ownProgramIds = "";
 
                 foreach ($result as $special) {
+                    if ($special->programsId == null || $special->programsId == "") {
+                        continue;
+                    }
+                    
                     if ($ownProgramIds != "")
                         $ownProgramIds = $ownProgramIds . ",";
 
@@ -1333,7 +1347,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
                 
                 $programIds = explode(",", $ownProgramIds);
-
+            //    var_dump($programIds); exit;
                 $this->view->model = $target;
                 $photo = $target->photo;
                 
@@ -1357,8 +1371,9 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
                 
                 $myOwnProgramIds = explode(",", $target->programsId);
-
+                
                 $myOwnPrograms = $programModel->getProgramBySpecialId($myOwnProgramIds);
+
                 $notOwnprograms = $programModel->getProgramNotOwn($programIds);
                 
                 $programs = array();
@@ -1367,8 +1382,10 @@ class Angel_ManageController extends Angel_Controller_Action {
                     $programs[] = $program;
                 }
                 
-                foreach ($myOwnPrograms as $program) {
-                    $programs[] = $program;
+                if (!empty($myOwnPrograms)) {
+                    foreach ($myOwnPrograms as $program) {
+                        $programs[] = $program;
+                    }
                 }
 
                 $this->view->authors = $authorModel->getAll();
