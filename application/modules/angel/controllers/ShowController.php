@@ -35,14 +35,21 @@ class Angel_ShowController extends Angel_Controller_Action {
 
     
     
-    public function playAction() {
+    public function playAction() {       
+        $uid = "";
         
-        if (!$this->request->isPost()) {
-            if ($_COOKIE["userId"] == null|| $_COOKIE["userId"] == "") {
-                $guidModel = $this->getModel('guid');
+        if ($_COOKIE["userId"] == null|| $_COOKIE["userId"] == "") {
+            
+            $guidModel = $this->getModel('guid');
+            $uid = $guidModel->toString();
 
-                setcookie('userId', $guidModel->toString());
-            }
+            setcookie('userId', $uid);
+            
+            $this->view->uid = $uid;
+        }
+        else {
+            $uid = $_COOKIE["userId"];
+            $this->view->uid = $uid;
         }
     }
     
@@ -52,7 +59,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $programModel = $this->getModel('program');
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
-
+        
         //获取当前需要推荐的用户ID
         $userId = $this->me->getUser()->id;
         
