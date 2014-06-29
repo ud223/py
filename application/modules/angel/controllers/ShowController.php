@@ -23,9 +23,9 @@ class Angel_ShowController extends Angel_Controller_Action {
 //                $this->view->audio_url = $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key;
 //            }
         }
-        
+
         if (!$this->request->isPost()) {
-            if ($_COOKIE["userId"] == null|| $_COOKIE["userId"] == "") {
+            if ($_COOKIE["userId"] == null || $_COOKIE["userId"] == "") {
                 $guidModel = $this->getModel('guid');
 
                 setcookie('userId', $guidModel->toString());
@@ -33,52 +33,49 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
     }
 
-    
-    
-    public function playAction() {       
+    public function playAction() {
         $uid = "";
-        
-        if ($_COOKIE["userId"] == null|| $_COOKIE["userId"] == "") {
-            
+
+        if ($_COOKIE["userId"] == null || $_COOKIE["userId"] == "") {
+
             $guidModel = $this->getModel('guid');
             $uid = $guidModel->toString();
 
             setcookie('userId', $uid);
-            
+
             $this->view->uid = $uid;
-        }
-        else {
+        } else {
             $uid = $_COOKIE["userId"];
             $this->view->uid = $uid;
         }
     }
-    
-    public function specialRecommendAction() {     
+
+    public function specialRecommendAction() {
         $specialModel = $this->getModel('special');
         $recommendModel = $this->getModel('recommend');
         $programModel = $this->getModel('program');
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
-        
+
         //获取当前需要推荐的用户ID
         $userId = $this->me->getUser()->id;
-        
+
         if ($userId == null || $userId == "") {
             $userId = $this->request->getParam('uid');
         }
-        
+
         $curSpecialId = $this->request->getParam('sid');
-        
+
         if ($curSpecialId == "none")
-               $curSpecialId = null; 
+            $curSpecialId = null;
         //获取该用户已经推荐过的专辑ID集合
         $recommends = $recommendModel->getRecommendIds($userId);
-        
+
         $special = null;
         $recommendIds = "";
         //获取推荐专辑的次数
         $viewCount = count($recommends);
-        
+
         //将该用户推荐过的专辑id拼接成 id，id的条件形式
         foreach ($recommends as $recommend) {
             if ($recommendIds != "")
@@ -86,23 +83,21 @@ class Angel_ShowController extends Angel_Controller_Action {
 
             $recommendIds = $recommendIds . $recommend->specialId;
         }
-         
+
         $recommendSpecialIds = "";
-        
+
         if ($recommendIds != "")
             $recommendSpecialIds = explode(",", $recommendIds);
-        
+
 //        $this->_helper->json(array('data' => $recommendSpecialIds, 'code' => 200)); exit;
 //        if ($viewCount <  1 || $recommends == 0) {//00
         //获取一个没有推荐过的专辑
         $special = $specialModel->getNotRecommendSpecial($recommendSpecialIds, $curSpecialId);
-        
- //       $this->_helper->json(array('data' => $special->name, 'code' => 200)); exit;
+
+        //       $this->_helper->json(array('data' => $special->name, 'code' => 200)); exit;
 //        echo $special->id; exit;
-        
 //        }
 //        else {
-
 // 
 //            //获取推荐过的专辑集合
 //            $tmpSpecials = $specialModel->getByIds($recommendIds);
@@ -139,7 +134,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         if (empty($special)) {
             $special = $specialModel->getlastOne();
         }
-        
+
         //获取该专辑拥有的节目ID集合
         $ownProgramIds = explode(",", $special->programsId);
         //获取该专辑节目列表
@@ -149,34 +144,29 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         $result["id"] = $special->id;
         $result["name"] = $special->name;
-        
+
         if ($author == "")
             $result["author"] = "";
         else
             $result["author"] = $author->name;
-        
-        $photo = null;
-        
-        foreach ($special->photo as $p) {
-            $photo = $p;
-            
-            break;
+
+
+        $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
+        $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];
+        if (count($special->photo)) {
+            $photo = $special->photo[0];
+            $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
+            $result["photo_main"] = $this->view->photoImage($photo->name . $photo->type, 'main');
         }
 
-        if ($photo != null) {
-            $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
-        }
-        else {
-            $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
-        }
-        
         foreach ($programs as $program) {
             $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
-        
+
         //保存推荐记录
         $recommendModel->addRecommend($special->id, $userId);
 
         $this->_helper->json(array('data' => $result, 'code' => 200));
     }
+
 }

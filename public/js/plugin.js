@@ -607,9 +607,6 @@
 
     /* LOADING (END) */
 
-    /* VALIDATOR (START) */
-
-    /* VALIDATOR (END) */
 
     /* PAPER (START) */
     $.fn.paper = function(options, content) {

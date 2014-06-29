@@ -60,8 +60,8 @@
         <button id="tv-fs-pause-btn" class="empty-btn"></button>
     </div>
     <div id="tv-audio-holder" style="position:absolute;width:600px;height:600px;background:url(/img/cd.png);left:50%;top:50%;margin-left:-300px;margin-top:-300px;">
-        <div id="tv-mask" style="position:absolute;border-radius:1000px;width:350px;height:350px;left:50%;top:50%;margin-left:-175px;margin-top:-175px;">
-            
+        <div id="tv-mask" style="background-size:cover;background-position:center center;position:absolute;border-radius:1000px;width:350px;height:350px;left:50%;top:50%;margin-left:-175px;margin-top:-175px;">
+
         </div>
     </div>
 </div>
@@ -158,7 +158,16 @@
         $('#tv-header #refresh').click(function() {
             getApiData(nextFunc);
         });
-
+        
+        var __dura = 10000;
+        $.rotateCd = function() {
+            $('#tv-mask').animate({
+                rotate: '+=360deg'
+            }, __dura, 'linear');
+        };
+        $.rotateCd();
+        window.setInterval("$.rotateCd()", __dura);
+        
         getApiData(nextFunc);
     });
     function playFunc(target) {
@@ -214,7 +223,7 @@
     }
 
     function switchFunc() {
-        
+
     }
     function playListCount() {
         var list_item = $('#tv-listbar-content .list-item');
@@ -225,19 +234,18 @@
         }
     }
     function getApiData(callback) {
-        <?php
-            $url = "";
-            $uid = "";
-            
-            $uid = $this->uid;
-            
-            if (!empty($_COOKIE["specialId"])) {
-                $url = $this->url(array("uid" => $uid, "sid" => $_COOKIE["specialId"]), "api-special-recommend");
-            }
-            else {
-                $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
-            }
-        ?>
+<?php
+$url = "";
+$uid = "";
+
+$uid = $this->uid;
+
+if (!empty($_COOKIE["specialId"])) {
+    $url = $this->url(array("uid" => $uid, "sid" => $_COOKIE["specialId"]), "api-special-recommend");
+} else {
+    $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
+}
+?>
 
         var url = "<?php echo $url ?>";
 
@@ -251,6 +259,7 @@
                     $("#tv-author-name").html(result.data.author);
                     $("#tv-author-img").css('background-image', 'url(' + result.data.photo + ')');
                     $("#tv-listbar-content").empty();
+                    $('#tv-mask').css('background-image', 'url(' + result.data.photo_main + ')');
                     $.each(result.data.programs, function() {
                         var item = $(".P_tmp .list-item").clone(true);
                         item.click(function() {
