@@ -59,6 +59,11 @@
         <button id="tv-fs-play-btn" class="empty-btn"></button>
         <button id="tv-fs-pause-btn" class="empty-btn"></button>
     </div>
+    <div id="tv-audio-holder" style="position:absolute;width:600px;height:600px;background:url(/img/cd.png);left:50%;top:50%;margin-left:-300px;margin-top:-300px;">
+        <div id="tv-mask" style="position:absolute;border-radius:1000px;width:350px;height:350px;left:50%;top:50%;margin-left:-175px;margin-top:-175px;">
+            
+        </div>
+    </div>
 </div>
 
 <div class="P_tmp">
@@ -105,7 +110,7 @@
                 }
             }
         });
-        $('#tv-video-player').video({
+        $('#tv-screen').video({
             onPause: function() {
                 $('#tv-fs-play-btn').show();
                 $('#tv-fs-pause-btn').hide();
@@ -131,12 +136,12 @@
             $('#pause').click();
         });
         $('#play').click(function() {
-            $('#tv-video-player').video("play", function() {
+            $('#tv-screen').video("play", function() {
                 $('#tv-cover').hide();
             });
         });
         $('#pause').click(function() {
-            $('#tv-video-player').video("pause", function() {
+            $('#tv-screen').video("pause", function() {
                 $('#tv-cover').show();
             });
         });
@@ -162,7 +167,7 @@
         var video_url = target.attr('video');
         var audio_url = target.attr('audio');
         var title = target.find('.tv-current-title').html();
-        $('#tv-video-player').video("restart", function() {
+        $('#tv-screen').video("restart", function() {
             $('#tv-cover').hide();
             $('#tv-prog-title').html(title);
         }, video_url);
@@ -209,7 +214,7 @@
     }
 
     function switchFunc() {
-
+        
     }
     function playListCount() {
         var list_item = $('#tv-listbar-content .list-item');

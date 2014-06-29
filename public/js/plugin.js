@@ -652,10 +652,11 @@
             var $this = $(this);
             var self = $this.get(0);
             $.extend(setting, option);
-            $this.data('setting', setting);
-            if (self.tagName.toLowerCase() !== 'video') {
-                return;
-            }
+//            $this.data('setting', setting);
+            // save setting
+            var hidden = $('.video-value-host');
+            hidden.data('setting', setting);
+
             $this.find('source').attr('src', setting.src);
             $this.video('update');
             var xClick = function(obj) {
@@ -690,23 +691,38 @@
                 $this.on('ended', setting.onEnded);
             }
         },
+        setting: function(key, val) {
+            var hidden = $('.video-value-host');
+            var _setting = hidden.data('setting');
+            if (key && val) {
+                // save key value
+                _setting[key] = val;
+                hidden.data('setting', _setting);
+            } else if (key) {
+                // read key
+                return _setting[key];
+            } else {
+                // read setting
+                return _setting;
+            }
+        },
         play: function(callback) {
-            var self = $(this).get(0), setting = $(this).data('setting');
+            var self = $(this).get(0);
             self.play();
             if (callback) {
                 callback();
             }
         },
         pause: function(callback) {
-            var self = $(this).get(0), setting = $(this).data('setting');
+            var self = $(this).get(0);
             self.pause();
             if (callback) {
                 callback();
             }
         },
         restart: function(callback, src) {
-            var self = $(this).get(0), setting = $(this).data('setting');
-            setting.src = src;
+            var self = $(this).get(0);
+            $(this).video('setting', 'src', src);
             $(this).find('source').attr('src', src);
             self.load();
             self.play();
@@ -714,11 +730,11 @@
                 callback();
             }
         },
-        update: function(option) {
-            var self = $(this).get(0), setting = $(this).data('setting');
-            $.extend(setting, option);
+        update: function() {
+            var self = $(this).get(0);
             var update_id = setInterval(function() {
                 // update buffer
+                var setting = $(self).video('setting');
                 var currentTag = $(setting.current);
                 var totalTag = $(setting.total);
                 // update time
@@ -731,11 +747,11 @@
             $('body').data('update_id', update_id);
         },
         seek: function(perc) {
-            var self = $(this).get(0), setting = $(this).data('setting');
+            var self = $(this).get(0);
             self.currentTime = self.duration * (perc / 100);
         },
         switchSpeaker: function() {
-            var self = $(this).get(0), setting = $(this).data('setting');
+            var self = $(this).get(0), setting = $(this).video('setting');
             self.muted = !self.muted;
             $(setting.speakerButton).toggleClass('disable');
             if (self.muted) {
@@ -746,7 +762,7 @@
             }
         },
         adjustVolume: function(perc) {
-            var self = $(this).get(0), setting = $(this).data('setting');
+            var self = $(this).get(0), setting = $(this).video('setting');
             self.muted = false;
             $(setting.speakerButton).removeClass('disable');
             var v = Math.ceil(perc / 10);
@@ -761,7 +777,7 @@
         fullscreen: function() {
             if (!$(this).data('fullscreen'))
                 $(this).data('fullscreen', false);
-            var self = $(this).get(0), setting = $(this).data('setting');
+            var setting = $(this).video('setting');
             var docElm = $(setting.container).get(0);
 
             var isFullscreen = $(this).data('fullscreen');
@@ -791,10 +807,20 @@
      * @returns {unresolved}
      */
     $.fn.video = function(method) {
+        var target = this;
+        if (target.get(0).tagName != "VIDEO" && target.get(0).tagName != "AUDIO") {
+            target = $(target.find('video').get(0));
+        }
+
         if (videoMethods[method]) {
-            return videoMethods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+            return videoMethods[method].apply(target, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
-            return videoMethods.init.apply(this, arguments);
+            if ($('.video-value-host').length === 0) {
+                var html = $("<input>").attr('type', 'hidden').attr('class', 'video-value-host');
+                $('body').append(html);
+            }
+
+            return videoMethods.init.apply(target, arguments);
         } else {
             $.error('The method ' + method + ' does not exist in $.uploadify');
         }
