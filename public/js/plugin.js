@@ -5,19 +5,19 @@
         var _ARS_data = $el.data('_ARS_data');
         if (!_ARS_data) {
             _ARS_data = {rotateUnits: 'deg', scale: 1, rotate: 0};
-            $el.data('_ARS_data', _ARS_data)
+            $el.data('_ARS_data', _ARS_data);
         }
         return _ARS_data;
     }
 
     function setTransform($el, data) {
-        $el.css('transform', 'rotate(' + data.rotate + data.rotateUnits + ') scale(' + data.scale + ',' + data.scale + ')')
+        $el.css('transform', 'rotate(' + data.rotate + data.rotateUnits + ') scale(' + data.scale + ',' + data.scale + ')');
     }
 
     $.fn.rotate = function(val) {
         var $self = $(this), m, data = initData($self);
         if (typeof val == 'undefined') {
-            return data.rotate + data.rotateUnits
+            return data.rotate + data.rotateUnits;
         }
         m = val.toString().match(/^(-?\d+(\.\d+)?)(.+)?$/);
         if (m) {
@@ -32,7 +32,7 @@
     $.fn.scale = function(val) {
         var $self = $(this), data = initData($self);
         if (typeof val === 'undefined') {
-            return data.scale
+            return data.scale;
         }
         data.scale = val;
         setTransform($self, data);
@@ -66,7 +66,7 @@
             prop['rotate'] = m[1];
         }
         return animateProxied.apply(this, arguments);
-    }
+    };
 })(jQuery);
 
 (function($) {
