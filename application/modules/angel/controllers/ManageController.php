@@ -1356,8 +1356,24 @@ class Angel_ManageController extends Angel_Controller_Action {
                     $this->view->photo = $saveObj;
                 }
                 
+                $myOwnProgramIds = explode(",", $target->programsId);
+
+                $myOwnPrograms = $programModel->getProgramBySpecialId($myOwnProgramIds);
+                $notOwnprograms = $programModel->getProgramNotOwn($programIds);
+                
+                $programs = array();
+                
+                foreach ($notOwnprograms as $program) {
+                    $programs[] = $program;
+                }
+                
+                foreach ($myOwnPrograms as $program) {
+                    $programs[] = $program;
+                }
+
                 $this->view->authors = $authorModel->getAll();
-                $this->view->programs = $programModel->getProgramNotOwn($programIds);
+                $this->view->ownProgramIds = $myOwnProgramIds;
+                $this->view->programs = $programs;
                 $this->view->categorys = $categoryModel->getRoot();
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);

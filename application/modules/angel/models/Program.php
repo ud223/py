@@ -160,12 +160,12 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
     }
     
     public function getProgramBySpecialId($specialOwnProgramIds) {
+        
         $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->in($specialOwnProgramIds)->sort('created_at', -1);
 
         $result = $query
-                ->getQuery()
-                ->execute();
-        
+                ->getQuery();
+
         return $result;
     }
 }
