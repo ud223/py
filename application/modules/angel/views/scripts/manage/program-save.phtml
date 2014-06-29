@@ -106,11 +106,6 @@ $model = $this->model;
                     <input type="checkbox" name="keywords[]" value="<?php echo $keyword->id ?>" <?php if (strpos($this->model->keyWordIds, $keyword->id) > -1) { echo "checked='checked'"; } ?>> <?php echo $keyword->name ?><br>
                 <?php endforeach; ?>
             </div>
-            <?php if ($model->oss_video || $model->oss_video): ?>
-                <div class="form-group">
-                    <a target="_blank" href="<?php echo $this->url(array("id" => $model->id), "show-detail") ?>" class="btn btn-success"><i class="glyphicon glyphicon-play"></i> 预览</a>
-                </div>
-            <?php endif; ?>
 
             <div class="form-group">
                 <label>音频文件：</label>
