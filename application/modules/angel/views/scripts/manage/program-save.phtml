@@ -81,17 +81,17 @@ $model = $this->model;
                     <option value="soldout">下线</option>
                 </select>
             </div>
-            <div class="form-group">
+<!--            <div class="form-group">
                 <label>节目图片：</label>
-                <?php if ($this->imageBroken): ?>
+                <?php //if ($this->imageBroken): ?>
                     <label class="label label-danger">部分图片已被删除，无法显示，请重新设置</label>
-                <?php endif; ?>
+                <?php// endif; ?>
                 <div class='panel panel-info'>
                     <div id="gy-photo" class='panel-body gy-photo'>
                     </div>
                 </div>
                 <input type="hidden" name="photo" id="photo"/>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label>描述：</label>
                 <textarea row="10" class="form-control" id="description" name="description"><?php echo $model->description ?></textarea>
