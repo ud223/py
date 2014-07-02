@@ -99,5 +99,4 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function logoutAction() {
         $this->userLogout('login');
     }
-
 }

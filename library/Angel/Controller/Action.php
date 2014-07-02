@@ -229,14 +229,31 @@ class Angel_Controller_Action extends Zend_Controller_Action {
             } catch (Angel_Exception_User $e) {
                 $error = $e->getDetail();
             }
-            if ($result) {
-                $this->_redirect($this->view->url(array(), $defaultRedirectRoute) . '?register=success');
-            } else {
-                $this->view->error = $error;
+            
+            if ($this->getParam('format') == 'json') {
+                $msg = "注册成功!";
+                
+                if ($error != "")
+                    $msg = $error;
+                
+                $this->_helper->json(array('data' => $msg, 'code' => 200));
+            }
+            else {
+                if ($result) {
+                    $this->_redirect($this->view->url(array(), $defaultRedirectRoute) . '?register=success');
+                } else {
+                    $this->view->error = $error;
+                }
             }
         }
-        // GET METHOD
-        $this->view->title = $pageTitle;
+        
+        if ($this->getParam('format') == 'json') {
+            
+        } 
+        else {
+            // GET METHOD
+            $this->view->title = $pageTitle;
+        }
     }
 
     protected function userLogin($defaultRedirectRoute, $pageTitle) {
@@ -276,16 +293,32 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                 if ($goto) {
                     $url = $goto;
                 }
-                $this->_redirect($url);
+                if ($this->getParam('format') == 'json') {
+                    $this->_helper->json(array('data' => 'success', 'code' => 200));
+                }
+                else {
+                    $this->_redirect($url);
+                }
             } else {
-                $this->view->error = $errorMsg;
+                if ($this->getParam('format') == 'json') {
+                    $this->_helper->json(array('data' => $errorMsg, 'code' => 200));
+                }
+                else {
+                    $this->view->error = $errorMsg;
+                }
             }
         } else {
             if ($this->getParam('register') == 'success') {
                 $this->view->register = 'success';
             }
         }
-        $this->view->title = $pageTitle;
+        
+        if ($this->getParam('format') == 'json') {
+        
+        }
+        else {
+            $this->view->title = $pageTitle;
+        }
     }
 
 }
