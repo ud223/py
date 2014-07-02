@@ -201,6 +201,8 @@ class Angel_Controller_Action extends Zend_Controller_Action {
 
     protected function userRegister($defaultRedirectRoute, $pageTitle, $userType) {
         if ($this->request->isPost()) {
+            $msg = "注册成功!";
+            $code = 200;
             // POST METHOD
             $email = $this->request->getParam('email');
             if ($email) {
@@ -210,7 +212,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
             $password = $this->request->getParam('password');
 
             $result = false;
-            $error = "";
+
             try {
                 $userModel = $this->getModel('user');
                 $isEmailExist = $userModel->isEmailExist($email);
@@ -227,37 +229,29 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                     }
                 }
             } catch (Angel_Exception_User $e) {
-                $error = $e->getDetail();
+                $msg = $e->getDetail();
+                $code = 500;
             }
             
             if ($this->getParam('format') == 'json') {
-                $msg = "注册成功!";
-                
-                if ($error != "")
-                    $msg = $error;
-                
-                $this->_helper->json(array('data' => $msg, 'code' => 200));
+                $this->_helper->json(array('data' => $msg, 'code' => $code));
             }
             else {
                 if ($result) {
                     $this->_redirect($this->view->url(array(), $defaultRedirectRoute) . '?register=success');
                 } else {
-                    $this->view->error = $error;
+                    $this->view->error = $msg;
                 }
             }
         }
         
-        if ($this->getParam('format') == 'json') {
-            
-        } 
-        else {
-            // GET METHOD
-            $this->view->title = $pageTitle;
-        }
+        // GET METHOD
+        $this->view->title = $pageTitle;
     }
 
     protected function userLogin($defaultRedirectRoute, $pageTitle) {
         $errorMsg = "登录失败，请重试或";
+        $code = 200;
         if ($this->request->isPost()) {
             $email = $this->request->getParam('email');
             if ($email) {
@@ -286,39 +280,42 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                 }
             } catch (Angel_Exception_User $e) {
                 $error = $e->getMessage();
+                $errorMsg = $error;
             }
+            
+            $url = "";
+            
             if ($success) {
                 $goto = $this->getParam('goto');
                 $url = $this->view->url(array(), $defaultRedirectRoute);
+                
                 if ($goto) {
                     $url = $goto;
                 }
-                if ($this->getParam('format') == 'json') {
-                    $this->_helper->json(array('data' => 'success', 'code' => 200));
-                }
-                else {
-                    $this->_redirect($url);
-                }
+                
+                $errorMsg = "success";
             } else {
-                if ($this->getParam('format') == 'json') {
-                    $this->_helper->json(array('data' => $errorMsg, 'code' => 200));
+                $code = 500;
+            }
+            
+            if ($this->getParam('format') == 'json') {
+                $this->_helper->json(array('data' => $errorMsg, 'code' => $code));
+            }
+            else {
+                if ($code == 200) {
+                    $this->_redirect($url);
                 }
                 else {
                     $this->view->error = $errorMsg;
                 }
-            }
+            }         
         } else {
             if ($this->getParam('register') == 'success') {
                 $this->view->register = 'success';
             }
         }
         
-        if ($this->getParam('format') == 'json') {
-        
-        }
-        else {
-            $this->view->title = $pageTitle;
-        }
+        $this->view->title = $pageTitle;
     }
 
 }
