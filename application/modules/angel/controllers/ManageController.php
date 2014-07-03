@@ -862,6 +862,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $result = 0;
             // POST METHOD
             $id = $this->getParam('id');
+
             if ($id) {
                 $categoryModel = $this->getModel('category');
                 $result = $categoryModel->remove($id);

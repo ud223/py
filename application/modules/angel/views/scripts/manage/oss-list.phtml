@@ -25,12 +25,12 @@ $model = $this->model;
                 <p><?php echo $p['name'] ?></p>
                 <div class="btn-group">
                     <a type="button" href="<?php echo $this->url(array(id => $p["id"]), 'manage-oss-save') ?>" class="btn btn-info btn-sm">编辑</a>
-
-                    <?php if (count($this->programModel->getProgramByOss($p["id"], $p["type"])) == 0): ?>
-                        <button type="button" class="btn btn-danger btn-sm remove-oss">删除</button>
-                    <?php else: ?>
-                        <label class="xs">不为空</label>
-                    <?php endif; ?>
+                    <button type="button" class="btn btn-danger btn-sm remove-oss">删除</button>
+                    <?php// if (count($this->programModel->getProgramByOss($p["id"], $p["type"])) == 0): ?>
+                        <!--<button type="button" class="btn btn-danger btn-sm remove-oss">删除</button>-->
+                    <?php// else: ?>
+                        <!--<label class="xs">不为空</label>-->
+                    <?php// endif; ?>
                 </div>
                 <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
             </div>
