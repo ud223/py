@@ -10,12 +10,12 @@
         <link rel="stylesheet" href="<?php echo $this->cssPath("bootstrap.theme.css"); ?>">
         <link href="<?php echo $this->cssPath("global.css"); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo $this->cssPath("global.manage.css"); ?>" rel="stylesheet" type="text/css" />
-        
+
         <script type="text/javascript" src="<?php echo $this->jsPath('jquery.1.10.2.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('bootstrap.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('plugin.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
-        
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -39,24 +39,30 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">节目管理 <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">节目 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo $this->url(array(), 'manage-program-list-home') ?>">节目列表</a></li>
                                 <li><a href="<?php echo $this->url(array(), 'manage-program-create') ?>">添加节目</a></li>
-                                <li class="divider"></li>
-                                <li><a href="<?php echo $this->url(array(), 'manage-oss-list-home') ?>">文件列表</a></li>
-                                <li><a href="<?php echo $this->url(array(), 'manage-oss-create') ?>">上传文件</a></li>
+
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">专辑管理 <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">多媒体文件 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-oss-list-home') ?>">多媒体文件列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-oss-create') ?>">多媒体上传文件</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">专辑 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo $this->url(array(), 'manage-special-list-home') ?>">专辑列表</a></li>
                                 <li><a href="<?php echo $this->url(array(), 'manage-special-create') ?>">添加专辑</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">图片管理 <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">图片 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo $this->url(array(), 'manage-photo-list-home') ?>">图片列表</a></li>
                                 <li><a href="<?php echo $this->url(array(), 'manage-photo-upload') ?>">添加图片</a></li>
@@ -65,21 +71,21 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">分类管理 <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo $this->url(array(), 'manage-category-list-home') ?>">分类列表</a></li>
                                 <li><a href="<?php echo $this->url(array(), 'manage-category-create') ?>">添加分类</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">作者管理 <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">作者 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo $this->url(array(), 'manage-author-list-home') ?>">作者列表</a></li>
                                 <li><a href="<?php echo $this->url(array(), 'manage-author-create') ?>">添加作者</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">关键词管理 <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">关键词 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo $this->url(array(), 'manage-keyword-list-home') ?>">关键词列表</a></li>
                                 <li><a href="<?php echo $this->url(array(), 'manage-keyword-create') ?>">添加关键词</a></li>
@@ -87,17 +93,17 @@
                         </li>
 
                     </ul>
-                    <?php if(isset($this->me)): ?>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="<?php echo $this->url(array(), 'manage-logout') ?>">你好 <?php echo $this->me->getUser()->email ?>, 安全退出 <i class="glyphicon glyphicon-off"></i></a></li>
-                    </ul>
+                    <?php if (isset($this->me)): ?>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="<?php echo $this->url(array(), 'manage-logout') ?>" title="<?php echo $this->me->getUser()->email ?>">你好 管理员, 安全退出 <i class="glyphicon glyphicon-off"></i></a></li>
+                        </ul>
                     <?php else: ?>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="<?php echo $this->url(array(), 'manage-login') ?>">登录</a></li>
-                    </ul>
-                    
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="<?php echo $this->url(array(), 'manage-login') ?>">登录</a></li>
+                        </ul>
+
                     <?php endif; ?>
-                    
+
                 </div><!--/.nav-collapse -->
             </div>
         </div>
@@ -107,11 +113,11 @@
             <?php echo $this->layout()->content; ?>
         </div> <!-- /container -->
         <div class='marginbottom50px'>
-            
+
         </div>
         <script type="text/javascript">
             $(document).ready(function() {
-                
+
             });
         </script>
     </body>
