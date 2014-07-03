@@ -938,7 +938,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $this->view->title = "上传文件";
+            $this->view->title = "上传多媒体文件";
             $this->view->oss_prefix = $this->bootstrap_options['oss_prefix'];
         }
     }
@@ -972,7 +972,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $this->view->title = "编辑文件";
+            $this->view->title = "编辑多媒体文件";
             $this->view->oss_prefix = $this->bootstrap_options['oss_prefix'];
 
             $id = $this->request->getParam("id");
@@ -1015,7 +1015,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             $this->view->paginator = $paginator;
             $this->view->resource = $resource;
-            $this->view->title = "文件列表";
+            $this->view->title = "多媒体文件列表";
             $this->view->programModel = $programModel;
         }
     }
