@@ -98,7 +98,10 @@ $model = $this->model;
             </div>
             <div class="form-group">
                 <label>节目时长：</label>
-                <input type="text" class="form-control" id="time" name="time" data-toggle="popover" value="<?php echo $model->time ?>">
+            </div>
+            <div class="form-group">
+                <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" id="time" name="min" data-toggle="popover" placeholder="分" style="width:80px; float: left; margin-right: 10px" value="">
+                <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" id="time" name="sec" data-toggle="popover" placeholder="秒" style="width:80px; margin-right: 10px" value="">
             </div>
             <div class="form-group">
                 <label>关键词：</label>
