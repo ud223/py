@@ -203,6 +203,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
         if ($this->request->isPost()) {
             $msg = "注册成功!";
             $code = 200;
+            $error = "";
             // POST METHOD
             $email = $this->request->getParam('email');
             if ($email) {
@@ -216,10 +217,12 @@ class Angel_Controller_Action extends Zend_Controller_Action {
             try {
                 $userModel = $this->getModel('user');
                 $isEmailExist = $userModel->isEmailExist($email);
+                
                 if ($isEmailExist) {
                     $error = "该邮箱已经存在，不能重复注册";
                 } else {
                     $result = null;
+                    
                     if ($userType == 'user') {
                         $result = $userModel->addUser($email, $password, $username, Zend_Session::getId(), false);
                     } else if ($userType == 'admin') {
@@ -228,8 +231,13 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                         $error = "invalid request";
                     }
                 }
+                
             } catch (Angel_Exception_User $e) {
-                $msg = $e->getDetail();
+                $error = $e->getDetail();
+            }
+            
+            if ($error != "") {
+                $msg = $error;
                 $code = 500;
             }
             

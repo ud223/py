@@ -101,7 +101,15 @@ class Angel_ManageController extends Angel_Controller_Action {
          //   $categoryId = $this->request->getParam('category');
             
             $keyWordIds = $this->request->getParam('keywords');
-            $time = $this->request->getParam('time');
+            
+            $min = $this->request->getParam('min');
+            $sec = $this->request->getParam('sec');
+            
+            if (empty($min))
+                $min = 0;
+            
+            $time = $min * 60 + $sec;
+            
             $captions = "";
             $file = $_FILES["captions"];
 
@@ -198,7 +206,15 @@ class Angel_ManageController extends Angel_Controller_Action {
             $photo = $this->decodePhoto();
          //   $categoryId = $this->request->getParam('category');
             $keyWordIds = $this->request->getParam('keywords');
-            $time = $this->request->getParam('time');
+            
+            $min = $this->request->getParam('min');
+            $sec = $this->request->getParam('sec');
+            
+            if (empty($min))
+                $min = 0;
+            
+            $time = $min * 60 + $sec;
+            
             $captions = $this->request->getParam('captions');
             
             $tmpKeyWordIds = null;
@@ -278,14 +294,20 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $this->view->category = $categoryModel->getAll();
                 $this->view->oss_audio = $ossModel->getBy(false, array('type' => 'audio'));
                 $this->view->oss_video = $ossModel->getBy(false, array('type' => 'video'));
+                 
                 if ($copy) {
                     // 复制一个节目
                     $this->view->title = "复制并创建节目";
                     $this->view->copy = $copy;
                 }
+                
                 $this->view->model = $target;
 
+                $this->view->min =  floor($target->time / 60);
+                $this->view->sec = $target->time % 60;
+                
                 $photo = $target->photo;
+                
                 if ($photo) {
                     $saveObj = array();
                     foreach ($photo as $p) {
