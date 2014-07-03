@@ -13,29 +13,29 @@
                 <input type="text" class="form-control" id="description" name="description" data-toggle="popover" value="">
             </div>
             <div>
-                <label>父类：</label>
+<!--                <label>父类：</label>
                 <select id="parent" name="parent" value="">
                     <option value="">根类</option>
-                    <?php foreach ($this->categories as $category): ?>
+                    <?php //foreach ($this->categories as $category): ?>
                         <?php
-                        if ($category->level > 0) {
-                            continue;
-                        }
+//                        if ($category->level > 0) {
+//                            continue;
+                       // }
                         ?>
-                        <option value="<?php echo $category->id ?>">
+                        <option value="<?php// echo $category->id ?>">
                             <?php
-                            $prefix = "--";
-                            if ($category->level) {
-                                for ($i = 0; $i < $category->level; $i++) {
-                                    $prefix = $prefix . " -- ";
-                                }
-                            }
-                            echo $prefix;
+//                            $prefix = "--";
+//                            if ($category->level) {
+//                                for ($i = 0; $i < $category->level; $i++) {
+//                                    $prefix = $prefix . " -- ";
+//                                }
+//                            }
+//                            echo $prefix;
                             ?>
-                            <?php echo $category->name ?>
+                            <?php// echo $category->name ?>
                         </option>
-                    <?php endforeach; ?>
-                </select>
+                    <?php// endforeach; ?>
+                </select>-->
             </div>
 
 

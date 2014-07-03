@@ -93,10 +93,15 @@
             </div>
             <div class="form-group">
                 <label>节目时长：</label>
-                <input type="text" class="form-control" id="time" name="time" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="time" name="min" data-toggle="popover" placeholder="分" style="width:80px; float: left; margin-right: 10px" value="">
+                <input type="text" class="form-control" id="time" name="sec" data-toggle="popover" placeholder="秒" style="width:80px; float: left; margin-right: 10px" value="">
             </div>
             <div class="form-group">
                 <label>关键词：</label>
+            </div>
+            <div class="form-group">
                 <?php foreach ($this->keywords as $keyword): ?>
                     <input type="checkbox" name="keywords[]" value="<?php echo $keyword->id ?>"> <?php echo $keyword->name ?><br>
                 <?php endforeach; ?>
@@ -124,15 +129,15 @@
                     <?php endforeach; ?>
                 </select>
             </div>
-            <div class="form-group">
+<!--            <div class="form-group">
                 <label>作者：</label>
                 <select id="author" name="author" value="">
                     <option value="">无作者</option>
-                    <?php foreach ($this->author as $b): ?>
-                        <option value="<?php echo $b->id ?>"><?php echo $b->name ?></option>
-                    <?php endforeach; ?>
+                    <?php// foreach ($this->author as $b): ?>
+                        <option value="<?php// echo $b->id ?>"><?php// echo $b->name ?></option>
+                    <?php// endforeach; ?>
                 </select>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label>字幕：</label>
                 <input type="file" id="captions" name="captions">
