@@ -1321,7 +1321,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $this->view->title = "编辑列表";
+            $this->view->title = "编辑专辑";
 
             $id = $this->request->getParam("id");
 
