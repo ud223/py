@@ -114,7 +114,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $file = $_FILES["captions"];
 
             if (is_uploaded_file($file["tmp_name"])) {
-                $captions = file_get_contents($file["tmp_name"]);
+                $captions = utf8_encode(file_get_contents($file["tmp_name"]));
             }
             
             $tmpKeyWordIds = null;
