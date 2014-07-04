@@ -46,4 +46,18 @@
             }
         }
     });
+    
+    //api test
+    function test() {
+        $.ajax({
+           url: 'http://localhost/login',
+           type: 'POST',
+           data: 'email=108234154@qq.com&password=119223&format=json',
+           success: function (data){
+               console.log(data);
+           }
+        });
+    }
+   
+    //test();
 </script>
