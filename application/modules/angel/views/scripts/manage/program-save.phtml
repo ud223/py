@@ -121,8 +121,10 @@ $model = $this->model;
                     <?php foreach ($this->oss_audio as $b): ?>
                         <option value="<?php echo $b->id ?>"
                              <?php
-                                if ($this->model->oss_audio->id == $b->id) {
-                                    echo "selected='selected'";
+                                if (!empty($b->id)) {
+                                    if ($this->model->oss_audio->id == $b->id) {
+                                        echo "selected='selected'";
+                                    }
                                 }
                             ?>>
                             <?php
@@ -140,8 +142,10 @@ $model = $this->model;
                     <?php foreach ($this->oss_video as $b): ?>
                         <option value="<?php echo $b->id ?>"
                              <?php
-                                if ($this->model->oss_video->id == $b->id) {
-                                    echo "selected='selected'";
+                                if (!empty($b->id)) {
+                                   if ($this->model->oss_video->id == $b->id) {
+                                       echo "selected='selected'";
+                                   }
                                 }
                             ?>>   
                             <?php echo $b->name ?>
