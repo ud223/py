@@ -81,17 +81,17 @@ $model = $this->model;
                     <option value="soldout">下线</option>
                 </select>
             </div>
-<!--            <div class="form-group">
-                <label>节目图片：</label>
-                <?php //if ($this->imageBroken): ?>
-                    <label class="label label-danger">部分图片已被删除，无法显示，请重新设置</label>
-                <?php// endif; ?>
-                <div class='panel panel-info'>
-                    <div id="gy-photo" class='panel-body gy-photo'>
-                    </div>
-                </div>
-                <input type="hidden" name="photo" id="photo"/>
-            </div>-->
+            <!--            <div class="form-group">
+                            <label>节目图片：</label>
+            <?php //if ($this->imageBroken): ?>
+                                <label class="label label-danger">部分图片已被删除，无法显示，请重新设置</label>
+            <?php // endif; ?>
+                            <div class='panel panel-info'>
+                                <div id="gy-photo" class='panel-body gy-photo'>
+                                </div>
+                            </div>
+                            <input type="hidden" name="photo" id="photo"/>
+                        </div>-->
             <div class="form-group">
                 <label>描述：</label>
                 <textarea row="10" class="form-control" id="description" name="description"><?php echo $model->description ?></textarea>
@@ -100,57 +100,70 @@ $model = $this->model;
                 <label>节目时长：</label>
             </div>
             <div class="form-group">
-                <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" id="time" name="min" data-toggle="popover" placeholder="分" style="width:80px; float: left; margin-right: 10px" value="<?php echo $this->min ?>">
-                <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" id="time" name="sec" data-toggle="popover" placeholder="秒" style="width:80px; margin-right: 10px" value="<?php echo $this->sec ?>">
+                <input type="text" onkeyup="this.value = this.value.replace(/\D/g, '')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" id="time" name="min" data-toggle="popover" placeholder="分" style="width:80px; float: left; margin-right: 10px" value="<?php echo $this->min ?>">
+                <input type="text" onkeyup="this.value = this.value.replace(/\D/g, '')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" id="time" name="sec" data-toggle="popover" placeholder="秒" style="width:80px; margin-right: 10px" value="<?php echo $this->sec ?>">
             </div>
             <div class="form-group">
                 <label>关键词：</label>
             </div>
             <div class="form-group">
                 <?php foreach ($this->keywords as $keyword): ?>
-                    <input type="checkbox" name="keywords[]" value="<?php echo $keyword->id ?>" <?php if (strpos($this->model->keyWordIds, $keyword->id) > -1) { echo "checked='checked'"; } ?>> <?php echo $keyword->name ?><br>
-                <?php endforeach; ?>
-                <?php 
-                    if (count($this->keywords) == 0) {
-                        echo '<a href="'.$this->url(array(), "manage-keyword-list-home").'" class="butn btn-default" target="_blank">暂时没有关键词可以关联， 现在添加</a>';
-                    }    
-                ?>
+                    <input type="checkbox" name="keywords[]" value="<?php echo $keyword->id ?>" <?php
+                    if (strpos($this->model->keyWordIds, $keyword->id) > -1) {
+                        echo "checked='checked'";
+                    }
+                    ?>> <?php echo $keyword->name ?><br>
+                       <?php endforeach; ?>
+                       <?php
+                       if (count($this->keywords) == 0) {
+                           echo '<a href="' . $this->url(array(), "manage-keyword-list-home") . '" class="butn btn-default" target="_blank">暂时没有关键词可以关联， 现在添加</a>';
+                       }
+                       ?>
             </div>
             <div class="form-group">
                 <label>音频文件：</label>
-                <select id="oss_audio" name="oss_audio" value=""><?php// echo $this->model->oss_audio->id ?>
+                <?php
+                $oaid = "";
+                try {
+                    $oaid = $this->model->oss_audio->id;
+                } catch (Exception $ex) {
+                    $oaid = false;
+                }
+                ?>
+                <select id="oss_audio" name="oss_audio">
                     <option value="">无文件</option>
                     <?php foreach ($this->oss_audio as $b): ?>
                         <option value="<?php echo $b->id ?>"
-                             <?php
-                                if (!empty($b->id)) {
-                                    if ($this->model->oss_audio->id == $b->id) {
-                                        echo "selected='selected'";
-                                    }
-                                }
-                            ?>>
-                            <?php
-                                echo $b->name;
-                            ?>
-                            <?php// echo $b->name ?>
+                        <?php
+                        if ($oaid == $b->id) {
+                            echo "selected='selected'";
+                        }
+                        ?>>
+                                    <?php echo $b->name; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">
                 <label>视频文件：</label>
-                <select id="oss_video" name="oss_video" value="<?php// echo $this->model->oss_video->id ?>">
+                <?php
+                $ovid = "";
+                try {
+                    $ovid = $this->model->oss_video->id;
+                } catch (Exception $ex) {
+                    $ovid = false;
+                }
+                ?>
+                <select id="oss_video" name="oss_video">
                     <option value="">无文件</option>
                     <?php foreach ($this->oss_video as $b): ?>
                         <option value="<?php echo $b->id ?>"
-                             <?php
-                                if (!empty($b->id)) {
-                                   if ($this->model->oss_video->id == $b->id) {
-                                       echo "selected='selected'";
-                                   }
-                                }
-                            ?>>   
-                            <?php echo $b->name ?>
+                        <?php
+                        if ($ovid == $b->id) {
+                            echo "selected='selected'";
+                        }
+                        ?>>   
+                                    <?php echo $b->name ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -174,8 +187,8 @@ $model = $this->model;
         $('#status').setSelectValue();
         $('#oss_audio').setSelectValue();
         $('#oss_video').setSelectValue();
-        
-  //      $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
+
+        //      $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
 
         $('#save-btn').click(function() {
             var save = $('#gy-photo').attr('save');
