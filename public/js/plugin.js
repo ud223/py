@@ -81,7 +81,7 @@
         };
         $.extend(settings, options);
         var $this = $(this);
-        if ($this.get(0).tagName.toLowerCase() === settings.tagName) {
+        if ($this.length && ($this.get(0).tagName.toLowerCase() === settings.tagName)) {
             var val = $this.attr('value');
             if (val) {
                 $.each($this.find('option'), function() {

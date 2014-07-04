@@ -154,15 +154,6 @@ $model = $this->model;
                 </select>
             </div>
 
-<!--            <div class="form-group">
-                <label>作者：</label>
-                <select id="author" name="author" value="<?php// echo $this->model->author->id ?>">
-                    <option value="">无作者</option>
-                    <?php// foreach ($this->author as $b): ?>
-                        <option value="<?php// echo $b->id ?>"><?php// echo $b->name ?></option>
-                    <?php// endforeach; ?>
-                </select>
-            </div>-->
             <div class="form-group">
                 <label>字幕：</label>
                 <textarea row="10" class="form-control" id="captions" name="captions"><?php echo $model->captions ?></textarea>
@@ -179,8 +170,6 @@ $model = $this->model;
 
         $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
         $('#status').setSelectValue();
-        $('#author').setSelectValue();
-//        $('#category').setSelectValue();
         $('#oss_audio').setSelectValue();
         $('#oss_video').setSelectValue();
         
