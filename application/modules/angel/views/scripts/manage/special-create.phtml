@@ -48,7 +48,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <?php foreach ($this->programs as $program): ?>
-                            <span class="label label-default pull-left marginright10px">
+                            <span class="label label-default pull-left marginright10px marginbottom10px">
                                 <input type="checkbox" name="programs[]" value="<?php echo $program->id ?>" id="<?php echo $program->id ?>"> <label for="<?php echo $program->id ?>"><?php echo $program->name ?></label><br>
                             </span>
                         <?php endforeach; ?>
