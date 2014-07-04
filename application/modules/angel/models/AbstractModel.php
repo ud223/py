@@ -141,6 +141,17 @@ abstract class Angel_Model_AbstractModel {
         }
         return $result;
     }
+    
+    public function getOneBy($condition = false) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class);
+        if (is_array($condition)) {
+            foreach ($condition as $key => $val) {
+                $query = $query->field($key)->equals($val);
+            }
+        }
+        $result = $query->getQuery()->getSingleResult();
+        return $result;
+    }
 
     public function getDocumentClass() {
         return $this->_document_class;
