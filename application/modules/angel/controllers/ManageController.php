@@ -115,7 +115,20 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             if (is_uploaded_file($file["tmp_name"])) {
                 $captions = file_get_contents($file["tmp_name"]);
-                $isUtf8 = mb_detect_encoding($captions, "UTF-8");
+                $isUtf8 = mb_detect_encoding($captions, "UTF-8,GB2312,EUC-CN");
+                switch($isUtf8) {
+                    case "UTF-8":
+                        break;
+                    case "EUC-CN":
+                        $captions = iconv("EUC-CN", "UTF-8", $captions);
+                        break;
+                    case "GB2312":
+                        $captions = iconv("GB2312", "UTF-8", $captions);
+                        break;
+                    default:
+                        break;
+                }
+                
                 if (!$isUtf8) {
                     $captions = utf8_encode(file_get_contents($file["tmp_name"]));
                 }
