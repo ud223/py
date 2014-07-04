@@ -105,6 +105,8 @@ $model = $this->model;
             </div>
             <div class="form-group">
                 <label>关键词：</label>
+            </div>
+            <div class="form-group">
                 <?php foreach ($this->keywords as $keyword): ?>
                     <input type="checkbox" name="keywords[]" value="<?php echo $keyword->id ?>" <?php if (strpos($this->model->keyWordIds, $keyword->id) > -1) { echo "checked='checked'"; } ?>> <?php echo $keyword->name ?><br>
                 <?php endforeach; ?>
@@ -137,7 +139,7 @@ $model = $this->model;
             </div>
             <div class="form-group">
                 <label>视频文件：</label>
-                <select id="oss_video" name="oss_video" value="<?php echo $this->model->oss_video->id ?>">
+                <select id="oss_video" name="oss_video" value="<?php// echo $this->model->oss_video->id ?>">
                     <option value="">无文件</option>
                     <?php foreach ($this->oss_video as $b): ?>
                         <option value="<?php echo $b->id ?>"
