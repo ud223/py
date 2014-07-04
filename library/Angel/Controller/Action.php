@@ -260,6 +260,8 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     protected function userLogin($defaultRedirectRoute, $pageTitle) {
         $errorMsg = "登录失败，请重试或";
         $code = 200;
+        $uid = "";
+        
         if ($this->request->isPost()) {
             $email = $this->request->getParam('email');
             if ($email) {
@@ -302,12 +304,14 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                 }
                 
                 $errorMsg = "success";
+                $uid = $auth["msg"];
+                
             } else {
                 $code = 500;
             }
             
             if ($this->getParam('format') == 'json') {
-                $this->_helper->json(array('data' => $errorMsg, 'code' => $code));
+                $this->_helper->json(array('data' => $errorMsg, 'uid' => $uid, 'code' => $code));
             }
             else {
                 if ($code == 200) {
