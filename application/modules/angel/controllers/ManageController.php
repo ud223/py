@@ -1291,6 +1291,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $id = $this->request->getParam('id');
             $name = $this->request->getParam('name');
             $authorId = $this->request->getParam('authorId');
+
             $photo = $this->decodePhoto();
             $programIds = $this->request->getParam('programs');
             $categoryId = $this->request->getParam('categoryId');

@@ -11,14 +11,15 @@
             <div class="form-group">
                 <label>作者：</label>
 
-                <select id="authorId">
+                <select id="authorId" name="authorId">
                     <option value="">作者</option>
                     <?php foreach ($this->authors as $author): ?>
-                        <option value="<?php echo $author->id ?>" <?php
-                        if ($this->model->authorId == $author->id) {
-                            echo "selected='selected'";
-                        }
-                        ?>>
+                        <option value="<?php echo $author->id ?>" 
+                            <?php
+                                if ($this->model->authorId == $author->id) {
+                                    echo "selected='selected'";
+                                }
+                            ?>>
                         <?php
                         echo $author->name;
                         ?>
