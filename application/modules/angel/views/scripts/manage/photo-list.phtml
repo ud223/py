@@ -63,7 +63,7 @@ $model = $this->model;
             <div class="wp">
                 <p><?php echo $p['owner']->email . ' 上传' ?>
                     <!--<button class="pull-right btn btn-xs btn-danger remove-photo">删除</button>-->
-                    <?php if (!$this->specialModel->getSpecialByPhoto($p["id"])): //&& !$this->authorModel->getAuthorByPhoto($p["id"])?>
+                    <?php if (!$this->specialModel->getSpecialByPhoto($p["id"]) && !$this->authorModel->getAuthorByPhoto($p["id"])): ?>
                         <button type="button" class="btn btn-danger btn-sm remove-photo">删除</button>
                     <?php else: ?>
                         <label class="xs">被引用</label>
