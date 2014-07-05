@@ -43,7 +43,7 @@ class Angel_Model_Author extends Angel_Model_AbstractModel {
         foreach ($result as $author) {
             $photo = $author->logo;
                 
-            if (count($photo) == 0)
+            if (!$photo)
                 continue;
 
             if ($photo->id == $photoId)
