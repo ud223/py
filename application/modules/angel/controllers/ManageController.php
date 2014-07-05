@@ -78,6 +78,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->paginator = $paginator;
             $this->view->resource = $resource;
             $this->view->title = "节目列表";
+            $this->view->specialModel = $this->getModel('special');
         }
     }
 
@@ -481,6 +482,8 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->paginator = $paginator;
             $this->view->resource = $resource;
             $this->view->title = "图片列表";
+            $this->view->specialModel = $this->getModel('special');
+            $this->view->authorModel = $this->getModel('author');
         }
     }
 
@@ -684,6 +687,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->resource = $resource;
             $this->view->title = "作者列表";
             $this->view->programModel = $programModel;
+            $this->view->specialModel = $this->getModel('special');
         }
     }
 
@@ -851,6 +855,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                     'code' => 200));
             } else {
                 $this->view->resource = $resource;
+                $this->view->specialMode = $this->getModel('special');
             }
         }
     }
@@ -1086,6 +1091,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->resource = $resource;
             $this->view->title = "关键词列表";
             $this->view->paginator = $paginator;
+            $this->view->programModel = $this->getModel('program');
         }
     }
 

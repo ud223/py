@@ -30,4 +30,26 @@ class Angel_Model_Author extends Angel_Model_AbstractModel {
         
         return $result;
     }
+    
+    public function getAuthorByPhoto($photoId) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+
+        $result = $query
+                ->getQuery();
+        
+        if (count($result) == 0)
+            return false;
+        
+        foreach ($result as $author) {
+            $photo = $author->logo;
+                
+            if (count($photo) == 0)
+                continue;
+
+            if ($photo->id == $photoId)
+                    return true;
+        }
+        
+        return false;
+    }
 }

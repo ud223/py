@@ -25,7 +25,12 @@ $model = $this->model;
                 <p><?php echo $p['name'] ?></p>
                 <div class="btn-group">
                     <a type="button" href="<?php echo $this->url(array(id => $p["id"]), 'manage-keyword-save') ?>" class="btn btn-info btn-sm">编辑</a>
-                    <button type="button" class="btn btn-danger btn-sm remove-keyword">删除</button>
+                    <!--<button type="button" class="btn btn-danger btn-sm remove-keyword">删除</button>-->
+                    <?php if (!$this->programModel->getProgramByKeyword($p["id"])): ?>
+                        <button type="button" class="btn btn-danger btn-sm remove-keyword">删除</button>
+                    <?php else: ?>
+                        <label class="xs">被引用</label>
+                    <?php endif; ?>
                 </div>
                 <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
             </div>

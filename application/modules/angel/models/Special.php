@@ -193,4 +193,91 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         
         return $result;
     }
+    
+    public function getSpecialByPhoto($photoId) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+
+        $result = $query
+                ->getQuery();
+        if (count($result) == 0)
+            return false;
+
+        foreach ($result as $special) {
+            $photoes = $special->photo;
+            
+            if (count($photoes) == 0)
+                continue;
+            
+            foreach ($photoes as $photo) {
+                if ($photo->id == $photoId)
+                    return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public function getSpecialByCategory($categoryId) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+
+        $result = $query
+                ->getQuery();
+       
+        if (count($result) == 0)
+            return false;
+
+        foreach ($result as $special) {
+            $tmpCategoryId = $special->categoryId;
+            
+            if ($tmpCategoryId == $categoryId)
+                return true;
+        }
+        
+        return false;
+    }
+    
+    public function getSpecialByAuthor($authorId) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+
+        $result = $query
+                ->getQuery();
+       
+        if (count($result) == 0)
+            return false;
+
+        foreach ($result as $special) {
+            $tmpAuthorId = $special->authorId;
+            
+            if ($tmpAuthorId == $authorId)
+                return true;
+        }
+        
+        return false;
+    }
+    
+    public function getSpecialByProgram($programId) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+
+        $result = $query
+                ->getQuery();
+       
+        if (count($result) == 0)
+            return false;
+        
+        foreach ($result as $special) {
+            $tmpPrograms = $special->programsId;
+            
+            if ($tmpPrograms == "")
+                continue;
+            
+            $programIds = explode(",", $tmpPrograms);
+
+            foreach ($programIds as $program) {
+                if ($program == $programId)
+                    return true;
+            }
+        }
+        
+        return false;
+    }
 }

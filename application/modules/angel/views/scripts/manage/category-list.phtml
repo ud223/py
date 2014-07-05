@@ -34,12 +34,12 @@
                         <p><?php echo $root->name ?></p>
                         <div class="btn-group">
                             <a type="button" href="<?php echo $this->url(array(id => $root->id), 'manage-category-save') ?>" class="btn btn-info btn-sm">编辑</a>
-                            <button type="button" class="btn btn-danger btn-sm remove-category">删除</button>
-                            <?php //if (count($this->programModel->getProgramByCategory($root->id)) == 0 && count($this->categoryModel->getByParent($root->id)) == 0): ?>
-                                <!--<button type="button" class="btn btn-danger btn-sm remove-root-category">删除</button>-->
-                            <?php //else: ?>
-                                <!--<label class="xs">不为空</label>-->
-                            <?php// endif; ?>
+                            <!--<button type="button" class="btn btn-danger btn-sm remove-category">删除</button>-->
+                            <?php if (!$this->specialMode->getSpecialByCategory($root->id) ): ?>
+                                <button type="button" class="btn btn-danger btn-sm remove-category">删除</button>
+                            <?php else: ?>
+                                <label class="xs">被引用</label>
+                            <?php endif; ?>
 
                         </div>
 

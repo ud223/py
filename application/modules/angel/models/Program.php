@@ -171,4 +171,30 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
 
         return $result;
     }
+    
+    public function getProgramByKeyword($keywordId) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+
+        $result = $query
+                ->getQuery();
+       
+        if (count($result) == 0)
+            return false;
+        
+        foreach ($result as $program) {
+            $tmpKeywords = $program->keyWordIds;
+            
+            if ($tmpKeywords == "")
+                continue;
+            
+            $keywords = explode(",", $tmpKeywords);
+
+            foreach ($keywords as $keyword) {
+                if ($keyword == $keywordId)
+                    return true;
+            }
+        }
+        
+        return false;
+    }
 }
