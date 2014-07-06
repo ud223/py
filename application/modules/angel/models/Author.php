@@ -31,25 +31,17 @@ class Angel_Model_Author extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getAuthorByPhoto($photoId) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-
-        $result = $query
-                ->getQuery();
+    public function getAuthorByPhoto($photo_id) {
+        $result = false;
         
-        if (count($result) == 0)
-            return false;
-        
-        foreach ($result as $author) {
-            $photo = $author->logo;
-                
-            if (empty($photo))
-                continue;
-
-            if ($photo->id == $photoId)
-                return true;
+        if ($photo_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)
+                    ->field('logo.$id')->equals(new MongoId($photo_id))
+                    ->sort('created_at', -1);
+            
+            $result = $query->getQuery()->getSingleResult();
         }
         
-        return false;
+        return $result;
     }
 }

@@ -1070,14 +1070,14 @@ class Angel_ManageController extends Angel_Controller_Action {
             $page = 1;
         }
 
-        $root = $keyWordModel->getRoot();
+//        $root = $keyWordModel->getRoot();
         $paginator = $keyWordModel->getAll();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
 
         $resource = array();
 
-        foreach ($root as $r) {
+        foreach ($paginator as $r) {
             $resource[] = array(
                 'id' => $r->id,
                 'name' => $r->name

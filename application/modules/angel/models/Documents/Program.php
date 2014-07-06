@@ -42,8 +42,8 @@ class Program extends AbstractDocument {
     /** @ODM\String */
     protected $status;                      // 节目状态：online, offline
     
-    /** @ODM\String */
-    protected $keywordsId; 
+    //** @ODM\String */
+    //protected $keywordsId; 
 
     /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
     protected $owner;
