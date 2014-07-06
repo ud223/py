@@ -19,6 +19,9 @@ $model = $this->model;
     <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-oss-create') ?>">上传多媒体文件</a>
 </div>
 <div class="row">
+    <?php
+    $c = 0;
+    ?>
     <?php foreach ($this->resource as $p): ?>
         <div class="col-md-2 itm">
             <div class="paddingbox20px relative">
@@ -35,6 +38,10 @@ $model = $this->model;
                 <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
             </div>
         </div>
+        <?php $c ++; ?>
+        <?php if ($c % 6 == 0): ?>
+            <div class="clearfix"></div>
+        <?php endif; ?>
     <?php endforeach; ?>
 </div>
 <div class="row">
@@ -53,15 +60,14 @@ $model = $this->model;
 
 
 
-                
-                
-                    
-                    
-                   
-                        
-                    
-                    
-                
-                
 
-        
+
+
+
+
+
+
+
+
+
+

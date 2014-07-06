@@ -22,6 +22,9 @@
     <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-category-create') ?>">新建分类</a>
 </div>
 <div class="row">
+    <?php
+    $c = 0;
+    ?>
     <?php if ($this->resource): ?>
         <?php foreach ($this->resource as $p): ?>
             <?php
@@ -35,7 +38,7 @@
                         <div class="btn-group">
                             <a type="button" href="<?php echo $this->url(array(id => $root->id), 'manage-category-save') ?>" class="btn btn-info btn-sm">编辑</a>
                             <!--<button type="button" class="btn btn-danger btn-sm remove-category">删除</button>-->
-                            <?php if (!$this->specialMode->getSpecialByCategory($root->id) ): ?>
+                            <?php if (!$this->specialMode->getSpecialByCategory($root->id)): ?>
                                 <button type="button" class="btn btn-danger btn-sm remove-category">删除</button>
                             <?php else: ?>
                                 <label class="xs">被引用</label>
@@ -45,24 +48,12 @@
 
                         <input type="hidden" class="tmp" value="<?php echo $root->id ?>"/>
                     </div>
-                    <?php //foreach ($children as $c): ?>
-                        <!--<div class="child-itm">-->
-                            <!--<p><?php// echo $c->name ?></p>-->
-                            <!--<div class="btn-group">-->
-                                <!--<a type="button" href="<?//php echo $this->url(array(id => $c->id), 'manage-category-save') ?>" class="btn btn-info btn-xs">编辑</a>-->
-                            <!--</div>-->
-
-                            <?php// if (count($this->programModel->getProgramByCategory($c->id)) == 0): ?>
-                                <!--<button type="button" class="btn btn-danger btn-xs remove-child-category">删除</button>-->
-                            <?php// else: ?>
-                                <!--<label class="xs">不为空</label>-->
-                            <?php //endif; ?>
-
-                            <!--<input type="hidden" class="childhd" value="//<?php// echo $c->id ?>"/>-->
-                        <!--</div>-->
-                    <?php// endforeach; ?>
                 </div>
             </div>
+            <?php $c ++; ?>
+            <?php if ($c % 6 == 0): ?>
+                <div class="clearfix"></div>
+            <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>
 </div>
