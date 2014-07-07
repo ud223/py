@@ -258,7 +258,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     }
 
     protected function userLogin($defaultRedirectRoute, $pageTitle) {
-        $errorMsg = "登录失败，请重试或";
+        $errorMsg = "登录失败，请重试或联系管理员";
         $code = 200;
         $uid = "";
         
