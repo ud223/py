@@ -15,16 +15,17 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
     protected $_document_class = '\Documents\Special';
     protected $_author_class = '\Documents\Author';
     
-    public function addSpecial($name, $authorId, $photo, $programsId, $categoryId) {
-        $data = array("name" => $name, "authorId" => $authorId, "photo" => $photo, "programsId"=>$programsId, "categoryId"=>$categoryId);
+    public function addSpecial($name, $authorId, $photo, $programs, $categoryId) {
+        $data = array("name" => $name, "authorId" => $authorId, "photo" => $photo, "program"=>$programs, "categoryId"=>$categoryId);
+        
         $result = $this->add($data);
         
         return $result;
     }
 
-    public function saveSpecial($id, $name, $authorId, $photo, $programsId, $categoryId) {
+    public function saveSpecial($id, $name, $authorId, $photo, $programs, $categoryId) {
         
-        $data = array("name" => $name, "authorId" => $authorId, "photo" => $photo, "programsId"=>$programsId, "categoryId"=>$categoryId);
+        $data = array("name" => $name, "authorId" => $authorId, "photo" => $photo, "program"=>$programs, "categoryId"=>$categoryId);
         
         $result = $this->save($id, $data);
         
@@ -72,11 +73,11 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getByIds($ids) {
+    public function getByIds($id) {
         
         $result = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->in($id)->getQuery();
-        echo $result->name; exit;
+
         return $result;
     }
     
@@ -113,7 +114,7 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
 //            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($recommendIds)->sort('created_at', -1);
 //        }
         
-        $result = $query->getQuery();//->getSingleResult();
+        $result = $query->getQuery();
         $special = null;
         $isRecommend = FALSE;
         
@@ -194,90 +195,67 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getSpecialByPhoto($photoId) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-
-        $result = $query
-                ->getQuery();
-        if (count($result) == 0)
-            return false;
-
-        foreach ($result as $special) {
-            $photoes = $special->photo;
+    public function getSpecialByPhoto($photo_id) {
+        $result = false;
+        
+        if ($photo_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)
+                    ->field('photo.$id')->equals(new MongoId($photo_id))
+                    ->sort('created_at', -1);
             
-            if (count($photoes) == 0)
-                continue;
-            
-            foreach ($photoes as $photo) {
-                if ($photo->id == $photoId)
-                    return true;
-            }
+            $result = $query->getQuery()->getSingleResult();
         }
         
-        return false;
+        if ($result)
+            return true;
+        else
+            return false;
     }
     
-    public function getSpecialByCategory($categoryId) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-
-        $result = $query
-                ->getQuery();
-       
-        if (count($result) == 0)
-            return false;
-
-        foreach ($result as $special) {
-            $tmpCategoryId = $special->categoryId;
+    public function getSpecialByCategory($category_id) {
+        $result = false;
+        
+        if ($category_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('categoryId')->equals($category_id)->sort('created_at', -1);
             
-            if ($tmpCategoryId == $categoryId)
-                return true;
+            $result = $query->getQuery()->getSingleResult();
         }
         
-        return false;
+        if ($result)
+            return true;
+        else
+            return false;
     }
     
-    public function getSpecialByAuthor($authorId) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-
-        $result = $query
-                ->getQuery();
-       
-        if (count($result) == 0)
-            return false;
-
-        foreach ($result as $special) {
-            $tmpAuthorId = $special->authorId;
+    public function getSpecialByAuthor($author_id) {
+        $result = false;
+        
+        if ($author_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('authorId')->equals($author_id)->sort('created_at', -1);
             
-            if ($tmpAuthorId == $authorId)
-                return true;
+            $result = $query->getQuery()->getSingleResult();
         }
         
-        return false;
+        if ($result)
+            return true;
+        else
+            return false;
     }
     
-    public function getSpecialByProgram($programId) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-
-        $result = $query
-                ->getQuery();
-       
-        if (count($result) == 0)
-            return false;
+    public function getSpecialByProgram($program_id) {
+        $result = false;
         
-        foreach ($result as $special) {
-            $tmpPrograms = $special->programsId;
+        if ($program_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)
+                    ->field('program.$id')->equals(new MongoId($program_id))
+                    ->sort('created_at', -1);
             
-            if ($tmpPrograms == "")
-                continue;
-            
-            $programIds = explode(",", $tmpPrograms);
-
-            foreach ($programIds as $program) {
-                if ($program == $programId)
-                    return true;
-            }
+            $result = $query->getQuery()->getSingleResult();
         }
         
-        return false;
+        if ($result)
+            return true;
+        else
+            return false;
     }
 }

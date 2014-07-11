@@ -103,7 +103,7 @@
             </div>
             <div class="form-group">
                 <?php foreach ($this->keywords as $keyword): ?>
-                    <input type="checkbox" name="keywords[]" value="<?php echo $keyword->id ?>"> <?php echo $keyword->name ?><br>
+                    <input type="checkbox" name="keyword[]" value="<?php echo $keyword->id ?>"> <?php echo $keyword->name ?><br>
                 <?php endforeach; ?>
                  <?php 
                     if (count($this->keywords) == 0) {

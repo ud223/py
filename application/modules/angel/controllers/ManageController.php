@@ -47,6 +47,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
         $resource = array();
+        
         foreach ($paginator as $r) {
             $path = $this->bootstrap_options['image_broken_ico']['middle'];
             if (count($r->photo)) {
@@ -97,7 +98,15 @@ class Angel_ManageController extends Angel_Controller_Action {
             $description = $this->request->getParam('description');
             $photo = $this->decodePhoto();
 
-            $keyWordIds = $this->request->getParam('keywords');
+            $keyword = $this->request->getParam('keyword');
+
+            $keywords = array();
+            
+            if (is_array($keyword)) {
+                foreach ($keyword as $p) {
+                    $keywords[] = $keyWordModel->getById($p);
+                }
+            }
 
             $min = $this->request->getParam('min');
             $sec = $this->request->getParam('sec');
@@ -129,18 +138,6 @@ class Angel_ManageController extends Angel_Controller_Action {
                 if (!$isUtf8) {
                     $captions = utf8_encode(file_get_contents($file["tmp_name"]));
                 }
-//                $captions = utf8_encode(file_get_contents($file["tmp_name"]));
-                //     $captions = mb_convert_case($captions, "UTF-8", "UTF-8, GBK, GB2312, BIG5");
-                //   $captions = utf8_decode($captions);
-            }
-
-            $tmpKeyWordIds = null;
-
-            foreach ($keyWordIds as $keyWordId) {
-                if ($tmpKeyWordIds != NULL)
-                    $tmpKeyWordIds = $tmpKeyWordIds . ',';
-
-                $tmpKeyWordIds = $tmpKeyWordIds . $keyWordId;
             }
 
             $result = false;
@@ -162,7 +159,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                         $this->_redirect($this->view->url(array(), 'manage-result') . '?error="notfound"');
                     }
                 }
-                $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $tmpKeyWordIds, $time, $captions);
+                $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $keywords, $time, $captions);
             } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
@@ -192,7 +189,6 @@ class Angel_ManageController extends Angel_Controller_Action {
 
         if ($this->request->isPost()) {
             // POST METHOD
-
             $name = $this->request->getParam('name');
             $sub_title = $this->request->getParam('sub_title');
             $ossVideoId = $this->request->getParam('oss_video');
@@ -201,9 +197,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $status = $this->request->getParam('status');
             $description = $this->request->getParam('description');
             $photo = $this->decodePhoto();
-            //   $categoryId = $this->request->getParam('category');
-            $keyWordIds = $this->request->getParam('keywords');
-
+            $captions = $this->request->getParam('captions');
             $min = $this->request->getParam('min');
             $sec = $this->request->getParam('sec');
 
@@ -211,16 +205,15 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $min = 0;
 
             $time = $min * 60 + $sec;
+            
+            $keyword = $this->request->getParam('keyword');
 
-            $captions = $this->request->getParam('captions');
-
-            $tmpKeyWordIds = null;
-
-            foreach ($keyWordIds as $keyWordId) {
-                if ($tmpKeyWordIds != NULL)
-                    $tmpKeyWordIds = $tmpKeyWordIds . ',';
-
-                $tmpKeyWordIds = $tmpKeyWordIds . $keyWordId;
+            $keywords = array();
+            
+            if (is_array($keyword)) {
+                foreach ($keyword as $p) {
+                    $keywords[] = $keyWordModel->getById($p);
+                }
             }
 
             $result = false;
@@ -244,9 +237,9 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
                 if ($copy) {
                     $owner = $this->me->getUser();
-                    $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $tmpKeyWordIds, $time, $captions);
+                    $result = $programModel->addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $keywords, $time, $captions);
                 } else {
-                    $result = $programModel->saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $tmpKeyWordIds, $time, $captions);
+                    $result = $programModel->saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $keywords, $time, $captions);
                 }
             } catch (Angel_Exception_Program $e) {
                 $error = $e->getDetail();
@@ -1166,20 +1159,19 @@ class Angel_ManageController extends Angel_Controller_Action {
             $name = $this->request->getParam('name');
             $authorId = $this->request->getParam('authorId');
             $photo = $this->decodePhoto();
-            $programIds = $this->request->getParam('programs');
             $categoryId = $this->request->getParam('categoryId');
-
-            $tmpProgramIds = null;
-
-            foreach ($programIds as $programId) {
-                if ($tmpProgramIds != NULL)
-                    $tmpProgramIds = $tmpProgramIds . ',';
-
-                $tmpProgramIds = $tmpProgramIds . $programId;
+            $programs_id = $this->request->getParam('programs');
+            
+            $programs = array();
+            
+            if (is_array($programs_id)) {
+                foreach ($programs_id as $p) {
+                    $programs[] = $programModel->getById($p);
+                }
             }
 
             try {
-                $result = $specialModel->addSpecial($name, $authorId, $photo, $tmpProgramIds, $categoryId);
+                $result = $specialModel->addSpecial($name, $authorId, $photo, $programs, $categoryId);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
@@ -1189,46 +1181,6 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
         } else {
-            // GET METHOD
-
-            $result = $specialModel->getRoot();
-
-//            $ownProgramIds = "";
-//            
-//            foreach ($result as $special) {       
-//                if ($ownProgramIds != "")
-//                    $ownProgramIds = $ownProgramIds . ",";
-//
-//                $ownProgramIds = $ownProgramIds . $special->programsId;
-//            }
-//            
-//            $programIds = "";
-//            
-//            if ($ownProgramIds != "") {
-//                $programIds = explode(",", $ownProgramIds);
-//            
-//                foreach ($programIds as $programId) {
-//                    if ($programId == null || $programId == "") {
-//                        unset($programId[$programId]);
-//                    }
-//                }
-//            }
-
-            $ownProgramIds = "";
-
-            foreach ($result as $special) {
-                if ($special->programsId == null || $special->programsId == "") {
-                    continue;
-                }
-
-                if ($ownProgramIds != "")
-                    $ownProgramIds = $ownProgramIds . ",";
-
-                $ownProgramIds = $ownProgramIds . $special->programsId;
-            }
-
-            $programIds = explode(",", $ownProgramIds);
-
             $this->view->title = "创建专辑";
             $this->view->authors = $authorModel->getAll(false);
             $this->view->programs = $programModel->getProgramNotOwn($programIds);
@@ -1299,20 +1251,21 @@ class Angel_ManageController extends Angel_Controller_Action {
             $authorId = $this->request->getParam('authorId');
 
             $photo = $this->decodePhoto();
-            $programIds = $this->request->getParam('programs');
             $categoryId = $this->request->getParam('categoryId');
 
-            $tmpProgramIds = null;
-
-            foreach ($programIds as $programId) {
-                if ($tmpProgramIds != NULL)
-                    $tmpProgramIds = $tmpProgramIds . ',';
-
-                $tmpProgramIds = $tmpProgramIds . $programId;
+            $programs_id = $this->request->getParam('programs');
+            
+            $programs = array();
+            
+            if (is_array($programs_id)) {
+                foreach ($programs_id as $p) {
+                    $programs[] = $programModel->getById($p);
+                }
             }
 
+
             try {
-                $result = $specialModel->saveSpecial($id, $name, $authorId, $photo, $tmpProgramIds, $categoryId);
+                $result = $specialModel->saveSpecial($id, $name, $authorId, $photo, $programs, $categoryId);
             } catch (Angel_Exception_Special $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
@@ -1339,36 +1292,25 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
 
                 //get all special's programs_id
-                $result = $specialModel->getRoot();
+                $result = $specialModel->getAll();
 
-//                $ownProgramIds = "";
-//
-//                foreach ($result as $special) {
-//                    if ($special->id == $target->id)
-//                        continue;
-//
-//                    if ($ownProgramIds != "")
-//                        $ownProgramIds = $ownProgramIds . ",";
-//
-//                    $ownProgramIds = $ownProgramIds . $special->programsId;
-//                }
-//                
-//                $programIds = explode(",", $ownProgramIds);
                 $ownProgramIds = "";
 
                 foreach ($result as $special) {
-                    if ($special->programsId == null || $special->programsId == "") {
+                    if (!$special->program) {
                         continue;
                     }
+                    
+                    foreach ($special->program as $p) {
+                        if ($ownProgramIds != "")
+                            $ownProgramIds = $ownProgramIds . ",";
 
-                    if ($ownProgramIds != "")
-                        $ownProgramIds = $ownProgramIds . ",";
-
-                    $ownProgramIds = $ownProgramIds . $special->programsId;
+                        $ownProgramIds = $ownProgramIds . $p->id;
+                    }
                 }
-
+                
                 $programIds = explode(",", $ownProgramIds);
-                //    var_dump($programIds); exit;
+
                 $this->view->model = $target;
                 $photo = $target->photo;
 
@@ -1391,28 +1333,21 @@ class Angel_ManageController extends Angel_Controller_Action {
                     $this->view->photo = $saveObj;
                 }
 
-                $myOwnProgramIds = explode(",", $target->programsId);
-
-                $myOwnPrograms = $programModel->getProgramBySpecialId($myOwnProgramIds);
-
-                $notOwnprograms = $programModel->getProgramNotOwn($programIds);
+                $notOwnPrograms = $programModel->getProgramNotOwn($programIds);
 
                 $programs = array();
 
-                foreach ($notOwnprograms as $program) {
+                foreach ($notOwnPrograms as $program) {
                     $programs[] = $program;
                 }
 
-                if (!empty($myOwnPrograms)) {
-                    foreach ($myOwnPrograms as $program) {
-                        $programs[] = $program;
-                    }
+                foreach ($target->program as $program) {
+                    $programs[] = $program;
                 }
-
+                
                 $this->view->authors = $authorModel->getAll(false);
-                $this->view->ownProgramIds = $myOwnProgramIds;
                 $this->view->programs = $programs;
-                $this->view->categorys = $categoryModel->getRoot();
+                $this->view->categorys = $categoryModel->getAll();
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
             }

@@ -16,9 +16,17 @@ class Special extends AbstractDocument {
     /** @ODM\ReferenceMany(targetDocument="\Documents\Photo") */
     protected $photo = array();
 
-    /** @ODM\String */
-    protected $programsId;
+    /** @ODM\ReferenceMany(targetDocument="\Documents\Program") */
+    protected $program = array();
 
     /** @ODM\String */
     protected $categoryId;
+    
+    public function addProgram(\Documents\Program $p) {
+        $this->program[] = $p;
+    }
+    
+    public function clearProgram() {
+        $this->$program = array();
+    }
 }

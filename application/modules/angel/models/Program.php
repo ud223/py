@@ -3,7 +3,7 @@
 class Angel_Model_Program extends Angel_Model_AbstractModel {
 
     protected $_document_class = '\Documents\Program';
-
+    protected $_keyword_class = '\Documents\Keyword';
     /**
      * 添加节目
      * 
@@ -21,15 +21,21 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $keyWordIds, $time, $captions) {
+    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $keywords, $time, $captions) {
         $result = false;
 
         $program = new $this->_document_class();
+        
         if (is_array($photo)) {
             foreach ($photo as $p) {
                 $program->addPhoto($p);
             }
         }
+        
+        foreach ($keywords as $p) {
+            $program->addKeyword($p);
+        }
+    //    echo $program->keyword[0]->id; exit;
         $program->name = $name;
         $program->sub_title = $sub_title;
         $program->oss_video = $oss_video;
@@ -39,7 +45,6 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->description = $description;
         $program->status = $status;
         $program->owner = $owner;
-        $program->keyWordIds = $keyWordIds;
         $program->time = $time;
         $program->captions = $captions;
          
@@ -72,7 +77,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $keyWordIds, $time, $captions) {
+    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $keywords, $time, $captions) {
         $result = false;
 
         $program = $this->getById($id);
@@ -87,6 +92,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
                 $program->addPhoto($p);
             }
         }
+        
         $program->name = $name;
         $program->sub_title = $sub_title;
         $program->oss_video = $oss_video;
@@ -95,9 +101,14 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->duration = $duration;
         $program->description = $description;
         $program->status = $status;
-        $program->keyWordIds = $keyWordIds;
         $program->time = $time;
         $program->captions = $captions;
+
+        $program->clearKeyword();
+
+        foreach ($keywords as $p) {
+            $program->addKeyword($p);
+        }
 
         try {
             $this->_dm->persist($program);
@@ -124,33 +135,15 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         }
         return $result;
     }
-
-    public function getProgramByAuthor($author_id) {
-        $result = $this->getBy(true, array('author.$id' => new MongoId($author_id)));
-        return $result;
-    }
-
-    public function getProgramByCategory($category_id, $return_as_paginator = true) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('category.$id')->equals(new MongoId($category_id))
-                ->sort('created_at', -1);
-        $result = null;
-        if ($return_as_paginator) {
-            $result = $this->paginator($query);
-        } else {
-            $result = $query->getQuery()->execute();
-        }
-        return $result;
-    }
     
-    public function getProgramNotOwn($ownProgramId) { 
+    public function getProgramNotOwn($programs_id) { 
         $query = null;
   
-        if (count($ownProgramId) < 1 || $ownProgramId[0] == "") {
+        if (count($programs_id) < 1 || $programs_id[0] == "") {
             $query = $this->_dm->createQueryBuilder($this->_document_class)->find()->sort('created_at', -1);
         }
         else {
-            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($ownProgramId)->sort('created_at', -1);
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($programs_id)->sort('created_at', -1);
         }
 
         $result = $query
@@ -159,12 +152,12 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getProgramBySpecialId($specialOwnProgramIds) {
-        if (count($specialOwnProgramIds) < 1 || $specialOwnProgramIds[0] == "") {
+    public function getProgramBySpecialId($programs_id) {
+        if (count($programs_id) < 1 || $programs_id[0] == "") {
             return null;
         }
         
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->in($specialOwnProgramIds)->sort('created_at', -1);
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->in($programs_id)->sort('created_at', -1);
 
         $result = $query
                 ->getQuery();
@@ -172,29 +165,20 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getProgramByKeyword($keywordId) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-
-        $result = $query
-                ->getQuery();
-       
-        if (count($result) == 0)
-            return false;
+    public function getProgramByKeyword($keyword_id) {
+        $result = false;
         
-        foreach ($result as $program) {
-            $tmpKeywords = $program->keyWordIds;
+        if ($keyword_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)
+                    ->field('keyword.$id')->equals(new MongoId($keyword_id))
+                    ->sort('created_at', -1);
             
-            if ($tmpKeywords == "")
-                continue;
-            
-            $keywords = explode(",", $tmpKeywords);
-
-            foreach ($keywords as $keyword) {
-                if ($keyword == $keywordId)
-                    return true;
-            }
+            $result = $query->getQuery()->getSingleResult();
         }
         
-        return false;
+        if ($result)
+            return true;
+        else
+            return false;
     }
 }

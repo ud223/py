@@ -28,16 +28,6 @@ class Angel_Model_Keyword extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    public function getRoot() {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->find();//->field('keycode')->in(array('aa'));//->equals(new MongoRegex("/aa/i"));//findby({keycode: {$in:["aa", "bb"]}})->sort('created_at', -1);
-
-        $result = $query
-                ->getQuery()
-                ->execute();
-
-        return $result;
-    }
-    
     /**
      * 根据id获取Keyword document
      * 
@@ -50,7 +40,7 @@ class Angel_Model_Keyword extends Angel_Model_AbstractModel {
                 ->field('id')->equals($id)
                 ->getQuery()
                 ->getSingleResult();
-
+        
         if (!empty($keyWord)) {
             $result = $keyWord;
         }

@@ -5,8 +5,8 @@ require ('../../extlib/OSS/aliyun.php');
 use \Aliyun\OSS\OSSClient;
 
 $client = OSSClient::factory(array(
-            'AccessKeyId' => 'q4JANNcG8ki8hQRZ',
-            'AccessKeySecret' => 'z0BkNBjRBUU0gsobVupXJY8yHGXkFm',
+            'AccessKeyId' => '9DRZ6locwtVaPjlH',
+                'AccessKeySecret' => 'Av8wIjNXzQyYT40cdQmCC5pvaAsSIT',
         ));
 
 function putResourceObject(OSSClient $client, $bucket, $key, $content, $size) {
@@ -27,7 +27,7 @@ function putResourceObject(OSSClient $client, $bucket, $key, $content, $size) {
 $file = $_FILES["file"]["tmp_name"];
 $filesize = $_FILES["file"]["size"];
 
-$bucket = 'angelhere-cheesetv';
+$bucket = 'cheesetv';
 //$key = $_FILES["file"]["name"];
 $ext = '.' . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
 $uid = uniqid();

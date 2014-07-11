@@ -59,8 +59,8 @@
                     <div class="panel-body">
                         <?php foreach ($this->programs as $program): ?>
                              <?php      
-                                foreach ($this->ownProgramIds as $ownProgramId) {
-                                    if ($program->id == $ownProgramId) {
+                                foreach ($this->model->program as $p) {
+                                    if ($program->id == $p->id) {
                                         $checked = "checked='checked'";
                                         $lb = "label-success";
 

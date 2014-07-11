@@ -30,8 +30,8 @@ class Program extends AbstractDocument {
     /** @ODM\String */
     protected $time;
     
-    /** @ODM\String */
-    protected $keyWordIds;
+    /** @ODM\ReferenceMany(targetDocument="\Documents\Keyword") */
+    protected $keyword = array();
 
     /** @ODM\String */
     protected $description;
@@ -41,9 +41,6 @@ class Program extends AbstractDocument {
 
     /** @ODM\String */
     protected $status;                      // 节目状态：online, offline
-    
-    //** @ODM\String */
-    //protected $keywordsId; 
 
     /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
     protected $owner;
@@ -64,5 +61,12 @@ class Program extends AbstractDocument {
     public function clearPhoto() {
         $this->photo = array();
     }
-
+    
+    public function addKeyword(\Documents\Keyword $p) {
+        $this->keyword[] = $p;
+    }
+    
+    public function clearKeyword() {
+        $this->keyword = array();
+    }
 }
