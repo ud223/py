@@ -1181,6 +1181,25 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
         } else {
+            $result = $specialModel->getAll();
+
+            $ownProgramIds = "";
+
+            foreach ($result as $special) {
+                if (!$special->program) {
+                    continue;
+                }
+
+                foreach ($special->program as $p) {
+                    if ($ownProgramIds != "")
+                        $ownProgramIds = $ownProgramIds . ",";
+
+                    $ownProgramIds = $ownProgramIds . $p->id;
+                }
+            }
+
+            $programIds = explode(",", $ownProgramIds);
+            
             $this->view->title = "创建专辑";
             $this->view->authors = $authorModel->getAll(false);
             $this->view->programs = $programModel->getProgramNotOwn($programIds);

@@ -234,19 +234,19 @@
         }
     }
     function getApiData(callback) {
-<?php
-$url = "";
-$uid = "";
+        <?php
+            $url = "";
+            $uid = "";
 
-$uid = $this->uid;
+            $uid = $this->uid;
 
-if (!empty($_COOKIE["specialId"])) {
-    $url = $this->url(array("uid" => $uid, "sid" => $_COOKIE["specialId"]), "api-special-recommend");
-} else {
-    $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
-}
-?>
-
+            if (!empty($_COOKIE["specialId"])) {
+                $url = $this->url(array("uid" => $uid, "sid" => $_COOKIE["specialId"]), "api-special-recommend");
+            } else {
+                $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
+            }
+        ?>
+        
         var url = "<?php echo $url ?>";
 
         $.ajax({
