@@ -134,14 +134,10 @@ class Angel_ShowController extends Angel_Controller_Action {
         if (empty($special)) {
             $special = $specialModel->getlastOne();
         }
-
-        //获取该专辑拥有的节目ID集合
-        $ownProgramIds = explode(",", $special->programsId);
-        //获取该专辑节目列表
-        $programs = $programModel->getProgramBySpecialId($ownProgramIds);
+        
         //获取该专辑作者
         $author = $authorModel->getAuthorById($special->authorId);
-
+        
         $result["id"] = $special->id;
         $result["name"] = $special->name;
 
@@ -150,23 +146,38 @@ class Angel_ShowController extends Angel_Controller_Action {
         else
             $result["author"] = $author->name;
 
-
         $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
         $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];
+        
         if (count($special->photo)) {
             $photo = $special->photo[0];
             $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
             $result["photo_main"] = $this->view->photoImage($photo->name . $photo->type, 'main');
         }
 
-        foreach ($programs as $program) {
+        foreach ($special->program as $program) {
             $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
-
+        
         //保存推荐记录
         $recommendModel->addRecommend($special->id, $userId);
 
         $this->_helper->json(array('data' => $result, 'code' => 200));
     }
-
+    
+    public function deviceAction() {
+        $deviceModel = $this->getModel('device');
+        $name = $this->request->getParam('name');
+        
+        $result = $deviceModel->getByName($name);
+        
+        if ($result) {
+            $deviceModel->saveDevice($result->id, $result->name, $result->count);
+        }
+        else {
+            $deviceModel->addDevice($name);
+        }
+        
+         $this->_helper->json(array('data' => 'success', 'code' => 200));
+    }
 }
