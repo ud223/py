@@ -1282,7 +1282,6 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
             }
 
-
             try {
                 $result = $specialModel->saveSpecial($id, $name, $authorId, $photo, $programs, $categoryId);
             } catch (Angel_Exception_Special $e) {
