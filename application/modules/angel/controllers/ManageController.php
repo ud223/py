@@ -1302,16 +1302,14 @@ class Angel_ManageController extends Angel_Controller_Action {
             $id = $this->request->getParam("id");
 
             if ($id) {
-
                 $target = $specialModel->getById($id);
 
                 if (!$target) {
                     $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
                 }
 
-                //get all special's programs_id
-                $result = $specialModel->getAll();
-
+                $result = $specialModel->getAll(false);
+                
                 $ownProgramIds = "";
 
                 foreach ($result as $special) {
@@ -1326,7 +1324,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                         $ownProgramIds = $ownProgramIds . $p->id;
                     }
                 }
-                
+
                 $programIds = explode(",", $ownProgramIds);
 
                 $this->view->model = $target;
@@ -1352,13 +1350,13 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
 
                 $notOwnPrograms = $programModel->getProgramNotOwn($programIds);
-
+                
                 $programs = array();
 
                 foreach ($notOwnPrograms as $program) {
                     $programs[] = $program;
                 }
-
+                
                 foreach ($target->program as $program) {
                     $programs[] = $program;
                 }

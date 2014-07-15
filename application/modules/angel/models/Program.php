@@ -138,7 +138,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
     
     public function getProgramNotOwn($programs_id) { 
         $query = null;
-  
+        
         if (count($programs_id) < 1 || $programs_id[0] == "") {
             $query = $this->_dm->createQueryBuilder($this->_document_class)->find()->sort('created_at', -1);
         }
