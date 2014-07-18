@@ -1449,7 +1449,7 @@ class Angel_ManageController extends Angel_Controller_Action {
     public function versionListAction() {
         $versionModel = $this->getModel('version');
         $page = $this->request->getParam('page');
-        echo 1; exit;
+        
         if (!$page) {
             $page = 1;
         }
