@@ -1447,19 +1447,19 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
     
     public function versionListAction() {
-        $specialModel = $this->getModel('version');
+        $versionModel = $this->getModel('version');
         $page = $this->request->getParam('page');
 
         if (!$page) {
             $page = 1;
         }
         
-        $paginator = $specialModel->getAll();
+        $paginator = $versionModel->getAll();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
 
         $resource = array();
-
+        echo 1;
         foreach ($paginator as $r) {
             $resource[] = array(
                 'id' => $r->id,
@@ -1467,7 +1467,8 @@ class Angel_ManageController extends Angel_Controller_Action {
                 'sys' => $r->sys
             );
         }
-        echo 1;
+        echo 2;
+
         $this->view->resource = $resource;
         $this->view->title = "版本列表";
         $this->view->paginator = $paginator;
