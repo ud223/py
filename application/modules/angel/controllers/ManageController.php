@@ -1467,7 +1467,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 'sys' => $r->sys
             );
         }
-
+        echo 1;
         $this->view->resource = $resource;
         $this->view->title = "版本列表";
         $this->view->paginator = $paginator;
