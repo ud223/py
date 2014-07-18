@@ -99,4 +99,35 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function logoutAction() {
         $this->userLogout('login');
     }
+    
+    public function deviceAction() {
+        $deviceModel = $this->getModel('device');
+        $name = $this->request->getParam('name');
+        
+        $result = $deviceModel->getByName($name);
+        
+        if ($result) {
+            $deviceModel->saveDevice($result->id, $result->name, $result->count);
+        }
+        else {
+            $deviceModel->addDevice($name);
+        }
+        
+         $this->_helper->json(array('data' => 'success', 'code' => 200));
+    }
+ 
+    public function deviceCountAction() {
+        $deviceModel = $this->getModel('device');
+        
+        $sys = $this->request->getParam('name');
+        
+        $result = $deviceModel->getByName($sys);  
+        
+        if ($result) {
+            $this->_helper->json(array('data' => $result->count, 'code' => 200));
+        }
+        else {
+            $this->_helper->json(array('data' => '0', 'code' => 200));
+        }
+    }
 }
