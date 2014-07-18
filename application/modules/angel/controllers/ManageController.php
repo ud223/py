@@ -1369,5 +1369,127 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         }
     }
+    
+    public function versionCreateAction() {
+        $versionModel = $this->getModel('version');
 
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $name = $this->request->getParam('name');
+            $sys = $this->request->getParam('sys');
+            $fix = $this->request->getParam('fix');
+            $update = $this->request->getParam('update');
+            $url = $this->request->getParam('url');
+
+            try {
+                $result = $versionModel->addVersion($name, $sys, $fix, $update, $url);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-version-list'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            $result = $versionModel->getAll();
+
+            $this->view->title = "创建版本";
+        }
+    }
+    
+    public function versionSaveAction() {
+        $notFoundMsg = '未找到目标分类';
+        $versionModel = $this->getModel('version');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->request->getParam('id');
+            $name = $this->request->getParam('name');
+            $sys = $this->request->getParam('sys');
+            $fix = $this->request->getParam('fix');
+            $update = $this->request->getParam('update');
+            $url = $this->request->getParam('url');
+            
+            try {
+                $result = $versionModel->saveVersion($id, $name, $sys, $fix, $update, $url);
+            } catch (Angel_Exception_version $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-version-list'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑版本";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                $target = $versionModel->getById($id);
+
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+                
+                $this->view->model = $target;
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
+    }
+    
+    public function versionListAction() {
+        $specialModel = $this->getModel('version');
+        $page = $this->request->getParam('page');
+
+        if (!$page) {
+            $page = 1;
+        }
+        
+        $paginator = $specialModel->getAll();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
+        $resource = array();
+
+        foreach ($paginator as $r) {
+            $resource[] = array(
+                'id' => $r->id,
+                'name' => $r->name, 
+                'sys' => $r->sys
+            );
+        }
+
+        // JSON FORMAT
+        if ($this->getParam('format') == 'json') {
+            $this->_helper->json(array('data' => $resource, 'code' => 200));
+        } else {
+            $this->view->resource = $resource;
+            $this->view->title = "版本列表";
+            $this->view->paginator = $paginator;
+        }
+    }
+
+    public function versionRemoveAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $versionModel = $this->getModel('version');
+                
+                $result = $versionModel->remove($id);
+            }
+            echo $result;
+            exit;
+        }
+    }
 }

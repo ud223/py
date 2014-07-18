@@ -180,4 +180,25 @@ class Angel_ShowController extends Angel_Controller_Action {
         
          $this->_helper->json(array('data' => 'success', 'code' => 200));
     }
+    
+    public function versionGetAction() {
+        $versionModel = $this->getModel('version');
+        $sys = $this->request->getParam('sys');
+        
+        $result = $versionModel->getNewVersion($sys);
+        
+        if ($result) {
+            $version["id"] = $result->id;//array("id" => $result->id, "name" => $result->name, "sys" => $result->sys, "fix" => $result->fix, "update" => $result->update);
+            $version["name"] = $result->name;
+            $version["sys"] = $result->sys;
+            $version["fix"] = $result->fix;
+            $version["update"] = $result->update;
+            $version["url"] = $result->url;
+            
+            $this->_helper->json(array('data' => $version, 'code' => 200));
+        }
+        else {
+            $this->_helper->json(array('data' => 'none', 'code' => 200));
+        }
+    }
 }
