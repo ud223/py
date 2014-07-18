@@ -2,7 +2,7 @@
 
 class Angel_IndexController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('index', 'subscribe', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
+    protected $login_not_required = array('index', 'subscribe', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password', 'version-get', 'device', 'device-count');
 
     public function init() {
         parent::init();
@@ -128,6 +128,30 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
         else {
             $this->_helper->json(array('data' => '0', 'code' => 200));
+        }
+    }
+    
+    public function versionGetAction() {
+        $versionModel = $this->getModel('version');
+        
+        $sys = $this->request->getParam('name');
+        
+        $result = $versionModel->getNewVersion($sys);
+        
+        if ($result) {
+            $version = array();
+            
+            $version["id"] = $result->id;
+            $version["name"] = $result->name;
+            $version["sys"] = $result->sys;
+            $version["fix"] = $result->fix;
+            $version["update"] = $result->update;
+            $version["url"] = $result->url;
+            
+            $this->_helper->json(array('data' => $result->count, 'code' => 200));
+        }
+        else {
+            $this->_helper->json(array('data' => '1.0', 'code' => 200));
         }
     }
 }
