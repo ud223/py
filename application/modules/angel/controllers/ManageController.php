@@ -1468,14 +1468,9 @@ class Angel_ManageController extends Angel_Controller_Action {
             );
         }
 
-        // JSON FORMAT
-        if ($this->getParam('format') == 'json') {
-            $this->_helper->json(array('data' => $resource, 'code' => 200));
-        } else {
-            $this->view->resource = $resource;
-            $this->view->title = "版本列表";
-            $this->view->paginator = $paginator;
-        }
+        $this->view->resource = $resource;
+        $this->view->title = "版本列表";
+        $this->view->paginator = $paginator;
     }
 
     public function versionRemoveAction() {
