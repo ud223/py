@@ -1449,7 +1449,7 @@ class Angel_ManageController extends Angel_Controller_Action {
     public function versionListAction() {
         $versionModel = $this->getModel('version');
         $page = $this->request->getParam('page');
-
+        echo 1; exit;
         if (!$page) {
             $page = 1;
         }
@@ -1459,7 +1459,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         $paginator->setCurrentPageNumber($page);
 
         $resource = array();
-        echo 1;
+
         foreach ($paginator as $r) {
             $resource[] = array(
                 'id' => $r->id,
@@ -1467,7 +1467,6 @@ class Angel_ManageController extends Angel_Controller_Action {
                 'sys' => $r->sys
             );
         }
-        echo 2;
 
         $this->view->resource = $resource;
         $this->view->title = "版本列表";
