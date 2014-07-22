@@ -25,12 +25,12 @@
     </div>
     <div id="tv-footer-rtbar">
         <div class="wp">
-            <div id="volume-ctrl" class="pull-left">
+<!--            <div id="volume-ctrl" class="pull-left">
                 <button id="volume-speaker" class="ico pull-left"></button>
                 <div id="volume-holder" class="pull-left">
                     <div id="volume-in"></div>
                 </div>
-            </div>
+            </div>-->
             <button id="tv-listbtn" class="ico"></button>
         </div>
     </div>
@@ -50,7 +50,12 @@
 </div>
 
 <div id='tv-sider'>
-
+    <div id='tv-toggle'>
+        <div class='bt-go selected'>看</div>
+        <div class='bt-go'>听</div>
+    </div>
+    <button title="换一换" id='btn-refresh'></button>
+        <div class="clear"></div>
 </div>
 
 <div id="tv-main-container" class="layer">
@@ -106,12 +111,13 @@
         });
 
         var list = [
-            {htmlObject: $('#tv-header')}
+            {htmlObject: $('#tv-header')},
+            {htmlObject: $('#tv-sider')}
         ];
-        $('#tv-header').mouseenter(function() {
+        $('#tv-header, #tv-sider').mouseenter(function() {
             $.autoToggleListStop();
         });
-        $('#tv-header').mouseleave(function() {
+        $('#tv-header, #tv-sider').mouseleave(function() {
             $.autoToggleListRestart();
         });
         $.autoToggleList(list);
@@ -174,7 +180,7 @@
         // 显示“换一批”按钮
         $('#tv-header .unvisiable').removeClass('unvisiable');
 
-        $('#tv-header #refresh').click(function() {
+        $('#btn-refresh').click(function() {
             getApiData(nextFunc);
         });
 

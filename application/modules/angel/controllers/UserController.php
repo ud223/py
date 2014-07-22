@@ -3,6 +3,7 @@
 class Angel_UserController extends Angel_Controller_Action {
 
     public function init() {
+        $this->_helper->layout->setLayout('normal');
         parent::init();
     }
 
