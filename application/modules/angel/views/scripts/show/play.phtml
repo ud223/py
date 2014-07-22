@@ -1,4 +1,5 @@
-<div id="tv-footer">
+
+<div id="tv-footer" style="display:none">
     <div id="tv-listbar">
         <div id="tv-listbar-title">
             <a href="javascript:void(0)" id="tv-author-img"></a>
@@ -24,12 +25,12 @@
     </div>
     <div id="tv-footer-rtbar">
         <div class="wp">
-            <div id="volume-ctrl" class="pull-left">
+<!--            <div id="volume-ctrl" class="pull-left">
                 <button id="volume-speaker" class="ico pull-left"></button>
                 <div id="volume-holder" class="pull-left">
                     <div id="volume-in"></div>
                 </div>
-            </div>
+            </div>-->
             <button id="tv-listbtn" class="ico"></button>
         </div>
     </div>
@@ -47,6 +48,16 @@
         </div>
     </div>
 </div>
+
+<div id='tv-sider'>
+    <div id='tv-toggle'>
+        <div class='bt-go selected'>看</div>
+        <div class='bt-go'>听</div>
+    </div>
+    <button title="换一换" id='btn-refresh'></button>
+        <div class="clear"></div>
+</div>
+
 <div id="tv-main-container" class="layer">
     <div id="tv-screen" class="layer text-center">
         <video id="tv-video-player" preload oncontextmenu="return false;">
@@ -98,18 +109,32 @@
         $('#tv-listbtn').click(function() {
             $('#tv-listbar').clickToggle();
         });
-        $('#tv-header').autoToggle();
-        $('#tv-footer').autoToggle({
-            animationDirection: 'bottom',
-            beforeDisplay: function() {
-                $('#tv-cover').show();
-            },
-            beforeHide: function() {
-                if (!document.getElementById("tv-video-player").paused) {
-                    $('#tv-cover').hide();
-                }
-            }
+
+        var list = [
+            {htmlObject: $('#tv-header')},
+            {htmlObject: $('#tv-sider')}
+        ];
+        $('#tv-header, #tv-sider').mouseenter(function() {
+            $.autoToggleListStop();
         });
+        $('#tv-header, #tv-sider').mouseleave(function() {
+            $.autoToggleListRestart();
+        });
+        $.autoToggleList(list);
+
+
+//        $('#tv-header').autoToggle();
+//        $('#tv-footer').autoToggle({
+//            animationDirection: 'bottom',
+//            beforeDisplay: function() {
+//                $('#tv-cover').show();
+//            },
+//            beforeHide: function() {
+//                if (!document.getElementById("tv-video-player").paused) {
+//                    $('#tv-cover').hide();
+//                }
+//            }
+//        });
         $('#tv-screen').video({
             onPause: function() {
                 $('#tv-fs-play-btn').show();
@@ -155,10 +180,10 @@
         // 显示“换一批”按钮
         $('#tv-header .unvisiable').removeClass('unvisiable');
 
-        $('#tv-header #refresh').click(function() {
+        $('#btn-refresh').click(function() {
             getApiData(nextFunc);
         });
-        
+
         var __dura = 10000;
         $.rotateCd = function() {
             $('#tv-mask').animate({
@@ -167,7 +192,7 @@
         };
         $.rotateCd();
         window.setInterval("$.rotateCd()", __dura);
-        
+
         getApiData(nextFunc);
     });
     function playFunc(target) {

@@ -1,5 +1,5 @@
 body {
-    background-color: #333;
+    background:url(/img/title-bg-flat.png);
     background-position: center center;
     color: #fff;
     font-family: "microsoft yahei";
@@ -184,18 +184,18 @@ h3 {
     top: 0;
     width: 100%;
 }
-#tv #tv-header, #tv #tv-footer {
+#tv #tv-header, #tv #tv-footer, #tv #tv-sider {
     background: url(../img/title-bg.png) center bottom;
     border-radius: 5px 5px 0 0;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 0 12px rgba(0,0,0,0.6);
-    border-bottom: 3px solid #FF0;
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.22), 0 0 12px rgba(0,0,0,0.6);
+    border-bottom: 1px solid rgba(0,0,0,0.5);
     border-top: 1px solid #333;
     display: block;
     height: 75px;
     position: relative;
     z-index:5;
 }
-#tv #tv-header.fix, #tv #tv-footer {
+#tv #tv-header.fix, #tv #tv-footer, #tv #tv-sider {
     left: 0;
     position: fixed;
     top: 0;
@@ -205,13 +205,86 @@ h3 {
 #tv #tv-footer {
     border: none;
     border-radius: 0;
-    border-top: 1px solid rgba(0,0,0,0.5);
+    /*border-top: 1px solid rgba(0,0,0,0.5);*/
     bottom: 0;
+    /*box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 0 12px rgba(0,0,0,0.6);*/
     height: 60px;
     top: auto;
 }
+#tv #tv-sider {
+    background:url(../img/title-bg-flat.png);
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius:5px 0 0 5px;
+    box-shadow: inset 0 0 1px rgba(255,255,255,0.32), 0 0 12px rgba(0,0,0,0.6);
+    height:auto;
+    left:auto;
+    margin-top:-120px;
+    right:0;
+    padding-bottom:20px;
+    top:50%;
+    width:90px;
+}
+#tv #tv-sider #tv-toggle {
+    background:rgba(0,0,0,0.4);
+    border-radius:400px;
+    box-sizing:border-box;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.15);
+    display:block;
+    margin:20px;
+    padding:3px;
+    width:50px;
+}
+/*#tv #tv-sider #tv-toggle {
+    background:rgba(0,0,0,0.4);
+    border-radius:400px;
+    box-sizing:border-box;
+    border:2px solid #FF0;
+    margin:20px;
+    padding:3px;
+    width:50px;
+}*/
+#tv #tv-sider #tv-toggle .bt-go {
+    background:none;
+    border-radius:300px;
+    box-shadow:none;
+    cursor:pointer;
+    height:44px;
+    line-height:44px;
+    opacity:0.5;
+    text-align:center;
+    width:44px;
+}
+/*#tv #tv-sider #tv-toggle .bt-go {
+    background:none;
+    border-radius:300px;
+    box-shadow:none;
+    cursor:pointer;
+    height:40px;
+    line-height:40px;
+    opacity:0.5;
+    text-align:center;
+    width:40px;
+}*/
+#tv #tv-sider #tv-toggle .bt-go.selected {
+    background:url(../img/title-bg-flat.png);
+    box-shadow:0 1px 1px rgba(0,0,0,0.35), inset 0 1px 0px rgba(255,255,255,0.2);
+    color:#FF0 !important;
+    opacity:1;
+}
+/*#tv #tv-sider #tv-toggle .bt-go.selected {
+    background:#FF0;
+    color:rgba(0,0,0,0.9) !important;
+    opacity:1;
+    text-shadow:none;
+}*/
+#tv #tv-sider #tv-toggle .bt-go:hover {
+    opacity:1;
+}
+/*#tv #tv-sider #tv-toggle .bt-go:hover {
+    opacity:1;
+}*/
 #tv #tv-header .wp {
-    padding: 10px 15px;
+    padding: 10px 15px 10px 0;
     overflow: visible;
     position: relative;
 }
@@ -223,12 +296,9 @@ h3 {
     background: url(../img/title-splr.png);
     bottom: 0;
     height: 80px;
-    left: 198px;
+    left: 75px;
     position: absolute;
     width: 2px;
-}
-#tv #profile-blk {
-    padding-top: 7px;
 }
 #tv #login-and-register-blk {
     font-size:12px;
@@ -241,18 +311,20 @@ h3 {
 }
 #tv #profile-img {
     background-color: #EEE;
-    border-radius: 100px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    box-shadow:0 1px 1px rgba(0,0,0,0.35);
     display: inline-block;
-    height: 40px;
+    height: 72px;
     overflow: hidden;
-    width: 40px;
+    position:absolute;
+    left:0;
+    top:0;
+    width: 72px;
 }
 #tv #profile-img img {
-    height: 40px;
-    width: 40px;
+    height: 72px;
+    width: 72px;
 }
-#tv #profile-img, #tv #profile-txt {
+#tv #profile-txt {
     float: right;
     margin-left: 15px;
 }
@@ -316,64 +388,15 @@ h3 {
     float: left;
     width: 50px;
 }
-#tv #tv-switch {
-    background: rgba(0,0,0,0.25);
-    border-radius: 5px;
-    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.15);
-    height: 40px;
-    left: 50%;
-    margin-left: -100px;
-    margin-top: -20px;
+#tv #tv-logo {
+    left:50%;
+    margin-left: -70px;
+    margin-top: -25px;
     position: absolute;
     top: 50%;
-    width: 200px;
 }
-#tv #tv-to-video, #tv #tv-to-audio {
-    background: url(../img/title-bg-sm.png);
-    border-radius: 5px 0 0 5px;
-    border: 1px solid rgba(0,0,0,0.4);
-    box-shadow: 0 0 5px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.2);
-    box-sizing: border-box;
-    cursor: pointer;
-    display: inline-block;
-    float: left;
-    height: 40px;
-    width: 100px;
-}
-#tv #tv-to-video.selected, #tv #tv-to-audio.selected {
-    background: none;
-    border: none;
-    box-shadow: none;
-    cursor: default;
-}
-#tv #tv-to-audio {
-    border-radius: 0 5px 5px 0;
-}
-#tv #tv-to-video .ico, #tv #tv-to-audio .ico {
-    float: left;
-    height: 39px;
-    margin: 0;
-    padding: 0;
-    width: 99px;
-}
-#tv #tv-to-video .ico {
-    background-position: left -5px;
-}
-#tv #tv-to-video.selected .ico {
-    background-position: -100px -5px;
-}
-#tv #tv-to-video:hover .ico {
-    background-position: -100px -5px;
-}
-#tv #tv-to-audio .ico {
-    background-position: -200px -6px;
-}
-#tv #tv-to-audio.selected .ico {
-    background-position: -300px -6px;
-}
-#tv #tv-to-audio:hover .ico {
-    background-position: -300px -6px;
-}
+
+
 #tv #tv-footer #tv-prog {
     background: rgba(0,0,0,0.3);
     border-radius: 100px;
@@ -487,6 +510,7 @@ h3 {
 }
 #tv #volume-speaker {
     background-position: -338px -63px;
+    border:none;
     height: 24px !important;
     width: 24px !important;
 }
@@ -798,8 +822,25 @@ h3 {
 #tv #tv-frame .bdrow button:hover {
     background:#FFD800;
 }
-
-
+#tv #btn-refresh {
+    background:url("../img/btn-refresh.png") center top no-repeat #FF0;
+    border-radius:200px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.3);
+    border: none;
+    color:rgba(0,0,0,0.8) !important;
+    cursor:pointer;
+    display:block;
+    font-size:15px;
+    height:50px;
+    line-height:50px;
+    margin-left:20px;
+    text-align:center;
+    text-shadow:none !important;
+    width:50px;
+}
+#tv #btn-refresh:hover {
+    background-position: center bottom;
+}
 .sign-gotmsg {
     margin:-30px 0 15px 0;
 }
