@@ -1,4 +1,5 @@
-<div id="tv-footer">
+
+<div id="tv-footer" style="display:none">
     <div id="tv-listbar">
         <div id="tv-listbar-title">
             <a href="javascript:void(0)" id="tv-author-img"></a>
@@ -47,6 +48,11 @@
         </div>
     </div>
 </div>
+
+<div id='tv-sider'>
+
+</div>
+
 <div id="tv-main-container" class="layer">
     <div id="tv-screen" class="layer text-center">
         <video id="tv-video-player" preload oncontextmenu="return false;">
@@ -98,18 +104,31 @@
         $('#tv-listbtn').click(function() {
             $('#tv-listbar').clickToggle();
         });
-        $('#tv-header').autoToggle();
-        $('#tv-footer').autoToggle({
-            animationDirection: 'bottom',
-            beforeDisplay: function() {
-                $('#tv-cover').show();
-            },
-            beforeHide: function() {
-                if (!document.getElementById("tv-video-player").paused) {
-                    $('#tv-cover').hide();
-                }
-            }
+
+        var list = [
+            {htmlObject: $('#tv-header')}
+        ];
+        $('#tv-header').mouseenter(function() {
+            $.autoToggleListStop();
         });
+        $('#tv-header').mouseleave(function() {
+            $.autoToggleListRestart();
+        });
+        $.autoToggleList(list);
+
+
+//        $('#tv-header').autoToggle();
+//        $('#tv-footer').autoToggle({
+//            animationDirection: 'bottom',
+//            beforeDisplay: function() {
+//                $('#tv-cover').show();
+//            },
+//            beforeHide: function() {
+//                if (!document.getElementById("tv-video-player").paused) {
+//                    $('#tv-cover').hide();
+//                }
+//            }
+//        });
         $('#tv-screen').video({
             onPause: function() {
                 $('#tv-fs-play-btn').show();
@@ -158,7 +177,7 @@
         $('#tv-header #refresh').click(function() {
             getApiData(nextFunc);
         });
-        
+
         var __dura = 10000;
         $.rotateCd = function() {
             $('#tv-mask').animate({
@@ -167,7 +186,7 @@
         };
         $.rotateCd();
         window.setInterval("$.rotateCd()", __dura);
-        
+
         getApiData(nextFunc);
     });
     function playFunc(target) {
@@ -234,19 +253,19 @@
         }
     }
     function getApiData(callback) {
-        <?php
-            $url = "";
-            $uid = "";
+<?php
+$url = "";
+$uid = "";
 
-            $uid = $this->uid;
+$uid = $this->uid;
 
-            if (!empty($_COOKIE["specialId"])) {
-                $url = $this->url(array("uid" => $uid, "sid" => $_COOKIE["specialId"]), "api-special-recommend");
-            } else {
-                $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
-            }
-        ?>
-        
+if (!empty($_COOKIE["specialId"])) {
+    $url = $this->url(array("uid" => $uid, "sid" => $_COOKIE["specialId"]), "api-special-recommend");
+} else {
+    $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
+}
+?>
+
         var url = "<?php echo $url ?>";
 
         $.ajax({
