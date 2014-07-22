@@ -42,7 +42,17 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getlastOne() {
+    public function getByCategory($category) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('categoryId')->equals($category)->sort('created_at', -1);
+
+        $result = $query
+                ->getQuery()
+                ->execute();
+
+        return $result;
+    }
+    
+    public function getLastOne() {
         $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
 
         $result = $query
@@ -73,11 +83,43 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getByIds($id) {
-        
+    public function getByIds($id) {     
         $result = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->in($id)->getQuery();
 
+        return $result;
+    }
+    
+    public function getNext($special) {
+//        $result = $this->_dm->createQueryBuilder($this->_document_class)
+//                ->field('created_at')->lt($special->created_at)->getQuery();
+//
+//        if (empty($result)) {
+//            return false;
+//        }
+        //时间比较暂时替代代码
+        $specials = $this->getRoot();
+        $arrSpecials = array();
+        
+        foreach ($specials as $p) {
+            $arrSpecials[] = $p;
+        }
+        
+        $index = 0;
+        
+        foreach ($arrSpecials as $p) {
+            if ($p->id == $special->id) {
+                break;
+            }
+            
+            $index = $index + 1;
+        }
+        
+        if (count($arrSpecials) == $index)
+            return false;
+        
+        $result = $arrSpecials[$index + 1];
+        
         return $result;
     }
     
@@ -102,11 +144,18 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
         return $ownProgramsId;
     }
     
-    public function getNotRecommendSpecial($recommendIds, $curSpecialId) {
+    public function getNotRecommendSpecial($recommendIds) {//$recommendIds, $curSpecialId
         
+        $result = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('id')->notIn($recommendIds)->sort('created_at', -1)->getQuery()->getSingleResult();
+
+        if (empty($result))
+            return false;
         
-        $query = null;
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+        return $result;
+        
+//        $query = null;
+//        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
 //        if ($recommendIds == "") {
 //            $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
 //        }
@@ -114,71 +163,71 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
 //            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($recommendIds)->sort('created_at', -1);
 //        }
         
-        $result = $query->getQuery();
-        $special = null;
-        $isRecommend = FALSE;
-        
-        $specials = array();
-        
-        foreach ($result as $tmp) {
-            $specials[] = $tmp;
-        }
-        
-        foreach ($specials as $tmpSpecial) {
-            if (count($specials) < count($recommendIds) || $recommendIds[0] == "") {
-                
-                $index = rand(0, count($specials) - 1);
-                
-                $special = $specials[$index];
-                
-                if ($curSpecialId != null) {
-                    if ($special->id == $curSpecialId) {
-                        $index = rand(0, count($specials) - 1);
-                
-                        $special = $specials[$index];
-                        
-                        if ($special->id == $curSpecialId) {
-                            $index = rand(0, count($specials) - 1);
-                
-                            $special = $specials[$index];
-                            
-                            if ($special->id == $curSpecialId) {
-                                $index = rand(0, count($specials) - 1);
-
-                                $special = $specials[$index];
-
-                                if ($special->id == $curSpecialId) {
-                                    $index = rand(0, count($specials) - 1);
-
-                                    $special = $specials[$index];
-                            
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                break;
-            }
-            
-            $isRecommend = FALSE;
-            
-            foreach ($recommendIds as $recommendId) {
-                if ($tmpSpecial->id == $recommendId) {
-                    $isRecommend = TRUE;
-                    
-                    break;
-                }
-            }
-
-            if ($isRecommend == FALSE) {
-                $special = $tmpSpecial;
-                
-                return $special;
-            }
-        }
-        
-        return $special;
+//        $result = $query->getQuery();
+//        $special = null;
+//        $isRecommend = FALSE;
+//        
+//        $specials = array();
+//        
+//        foreach ($result as $tmp) {
+//            $specials[] = $tmp;
+//        }
+//        
+//        foreach ($specials as $tmpSpecial) {
+//            if (count($specials) < count($recommendIds) || $recommendIds[0] == "") {
+//                
+//                $index = rand(0, count($specials) - 1);
+//                
+//                $special = $specials[$index];
+//                
+//                if ($curSpecialId != null) {
+//                    if ($special->id == $curSpecialId) {
+//                        $index = rand(0, count($specials) - 1);
+//                
+//                        $special = $specials[$index];
+//                        
+//                        if ($special->id == $curSpecialId) {
+//                            $index = rand(0, count($specials) - 1);
+//                
+//                            $special = $specials[$index];
+//                            
+//                            if ($special->id == $curSpecialId) {
+//                                $index = rand(0, count($specials) - 1);
+//
+//                                $special = $specials[$index];
+//
+//                                if ($special->id == $curSpecialId) {
+//                                    $index = rand(0, count($specials) - 1);
+//
+//                                    $special = $specials[$index];
+//                            
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//                break;
+//            }
+//            
+//            $isRecommend = FALSE;
+//            
+//            foreach ($recommendIds as $recommendId) {
+//                if ($tmpSpecial->id == $recommendId) {
+//                    $isRecommend = TRUE;
+//                    
+//                    break;
+//                }
+//            }
+//
+//            if ($isRecommend == FALSE) {
+//                $special = $tmpSpecial;
+//                
+//                return $special;
+//            }
+//        }
+//        
+//        return $special;
     }
     
     public function getLikeNotRecommendSpecial($recommendIds, $categoryId) {

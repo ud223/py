@@ -35,15 +35,16 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
 
     public function addManageUser($email, $password, $salt, $checkemail = true) {
         $usertype = "admin";
-        return $this->registerUser($email, $password, uniqid(), $usertype, $salt, $checkemail);
+        return $this->registerUser($email, $password, uniqid(), $usertype, $salt, $checkemail, NULL);
     }
 
-    public function addUser($email, $password, $username, $salt, $checkemail = true) {
+    public function addUser($email, $password, $username, $salt, $checkemail = true, $categorys) {
+        
         $usertype = "user";
-        return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail);
+        return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $categorys);
     }
 
-    protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail) {
+    protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail, $categorys) {
         $result = false;
         if (empty($email)) {
             throw new Angel_Exception_User(Angel_Exception_User::EMAIL_EMPTY);
@@ -60,7 +61,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
                 }
             }
         }
-
+        
         $user = new $this->_document_class();
 
         $user->email = $email;
@@ -71,7 +72,13 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         $user->active_bln = true;
         $user->email_validated_bln = !$checkemail;
         $user->validated_bln = false;
-
+        
+        if (is_array($categorys)) {
+            foreach ($categorys as $p) {
+                $user->addCategory($p);
+            }        
+        }
+        
         try {
             $this->_dm->persist($user);
             $this->_dm->flush();
