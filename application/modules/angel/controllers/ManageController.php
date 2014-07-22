@@ -27,6 +27,8 @@ class Angel_ManageController extends Angel_Controller_Action {
 
     public function registerAction() {
         $this->userRegister('manage-login', "注册成为管理员", "admin");
+        
+        $this->view->ismanage = true;
     }
 
     public function logoutAction() {
@@ -1485,6 +1487,93 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
             echo $result;
             exit;
+        }
+    }
+    
+    public function hotListAction() {
+        $categoryModel = $this->getModel('category');
+        $page = $this->request->getParam('page');
+        
+        if (!$page) {
+            $page = 1;
+        }
+        
+        $paginator = $categoryModel->getAll();
+        $result = $categoryModel->getRoot();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
+//        $resource = array();
+//
+//        foreach ($paginator as $r) {
+//           echo $r->id; exit;
+////            $resource[] = array(
+////                'id' => $r->id,
+////                'name' => $r->name
+////            );
+//        }
+        
+        $this->view->resource = $result;
+        $this->view->title = "分类列表";
+        $this->view->paginator = $paginator;
+    }
+    
+    public function hotSaveAction() {
+        $notFoundMsg = '未找到目标分类';
+        $categroyModel = $this->getModel("category");
+        $hotModel = $this->getModel('hot');
+        $specialModel = $this->getModel("special");
+
+        if ($this->request->isPost()) {
+            $result = false;
+            // POST METHOD
+            $id = $this->request->getParam('id');
+            
+            $specials_id = $this->request->getParam('specials');
+            
+            $specials = $specialModel->getByIds($specials_id);
+            $hot = $hotModel->getById($id);
+
+            try {
+                if (!$hot) {
+                    $result = $hotModel->addHot($id, $specials);
+                }
+                else {
+                    $result = $hotModel->saveHot($hot->id, $id, $specials);
+                }
+            } catch (Angel_Exception_version $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-hot-list'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑版本";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                $target = $categroyModel->getById($id);
+
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+                
+                $specials = $specialModel->getByCategory($id);
+                $result = $hotModel->getById($id);
+                
+                $this->view->specials = $specials;
+                $this->view->model = $target;
+                $this->view->ownSpecials = $result->special;
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ class Angel_Model_Recommend extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getRecommendIds($userId) {
+    public function getRecommend($userId) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('userId')->equals($userId)->sort('created_at', -1);
 
@@ -30,7 +30,7 @@ class Angel_Model_Recommend extends Angel_Model_AbstractModel {
                 ->execute();
 
         if (count($result) == 0) {
-            return 0;
+            return false;
         }
 
         return $result;

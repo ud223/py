@@ -85,6 +85,9 @@ class User extends AbstractDocument{
     /** @ODM\EmbedMany(targetDocument="\Documents\InvestedCompany") */
     protected $invested_companies = array(); // 投资过的公司
     
+    /** @ODM\ReferenceMany(targetDocument="\Documents\Category") */
+    protected $category = array();
+    
     /**
      * 验证身份是否正确 
      */
@@ -283,5 +286,13 @@ class User extends AbstractDocument{
         }
         
         return $result;
+    }
+    
+    public function addCategory(\Documents\Category $p) { 
+        $this->category[] = $p;
+    }
+    
+    public function clearCategory() {
+        $this->category = array();
     }
 }

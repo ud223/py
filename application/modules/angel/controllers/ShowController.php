@@ -56,7 +56,8 @@ class Angel_ShowController extends Angel_Controller_Action {
         $programModel = $this->getModel('program');
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
-
+        $hotModel = $this->getModel("hot");
+        
         //获取当前需要推荐的用户ID
         $userId = $this->me->getUser()->id;
 
@@ -67,72 +68,67 @@ class Angel_ShowController extends Angel_Controller_Action {
         $curSpecialId = $this->request->getParam('sid');
 
         if ($curSpecialId == "none")
-            $curSpecialId = null;
+            $curSpecialId = false;
+        
         //获取该用户已经推荐过的专辑ID集合
-        $recommends = $recommendModel->getRecommendIds($userId);
+        $recommends = $recommendModel->getRecommend($userId);       
+        $hots = $hotModel->getAll();
 
-        $special = null;
-        $recommendIds = "";
-        //获取推荐专辑的次数
-        $viewCount = count($recommends);
-
-        //将该用户推荐过的专辑id拼接成 id，id的条件形式
-        foreach ($recommends as $recommend) {
-            if ($recommendIds != "")
-                $recommendIds = $recommendIds . ",";
-
-            $recommendIds = $recommendIds . $recommend->specialId;
+        $special = false;    
+        $hot_specials = array();
+        
+        foreach ($hots as $hot) {
+            foreach ($hot->special as $p) {
+                $hot_specials[] = $p;
+            }
         }
 
-        $recommendSpecialIds = "";
+        //获取还没有推荐过的热点专辑
+        if (count($hot_specials) > 0) {
+            foreach ($hot_specials as $p) {
+                $isRecommend = false;
+                
+                foreach ($recommends as $r) {
+                    if ($p->id == $r->specialId) {
+                        $isRecommend = true;
+                    
+                        break;
+                    }
+                } 
+                
+                if (!$isRecommend) {
+                    $special = $p;
+                    
+                    break;
+                }
+            }
+        }
 
-        if ($recommendIds != "")
-            $recommendSpecialIds = explode(",", $recommendIds);
+        //如果没有得到还没有看过的热点专辑
+        if (!$special) {
+            $recommendIds = array();
+            
+            foreach ($recommends as $r) {
+                $recommendIds[] = $r->id;
+            }
+            
+            //获取一个没有推荐过的专辑
+            $special = $specialModel->getNotRecommendSpecial($recommendIds);
+        }
+        
+        if (!$special) {
+            //没有热点，也没有没看过的视频，同时还没有获取到当前视频id的极端情况
+            if (!$curSpecialId) {
+                $special = $specialModel->getLastOne();
+            }
+            else {
+                $tmpSpecial = $specialModel->getById($curSpecialId);
 
-//        $this->_helper->json(array('data' => $recommendSpecialIds, 'code' => 200)); exit;
-//        if ($viewCount <  1 || $recommends == 0) {//00
-        //获取一个没有推荐过的专辑
-        $special = $specialModel->getNotRecommendSpecial($recommendSpecialIds, $curSpecialId);
+                $special = $specialModel->getNext($tmpSpecial);
 
-        //       $this->_helper->json(array('data' => $special->name, 'code' => 200)); exit;
-//        echo $special->id; exit;
-//        }
-//        else {
-// 
-//            //获取推荐过的专辑集合
-//            $tmpSpecials = $specialModel->getByIds($recommendIds);
-//            echo count($tmpSpecials); exit;
-//            $categoryCount = array();
-//            //整理推荐过专辑的集合分类id
-//            foreach ($tmpSpecials as $tmpSpecial) {
-//                 
-//                array_push($categoryCount, $tmpSpecial->categoryId);
-//            }
-//             
-//            $tmpCategoryCount = array_count_values($categroys);
-//        
-//            $tmpCount = 0;
-//            $maxCategory = "";
-//            
-//            //循环计算推荐最多的专辑ID
-//            foreach ($tmpCategoryCount as $categoryCount) {
-//                if ($categoryCount[$categoryCount] > $tmpCount) {
-//                    $tmpCount = $categoryCount[$categoryCount];
-//                    $maxCategory = $categoryCount;
-//                }
-//            }
-//            
-//            //得到推荐最多的分类却还未推荐过的专辑
-//            $special = $specialModel->getLikeNotRecommendSpecial($recommendIds, $maxCategory);
-//            
-//            //如果没有在喜欢的分类中找到还没有推荐的专辑，就任意从未推荐的专辑中找一个专辑
-//            if (!$special) {
-//                $special = $specialModel->getNotRecommendSpecial($recommendIds);
-//            }
-//        }
-        //如果最后都没有找到专辑就推荐最后添加的专辑--极端情况          
-        if (empty($special)) {
-            $special = $specialModel->getlastOne();
+                if (!$special)
+                    $special = $specialModel->getLastOne();
+            }
         }
         
         //获取该专辑作者
@@ -163,7 +159,5 @@ class Angel_ShowController extends Angel_Controller_Action {
         $recommendModel->addRecommend($special->id, $userId);
 
         $this->_helper->json(array('data' => $result, 'code' => 200));
-    }
-    
-    
+    }  
 }

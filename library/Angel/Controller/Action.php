@@ -201,19 +201,32 @@ class Angel_Controller_Action extends Zend_Controller_Action {
 
     protected function userRegister($defaultRedirectRoute, $pageTitle, $userType) {
         if ($this->request->isPost()) {
+            $categoryModel = $this->getModel('category');
             $msg = "注册成功!";
             $code = 200;
             $error = "";
             // POST METHOD
             $email = $this->request->getParam('email');
+            
             if ($email) {
                 $email = strtolower($email);
             }
+            
             $username = $this->request->getParam('username');
             $password = $this->request->getParam('password');
 
+            $categorys_id = $this->request->getParam('categorys');
+            
+            $categorys = array();
+            
+            if (is_array($categorys_id)) {
+                foreach ($categorys_id as $id) {
+                    $categorys[] = $categoryModel->getById($id);
+                }
+            }
+            
             $result = false;
-
+            
             try {
                 $userModel = $this->getModel('user');
                 $isEmailExist = $userModel->isEmailExist($email);
@@ -224,7 +237,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                     $result = null;
                     
                     if ($userType == 'user') {
-                        $result = $userModel->addUser($email, $password, $username, Zend_Session::getId(), false);
+                        $result = $userModel->addUser($email, $password, $username, Zend_Session::getId(), false, $categorys);
                     } else if ($userType == 'admin') {
                         $result = $userModel->addManageUser($email, $password, Zend_Session::getId(), false);
                     } else {
