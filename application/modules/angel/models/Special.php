@@ -145,6 +145,7 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
     }
     
     public function getNotRecommendSpecial($recommendIds) {//$recommendIds, $curSpecialId
+        
         $result = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->notIn($recommendIds)->sort('created_at', -1)->getQuery()->getSingleResult();
 

@@ -76,40 +76,44 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         $special = false;    
         $hot_specials = array();
-        
+        //获取热点专辑
         foreach ($hots as $hot) {
             foreach ($hot->special as $p) {
                 $hot_specials[] = $p;
             }
         }
-
+        
         //获取还没有推荐过的热点专辑
         if (count($hot_specials) > 0) {
+           // echo 1; 
             foreach ($hot_specials as $p) {
                 $isRecommend = false;
-                
-                foreach ($recommends as $r) {
-                    if ($p->id == $r->specialId) {
-                        $isRecommend = true;
-                    
+//                echo $p->id . '<br>';
+                if ($recommends) {
+                    foreach ($recommends as $r) {
+                        if ($p->id == $r->specialId) {
+                            $isRecommend = true;
+
+                            break;
+                        }
+                    } 
+
+                    if (!$isRecommend) {
+                        $special = $p;
+
                         break;
                     }
-                } 
-                
-                if (!$isRecommend) {
-                    $special = $p;
-                    
-                    break;
                 }
             }
         }
 
         //如果没有得到还没有看过的热点专辑
         if (!$special) {
+          //  echo 2;
             $recommendIds = array();
             
             foreach ($recommends as $r) {
-                $recommendIds[] = $r->id;
+                $recommendIds[] = $r->specialId;
             }
             
             //获取一个没有推荐过的专辑
@@ -117,6 +121,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
         
         if (!$special) {
+//            echo 3; 
             //没有热点，也没有没看过的视频，同时还没有获取到当前视频id的极端情况
             if (!$curSpecialId) {
                 $special = $specialModel->getLastOne();
