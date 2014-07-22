@@ -69,7 +69,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         if ($curSpecialId == "none")
             $curSpecialId = false;
-        
+       
         //获取该用户已经推荐过的专辑ID集合
         $recommends = $recommendModel->getRecommend($userId);       
         $hots = $hotModel->getAll();
@@ -84,8 +84,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
         
         //获取还没有推荐过的热点专辑
-        if (count($hot_specials) > 0) {
-           // echo 1; 
+        if (count($hot_specials) > 0) { 
             foreach ($hot_specials as $p) {
                 $isRecommend = false;
 //                echo $p->id . '<br>';
@@ -109,7 +108,6 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         //如果没有得到还没有看过的热点专辑
         if (!$special) {
-          //  echo 2;
             $recommendIds = array();
             
             foreach ($recommends as $r) {
@@ -120,15 +118,14 @@ class Angel_ShowController extends Angel_Controller_Action {
             $special = $specialModel->getNotRecommendSpecial($recommendIds);
         }
         
-        if (!$special) {
-//            echo 3; 
+        if (!$special) {    
             //没有热点，也没有没看过的视频，同时还没有获取到当前视频id的极端情况
             if (!$curSpecialId) {
                 $special = $specialModel->getLastOne();
             }
             else {
                 $tmpSpecial = $specialModel->getById($curSpecialId);
-
+                
                 $special = $specialModel->getNext($tmpSpecial);
 
                 if (!$special)
@@ -162,7 +159,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         
         //保存推荐记录
         $recommendModel->addRecommend($special->id, $userId);
-
+        setcookie('specialId', $special->id);
         $this->_helper->json(array('data' => $result, 'code' => 200));
     }  
 }

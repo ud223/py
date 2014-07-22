@@ -233,28 +233,28 @@
             return false;
         }
     }
+    
+    <?php
+        $url = "";
+        $uid = "";
+
+        $uid = $this->uid;
+
+        $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
+    ?>
+
+    var tmpUrl = "<?php echo $url ?>";
+    var myUrl = tmpUrl;
+    
     function getApiData(callback) {
-        <?php
-            $url = "";
-            $uid = "";
-
-            $uid = $this->uid;
-
-            if (!empty($_COOKIE["specialId"])) {
-                $url = $this->url(array("uid" => $uid, "sid" => $_COOKIE["specialId"]), "api-special-recommend");
-            } else {
-                $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
-            }
-        ?>
-        
-        var url = "<?php echo $url ?>";
-        
         $.ajax({
-            url: url,
+            url: myUrl,
             dataType: 'json',
             success: function(result) {
                 if (result.code === 200) {
-                    $.cookie('specialId', result.data.id);
+                    myUrl = tmpUrl;
+                    myUrl = myUrl.replace('none', result.data.id);
+            
                     $("#tv-special-name").html(result.data.name);
                     $("#tv-author-name").html(result.data.author);
                     $("#tv-author-img").css('background-image', 'url(' + result.data.photo + ')');
@@ -272,6 +272,7 @@
                         item.find('.col3').html(parseInt(this.time).timeFormat());
                         $("#tv-listbar-content").append(item);
                     });
+                    
                     if (typeof callback === 'function') {
                         callback();
                     }

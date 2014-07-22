@@ -91,12 +91,6 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
     }
     
     public function getNext($special) {
-//        $result = $this->_dm->createQueryBuilder($this->_document_class)
-//                ->field('created_at')->lt($special->created_at)->getQuery();
-//
-//        if (empty($result)) {
-//            return false;
-//        }
         //时间比较暂时替代代码
         $specials = $this->getRoot();
         $arrSpecials = array();
@@ -114,10 +108,10 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
             
             $index = $index + 1;
         }
-        
+      //  echo $arrSpecials[$index + 1]->id; exit;
         if (count($arrSpecials) == $index)
             return false;
-        
+
         $result = $arrSpecials[$index + 1];
         
         return $result;
