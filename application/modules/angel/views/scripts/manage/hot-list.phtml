@@ -1,0 +1,54 @@
+<style>
+    .itm {
+        padding:20px;
+    }
+    .itm:hover {
+        background:#F0F0F0;
+    }
+    label.xs {
+        color:#aaa;
+        font-size:smaller;
+        margin-left:5px;
+    }
+    .child-itm {
+        border-left: 1px dotted #aaa;
+        margin-top:10px;
+        padding-left:30px;
+    }
+</style>
+
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="row">
+    <?php
+    $c = 0;
+    ?>
+    <?php if ($this->resource): ?>
+        <?php foreach ($this->resource as $p): ?>
+            <?php
+//            $root = $p['root'];
+//            $children = $p['children'];
+//            echo $p->id; exit;
+            ?>
+            <div class="col-md-2">
+                <div class="itm">
+                    <div class="paddingbox10px relative">
+                        <p><?php echo $p->name ?></p>
+                        <div class="btn-group">
+                            <a type="button" href="<?php echo $this->url(array(id => $p->id), 'manage-hot-save') ?>" class="btn btn-info btn-sm">设置热点</a>
+                        </div>
+
+                        <input type="hidden" class="tmp" value="<?php echo $p->id ?>"/>
+                    </div>
+                </div>
+            </div>
+            <?php $c ++; ?>
+            <?php if ($c % 6 == 0): ?>
+                <div class="clearfix"></div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
+<script type="text/javascript">
+
+    })(jQuery);
+</script>
