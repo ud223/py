@@ -165,7 +165,7 @@ function inArray(val, arr) {
             throw 'null array';
 
         var setting = {
-            delay: 2000,
+            delay: 5000,
             animationDuration: 300,
             animationDirection: 'top',
             animationDistance: '90',

@@ -1,20 +1,6 @@
 
 <div id="tv-footer" style="display:none">
-    <div id="tv-listbar">
-        <div id="tv-listbar-title">
-            <a href="javascript:void(0)" id="tv-author-img"></a>
-            <div class="wp">
-                <div id="tvidx02">
-                    <p id="tv-special-name">
-                    </p>
-                    <span id="tvidx01">By </span><a id="tv-author-name" href="javascript:void(0)"></a>
-                </div>
-                <button class="empty-btn close-btn" id="tv-listbar-close"></button>
-            </div>
-        </div>
-        <div id="tv-listbar-content">
-        </div>
-    </div>
+    
     <div id="tv-footer-ltbar">
         <div class="wp">
             <button class="ico" id="prev" class="pull-left"></button>
@@ -25,13 +11,13 @@
     </div>
     <div id="tv-footer-rtbar">
         <div class="wp">
-<!--            <div id="volume-ctrl" class="pull-left">
-                <button id="volume-speaker" class="ico pull-left"></button>
-                <div id="volume-holder" class="pull-left">
-                    <div id="volume-in"></div>
-                </div>
-            </div>-->
-            <button id="tv-listbtn" class="ico"></button>
+            <!--            <div id="volume-ctrl" class="pull-left">
+                            <button id="volume-speaker" class="ico pull-left"></button>
+                            <div id="volume-holder" class="pull-left">
+                                <div id="volume-in"></div>
+                            </div>
+                        </div>-->
+            <!--<button id="tv-listbtn" class="ico"></button>-->
         </div>
     </div>
 
@@ -55,10 +41,27 @@
         <div class='bt-go'>听</div>
     </div>
     <button id='btn-refresh'>换一波</button>
-        <div class="clear"></div>
+    <div class="clear"></div>
 </div>
 
 <div id="tv-main-container" class="layer">
+    
+    <div id="tv-listbar">
+        <div id="tv-listbar-title">
+            <a href="javascript:void(0)" id="tv-author-img"></a>
+            <div class="wp">
+                <div id="tvidx02">
+                    <p id="tv-special-name">
+                    </p>
+                    <span id="tvidx01">By </span><a id="tv-author-name" href="javascript:void(0)"></a>
+                </div>
+                <button class="empty-btn close-btn" id="tv-listbar-close"></button>
+            </div>
+        </div>
+        <div id="tv-listbar-content">
+        </div>
+    </div>
+    
     <div id="tv-screen" class="layer text-center">
         <video id="tv-video-player" preload oncontextmenu="return false;">
             <source>
@@ -66,15 +69,36 @@
         <audio id="tv-audio-player" preload oncontextmenu="return false;">
         </audio>
     </div>
-<!--    <div id="tv-cover" class="layer">
-        <button id="tv-fs-play-btn" class="empty-btn"></button>
-        <button id="tv-fs-pause-btn" class="empty-btn"></button>
-    </div>-->
-<!--    <div id="tv-audio-holder" style="position:absolute;width:600px;height:600px;background:url(/img/cd.png);left:50%;top:50%;margin-left:-300px;margin-top:-300px;">
-        <div id="tv-mask" style="background-size:cover;background-position:center center;position:absolute;border-radius:1000px;width:350px;height:350px;left:50%;top:50%;margin-left:-175px;margin-top:-175px;">
 
+    <div id="tv-ctrl-block">
+        <div style="padding:10px;">
+            <button class="ico pull-left" id="tv-listbtn"></button>
+            <button class="ico pull-left" id="prev"></button>
+            <button class="ico pull-left" id="play"></button>
+            <button class="ico pull-left" id="pause"></button>
+            <button class="ico pull-left" id="next"></button>
+            <span class="ico pull-left" id="tv-spk">
+                <div id="tv-spk-bar">
+                    <div id="tv-spk-bar-prog">
+                        <div id="tv-spk-bar-prog-loaded">
+                            
+                        </div>
+                    </div>
+                </div>
+            </span>
+            <div class="clear"></div>
         </div>
-    </div>-->
+    </div>
+
+    <!--    <div id="tv-cover" class="layer">
+            <button id="tv-fs-play-btn" class="empty-btn"></button>
+            <button id="tv-fs-pause-btn" class="empty-btn"></button>
+        </div>-->
+    <!--    <div id="tv-audio-holder" style="position:absolute;width:600px;height:600px;background:url(/img/cd.png);left:50%;top:50%;margin-left:-300px;margin-top:-300px;">
+            <div id="tv-mask" style="background-size:cover;background-position:center center;position:absolute;border-radius:1000px;width:350px;height:350px;left:50%;top:50%;margin-left:-175px;margin-top:-175px;">
+    
+            </div>
+        </div>-->
 </div>
 
 <div class="P_tmp">
@@ -258,19 +282,19 @@
             return false;
         }
     }
-    
-    <?php
-        $url = "";
-        $uid = "";
 
-        $uid = $this->uid;
+<?php
+$url = "";
+$uid = "";
 
-        $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
-    ?>
+$uid = $this->uid;
+
+$url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
+?>
 
     var tmpUrl = "<?php echo $url ?>";
     var myUrl = tmpUrl;
-    
+
     function getApiData(callback) {
         $.ajax({
             url: myUrl,
@@ -279,7 +303,7 @@
                 if (result.code === 200) {
                     myUrl = tmpUrl;
                     myUrl = myUrl.replace('none', result.data.id);
-            
+
                     $("#tv-special-name").html(result.data.name);
                     $("#tv-author-name").html(result.data.author);
                     $("#tv-author-img").css('background-image', 'url(' + result.data.photo + ')');
@@ -297,7 +321,7 @@
                         item.find('.col3').html(parseInt(this.time).timeFormat());
                         $("#tv-listbar-content").append(item);
                     });
-                    
+
                     if (typeof callback === 'function') {
                         callback();
                     }

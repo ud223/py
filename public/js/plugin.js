@@ -638,8 +638,8 @@
                 seekbar: "#tv-prog-seekbar",
                 loaded: "#tv-prog-loaded",
                 progress: "#tv-prog",
-                speakerButton: "#volume-speaker",
-                volumeBar: "#volume-holder",
+                speakerButton: "#tv-spk",
+                volumeBar: "#tv-spk-bar-prog",
                 fullscreenButton: "#fullscreen",
                 container: "#tv",
                 onPlay: false,
@@ -665,6 +665,16 @@
                 }
                 return perc;
             };
+            var yClick = function(obj) {
+                var y = event.clientY - $(obj).offset().top;
+                var h = $(obj).height();
+                var perc = Math.ceil(y / h * 100);
+                if (perc >= 99) {
+                    perc = 99;
+                }
+                perc = 100 - perc;
+                return perc;
+            };
             $(setting.seekbar).on('click', function() {
                 $this.video('seek', xClick(this));
             });
@@ -672,7 +682,8 @@
                 $this.video('switchSpeaker');
             });
             $(setting.volumeBar).on('click', function() {
-                $this.video('adjustVolume', xClick(this));
+                $this.video('adjustVolume', yClick(this));
+                $(event).stopPropagation();
             });
             $(setting.fullscreenButton).click(function() {
                 $this.video("fullscreen");
@@ -752,10 +763,10 @@
             self.muted = !self.muted;
             $(setting.speakerButton).toggleClass('disable');
             if (self.muted) {
-                $($(setting.volumeBar).children().get(0)).css('width', 0);
+                $($(setting.volumeBar).children().get(0)).css('height', 0);
             } else {
                 var w = self.volume * 100 + "%";
-                $($(setting.volumeBar).children().get(0)).css('width', w);
+                $($(setting.volumeBar).children().get(0)).css('height', w);
             }
         },
         adjustVolume: function(perc) {
@@ -769,7 +780,7 @@
             var w = v * 10 + "%";
             v = v / 10;
             self.volume = v;
-            $($(setting.volumeBar).children().get(0)).css('width', w);
+            $($(setting.volumeBar).children().get(0)).css('height', w);
         },
         fullscreen: function() {
             if (!$(this).data('fullscreen'))

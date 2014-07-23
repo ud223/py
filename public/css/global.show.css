@@ -311,17 +311,18 @@ h3 {
 }
 #tv #profile-img {
     background-color: #EEE;
-    border-radius:3px;
+    border-radius:300px;
     box-shadow:0 1px 1px rgba(0,0,0,0.35);
     display: inline-block;
-    height: 52px;
-    overflow: hidden;
     float:left;
-    width: 52px;
+    height: 42px;
+    margin-top:5px;
+    overflow: hidden;
+    width: 42px;
 }
 #tv #profile-img img {
-    height: 52px;
-    width: 52px;
+    height: 42px;
+    width: 42px;
 }
 #tv #profile-txt {
     float: right;
@@ -478,7 +479,7 @@ h3 {
     padding: 5px 15px 5px 30px;
     height: 58px;
 }
-#tv #tv-footer-ltbar .wp .ico, #tv #tv-footer-rtbar .wp .ico {
+#tv .ico, #tv .ico {
     background-color: transparent;
     background-image: url(../img/n-icon.png);
     border: none;
@@ -488,22 +489,33 @@ h3 {
     padding: 0;
     width: 50px;
 }
-#tv #tv-footer-ltbar .wp .ico#play {
+#tv .ico#play {
     background-position: -125px -100px;
 }
-#tv #tv-footer-ltbar .wp .ico#pause {
+#tv .ico#play:hover {
+    background-position: -125px -250px;
+}
+#tv .ico#pause {
     background-position: -25px -100px;
     display: none;
 }
-#tv #tv-footer-ltbar .wp .ico#prev {
+#tv .ico#pause:hover {
+    background-position: -25px -250px;
+}
+#tv .ico#prev {
     background-position: -230px -100px;
     width: 40px;
 }
-#tv #tv-footer-ltbar .wp .ico#next {
+#tv .ico#prev:hover {
+    background-position: -230px -250px;
+}
+#tv .ico#next {
     background-position: -230px -50px;
     width: 40px;
 }
-
+#tv .ico#next:hover {
+    background-position: -230px -200px;
+}
 #tv #volume-ctrl {
     margin-left: 20px;
     padding-top: 14px;
@@ -514,10 +526,10 @@ h3 {
     height: 24px !important;
     width: 24px !important;
 }
-#tv #volume-speaker.disable {
-    background-position: -438px -63px;
+#tv #tv-spk.disable {
+    background-position: -425px -50px !important;
 }
-#tv #volume-holder {
+/*#tv #volume-holder {
     background: rgba(0,0,0,0.3);
     border-radius: 100px;
     box-shadow: 0 1px 0 rgba(255,255,255,0.12);
@@ -532,12 +544,59 @@ h3 {
     box-shadow: 0 1px 1px rgba(0,0,0,0.5);
     height: 100%;
     width: 100%;
-}
-#tv #tv-listbtn {
+}*/
+#tv #tv-listbtn, #tv #tv-spk {
     background-position: -25px -50px;
-    float: right;
+    /*float: right;*/
     height: 50px;
-    width: 50px;
+    margin-right:50px;
+}
+#tv #tv-listbtn:hover {
+    background-position: -25px -200px;
+}
+#tv #tv-spk {
+    background-position: -325px -50px;
+    cursor:pointer;
+    margin-left:50px;
+    margin-right:0;
+    position:relative;
+}
+#tv #tv-spk #tv-spk-bar {
+    background:rgba(0,0,0,0.2);
+    border-radius:100px;
+    bottom:40px;
+    box-sizing: border-box;
+    display:none;
+    height:110px;
+    padding:5px;
+    position:absolute;
+    right:15px;
+    width:20px;
+    z-index:3;
+}
+#tv #tv-spk:hover #tv-spk-bar {
+    display:block;
+}
+#tv #tv-spk #tv-spk-bar-prog {
+    background:rgba(0,0,0,0.2);
+    border-radius:100px;
+    box-shadow:inset 0 0 5px rgba(0,0,0,0.1);
+    height:100px;
+    position:relative;
+    width:10px;
+}
+#tv #tv-spk #tv-spk-bar-prog-loaded {
+    background:#F0F0F0;
+    border-radius:100px;
+    bottom:0;
+    box-shadow:0 0 4px rgba(0,0,0,0.2);
+    height:100%;
+    left:0;
+    position:absolute;
+    width:10px;
+}
+#tv #tv-spk:hover {
+    background-position: -425px -200px;
 }
 #tv .layer {
     bottom: 0;
@@ -587,19 +646,18 @@ h3 {
 #tv #tv-listbar {
     background: url(../img/bg.png) #333;
     border: 1px solid rgba(0,0,0,0.5);
-    border-bottom: 0;
-    border-right: 0;
-    border-radius: 8px 0 0 0;
+    border-radius: 8px;
     box-sizing: content-box;
     box-shadow: inset 0 0 1px rgba(255,255,255,0.5), 0 0 6px rgba(0,0,0,0.5);
-    bottom: 60px;
+    top: 32%;
     display: none;
-    height: 400px;
+    height: 300px;
     overflow: hidden;
     position: absolute;
-    right: 0;
+    left: 50%;
     width: 360px;
-    z-index: 0;
+    margin-left:-181px;
+    z-index: 2;
 }
 #tv #tv-listbar-title {
     background: url(../img/title-bg-dark.png) center bottom;
@@ -625,6 +683,9 @@ h3 {
 }
 #tv #tv-special-name {
     margin-bottom: 3px;
+    height:20px;
+    overflow:hidden;
+    width:220px;
 }
 #tv #tv-author-name {
     font-size: smaller;
@@ -698,6 +759,20 @@ h3 {
 }
 #tv #tv-listbar-content .ico.null {
     background: none;
+}
+#tv #tv-ctrl-block {
+    background:url(../img/title-bg.png) center bottom;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius:1000px;
+    bottom:50px;
+    box-sizing:content-box;
+    box-shadow:inset 0 0 1px rgba(255,255,255,0.32), 0 0 12px rgba(0,0,0,0.6);
+    height:auto;
+    left:50%;
+    margin-left:-176px;
+    position:absolute;
+    width:350px;
+    z-index:10;
 }
 
 #tv #tv-header-ddl {
@@ -859,5 +934,5 @@ h3 {
 }
 #tvidx02 {
     float: left;
-    padding: 8px 15px;
+    padding: 8px 0 8px 15px;
 }
