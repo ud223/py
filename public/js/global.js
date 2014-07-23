@@ -165,7 +165,7 @@ function inArray(val, arr) {
             throw 'null array';
 
         var setting = {
-            delay: 5000,
+            delay: 3000,
             animationDuration: 300,
             animationDirection: 'top',
             animationDistance: '90',
@@ -235,7 +235,7 @@ function inArray(val, arr) {
             $.each(targets, function() {
                 // show
                 var target = $(this.htmlObject);
-                target.show();
+                target.fadeIn(setting.animationDuration);
             });
 
             // hide
@@ -249,7 +249,7 @@ function inArray(val, arr) {
                 }
                 $.each(targets, function() {
                     var target = $(this.htmlObject);
-                    target.hide();
+                    target.fadeOut(setting.animationDuration);
                 });
             }, delay));
 

@@ -637,7 +637,6 @@
                 current: "#t1",
                 seekbar: "#tv-prog-seekbar",
                 loaded: "#tv-prog-loaded",
-                progress: "#tv-prog",
                 speakerButton: "#tv-spk",
                 volumeBar: "#tv-spk-bar-prog",
                 fullscreenButton: "#fullscreen",

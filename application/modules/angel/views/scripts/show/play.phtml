@@ -1,14 +1,14 @@
 
 <div id="tv-footer" style="display:none">
-    
-    <div id="tv-footer-ltbar">
-        <div class="wp">
-            <button class="ico" id="prev" class="pull-left"></button>
-            <button class="ico" id="play" class="pull-left"></button>
-            <button class="ico" id="pause" class="pull-left"></button>
-            <button class="ico" id="next" class="pull-left"></button>
-        </div>
-    </div>
+
+    <!--    <div id="tv-footer-ltbar">
+            <div class="wp">
+                <button class="ico" id="prev" class="pull-left"></button>
+                <button class="ico" id="play" class="pull-left"></button>
+                <button class="ico" id="pause" class="pull-left"></button>
+                <button class="ico" id="next" class="pull-left"></button>
+            </div>
+        </div>-->
     <div id="tv-footer-rtbar">
         <div class="wp">
             <!--            <div id="volume-ctrl" class="pull-left">
@@ -24,13 +24,13 @@
     <div id="tv-footer-mdbar">
 
         <div id="tv-prog">
-            <div id="tv-prog-timer">
-                <span id="t1">--:--</span><span id="t2">/</span><span id="t3">--:--</span>
-            </div>
-            <div id="tv-prog-title">
-            </div>
-            <div id="tv-prog-seekbar" class="rr"></div>
-            <div id="tv-prog-loaded" class="rr"></div>
+            <!--            <div id="tv-prog-timer">
+                            <span id="t1">--:--</span><span id="t2">/</span><span id="t3">--:--</span>
+                        </div>-->
+            <!--            <div id="tv-prog-title">
+                        </div>-->
+            <!--            <div id="tv-prog-seekbar" class="rr"></div>
+                        <div id="tv-prog-loaded" class="rr"></div>-->
         </div>
     </div>
 </div>
@@ -45,7 +45,7 @@
 </div>
 
 <div id="tv-main-container" class="layer">
-    
+
     <div id="tv-listbar">
         <div id="tv-listbar-title">
             <a href="javascript:void(0)" id="tv-author-img"></a>
@@ -61,7 +61,7 @@
         <div id="tv-listbar-content">
         </div>
     </div>
-    
+
     <div id="tv-screen" class="layer text-center">
         <video id="tv-video-player" preload oncontextmenu="return false;">
             <source>
@@ -69,7 +69,12 @@
         <audio id="tv-audio-player" preload oncontextmenu="return false;">
         </audio>
     </div>
-
+    <div id="tv-prog-title">
+        <span class="tt"></span>
+        <div id="tv-prog-timer">
+            <span id="t1">--:--</span><span id="t2">/</span><span id="t3">--:--</span>
+        </div>
+    </div>
     <div id="tv-ctrl-block">
         <div style="padding:10px;">
             <button class="ico pull-left" id="tv-listbtn"></button>
@@ -81,7 +86,7 @@
                 <div id="tv-spk-bar">
                     <div id="tv-spk-bar-prog">
                         <div id="tv-spk-bar-prog-loaded">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -136,12 +141,14 @@
 
         var list = [
             {htmlObject: $('#tv-header')},
-            {htmlObject: $('#tv-sider')}
+            {htmlObject: $('#tv-sider')},
+            {htmlObject: $('#tv-ctrl-block')},
+            {htmlObject: $('#tv-prog-title')}
         ];
-        $('#tv-header, #tv-sider').mouseenter(function() {
+        $('#tv-header, #tv-sider, #tv-ctrl-block, #tv-listbar').mouseenter(function() {
             $.autoToggleListStop();
         });
-        $('#tv-header, #tv-sider').mouseleave(function() {
+        $('#tv-header, #tv-sider, #tv-ctrl-block, #tv-listbar').mouseleave(function() {
             $.autoToggleListRestart();
         });
         $.autoToggleList(list);
@@ -178,12 +185,12 @@
             }
         });
         // play and pause and next and prev
-        $('#tv-fs-play-btn').click(function() {
-            $('#play').click();
-        });
-        $('#tv-fs-pause-btn').click(function() {
-            $('#pause').click();
-        });
+//        $('#tv-fs-play-btn').click(function() {
+//            $('#play').click();
+//        });
+//        $('#tv-fs-pause-btn').click(function() {
+//            $('#pause').click();
+//        });
         $('#play').click(function() {
             $('#tv-screen').video("play", function() {
 //                $('#tv-cover').hide();
@@ -227,7 +234,7 @@
         var title = target.find('.tv-current-title').html();
         $('#tv-screen').video("restart", function() {
 //            $('#tv-cover').hide();
-            $('#tv-prog-title').html(title);
+            $('#tv-prog-title .tt').html(title);
         }, video_url);
     }
     function nextFunc() {

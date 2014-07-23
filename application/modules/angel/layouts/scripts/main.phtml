@@ -39,22 +39,22 @@ if ($this->me) {
                     });
                 }
 
-                $('.model-switch-btn').click(function() {
-                    var $this = $(this).closest('.model-switch-btn');
-                    if ($this.hasClass('selected')) {
-                        return;
-                    }
-                    $('.model-switch-btn').removeClass('selected');
-                    $this.addClass('selected');
-                    var id = $this.attr('id');
-                    if (id.indexOf('video') >= 0) {
-                        // video
-                        $('#tv-screen, #tv-cover').css('left', 0).css('position', 'absolute');
-                    } else {
-                        // audio
-                        $('#tv-screen, #tv-cover').css('left', 1000000).css('position', 'fixed');
-                    }
-                });
+//                $('.model-switch-btn').click(function() {
+//                    var $this = $(this).closest('.model-switch-btn');
+//                    if ($this.hasClass('selected')) {
+//                        return;
+//                    }
+//                    $('.model-switch-btn').removeClass('selected');
+//                    $this.addClass('selected');
+//                    var id = $this.attr('id');
+//                    if (id.indexOf('video') >= 0) {
+//                        // video
+//                        $('#tv-screen, #tv-cover').css('left', 0).css('position', 'absolute');
+//                    } else {
+//                        // audio
+//                        $('#tv-screen, #tv-cover').css('left', 1000000).css('position', 'fixed');
+//                    }
+//                });
             });
         </script>
     </head>
