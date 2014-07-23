@@ -32,9 +32,9 @@ if ($this->me) {
         <script type="text/javascript">
             $('document').ready(function() {
                 // ddl init
-                var profile_txt = $('#profile-txt');
-                if (profile_txt.length > 0) {
-                    profile_txt.click(function() {
+                var profile_img = $('#profile-img');
+                if (profile_img.length > 0) {
+                    profile_img.click(function() {
                         $('#tv-header-ddl').clickToggle();
                     });
                 }
@@ -78,7 +78,7 @@ if ($this->me) {
                     <?php endif; ?>
                         
                     
-                    <div id="volume-ctrl" class="pull-right" style="margin-left: 20px;">
+                    <div id="volume-ctrl" class="pull-right">
                         <button id="volume-speaker" class="ico pull-left"></button>
                         <div id="volume-holder" class="pull-left">
                             <div id="volume-in"></div>

@@ -54,7 +54,7 @@
         <div class='bt-go selected'>看</div>
         <div class='bt-go'>听</div>
     </div>
-    <button title="换一换" id='btn-refresh'></button>
+    <button id='btn-refresh'>换一波</button>
         <div class="clear"></div>
 </div>
 
@@ -66,15 +66,15 @@
         <audio id="tv-audio-player" preload oncontextmenu="return false;">
         </audio>
     </div>
-    <div id="tv-cover" class="layer">
+<!--    <div id="tv-cover" class="layer">
         <button id="tv-fs-play-btn" class="empty-btn"></button>
         <button id="tv-fs-pause-btn" class="empty-btn"></button>
-    </div>
-    <div id="tv-audio-holder" style="position:absolute;width:600px;height:600px;background:url(/img/cd.png);left:50%;top:50%;margin-left:-300px;margin-top:-300px;">
+    </div>-->
+<!--    <div id="tv-audio-holder" style="position:absolute;width:600px;height:600px;background:url(/img/cd.png);left:50%;top:50%;margin-left:-300px;margin-top:-300px;">
         <div id="tv-mask" style="background-size:cover;background-position:center center;position:absolute;border-radius:1000px;width:350px;height:350px;left:50%;top:50%;margin-left:-175px;margin-top:-175px;">
 
         </div>
-    </div>
+    </div>-->
 </div>
 
 <div class="P_tmp">
@@ -143,7 +143,7 @@
                 $('#pause').hide();
             },
             onEnded: function() {
-                $('#tv-cover').show();
+//                $('#tv-cover').show();
                 nextFunc();
             },
             onPlay: function() {
@@ -162,12 +162,12 @@
         });
         $('#play').click(function() {
             $('#tv-screen').video("play", function() {
-                $('#tv-cover').hide();
+//                $('#tv-cover').hide();
             });
         });
         $('#pause').click(function() {
             $('#tv-screen').video("pause", function() {
-                $('#tv-cover').show();
+//                $('#tv-cover').show();
             });
         });
         $('#next').click(function() {
@@ -202,7 +202,7 @@
         var audio_url = target.attr('audio');
         var title = target.find('.tv-current-title').html();
         $('#tv-screen').video("restart", function() {
-            $('#tv-cover').hide();
+//            $('#tv-cover').hide();
             $('#tv-prog-title').html(title);
         }, video_url);
     }
