@@ -50,7 +50,7 @@ class Angel_Model_Hot extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getById($id) {
+    public function getByCategoryId($id) {
         $result = false;
         
         $hot = $this->_dm->createQueryBuilder($this->_document_class)
@@ -61,7 +61,7 @@ class Angel_Model_Hot extends Angel_Model_AbstractModel {
         if (!empty($hot)) {
             $result = $hot;
         }
-        
+
         return $result;
     }
     
@@ -75,13 +75,30 @@ class Angel_Model_Hot extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getNotRecommendHot($recommends) {
+    public function getLikeNotRecommendHot($categorys_id) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('special')->equals($recommends)->sort('created_at', -1);
+                ->field('categoryId')->in($categorys_id)->sort('created_at', -1);
+        
+        $result = $query
+                ->getQuery();
+               // ->getSingleResult();
+        
+        if (empty($result))
+            return false;
+        
+        return $result;
+    }
+    
+    public function getNotRecommendHot($categorys_id) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('categoryId')->notIn($categorys_id)->sort('created_at', -1);
 
         $result = $query
-                ->getQuery()
-                ->execute();
+                ->getQuery();
+               // ->getSingleResult();
+        
+        if (empty($result))
+            return false;
         
         return $result;
     }

@@ -64,4 +64,15 @@ class Angel_Model_Category extends Angel_Model_AbstractModel {
         return $result;
     }
 
+    public function getNotLikeCategory($categorys_id) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('id')->equals($categorys_id)->sort('created_at', -1);
+        $result = null;
+        $result = $query->getQuery()->execute();
+        
+        if (empty($result))
+            return false;
+
+        return $result;
+    }
 }
