@@ -1,0 +1,59 @@
+<div id="tv-frame">
+    <div class="board">
+        <div class="title">
+            <?php echo $this->title ?>
+        </div>
+        <div class="content">   
+            <?php foreach ($this->categories as $category): ?>
+                <?php
+                $checked = "";
+                $lb = "";
+
+                foreach ($this->model->specials as $p) {
+                    if ($category->id == $p->id) {
+                        $checked = "checked='checked'";
+                        $lb = "selected";
+
+                        break;
+                    }
+                }
+                ?> 
+                <div class="mslb <?php echo $lb ?> pull-left">
+                    <img src="/img/raster_m.png"/>
+                    <p><?php echo $category->name ?></p>
+                    <input class="hidden" type="checkbox" name="categories[]" value="<?php echo $category->id ?>" id="<?php echo $category->id ?>" <?php echo $checked ?>>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<style>
+    #tv #tv-frame .board {
+        margin-top:30px;
+        width:800px;
+    }
+    
+    .mslb {
+        background:rgba(0,0,0,0.15);
+        border-radius:5px;
+        border:1px solid transparent;
+        box-shadow:0 1px 0 rgba(255,255,255,0.1), inset 0 1px 1px rgba(0,0,0,0.1);
+        box-sizing: content-box;
+        float:left;
+        height:120px;
+        margin:0 10px 10px 0;
+        padding:5px;
+        text-align:center;
+        width:120px;
+    }
+    .mslb img {
+        margin-bottom:8px;
+        margin-top:26px;
+    }
+    .selected {
+        
+    }
+</style>
+<script type="text/javascript">
+
+</script>

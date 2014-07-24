@@ -17,6 +17,13 @@ class Angel_UserController extends Angel_Controller_Action {
             $this->investorIndex();
         }
     }
+    
+    public function hobbyAction() {
+        
+        $categoryModel = $this->getModel('category');
+        $this->view->categories = $categoryModel->getRoot();
+        $this->view->title = "我的兴趣";
+    }
 
     private function startUpIndex() {
         $company = $this->getModel('company')->getCompanyByUser($this->me->getId());
