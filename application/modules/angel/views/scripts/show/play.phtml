@@ -1,4 +1,9 @@
-
+<?php
+$player_mode = "video";
+if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
+    $player_mode = $this->me->getUser()->attribute['player_mode'];
+}
+?>
 <div id="tv-footer" style="display:none">
 
     <!--    <div id="tv-footer-ltbar">
@@ -37,8 +42,8 @@
 
 <div id='tv-sider'>
     <div id='tv-toggle'>
-        <div class='bt-go selected'>看</div>
-        <div class='bt-go'>听</div>
+        <div rel="video" class='tv-toggle-unit bt-go'>看</div>
+        <div rel="audio" class='tv-toggle-unit bt-go'>听</div>
     </div>
     <button id='btn-refresh'>换一波</button>
     <div class="clear"></div>
@@ -121,7 +126,10 @@
 </div>
 
 <script type="text/javascript">
+    var init_player_mode = '<?php echo $player_mode; ?>';
     $('document').ready(function() {
+        $('.tv-toggle-unit[rel="' + init_player_mode + '"]').addClass('selected');
+
         // 网速失速
         $('#player').on('stalled', function() {
             console.log('stalled');
@@ -153,19 +161,6 @@
         });
         $.autoToggleList(list);
 
-
-//        $('#tv-header').autoToggle();
-//        $('#tv-footer').autoToggle({
-//            animationDirection: 'bottom',
-//            beforeDisplay: function() {
-//                $('#tv-cover').show();
-//            },
-//            beforeHide: function() {
-//                if (!document.getElementById("tv-video-player").paused) {
-//                    $('#tv-cover').hide();
-//                }
-//            }
-//        });
         $('#tv-screen').video({
             onPause: function() {
                 $('#tv-fs-play-btn').show();
@@ -184,13 +179,7 @@
                 $('#pause').show();
             }
         });
-        // play and pause and next and prev
-//        $('#tv-fs-play-btn').click(function() {
-//            $('#play').click();
-//        });
-//        $('#tv-fs-pause-btn').click(function() {
-//            $('#pause').click();
-//        });
+
         $('#play').click(function() {
             $('#tv-screen').video("play", function() {
 //                $('#tv-cover').hide();
@@ -214,6 +203,30 @@
         $('#btn-refresh').click(function() {
             getApiData(nextFunc);
         });
+
+        $('.tv-toggle-unit').click(function() {
+            var obj = $(this);
+            if (!obj.hasClass('selected')) {
+                obj.addClass('selected').siblings('.tv-toggle-unit').removeClass('selected');
+                var mode = obj.attr('rel');
+                var data = {'value': mode};
+                var url = "<?php echo $this->url(array(), 'user-player-mode') ?>";
+                $.ajax({
+                    url: url,
+                    data: data,
+                    dataType: 'json',
+                    method: 'post',
+                    success: function(response) {
+                        if (response.code === 200) {
+                        } else {
+                        }
+                    },
+                    error: function() {
+                    }
+                });
+            }
+        });
+
 
         var __dura = 10000;
         $.rotateCd = function() {
@@ -251,7 +264,6 @@
             return false;
         }
     }
-
     function _getSelectedItem(direction) {
         var selected = null;
         var current = $('#tv-listbar-content .list-item.selected');
@@ -279,7 +291,7 @@
     }
 
     function switchFunc() {
-
+        
     }
     function playListCount() {
         var list_item = $('#tv-listbar-content .list-item');
@@ -291,11 +303,7 @@
     }
 
 <?php
-$url = "";
-$uid = "";
-
 $uid = $this->uid;
-
 $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
 ?>
 

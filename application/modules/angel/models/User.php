@@ -39,9 +39,24 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
     }
 
     public function addUser($email, $password, $username, $salt, $checkemail = true, $categorys) {
-        
+
         $usertype = "user";
         return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $categorys);
+    }
+
+    public function setAttribute($user, $key, $value) {
+        $validated_key = array('player_mode');
+        if (!in_array($key, $validated_key)) {
+            return false;
+        }
+        $attribute = $user->attribute;
+        if (!$attribute) {
+            $attribute = array();
+        }
+
+        $attribute[$key] = $value;
+        $result = $this->updateUser($user, array('attribute' => $attribute));
+        return $result;
     }
 
     protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail, $categorys) {
@@ -61,7 +76,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
                 }
             }
         }
-        
+
         $user = new $this->_document_class();
 
         $user->email = $email;
@@ -72,13 +87,13 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         $user->active_bln = true;
         $user->email_validated_bln = !$checkemail;
         $user->validated_bln = false;
-        
+
         if (is_array($categorys)) {
             foreach ($categorys as $p) {
                 $user->addCategory($p);
-            }        
+            }
         }
-        
+
         try {
             $this->_dm->persist($user);
             $this->_dm->flush();
@@ -106,41 +121,39 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
      * @param string $email － 需要被检测的email地址
      * @return boolean 
      */
-    public function isEmailExist($email, $return_user_model=false){
+    public function isEmailExist($email, $return_user_model = false) {
         $result = false;
         $user = $this->_dm->createQueryBuilder($this->_document_class)
-                          ->field('email')->equals($email)
-                          ->getQuery()
-                          ->getSingleResult();
-        
-        if(!empty($user)){
-            if($return_user_model){
+                ->field('email')->equals($email)
+                ->getQuery()
+                ->getSingleResult();
+
+        if (!empty($user)) {
+            if ($return_user_model) {
                 $result = $user;
-            }
-            else{
+            } else {
                 $result = true;
             }
         }
-        
+
         return $result;
     }
-    
-    public function isUsernameExist($username, $return_user_model=false){
+
+    public function isUsernameExist($username, $return_user_model = false) {
         $result = false;
         $user = $this->_dm->createQueryBuilder($this->_document_class)
-                          ->field('username')->equals($username)
-                          ->getQuery()
-                          ->getSingleResult();
-        
-        if(!empty($user)){
-            if($return_user_model){
+                ->field('username')->equals($username)
+                ->getQuery()
+                ->getSingleResult();
+
+        if (!empty($user)) {
+            if ($return_user_model) {
                 $result = $user;
-            }
-            else{
+            } else {
                 $result = true;
             }
         }
-        
+
         return $result;
     }
 
