@@ -200,6 +200,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     }
 
     protected function userRegister($defaultRedirectRoute, $pageTitle, $userType) {
+        $errorMsg = "登录失败，请重试或联系管理员";
         if ($this->request->isPost()) {
             $categoryModel = $this->getModel('category');
             $msg = "注册成功!";
@@ -207,35 +208,35 @@ class Angel_Controller_Action extends Zend_Controller_Action {
             $error = "";
             // POST METHOD
             $email = $this->request->getParam('email');
-            
+
             if ($email) {
                 $email = strtolower($email);
             }
-            
+
             $username = $this->request->getParam('username');
             $password = $this->request->getParam('password');
 
             $categorys_id = $this->request->getParam('categorys');
-            
+
             $categorys = array();
-            
+
             if (is_array($categorys_id)) {
                 foreach ($categorys_id as $id) {
                     $categorys[] = $categoryModel->getById($id);
                 }
             }
-            
+
             $result = false;
-            
+
             try {
                 $userModel = $this->getModel('user');
                 $isEmailExist = $userModel->isEmailExist($email);
-                
+
                 if ($isEmailExist) {
                     $error = "该邮箱已经存在，不能重复注册";
                 } else {
                     $result = null;
-                    
+
                     if ($userType == 'user') {
                         $result = $userModel->addUser($email, $password, $username, Zend_Session::getId(), false, $categorys);
                     } else if ($userType == 'admin') {
@@ -244,28 +245,50 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                         $error = "invalid request";
                     }
                 }
-                
             } catch (Angel_Exception_User $e) {
                 $error = $e->getDetail();
             }
-            
+
             if ($error != "") {
                 $msg = $error;
                 $code = 500;
             }
-            
+
             if ($this->getParam('format') == 'json') {
                 $this->_helper->json(array('data' => $msg, 'code' => $code));
-            }
-            else {
+            } else {
                 if ($result) {
-                    $this->_redirect($this->view->url(array(), $defaultRedirectRoute) . '?register=success');
+//                    $this->_redirect($this->view->url(array(), $defaultRedirectRoute) . '?register=success');
+                    // 直接登录(START)
+                    $remember = 'on';
+                    try {
+                        $userModel = $this->getModel('user');
+                        $auth = $userModel->auth($email, $password);
+
+                        if ($auth['valid'] === true) {
+                            $ip = $this->getRealIpAddr();
+                            $r = $userModel->updateLoginInfo($auth['msg'], $ip);
+
+                            if ($r) {
+                                if ($remember == 'on') {
+                                    setcookie($this->bootstrap_options['cookie']['remember_me'], $userModel->getRememberMeValue($auth['msg'], $ip), time() + $this->bootstrap_options['token']['expiry']['remember_me'] * 60, '/', $this->bootstrap_options['site']['domain']);
+                                }
+                                // 跳转至兴趣设置页面
+                                $this->_redirect($this->view->url(array(), 'hobby') . '?register=success');
+                            } else {
+                                $this->view->error = $errorMsg;
+                            }
+                        }
+                    } catch (Angel_Exception_User $e) {
+                        $this->view->error = $e->getMessage();
+                    }
+                    // 直接登录(END)
                 } else {
                     $this->view->error = $msg;
                 }
             }
         }
-        
+
         // GET METHOD
         $this->view->title = $pageTitle;
     }
@@ -274,7 +297,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
         $errorMsg = "登录失败，请重试或联系管理员";
         $code = 200;
         $uid = "";
-        
+
         if ($this->request->isPost()) {
             $email = $this->request->getParam('email');
             if ($email) {
@@ -305,41 +328,38 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                 $error = $e->getMessage();
                 $errorMsg = $error;
             }
-            
+
             $url = "";
-            
+
             if ($success) {
                 $goto = $this->getParam('goto');
                 $url = $this->view->url(array(), $defaultRedirectRoute);
-                
+
                 if ($goto) {
                     $url = $goto;
                 }
-                
+
                 $errorMsg = "success";
                 $uid = $auth["msg"];
-                
             } else {
                 $code = 500;
             }
-            
+
             if ($this->getParam('format') == 'json') {
                 $this->_helper->json(array('data' => $errorMsg, 'uid' => $uid, 'code' => $code));
-            }
-            else {
+            } else {
                 if ($code == 200) {
                     $this->_redirect($url);
-                }
-                else {
+                } else {
                     $this->view->error = $errorMsg;
                 }
-            }         
+            }
         } else {
             if ($this->getParam('register') == 'success') {
                 $this->view->register = 'success';
             }
         }
-        
+
         $this->view->title = $pageTitle;
     }
 
