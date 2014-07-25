@@ -4,12 +4,12 @@
             <?php echo $this->title ?>
         </div>
         <div class="content">
-            <div class="ct">
-                <p style="margin-bottom:30px">
-                    <span style="border-radius:100px;font-size:15px;box-shadow:0 1px 0 rgba(255,255,255,0.05), inset 0 1px 2px rgba(0,0,0,0.05);display:inline-block;padding:10px 30px;background:rgba(0,0,0,0.05)">
+            <p style="margin-bottom:30px">
+                <span style="border-radius:100px;font-size:15px;box-shadow:0 1px 0 rgba(255,255,255,0.05), inset 0 1px 2px rgba(0,0,0,0.05);display:inline-block;padding:10px 30px;background:rgba(0,0,0,0.05)">
                     请勾选下方兴趣选项，我们将参考您的选择精确推送精彩节目
-                    </span>
-                </p>
+                </span>
+            </p>
+            <div class="ct">
                 <?php foreach ($this->categories as $category): ?>
                     <?php
                     $checked = "";
@@ -24,7 +24,7 @@
                     }
                     ?> 
                     <div id="<?php echo $category->id ?>" class="mslb <?php echo $lb ?> pull-left">
-                        <strong class="tt"><?php echo $category->name ?></strong>
+                        <p class="tt"><?php echo $category->name ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -59,7 +59,7 @@
         margin:0 10px 10px 0;
         padding:5px;
         text-align:center;
-        width:100px;
+        width:150px;
     }
     .mslb:hover,.mslb.selected {
         background-image:url(/img/raster_m.png);
@@ -69,33 +69,34 @@
     }
     .mslb .tt {
         display:block;
+        font-size:13px;
         margin-top:70px;
     }
     .content .ct {
-        padding-left:36px;
+        padding-left:58px;
     }
     .selected {
-        
+
     }
 </style>
 <script type="text/javascript">
-    $('document').ready(function(){
+    $('document').ready(function() {
         getSelectedCategory();
-        $('.mslb').click(function(){
+        $('.mslb').click(function() {
             $(this).closest('.mslb').toggleClass('selected');
             getSelectedCategory();
         });
-        $('#save-btn').click(function(){
-            $('#result-panel').empty().paper({type: 'success'}, '<b class="glyphicon glyphicon-ok-sign"></b> 保存成功 <a class="border-btn border-btn-xs" href="<?php echo $this->url(array(), 'show-play')?>">看看节目有哪些变化</a>');
+        $('#save-btn').click(function() {
+            $('#result-panel').empty().paper({type: 'success'}, '<b class="glyphicon glyphicon-ok-sign"></b> 保存成功 <a class="border-btn border-btn-xs" href="<?php echo $this->url(array(), 'show-play') ?>">看看节目有哪些变化</a>');
         });
     });
-    
+
     function getSelectedCategory() {
         var targets = $('.mslb.selected');
         var hd = "";
         var arr = new Array();
-        if(targets.length) {
-            $.each(targets, function(){
+        if (targets.length) {
+            $.each(targets, function() {
                 arr.push($(this).attr('id'));
             });
             hd = arr.join(';');
