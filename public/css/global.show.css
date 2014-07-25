@@ -463,6 +463,10 @@ h3 {
     width:700px;
     z-index:2;
 }
+#tv #tv-prog-timer {
+    display:inline-block;
+    margin-left:10px;
+}
 #tv #tv-prog-timer #t1 {
     opacity: 0.9;
 }
