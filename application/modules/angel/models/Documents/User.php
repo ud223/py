@@ -88,6 +88,12 @@ class User extends AbstractDocument{
     /** @ODM\ReferenceMany(targetDocument="\Documents\Category") */
     protected $category = array();
     
+    /** @ODM\Int */
+    protected $count = 0; //推荐数量
+    
+    /** @ODM\Int */
+    protected $Like = 1; //1为喜好0为随机
+    
     /**
      * 验证身份是否正确 
      */

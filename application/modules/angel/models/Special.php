@@ -147,81 +147,6 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
             return false;
         
         return $result;
-        
-//        $query = null;
-//        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-//        if ($recommendIds == "") {
-//            $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-//        }
-//        else {
-//            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($recommendIds)->sort('created_at', -1);
-//        }
-        
-//        $result = $query->getQuery();
-//        $special = null;
-//        $isRecommend = FALSE;
-//        
-//        $specials = array();
-//        
-//        foreach ($result as $tmp) {
-//            $specials[] = $tmp;
-//        }
-//        
-//        foreach ($specials as $tmpSpecial) {
-//            if (count($specials) < count($recommendIds) || $recommendIds[0] == "") {
-//                
-//                $index = rand(0, count($specials) - 1);
-//                
-//                $special = $specials[$index];
-//                
-//                if ($curSpecialId != null) {
-//                    if ($special->id == $curSpecialId) {
-//                        $index = rand(0, count($specials) - 1);
-//                
-//                        $special = $specials[$index];
-//                        
-//                        if ($special->id == $curSpecialId) {
-//                            $index = rand(0, count($specials) - 1);
-//                
-//                            $special = $specials[$index];
-//                            
-//                            if ($special->id == $curSpecialId) {
-//                                $index = rand(0, count($specials) - 1);
-//
-//                                $special = $specials[$index];
-//
-//                                if ($special->id == $curSpecialId) {
-//                                    $index = rand(0, count($specials) - 1);
-//
-//                                    $special = $specials[$index];
-//                            
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                
-//                break;
-//            }
-//            
-//            $isRecommend = FALSE;
-//            
-//            foreach ($recommendIds as $recommendId) {
-//                if ($tmpSpecial->id == $recommendId) {
-//                    $isRecommend = TRUE;
-//                    
-//                    break;
-//                }
-//            }
-//
-//            if ($isRecommend == FALSE) {
-//                $special = $tmpSpecial;
-//                
-//                return $special;
-//            }
-//        }
-//        
-//        return $special;
     }
     
     public function getLikeNotRecommendSpecial($recommendIds, $categoryId) {
@@ -300,5 +225,33 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
             return true;
         else
             return false;
+    }
+    
+    public function getSpecialByCategoryId($recommend_special_id, $category_id) {
+        $result = false;
+        
+        $query = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('id')->notIn($recommend_special_id)->field('categoryId')->in($category_id)->sort('created_at', -1);
+        
+        $result = $query->getQuery()->getSingleResult();
+        
+        if (empty($result))
+            return false;
+
+        return $result;
+    }
+    
+    public function getSpecialByNotCategoryId($recommend_special_id, $category_id) {
+        $result = false;
+        
+        $query = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('id')->notIn($recommend_special_id)->field('categoryId')->notIn($category_id)->sort('created_at', -1);//
+
+        $result = $query->getQuery()->getSingleResult();
+
+        if (empty($result))
+            return false;
+
+        return $result;
     }
 }

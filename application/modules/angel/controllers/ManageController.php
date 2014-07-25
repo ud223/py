@@ -1554,7 +1554,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $this->view->title = "编辑版本";
+            $this->view->title = "编辑热点";
 
             $id = $this->request->getParam("id");
 
@@ -1564,10 +1564,10 @@ class Angel_ManageController extends Angel_Controller_Action {
                 if (!$target) {
                     $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
                 }
-                
+ 
                 $specials = $specialModel->getByCategory($id);
-                $result = $hotModel->getById($id);
-                
+                $result = $hotModel->getByCategoryId($id);
+    
                 $this->view->specials = $specials;
                 $this->view->model = $target;
                 $this->view->ownSpecials = $result->special;
@@ -1575,5 +1575,11 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
             }
         }
+    }
+    
+    public function ossPreviewAction() {
+        $video = urldecode($this->request->getParam('video'));
+ 
+        $this->view->video = $video;
     }
 }

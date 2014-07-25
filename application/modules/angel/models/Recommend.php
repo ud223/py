@@ -28,7 +28,7 @@ class Angel_Model_Recommend extends Angel_Model_AbstractModel {
         $result = $query
                 ->getQuery()
                 ->execute();
-
+        
         if (count($result) == 0) {
             return false;
         }
