@@ -817,13 +817,17 @@ h3 {
 #tv #tv-header-ddl li {
     font-size: 12px;
     line-height: 20px;
-    padding: 8px 20px 8px 15px;
+    padding: 8px 20px 8px 45px;
+    position:relative;
 }
 #tv #tv-header-ddl li .ico {
     background-position: -341px -165px;
     height: 20px;
     float: left;
     margin-right: 15px;
+    position:absolute;
+    left:12px;
+    top:9px;
     width: 20px;
 }
 #tv #tv-header-ddl li .ico.list {
