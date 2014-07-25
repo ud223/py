@@ -17,12 +17,33 @@ class Angel_UserController extends Angel_Controller_Action {
             $this->investorIndex();
         }
     }
-    
+
     public function hobbyAction() {
-        
+
         $categoryModel = $this->getModel('category');
         $this->view->categories = $categoryModel->getRoot();
         $this->view->title = "我的兴趣";
+    }
+
+    /**
+     * 更改保存用户收看/收听习惯
+     */
+    public function playerModeAction() {
+        if ($this->request->isPost()) {
+            $key = "player_mode";
+            $value = $this->request->getParam('value');
+            $result = false;
+            if (in_array($value, array('audio', 'video'))) {
+                $result = $userMode = $this->getModel('user')->setAttribute($this->me->getUser(), $key, $value);
+            }
+
+            // JSON FORMAT RESPONSE
+            $code = 200;
+            if (!result) {
+                $code = 500;
+            }
+            $this->_helper->json(array('code' => $code));
+        }
     }
 
     private function startUpIndex() {
