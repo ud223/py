@@ -125,7 +125,6 @@
         </li>
     </ul>
 </div>
-
 <input type="hidden" id="uid" value="<?php echo $this->uid ?>"/>
 
 <script type="text/javascript">
@@ -308,8 +307,9 @@
 
     <?php
       $url = $this->url(array("uid" => $this->uid, "sid" => "none"), "api-special-recommend");
+      $uid = $this->uid;
     ?>
-
+    var userId = "<?php echo $uid ?>";
     var tmpUrl = "<?php echo $url ?>";
     var myUrl = tmpUrl;
 
@@ -350,5 +350,16 @@
             }
         });
     }
-   
+//test   
+//        url = "/api/keyword/good";
+//        
+//        $.ajax({
+//            url: url,
+//            dataType: 'json',
+//            data: {uid: userid , pid: '53c79dcbb3580e78098b4567'},
+//           
+//            success: function(result) {
+//                alert(result.data);
+//            }
+//        });
 </script>
