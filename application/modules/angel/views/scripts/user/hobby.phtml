@@ -15,7 +15,7 @@
                     $checked = "";
                     $lb = "";
 
-                    foreach ($this->model->specials as $p) {
+                    foreach ($this->model->category as $p) {
                         if ($category->id == $p->id) {
                             $lb = "selected";
 
@@ -23,7 +23,7 @@
                         }
                     }
                     ?> 
-                    <div id="<?php echo $category->id ?>" class="mslb <?php echo $lb ?> pull-left">
+                    <div id="<?php echo $category->id ?>" name="categorys[]" class="mslb <?php echo $lb ?> pull-left">
                         <p class="tt"><?php echo $category->name ?></p>
                     </div>
                 <?php endforeach; ?>
@@ -31,7 +31,7 @@
             <div class="clear"></div>
             <div id="result-panel" style="margin-top:30px;"></div>
             <div style="margin:30px 0;">
-                <button type="button" id="save-btn" class="btn">保存设置</button>
+                <button type="button" id="save-btn" class="btn" onclick="saveUserCategory()">保存设置</button>
             </div>
             <input type="hidden" id="categories" value=""/>
         </div>
@@ -102,5 +102,31 @@
             hd = arr.join(';');
         }
         $("#categories").val(hd);
+    }
+    
+
+
+    function saveUserCategory(callback) {
+        <?php
+            $url = $this->url(array("uid" => $this->userId, "category" => "none"), "api-user-category-save");
+        ?>
+
+        var tmpUrl = "<?php echo $url ?>";
+        var myUrl = tmpUrl;
+        
+        var category = $('#categories').val();
+        
+        if (category != null && category != '')
+            myUrl = myUrl.replace('none', category);
+
+        $.ajax({
+            url: myUrl,
+            dataType: 'json',
+            success: function(result) {
+                if (result.code === 0) {
+                    alert("save failed!");
+                }
+            }
+        });
     }
 </script>

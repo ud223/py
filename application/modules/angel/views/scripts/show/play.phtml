@@ -1,8 +1,9 @@
 <?php
-$player_mode = "video";
-if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
-    $player_mode = $this->me->getUser()->attribute['player_mode'];
-}
+    $player_mode = "video";
+    if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
+        $player_mode = $this->me->getUser()->attribute['player_mode'];
+    }
+    
 ?>
 <div id="tv-footer" style="display:none">
 
@@ -125,8 +126,11 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
     </ul>
 </div>
 
+<input type="hidden" id="uid" value="<?php echo $this->uid ?>"/>
+
 <script type="text/javascript">
     var init_player_mode = '<?php echo $player_mode; ?>';
+    
     $('document').ready(function() {
         $('.tv-toggle-unit[rel="' + init_player_mode + '"]').addClass('selected');
 
@@ -182,7 +186,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
 
         $('#play').click(function() {
             $('#tv-screen').video("play", function() {
-//                $('#tv-cover').hide();
+                $('#tv-cover').hide();
             });
         });
         $('#pause').click(function() {
@@ -203,7 +207,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         $('#btn-refresh').click(function() {
             getApiData(nextFunc);
         });
-
+        
         $('.tv-toggle-unit').click(function() {
             var obj = $(this);
             if (!obj.hasClass('selected')) {
@@ -302,18 +306,19 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         }
     }
 
-<?php
-$uid = $this->uid;
-$url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend");
-?>
+    <?php
+      $url = $this->url(array("uid" => $this->uid, "sid" => "none"), "api-special-recommend");
+    ?>
 
     var tmpUrl = "<?php echo $url ?>";
     var myUrl = tmpUrl;
 
+    
     function getApiData(callback) {
         $.ajax({
             url: myUrl,
             dataType: 'json',
+            
             success: function(result) {
                 if (result.code === 200) {
                     myUrl = tmpUrl;
@@ -336,12 +341,14 @@ $url = $this->url(array("uid" => $uid, "sid" => "none"), "api-special-recommend"
                         item.find('.col3').html(parseInt(this.time).timeFormat());
                         $("#tv-listbar-content").append(item);
                     });
-
+                    
                     if (typeof callback === 'function') {
                         callback();
                     }
+                    
                 }
             }
         });
     }
+   
 </script>

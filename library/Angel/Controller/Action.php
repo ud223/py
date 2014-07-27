@@ -202,7 +202,6 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     protected function userRegister($defaultRedirectRoute, $pageTitle, $userType) {
         $errorMsg = "登录失败，请重试或联系管理员";
         if ($this->request->isPost()) {
-            $categoryModel = $this->getModel('category');
             $msg = "注册成功!";
             $code = 200;
             $error = "";
@@ -216,16 +215,6 @@ class Angel_Controller_Action extends Zend_Controller_Action {
             $username = $this->request->getParam('username');
             $password = $this->request->getParam('password');
 
-            $categorys_id = $this->request->getParam('categorys');
-
-            $categorys = array();
-
-            if (is_array($categorys_id)) {
-                foreach ($categorys_id as $id) {
-                    $categorys[] = $categoryModel->getById($id);
-                }
-            }
-
             $result = false;
 
             try {
@@ -238,7 +227,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                     $result = null;
 
                     if ($userType == 'user') {
-                        $result = $userModel->addUser($email, $password, $username, Zend_Session::getId(), false, $categorys);
+                        $result = $userModel->addUser($email, $password, $username, Zend_Session::getId(), false);
                     } else if ($userType == 'admin') {
                         $result = $userModel->addManageUser($email, $password, Zend_Session::getId(), false);
                     } else {
@@ -273,8 +262,12 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                 if ($remember == 'on') {
                                     setcookie($this->bootstrap_options['cookie']['remember_me'], $userModel->getRememberMeValue($auth['msg'], $ip), time() + $this->bootstrap_options['token']['expiry']['remember_me'] * 60, '/', $this->bootstrap_options['site']['domain']);
                                 }
+                                
+                                $user = $userModel->getUserByEmail($email);
+                                
                                 // 跳转至兴趣设置页面
-                                $this->_redirect($this->view->url(array(), 'hobby') . '?register=success');
+                                $this->_redirect($this->view->url(array(), 'hobby') . '?register=success');//"uid"=> $user->id
+
                             } else {
                                 $this->view->error = $errorMsg;
                             }

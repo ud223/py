@@ -38,10 +38,10 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $this->registerUser($email, $password, uniqid(), $usertype, $salt, $checkemail, NULL);
     }
 
-    public function addUser($email, $password, $username, $salt, $checkemail = true, $categorys) {
+    public function addUser($email, $password, $username, $salt, $checkemail = true) {
 
         $usertype = "user";
-        return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $categorys);
+        return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail);
     }
 
     public function setAttribute($user, $key, $value) {
@@ -59,7 +59,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail, $categorys) {
+    protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail) {
         $result = false;
         if (empty($email)) {
             throw new Angel_Exception_User(Angel_Exception_User::EMAIL_EMPTY);
@@ -88,12 +88,6 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         $user->email_validated_bln = !$checkemail;
         $user->validated_bln = false;
 
-        if (is_array($categorys)) {
-            foreach ($categorys as $p) {
-                $user->addCategory($p);
-            }
-        }
-
         try {
             $this->_dm->persist($user);
             $this->_dm->flush();
@@ -112,6 +106,42 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         if ($result && !$checkemail) {
             
         }
+        return $result;
+    }
+    
+    public function saveUser($uesrId, $category) {
+         try {
+            $user = $this->getUserById($uesrId);
+   
+            $email = $user->email;
+            $username = $user->username;
+            $salt = $user->salt;
+            $usertype = $user->user_type;
+            $password = $user->password;
+            $active_bln = true;
+            $email_validated_bln = !$checkemail;
+            $validated_bln = false;
+
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $category);
+
+            $this->save($uesrId, $data);
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
+        }
+    }
+    
+    public function getUserByEmail($email) {
+        $result = false;
+        $user = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('email')->equals($email)
+                ->getQuery()
+                ->getSingleResult();
+
+        if (!empty($user)) {
+            $result = $user;
+        }
+
         return $result;
     }
 

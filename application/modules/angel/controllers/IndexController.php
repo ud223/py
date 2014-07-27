@@ -42,13 +42,6 @@ class Angel_IndexController extends Angel_Controller_Action {
      */
     public function registerAction() {
         $this->userRegister('login', "注册芝士电视", "user");
-    
-        $categoryModel = $this->getModel('category');
-        
-        $result = $categoryModel->getRoot();
-        
-        $this->view->categorys = $result;
-        $this->view->ismanage = false;
     }
 
 //    public function isEmailExistAction() {

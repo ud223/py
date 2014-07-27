@@ -19,10 +19,17 @@ class Angel_UserController extends Angel_Controller_Action {
     }
 
     public function hobbyAction() {
-
         $categoryModel = $this->getModel('category');
+        $userModel = $this->getModel('user');
+        
+        $uid = $this->me->getUser()->id;//$this->request->getParam('uid');
+        
+        $user = $userModel->getUserById($uid);
+               
+        $this->view->model = $user;
+        $this->view->userId = $uid;
         $this->view->categories = $categoryModel->getRoot();
-        $this->view->title = "我的兴趣";
+        $this->view->title = "我的兴趣";    
     }
 
     /**

@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail');
+    protected $login_not_required = array('detail', 'save-user-category', 'keyword-good', 'keyword-bad');
 
     public function init() {
         parent::init();
@@ -34,20 +34,9 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
 
     public function playAction() {
-        $uid = "";
-
-        if ($_COOKIE["userId"] == null || $_COOKIE["userId"] == "") {
-
-            $guidModel = $this->getModel('guid');
-            $uid = $guidModel->toString();
-
-            setcookie('userId', $uid);
-
-            $this->view->uid = $uid;
-        } else {
-            $uid = $_COOKIE["userId"];
-            $this->view->uid = $uid;
-        }
+        $uid = $this->me->getUser()->id;
+        $this->view->uid = $uid;
+        setcookie('userId', $uid);
     }
 
     public function specialRecommendAction() {
@@ -204,5 +193,121 @@ class Angel_ShowController extends Angel_Controller_Action {
         $recommendModel->addRecommend($special->id, $userId);
         setcookie('specialId', $special->id);
         $this->_helper->json(array('data' => $result, 'code' => 200));
-    }  
+    }
+    
+    public function saveUserCategoryAction() {
+        $categoryModel = $this->getModel('category');
+        $userModel = $this->getModel('user');
+        
+        //获取当前需要推荐的用户ID
+        $userId = $this->request->getParam('uid');
+        $categorys_id = $this->request->getParam('category');
+
+        $categorys = array();
+        
+        if ($categorys_id != 'none') {
+            $tmpCategorys_id = explode(";",$categorys_id);
+            
+            if (is_array($tmpCategorys_id)) {
+                foreach ($tmpCategorys_id as $id) {
+                    $categorys[] = $categoryModel->getById($id);
+                }
+            }
+        }
+        
+        try {
+            $userModel->saveUser($userId, $categorys);
+            
+            $this->_helper->json(array('data' => 'save success!', 'code' => 200));
+        }
+        catch (Exception $e){
+            $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+        }
+    }
+    
+    public function keywordGoodAction() {
+        $voteModel = $this->getModel('vote');
+        $programModel = $this->getModel('program');
+        
+        $program_id = $this->getParam('pid');
+        $user_id = $this->getParam('uid');
+        
+        $program = $programModel->getById($program_id);
+        
+        foreach ($program->keyword as $p) {
+            $vote = $voteModel->getByKeywordIdAndUid($p->id, $user_id);
+            $score = 0;
+            
+            if ($vote) {
+                $score = $vote->score;
+            
+                if (!$score)
+                    $score = 0;
+
+                $score = $score + 1;
+
+                try {
+                    $voteModel->saveVote($vote->id, $user_id, $p->id, $score);
+                }
+                catch (Exception $e){
+                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+                }
+            }
+            else {
+                $score = 1;
+
+                try {
+                    $voteModel->addVote($user_id, $p->id, $score);
+                }
+                catch (Exception $e){
+                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+                }
+            }  
+        }
+        
+        $this->_helper->json(array('data' => 'save success!', 'code' => 200));
+    }
+    
+    public function keywordBadAction() {
+        $voteModel = $this->getModel('vote');
+        $programModel = $this->getModel('program');
+        
+        $program_id = $this->getParam('pid');
+        $user_id = $this->getParam('uid');
+        
+        $program = $programModel->getById($program_id);
+        
+        foreach ($program->keyword as $p) {
+            $vote = $voteModel->getByKeywordIdAndUid($p->id, $user_id);
+            $score = 0;
+            
+            if ($vote) {
+                $score = $vote->score;
+            
+                if (!$score)
+                    $score = 0;
+
+                $score = $score - 1;
+
+                try {
+                    $voteModel->saveVote($vote->id, $user_id, $p->id, $score);
+                }
+                catch (Exception $e){
+                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+                }
+            }
+            else {
+                $score = -1;
+
+                try {
+                    $voteModel->addVote($user_id, $p->id, $score);
+                }
+                catch (Exception $e){
+                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+                }
+            }  
+        }
+        
+        $this->_helper->json(array('data' => 'save success!', 'code' => 200));
+    }
 }

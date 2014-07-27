@@ -21,31 +21,6 @@
                     if ($this->isManage)
                         $style="style='display:none'";
                 ?>
-                <div class="bdrow" <?php echo $style ?>>
-                    <label for="repwd">兴趣分类</label>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <?php foreach ($this->categorys as $category): ?>
-                                 <?php     
-                                    $checked = "";
-                                    $lb = "";
-
-                                    foreach ($this->model->specials as $p) {
-                                        if ($category->id == $p->id) {
-                                            $checked = "checked='checked'";
-                                            $lb = "label-success";
-
-                                            break;   
-                                        }
-                                    }                                
-                                ?> 
-                                <span class="label label-default <?php echo $lb ?> pull-left marginright10px marginbottom10px">
-                                    <input type="checkbox" name="categorys[]" value="<?php echo $category->id ?>" id="<?php echo $category->id ?>" <?php echo $checked ?>> <label for="<?php echo $category->id ?>" ><?php echo $category->name ?></label>
-                                </span>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                </div>
                 <div class="half-row">
                     <input type="checkbox" name="is-agree" id="is-aggree" class="required" data-toggle="popover" data-trigger ="manual" data-placement="left"><label for="is-aggree">我已阅读并接受<a href="#">《芝士电视用户协议》</a></label>
                 </div>
