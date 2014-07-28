@@ -227,20 +227,20 @@ class Angel_ShowController extends Angel_Controller_Action {
     
     public function keywordGoodAction() {
         $voteModel = $this->getModel('vote');
-        $programModel = $this->getModel('program');
+        $programModel = $this->getModel('program');//$_POST['uid']
         
         $program_id = $this->getParam('pid');
         $user_id = $this->getParam('uid');
-        
+
         $program = $programModel->getById($program_id);
-        
+
         foreach ($program->keyword as $p) {
             $vote = $voteModel->getByKeywordIdAndUid($p->id, $user_id);
             $score = 0;
-            
+
             if ($vote) {
                 $score = $vote->score;
-            
+
                 if (!$score)
                     $score = 0;
 
@@ -263,27 +263,27 @@ class Angel_ShowController extends Angel_Controller_Action {
                     $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
                 }
             }  
+
+            $this->_helper->json(array('data' => 'save success!', 'code' => 200));
         }
-        
-        $this->_helper->json(array('data' => 'save success!', 'code' => 200));
     }
     
     public function keywordBadAction() {
         $voteModel = $this->getModel('vote');
         $programModel = $this->getModel('program');
-        
+
         $program_id = $this->getParam('pid');
         $user_id = $this->getParam('uid');
-        
+
         $program = $programModel->getById($program_id);
-        
+
         foreach ($program->keyword as $p) {
             $vote = $voteModel->getByKeywordIdAndUid($p->id, $user_id);
             $score = 0;
-            
+
             if ($vote) {
                 $score = $vote->score;
-            
+
                 if (!$score)
                     $score = 0;
 
@@ -307,7 +307,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 }
             }  
         }
-        
+
         $this->_helper->json(array('data' => 'save success!', 'code' => 200));
     }
 }
