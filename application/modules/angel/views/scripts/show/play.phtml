@@ -43,8 +43,8 @@
 
 <div id='tv-sider'>
     <div id='tv-toggle'>
-        <div rel="video" class='tv-toggle-unit bt-go'>看</div>
-        <div rel="audio" class='tv-toggle-unit bt-go'>听</div>
+        <a href="javascript:void(0)" rel="video" title="看电视" id="tv-toggle-video-btn" class='tv-toggle-unit bt-go'><i></i></a>
+        <a href="javascript:void(0)" rel="audio" title="听声音" id="tv-toggle-audio-btn" class='tv-toggle-unit bt-go'><i></i></a>
     </div>
     <button id='btn-refresh'>换一波</button>
     <div class="clear"></div>
@@ -209,8 +209,14 @@
         });
         
         $('.tv-toggle-unit').click(function() {
+            // change class
             var obj = $(this);
             if (!obj.hasClass('selected')) {
+                // change player
+                // tv-video-player
+                
+                
+                // save mode status
                 obj.addClass('selected').siblings('.tv-toggle-unit').removeClass('selected');
                 var mode = obj.attr('rel');
                 var data = {'value': mode};
@@ -229,6 +235,7 @@
                     }
                 });
             }
+            
         });
 
 
