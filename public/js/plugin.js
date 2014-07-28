@@ -753,9 +753,28 @@
             }, 200);
             $('body').data('update_id', update_id);
         },
-        seek: function(perc) {
+        seek: function(perc, time) {
             var self = $(this).get(0);
-            self.currentTime = self.duration * (perc / 100);
+
+
+            var seeking_id = setInterval(function() {
+                var seeking_in_id = $('body').data('seeking_id');
+                console.log('i am here' + seeking_in_id);
+                var readyState = self.readyState;
+                if (readyState === 4) {
+                    $('body').data('seeking_id', null);
+                    clearInterval(seeking_in_id);
+
+                    var val = 0;
+                    if (perc) {
+                        val = self.duration * (perc / 100);
+                    } else if (time) {
+                        val = time;
+                    }
+                    self.currentTime = val;
+                }
+            }, 500);
+            $('body').data('seeking_id', seeking_id);
         },
         switchSpeaker: function() {
             var self = $(this).get(0), setting = $(this).video('setting');
@@ -780,6 +799,10 @@
             v = v / 10;
             self.volume = v;
             $($(setting.volumeBar).children().get(0)).css('height', w);
+        },
+        currentTime: function() {
+            var self = $(this).get(0);
+            return self.currentTime;
         },
         fullscreen: function() {
             if (!$(this).data('fullscreen'))

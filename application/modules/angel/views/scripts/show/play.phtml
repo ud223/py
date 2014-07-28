@@ -173,7 +173,6 @@
                 $('#pause').hide();
             },
             onEnded: function() {
-//                $('#tv-cover').show();
                 nextFunc();
             },
             onPlay: function() {
@@ -213,8 +212,6 @@
             var obj = $(this);
             if (!obj.hasClass('selected')) {
                 // change player
-                // tv-video-player
-                
                 
                 // save mode status
                 obj.addClass('selected').siblings('.tv-toggle-unit').removeClass('selected');
@@ -234,6 +231,9 @@
                     error: function() {
                     }
                 });
+                
+                // tv-video-player
+                continuePlayFunc();
             }
             
         });
@@ -254,12 +254,26 @@
         target.addClass('selected').find('.ico').removeClass('null').addClass('play');
         target.siblings('.list-item').removeClass('selected').find('.ico').addClass('null');
         var video_url = target.attr('video');
-        var audio_url = target.attr('audio');
+        var audio_url = target.attr('audio');        
+        var url = video_url;
+        if($('.tv-toggle-unit.selected').attr('rel') === 'audio')
+            url = audio_url;
         var title = target.find('.tv-current-title').html();
         $('#tv-screen').video("restart", function() {
 //            $('#tv-cover').hide();
             $('#tv-prog-title .tt').html(title);
-        }, video_url);
+        }, url);
+    }
+    function continuePlayFunc() {
+        var target = $('.list-item.itm.selected');
+        var video_url = target.attr('video');
+        var audio_url = target.attr('audio');
+        var url = video_url;
+        if($('.tv-toggle-unit.selected').attr('rel') === 'audio')
+            url = audio_url;
+        var currentTime = $('#tv-screen').video("currentTime");
+        $('#tv-screen').video("restart", false, url);
+        $('#tv-screen').video("seek", false, currentTime);
     }
     function nextFunc() {
         if (playListCount()) {
