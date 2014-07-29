@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'keyword-good', 'keyword-bad');
+    protected $login_not_required = array('detail', 'save-user-category');
 
     public function init() {
         parent::init();
@@ -230,6 +230,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $programModel = $this->getModel('program');//$_POST['uid']
         
         $program_id = $this->getParam('pid');
+        $time = $this->getParam('time');
         $user_id = $this->getParam('uid');
 
         $program = $programModel->getById($program_id);
@@ -265,6 +266,53 @@ class Angel_ShowController extends Angel_Controller_Action {
             }  
 
             $this->_helper->json(array('data' => 'save success!', 'code' => 200));
+        }
+    }
+    
+    public function keywordVoteAction() {
+        $voteModel = $this->getModel('vote');
+        $programModel = $this->getModel('program');
+        
+        $program_id = $this->getParam('pid');
+        $time = $this->getParam('time');
+        $user_id = $this->me->getUser()->id;
+
+        $program = $programModel->getById($program_id);
+
+        foreach ($program->keyword as $p) {
+            $vote = $voteModel->getByKeywordIdAndUid($p->id, $user_id);
+            $score = 0;
+
+            if ($vote) {
+                $score = $vote->score;
+
+                if (!$score)
+                    $score = 0;
+                
+                if ($time > 79)
+                    $score = $score + 1;
+                else
+                    $score = $score - 1;
+                    
+                try {
+                    $voteModel->saveVote($vote->id, $user_id, $p->id, $score);
+                }
+                catch (Exception $e){
+                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+                }
+            }
+            else {
+                $score = 1;
+
+                try {
+                    $voteModel->addVote($user_id, $p->id, $score);
+                }
+                catch (Exception $e){
+                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+                }
+            }  
+
+            $this->_helper->json(array('data' => $time, 'code' => 200));
         }
     }
     
