@@ -273,12 +273,10 @@ class Angel_ShowController extends Angel_Controller_Action {
         $voteModel = $this->getModel('vote');
         $programModel = $this->getModel('program');
         
-//        $program_id = $this->getParam('pid');
-//        $time = $this->getParam('time');
+        $program_id = $this->getParam('pid');
+        $time = $this->getParam('time');
         $user_id = $this->me->getUser()->id;
 
-        $this->_helper->json(array('data' => $user_id, 'code' => 200)); exit;
-        
         $program = $programModel->getById($program_id);
 
         foreach ($program->keyword as $p) {
@@ -291,7 +289,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 if (!$score)
                     $score = 0;
                 
-                if (time > 79)
+                if ($time > 79)
                     $score = $score + 1;
                 else
                     $score = $score - 1;
@@ -314,7 +312,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 }
             }  
 
-            $this->_helper->json(array('data' => 'save success!', 'code' => 200));
+            $this->_helper->json(array('data' => $time, 'code' => 200));
         }
     }
     
