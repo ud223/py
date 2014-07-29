@@ -9,5 +9,9 @@
         $('#video-control').on('ended', function(){
             alert('ended');
         });
+        
+        setInterval(function(){
+            console.log($('#video-control').get(0).ended);
+        }, 200);
     });
 </script>
