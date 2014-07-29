@@ -250,6 +250,23 @@ h3 {
     padding:3px;
     width:50px;
 }
+#tv #tv-toggle-video-btn i, #tv #tv-toggle-audio-btn i {
+    background-image:url(../img/n-icon.png);
+    background-position: -33px -5px;;
+    background-repeat:no-repeat;
+    display:inline-block;
+    height:36px;
+    width:36px;
+}
+#tv #tv-toggle-video-btn.selected i {
+    background-position: -133px -5px;
+}
+#tv #tv-toggle-audio-btn i {
+    background-position: -233px -5px;
+}
+#tv #tv-toggle-audio-btn.selected i {
+    background-position: -333px -5px;
+}
 /*#tv #tv-sider #tv-toggle {
     background:rgba(0,0,0,0.4);
     border-radius:400px;
@@ -264,6 +281,7 @@ h3 {
     border-radius:300px;
     box-shadow:none;
     cursor:pointer;
+    display:inline-block;
     height:44px;
     line-height:44px;
     opacity:0.5;

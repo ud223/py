@@ -2,13 +2,9 @@
     <div class="board">
         <div class="title">
             <?php echo $this->title ?>
+            <span style="font-size:smaller"> - 请勾选下方兴趣选项，我们将参考您的选择精确推送精彩节目</span>
         </div>
         <div class="content">
-            <p style="margin-bottom:30px">
-                <span style="border-radius:100px;font-size:15px;box-shadow:0 1px 0 rgba(255,255,255,0.05), inset 0 1px 2px rgba(0,0,0,0.05);display:inline-block;padding:10px 30px;background:rgba(0,0,0,0.05)">
-                    请勾选下方兴趣选项，我们将参考您的选择精确推送精彩节目
-                </span>
-            </p>
             <div class="ct">
                 <?php foreach ($this->categories as $category): ?>
                     <?php
@@ -47,7 +43,7 @@
     .mslb {
         background-color:rgba(0,0,0,0.15);
         background-image:url(/img/raster_g.png);
-        background-position:center 22px;
+        background-position:center 18px;
         background-repeat:no-repeat;
         border-radius:5px;
         border:1px solid transparent;
@@ -55,7 +51,7 @@
         box-sizing: content-box;
         cursor:pointer;
         float:left;
-        height:100px;
+        height:90px;
         margin:0 10px 10px 0;
         padding:5px;
         text-align:center;
@@ -70,7 +66,7 @@
     .mslb .tt {
         display:block;
         font-size:13px;
-        margin-top:70px;
+        margin-top:65px;
     }
     .content .ct {
         padding-left:58px;
