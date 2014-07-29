@@ -1,21 +1,13 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>video preview</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width">
-    </head>
-    <body>
-        <div>
-            <video width="800" height="374" controls autoplay>
-                <source src="<?php echo $this->video ?>" type="video/mp4" />
-                你浏览器不支持 video 功能
-            </video>
-        </div>
-    </body>
-</html>
+<div>
+    <video id="video-control" width="800" height="374" controls>
+        <source src="<?php echo $this->video ?>" type="video/mp4" />
+        你浏览器不支持 video 功能
+    </video>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#video-control').on('end', function(){
+            alert('ended');
+        });
+    });
+</script>
