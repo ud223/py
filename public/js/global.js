@@ -224,7 +224,7 @@ function inArray(val, arr) {
                 clearTimeout(htoid);
             }
             $('body').data('hide_time_out', setTimeout(function() {
-                if ($('body').data('auto-toggle-list-stop')) {
+                if ($('body').data('auto-toggle-list-stop') || $('body').data('auto-toggle-list-switch') === 'off') {
                     return;
                 }
                 $.each(targets, function() {

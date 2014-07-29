@@ -727,12 +727,14 @@
                 callback();
             }
         },
-        restart: function(callback, src) {
+        restart: function(callback, src, delayPlay) {
             var self = $(this).get(0);
             $(this).video('setting', 'src', src);
             $(this).find('source').attr('src', src);
             self.load();
-            self.play();
+            if (!delayPlay) {
+                self.play();
+            }
             if (callback) {
                 callback();
             }

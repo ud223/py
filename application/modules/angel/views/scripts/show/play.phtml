@@ -142,17 +142,17 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
     $('document').ready(function() {
 
         setInterval(function() {
+//            var l = $("#tv-louds-l");
+//            var r = $("#tv-louds-r");
+            var c = $('#tv-louds-c');
 
-            if ($('#tv-video-player').get(0).ended) {
+            if ($('#tv-video-player').get(0).ended || c.attr('status') === 'stop') {
                 return;
             }
 
 
             var ts = new Date().getTime();
             var t = ts % 7;
-//            var l = $("#tv-louds-l");
-//            var r = $("#tv-louds-r");
-            var c = $('#tv-louds-c');
             if (t > 2) {
                 c.addClass('big-c');
                 setTimeout(function() {
@@ -186,6 +186,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         if (init_player_mode === 'audio') {
             $('#tv-louds').show();
             $('#tv-video-player').addClass('move-away');
+            $('body').data('auto-toggle-list-switch', 'off');
         }
 
         // 网速失速
@@ -225,6 +226,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                 $('#tv-fs-pause-btn').hide();
                 $('#play').show();
                 $('#pause').hide();
+                $('#tv-louds-c').attr('status', 'stop');
             },
             onEnded: function() {
                 nextFunc();
@@ -234,6 +236,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                 $('#tv-fs-pause-btn').show();
                 $('#play').hide();
                 $('#pause').show();
+                $('#tv-louds-c').attr('status', 'play');
             }
         });
 
@@ -248,7 +251,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
             });
         });
         $('#next').click(function() {
-            nextFunc()
+            nextFunc();
         });
         $('#prev').click(function() {
             prevFunc();
@@ -258,7 +261,14 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         $('#tv-header .unvisiable').removeClass('unvisiable');
 
         $('#btn-refresh').click(function() {
-            getApiData(nextFunc);
+            $.waiting('一大波精彩节目正在向您走来 ...');
+            var callback = function() {
+                setTimeout(function() {
+                    $.endWaiting();
+                    nextFunc();
+                }, 2500);
+            }
+            getApiData(callback);
         });
 
         $('.tv-toggle-unit').click(function() {
@@ -268,7 +278,13 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                 // change player ui
                 $('#tv-louds').toggle();
                 $('#tv-video-player').toggleClass('move-away');
-
+                if (obj.attr('rel') === 'audio') {
+                    $('#tv-louds-c').attr('status', 'play');
+                    $('body').data('auto-toggle-list-switch', 'off');
+                } else {
+                    $('#tv-louds-c').attr('status', 'stop');
+                    $('body').data('auto-toggle-list-switch', 'on');
+                }
                 // save mode status
                 obj.addClass('selected').siblings('.tv-toggle-unit').removeClass('selected');
                 var mode = obj.attr('rel');
@@ -320,7 +336,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
 
 
     });
-    function playFunc(target) {
+    function playFunc(target, delayPlay) {
         target.addClass('selected').find('.ico').removeClass('null').addClass('play');
         target.siblings('.list-item').removeClass('selected').find('.ico').addClass('null');
         var video_url = target.attr('video');
@@ -332,7 +348,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         $('#tv-screen').video("restart", function() {
 //            $('#tv-cover').hide();
             $('#tv-prog-title .tt').html(title);
-        }, url);
+        }, url, delayPlay);
     }
     function continuePlayFunc() {
         var target = $('.list-item.itm.selected');
@@ -407,6 +423,7 @@ $uid = $this->uid;
 
 
     function getApiData(callback) {
+        $('#tv-screen').video('pause');
         $.ajax({
             url: myUrl,
             dataType: 'json',
@@ -436,8 +453,10 @@ $uid = $this->uid;
                     if (typeof callback === 'function') {
                         callback();
                     }
-
                 }
+            },
+            error: function() {
+                $.endWaiting();
             }
         });
     }
