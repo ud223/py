@@ -316,11 +316,9 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         if (playing.length) {
             // send keyword preference here
             var duration = $('#tv-screen').video("duration");
-            alert('duration:'+ duration);
             var currentTime = $('#tv-screen').video("currentTime");
-            alert('currentTime:'+ currentTime);
             var pid = playing.attr('id');
-            alert('pid:'+ pid);
+
             var tmpPer = currentTime / duration * 100;           
             var per = Math.floor(tmpPer);
             
