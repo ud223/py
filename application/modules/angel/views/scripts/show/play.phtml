@@ -263,13 +263,13 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                     var options = {
                         msg: msg,
                         confirmText: '立即收看',
-                        width:500,
-                        height:'auto',
+                        width: 500,
+                        height: 'auto',
                         cancelText: '换一波',
-                        cancelCallback:function(){
+                        cancelCallback: function() {
                             $('#btn-refresh').click();
                         },
-                        confirmCallback:nextFunc
+                        confirmCallback: nextFunc
                     };
                     $.confirm(options);
                     console.log(response);
@@ -458,19 +458,20 @@ $uid = $this->uid;
                     $("#tv-author-name").html(response.data.author);
                     $("#tv-author-img").css('background-image', 'url(' + response.data.photo + ')');
                     $("#tv-listbar-content").empty();
-                    $.each(response.data.programs, function() {
-                        var item = $(".P_tmp .list-item").clone(true);
-                        item.click(function() {
-                            playFunc($(this).closest('.list-item'));
+                    if (response.data.programs) {
+                        $.each(response.data.programs, function() {
+                            var item = $(".P_tmp .list-item").clone(true);
+                            item.click(function() {
+                                playFunc($(this).closest('.list-item'));
+                            });
+                            item.attr('video', this.oss_video);
+                            item.attr('audio', this.oss_audio);
+                            item.attr('id', this.id);
+                            item.find('.col2').html(this.name);
+                            item.find('.col3').html(parseInt(this.time).timeFormat());
+                            $("#tv-listbar-content").append(item);
                         });
-                        item.attr('video', this.oss_video);
-                        item.attr('audio', this.oss_audio);
-                        item.attr('id', this.id);
-                        item.find('.col2').html(this.name);
-                        item.find('.col3').html(parseInt(this.time).timeFormat());
-                        $("#tv-listbar-content").append(item);
-                    });
-
+                    }
                     if (typeof callback === 'function') {
                         callback(response);
                     }
