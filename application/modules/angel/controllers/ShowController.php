@@ -289,10 +289,14 @@ class Angel_ShowController extends Angel_Controller_Action {
                 if (!$score)
                     $score = 0;
                 
-                if ($time > 79)
-                    $score = $score + 1;
-                else
+                if ($time <  20)
                     $score = $score - 1;
+                else if ($time > 49)
+                    $score = $score + 1;
+                else if ($time > 79)
+                    $score = $score + 2;
+                else
+                    $score = $score;
                     
                 try {
                     $voteModel->saveVote($vote->id, $user_id, $p->id, $score);
