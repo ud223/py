@@ -252,7 +252,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         $('#tv-header .unvisiable').removeClass('unvisiable');
 
         $('#btn-refresh').click(function() {
-            
+
             $.waiting('一大波精彩节目正在向您走来 ...');
             var callback = function() {
                 setTimeout(function() {
@@ -321,7 +321,12 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
 
     });
     function playFunc(target, delayPlay) {
-        // send keyword preference here
+        var playing = $('.list-item.selected');
+        if (playing.length) {
+            // send keyword preference here
+            
+        }
+
         target.addClass('selected').find('.ico').removeClass('null').addClass('play');
         target.siblings('.list-item').removeClass('selected').find('.ico').addClass('null');
         var video_url = target.attr('video');
