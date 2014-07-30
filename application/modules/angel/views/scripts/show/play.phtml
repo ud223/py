@@ -296,22 +296,12 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                     error: function() {
                     }
                 });
-
                 // change url path
                 continuePlayFunc();
             }
-
         });
 
-
         getApiData(nextFunc);
-
-
-
-
-
-
-
 
         $('#seeking-testing-btn').click(function() {
             var t = $('#tv-screen').video('duration') - 5;
