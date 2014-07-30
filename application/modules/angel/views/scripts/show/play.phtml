@@ -1,9 +1,8 @@
 <?php
-    $player_mode = "video";
-    if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
-        $player_mode = $this->me->getUser()->attribute['player_mode'];
-    }
-    
+$player_mode = "video";
+if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
+    $player_mode = $this->me->getUser()->attribute['player_mode'];
+}
 ?>
 <div id="tv-footer" style="display:none">
 
@@ -26,6 +25,7 @@
             <!--<button id="tv-listbtn" class="ico"></button>-->
         </div>
     </div>
+
 
     <div id="tv-footer-mdbar">
 
@@ -69,11 +69,15 @@
     </div>
 
     <div id="tv-screen" class="layer text-center">
+
+        <div id="tv-louds" style="width:700px;height:320px;position:absolute;left:50%;top:50%;margin-left:-350px;margin-top:-210px;z-index:999;display:none">
+<!--            <img id="tv-louds-l" src="/img/speaker-big.png" style="width:320px;height:320px;left:0;top:0;position:absolute;"/>
+            <img id="tv-louds-r" src="/img/speaker-big.png" style="width:320px;height:320px;right:0;top:0;position:absolute;"/>-->
+            <img id="tv-louds-c" src="/img/speaker-big.png" style="width:320px;height:320px;left:50%;margin-left:-160px;top:0;position:absolute;"/>
+        </div>
         <video id="tv-video-player" preload oncontextmenu="return false;">
             <source>
         </video>
-        <audio id="tv-audio-player" preload oncontextmenu="return false;">
-        </audio>
     </div>
     <div id="tv-prog-title">
         <span class="tt"></span>
@@ -125,13 +129,65 @@
         </li>
     </ul>
 </div>
+
+
+
+<button id="seeking-testing-btn" style="position:fixed;z-index:100;bottom:100px;left:100px;padding:10px;">SEEKING BTN</button>
+
 <input type="hidden" id="uid" value="<?php echo $this->uid ?>"/>
 
 <script type="text/javascript">
     var init_player_mode = '<?php echo $player_mode; ?>';
-    
+
     $('document').ready(function() {
+
+        setInterval(function() {
+//            var l = $("#tv-louds-l");
+//            var r = $("#tv-louds-r");
+            var c = $('#tv-louds-c');
+
+            if ($('#tv-video-player').get(0).ended || c.attr('status') === 'stop') {
+                return;
+            }
+
+
+            var ts = new Date().getTime();
+            var t = ts % 7;
+            if (t > 2) {
+                c.addClass('big-c');
+                setTimeout(function() {
+                    c.removeClass('big-c');
+                }, 50);
+            }
+
+//            if (t === 0) {
+//                l.addClass('big-l');
+//                setTimeout(function() {
+//                    l.removeClass('big-l');
+//                }, 50);
+//            } else if (t === 1) {
+//                r.addClass('big-r');
+//                setTimeout(function() {
+//                    r.removeClass('big-r');
+//                }, 50);
+//            } else if (t === 2) {
+//                r.addClass('big-r');
+//                l.addClass('big-l');
+//                setTimeout(function() {
+//                    r.removeClass('big-r');
+//                    l.removeClass('big-l');
+//                }, 50);
+//            } else {
+//
+//            }
+        }, 101);
+
         $('.tv-toggle-unit[rel="' + init_player_mode + '"]').addClass('selected');
+        if (init_player_mode === 'audio') {
+            $('#tv-louds').show();
+            $('#tv-video-player').addClass('move-away');
+            $('body').data('auto-toggle-list-switch', 'off');
+        }
 
         // 网速失速
         $('#player').on('stalled', function() {
@@ -170,6 +226,7 @@
                 $('#tv-fs-pause-btn').hide();
                 $('#play').show();
                 $('#pause').hide();
+                $('#tv-louds-c').attr('status', 'stop');
             },
             onEnded: function() {
                 nextFunc();
@@ -179,6 +236,7 @@
                 $('#tv-fs-pause-btn').show();
                 $('#play').hide();
                 $('#pause').show();
+                $('#tv-louds-c').attr('status', 'play');
             }
         });
 
@@ -193,7 +251,7 @@
             });
         });
         $('#next').click(function() {
-            nextFunc()
+            nextFunc();
         });
         $('#prev').click(function() {
             prevFunc();
@@ -203,15 +261,30 @@
         $('#tv-header .unvisiable').removeClass('unvisiable');
 
         $('#btn-refresh').click(function() {
-            getApiData(nextFunc);
+            $.waiting('一大波精彩节目正在向您走来 ...');
+            var callback = function() {
+                setTimeout(function() {
+                    $.endWaiting();
+                    nextFunc();
+                }, 2500);
+            }
+            getApiData(callback);
         });
-        
+
         $('.tv-toggle-unit').click(function() {
             // change class
             var obj = $(this);
             if (!obj.hasClass('selected')) {
-                // change player
-                
+                // change player ui
+                $('#tv-louds').toggle();
+                $('#tv-video-player').toggleClass('move-away');
+                if (obj.attr('rel') === 'audio') {
+                    $('#tv-louds-c').attr('status', 'play');
+                    $('body').data('auto-toggle-list-switch', 'off');
+                } else {
+                    $('#tv-louds-c').attr('status', 'stop');
+                    $('body').data('auto-toggle-list-switch', 'on');
+                }
                 // save mode status
                 obj.addClass('selected').siblings('.tv-toggle-unit').removeClass('selected');
                 var mode = obj.attr('rel');
@@ -230,11 +303,11 @@
                     error: function() {
                     }
                 });
-                
-                // tv-video-player
+
+                // change url path
                 continuePlayFunc();
             }
-            
+
         });
 
 
@@ -248,27 +321,41 @@
         window.setInterval("$.rotateCd()", __dura);
 
         getApiData(nextFunc);
+
+
+
+
+
+
+
+
+        $('#seeking-testing-btn').click(function() {
+            var t = $('#tv-screen').video('duration') - 5;
+            $('#tv-screen').video('seek', false, t);
+        });
+
+
     });
-    function playFunc(target) {
+    function playFunc(target, delayPlay) {
         target.addClass('selected').find('.ico').removeClass('null').addClass('play');
         target.siblings('.list-item').removeClass('selected').find('.ico').addClass('null');
         var video_url = target.attr('video');
-        var audio_url = target.attr('audio');        
+        var audio_url = target.attr('audio');
         var url = video_url;
-        if($('.tv-toggle-unit.selected').attr('rel') === 'audio')
+        if ($('.tv-toggle-unit.selected').attr('rel') === 'audio')
             url = audio_url;
         var title = target.find('.tv-current-title').html();
         $('#tv-screen').video("restart", function() {
 //            $('#tv-cover').hide();
             $('#tv-prog-title .tt').html(title);
-        }, url);
+        }, url, delayPlay);
     }
     function continuePlayFunc() {
         var target = $('.list-item.itm.selected');
         var video_url = target.attr('video');
         var audio_url = target.attr('audio');
         var url = video_url;
-        if($('.tv-toggle-unit.selected').attr('rel') === 'audio')
+        if ($('.tv-toggle-unit.selected').attr('rel') === 'audio')
             url = audio_url;
         var currentTime = $('#tv-screen').video("currentTime");
         $('#tv-screen').video("restart", false, url);
@@ -315,7 +402,7 @@
     }
 
     function switchFunc() {
-        
+
     }
     function playListCount() {
         var list_item = $('#tv-listbar-content .list-item');
@@ -326,20 +413,20 @@
         }
     }
 
-    <?php
-      $url = $this->url(array("uid" => $this->uid, "sid" => "none"), "api-special-recommend");
-      $uid = $this->uid;
-    ?>
+<?php
+$url = $this->url(array("uid" => $this->uid, "sid" => "none"), "api-special-recommend");
+$uid = $this->uid;
+?>
     var userId = "<?php echo $uid ?>";
     var tmpUrl = "<?php echo $url ?>";
     var myUrl = tmpUrl;
 
-    
+
     function getApiData(callback) {
+        $('#tv-screen').video('pause');
         $.ajax({
             url: myUrl,
             dataType: 'json',
-            
             success: function(result) {
                 if (result.code === 200) {
                     myUrl = tmpUrl;
@@ -362,25 +449,41 @@
                         item.find('.col3').html(parseInt(this.time).timeFormat());
                         $("#tv-listbar-content").append(item);
                     });
-                    
+
                     if (typeof callback === 'function') {
                         callback();
                     }
-                    
                 }
+            },
+            error: function() {
+                $.endWaiting();
             }
         });
     }
-        //test vote
-//        url = "/api/keyword/vote";
-//        
-//        $.ajax({
-//            url: url,
-//            dataType: 'json',
-//            data: {time: '79' , pid: '53c79dcbb3580e78098b4567'},
-//           
-//            success: function(result) {
-//             //   alert(result.data);
-//            }
-//        });
 </script>
+
+<style>
+    .move-away {
+        position:fixed;
+        left:100000px;
+    }
+    .big-l {
+        left:-3px !important;
+        top:-3px !important;
+        width:326px !important;
+        height:326px !important;
+    }
+    .big-r {
+        width:326px !important;
+        height:326px !important;
+        right:-3px !important;
+        top:-3px !important;
+
+    }
+    .big-c {
+        width:326px !important;
+        height:326px !important;
+        margin-left:-163px !important;
+        margin-top:-2px;
+    }
+</style>

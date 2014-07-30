@@ -135,3 +135,14 @@ Plugin Css
     border-bottom-color:#333;
 }
 /* RESET POPOVER (END) */
+
+.rotatedivwrapper > .msg {
+    left:50%;
+    margin-left:-200px;
+    top:50%;
+    margin-top:72px;
+    position:absolute;
+    text-align:center;
+    text-shadow:0 0 5px rgba(0,0,0,0.7);
+    width:400px;
+}

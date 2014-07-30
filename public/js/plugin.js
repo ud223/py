@@ -727,12 +727,14 @@
                 callback();
             }
         },
-        restart: function(callback, src) {
+        restart: function(callback, src, delayPlay) {
             var self = $(this).get(0);
             $(this).video('setting', 'src', src);
             $(this).find('source').attr('src', src);
             self.load();
-            self.play();
+            if (!delayPlay) {
+                self.play();
+            }
             if (callback) {
                 callback();
             }
@@ -755,11 +757,8 @@
         },
         seek: function(perc, time) {
             var self = $(this).get(0);
-
-
             var seeking_id = setInterval(function() {
                 var seeking_in_id = $('body').data('seeking_id');
-                console.log('i am here' + seeking_in_id);
                 var readyState = self.readyState;
                 if (readyState === 4) {
                     $('body').data('seeking_id', null);
@@ -803,6 +802,10 @@
         currentTime: function() {
             var self = $(this).get(0);
             return self.currentTime;
+        },
+        duration: function() {
+            var self = $(this).get(0);
+            return self.duration;
         },
         fullscreen: function() {
             if (!$(this).data('fullscreen'))
