@@ -553,7 +553,7 @@
     };
 
     /* LOADING (START) */
-    $.waiting = function(msg) {
+    $.waiting = function(msg, container) {
         if ($('.rotatedivwrapper').length > 0) {
             return;
         }
@@ -566,7 +566,10 @@
             $('body').append(style);
         }
         var obja = $("<div>").addClass('rotatedivwrapper').append($('<div>').addClass('rotatediv'));
-        $('body').append(obja);
+        if (!container) {
+            container = $('body');
+        }
+        container.append(obja);
         var wp = $('.rotatedivwrapper');
         var wp_w = wp.width();
         var wp_h = wp.height();
@@ -872,7 +875,8 @@
             height: 'auto',
             width: 500,
             padding: 25,
-            textAlign: 'left'
+            textAlign: 'left',
+            containerBoxSelector : 'body'
         },
         popup: function(options) {
             var $popupsettings = $.extend({}, $.POPUPSETTINGSTMP, options);
@@ -893,7 +897,7 @@
 
             popupFrame.show();
             var clsbtn = $('<span>').addClass('P_closebtn').html("&times;");
-            $('body').append(popupFrame.append($(content).append(clsbtn)));
+            $($popupsettings.containerBoxSelector).append(popupFrame.append($(content).append(clsbtn)));
             var mt = "-" + $(content).height() / 2 + "px";
             $(content).css('margin-top', mt);
 
@@ -975,17 +979,17 @@
             else
                 wp = $('<div>').addClass('P_wp_msg').css('padding', 15).html(msg);
 
-            var cancel = $('<button>').attr('class','P_confirm_btn').attr('action', 'cancel').attr('type', 'button').html($popupsettings.cancelText);
-            cancel.click(function(){
+            var cancel = $('<button>').attr('class', 'P_confirm_btn').attr('action', 'cancel').attr('type', 'button').html($popupsettings.cancelText);
+            cancel.click(function() {
                 $.popupclose();
-                if($popupsettings.cancelCallback) {
+                if ($popupsettings.cancelCallback) {
                     $popupsettings.cancelCallback();
                 }
             });
-            var confirm = $('<button>').attr('class','P_confirm_btn').attr('action', 'confirm').attr('type', 'button').html($popupsettings.confirmText);
-            confirm.click(function(){
+            var confirm = $('<button>').attr('class', 'P_confirm_btn').attr('action', 'confirm').attr('type', 'button').html($popupsettings.confirmText);
+            confirm.click(function() {
                 $.popupclose();
-                if($popupsettings.confirmCallback) {
+                if ($popupsettings.confirmCallback) {
                     $popupsettings.confirmCallback();
                 }
             });

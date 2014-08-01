@@ -253,7 +253,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
 
         $('#btn-refresh').click(function() {
 
-            $.waiting('一大波精彩节目正在向您走来 ...');
+            $.waiting('一大波精彩节目正在向您走来 ...', $('#tv'));
             var callback = function(response) {
                 var msg = '<p>推送新专辑</p>';
                 msg += '<p style="color:#FFD800">' + response.data.name + '</p>';
@@ -266,6 +266,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                         width: 500,
                         height: 'auto',
                         cancelText: '换一波',
+                        containerBoxSelector: '#tv',
                         cancelCallback: function() {
                             $('#btn-refresh').click();
                         },
