@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category');
+    protected $login_not_required = array('detail', 'save-user-category', 'paypal-return', 'paypal-notify');
 
     public function init() {
         parent::init();
@@ -362,4 +362,124 @@ class Angel_ShowController extends Angel_Controller_Action {
 //
 //        $this->_helper->json(array('data' => 'save success!', 'code' => 200));
 //    }
+    
+    public function paypalReturnAction() {
+        //获取 PayPal 交易流水号 tx 
+        $tx_token = $_GET['tx']; 
+        //定义您的身份标记 
+        $auth_token = "CHANGE-TO-YOUR-TOKEN"; 
+        //形成验证字符串 
+        $req = " cmd=_notify-synch&tx=$tx_token&at=$auth_token"; 
+        //将交易流水号及身份标记返回 PayPal 验证 
+        $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n"; 
+        $header .= "Content-Type: application/x-www-form-urlencoded\r\n"; 
+        $header .= "Content-Length: " . strlen($req) . "\r\n\r\n"; 
+        $fp = fsockopen ('www.paypal.com', 80, $errno, $errstr, 30); 
+
+        if (!$fp) { 
+        // HTTP ERROR 
+        } 
+        else { 
+            fputs ($fp, $header . $req); 
+            //获取返回数据 
+            $res = ''; 
+            $headerdone = false; 
+
+            while (!feof($fp)) { 
+                $line = fgets ($fp, 1024); 
+                if (strcmp($line, "\r\n") == 0) { 
+                    //获取头 
+                    $headerdone = true; 
+                }else if ($headerdone){ 
+                //获取主体内容 
+                    $res .= $line; 
+                } 
+            } 
+            //解析获取内容 
+            $lines = explode("\n", $res); 
+            $keyarray = array(); 
+
+            if (strcmp ($lines[0], "SUCCESS") == 0) { 
+
+                for ($i=1; $i<count($lines);$i++){ 
+                    list($key,$val) = explode("=", $lines[$i]); 
+                    $keyarray[urldecode($key)] = urldecode($val); 
+                 } 
+                //检查交易付款状态 payment_status 是否为  „Completed‟ 
+                //检查交易流水号 txn_id 是否已经被处理过 
+                //检查接收 EMAIL receiver_email 是否为您的 PayPal 中已经注册的 EMAIL 
+                //检查金额 mc_gross 是否正确 
+                //…… 
+                //处理此次付款明细 
+                //该付款明细所有变量可参考： 
+                //https://www.paypal.com/IntegrationCenter/ic_ipn-pdt-variable-reference.html 
+                $name = $keyarray['first_name'] . ' ' . $keyarray['last_name']; 
+                $itemname = $keyarray['item_name']; 
+                $amount = $keyarray['mc_gross']; 
+
+                echo ("<p><h3>Thank you for you purchase!</h3></p>"); 
+                echo ("<b>Payment Details:</b><br>\n"); 
+                echo ("<li>Name: $name</li>\n"); 
+                echo ("<li>Item: $itemname</li>\n"); 
+                echo ("<li>Amount: $amount</li>\n"); 
+            }else if (strcmp ($lines[0], "FAIL") == 0) { 
+                //获取付款明细失败，记录并检查 
+            } 
+        } 
+
+        fclose ($fp);
+    }
+    
+    public function paypalNotifyAction() {
+        //从 PayPal 出读取 POST 信息同时添加变量„cmd‟ 
+        $req = 'cmd=_notify-validate'; 
+
+        foreach ($_POST as $key => $value) { 
+            $value = urlencode(stripslashes($value)); 
+            $req .= "&$key=$value"; 
+        } 
+        //建议在此将接受到的信息记录到日志文件中以确认是否收到 IPN 信息 
+        //将信息 POST 回给 PayPal 进行验证 
+        $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n"; 
+        $header .= "Content-Type:application/x-www-form-urlencoded\r\n"; 
+        $header .= "Content-Length:" . strlen($req) ."\r\n\r\n"; 
+        //在 Sandbox 情况下，设置： 
+        //$fp = fsockopen(„www.sandbox.paypal.com‟,80,$errno,$errstr,30); 
+        $fp = fsockopen ('www.paypal.com', 80, $errno, $errstr, 30); 
+        //将 POST 变量记录在本地变量中 
+        //该付款明细所有变量可参考： 
+        //https://www.paypal.com/IntegrationCenter/ic_ipn-pdt-variable-reference.html 
+        $item_name = $_POST['item_name']; 
+        $item_number = $_POST['item_number']; 
+        $payment_status = $_POST['payment_status']; 
+        $payment_amount = $_POST['mc_gross']; 
+        $payment_currency = $_POST['mc_currency']; 
+        $txn_id = $_POST['txn_id']; 
+        $receiver_email = $_POST['receiver_email']; 
+        $payer_email = $_POST['payer_email']; 
+        //… 
+        //判断回复 POST 是否创建成功 
+        if (!$fp) { 
+        //HTTP 错误 
+        }else { 
+            //将回复 POST 信息写入 SOCKET 端口 
+            fputs ($fp, $header .$req); 
+            //开始接受 PayPal 对回复 POST 信息的认证信息 
+            while (!feof($fp)) { 
+                $res = fgets ($fp, 1024); 
+        //已经通过认证 
+                if (strcmp ($res, "VERIFIED") == 0) { 
+                //检查付款状态 
+                //检查 txn_id 是否已经处理过 
+                //检查 receiver_email 是否是您的 PayPal 账户中的 EMAIL 地址 
+                //检查付款金额和货币单位是否正确 
+                //处理这次付款，包括写数据库 
+                }else if (strcmp ($res, "INVALID") == 0) { 
+                //未通过认证，有可能是编码错误或非法的 POST 信息 
+                } 
+            } 
+
+            fclose ($fp); 
+        } 
+    } 
 }
