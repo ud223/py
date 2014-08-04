@@ -123,7 +123,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
 
 
 
-<button id="seeking-testing-btn" style="position:fixed;z-index:100;bottom:100px;left:100px;padding:10px;">SEEKING BTN</button>
+<!--<button id="seeking-testing-btn" style="position:fixed;z-index:100;bottom:100px;left:100px;padding:10px;">SEEKING BTN</button>-->
 
 <input type="hidden" id="uid" value="<?php echo $this->uid ?>"/>
 
@@ -253,11 +253,28 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
 
         $('#btn-refresh').click(function() {
 
-            $.waiting('一大波精彩节目正在向您走来 ...');
-            var callback = function() {
+            $.waiting('一大波精彩节目正在向您走来 ...', $('#tv'));
+            var callback = function(response) {
+                var msg = '<p>推送新专辑</p>';
+                msg += '<p style="color:#FFD800">' + response.data.name + '</p>';
+                msg += '<p style="opacity:0.5">作者：' + response.data.author + '</p>';
                 setTimeout(function() {
                     $.endWaiting();
-                    nextFunc();
+                    var options = {
+                        msg: msg,
+                        confirmText: '立即收看',
+                        width: 500,
+                        height: 'auto',
+                        cancelText: '换一波',
+                        containerBoxSelector: '#tv',
+                        cancelCallback: function() {
+                            $('#btn-refresh').click();
+                        },
+                        confirmCallback: nextFunc
+                    };
+                    $.confirm(options);
+                    console.log(response);
+//                    nextFunc
                 }, 2500);
             }
             // "endWaiting" in "callback"
@@ -265,7 +282,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         });
 
         $('.tv-toggle-unit').click(function() {
-            // change class
+            // change classr
             var obj = $(this);
             if (!obj.hasClass('selected')) {
                 // change player ui
@@ -303,29 +320,29 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
 
         getApiData(nextFunc);
 
-        $('#seeking-testing-btn').click(function() {
-            var t = $('#tv-screen').video('duration') - 5;
-            $('#tv-screen').video('seek', false, t);
-        });
+//        $('#seeking-testing-btn').click(function() {
+//            var t = $('#tv-screen').video('duration') - 5;
+//            $('#tv-screen').video('seek', false, t);
+//        });
 
 
     });
     function playFunc(target, delayPlay) {
         var playing = $('.list-item.selected');
- 
+
         if (playing.length) {
             // send keyword preference here
             var duration = $('#tv-screen').video("duration");
             var currentTime = $('#tv-screen').video("currentTime");
             var pid = playing.attr('id');
 
-            var tmpPer = currentTime / duration * 100;           
+            var tmpPer = currentTime / duration * 100;
             var per = Math.floor(tmpPer);
-            
-            <?php
-                $url = $this->url(array(), "api-keyword-vote");
-            ?>
-            
+
+<?php
+$url = $this->url(array(), "api-keyword-vote");
+?>
+
             var url = '<?php echo $url ?>';
             var data = {'time': per, 'pid': pid};
 
@@ -433,30 +450,31 @@ $uid = $this->uid;
         $.ajax({
             url: myUrl,
             dataType: 'json',
-            success: function(result) {
-                if (result.code === 200) {
+            success: function(response) {
+                if (response.code === 200) {
                     myUrl = tmpUrl;
-                    myUrl = myUrl.replace('none', result.data.id);
+                    myUrl = myUrl.replace('none', response.data.id);
 
-                    $("#tv-special-name").html(result.data.name);
-                    $("#tv-author-name").html(result.data.author);
-                    $("#tv-author-img").css('background-image', 'url(' + result.data.photo + ')');
+                    $("#tv-special-name").html(response.data.name);
+                    $("#tv-author-name").html(response.data.author);
+                    $("#tv-author-img").css('background-image', 'url(' + response.data.photo + ')');
                     $("#tv-listbar-content").empty();
-                    $.each(result.data.programs, function() {
-                        var item = $(".P_tmp .list-item").clone(true);
-                        item.click(function() {
-                            playFunc($(this).closest('.list-item'));
+                    if (response.data.programs) {
+                        $.each(response.data.programs, function() {
+                            var item = $(".P_tmp .list-item").clone(true);
+                            item.click(function() {
+                                playFunc($(this).closest('.list-item'));
+                            });
+                            item.attr('video', this.oss_video);
+                            item.attr('audio', this.oss_audio);
+                            item.attr('id', this.id);
+                            item.find('.col2').html(this.name);
+                            item.find('.col3').html(parseInt(this.time).timeFormat());
+                            $("#tv-listbar-content").append(item);
                         });
-                        item.attr('video', this.oss_video);
-                        item.attr('audio', this.oss_audio);
-                        item.attr('id', this.id);
-                        item.find('.col2').html(this.name);
-                        item.find('.col3').html(parseInt(this.time).timeFormat());
-                        $("#tv-listbar-content").append(item);
-                    });
-
+                    }
                     if (typeof callback === 'function') {
-                        callback();
+                        callback(response);
                     }
                 }
             },
