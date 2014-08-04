@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'paypal-return', 'paypal-notify');
+    protected $login_not_required = array('detail', 'save-user-category', 'paypal-return', 'paypal-notify', 'paypal-pay');
 
     public function init() {
         parent::init();
@@ -482,4 +482,8 @@ class Angel_ShowController extends Angel_Controller_Action {
             fclose ($fp); 
         } 
     } 
+    
+    public function paypalPayAction() {
+        
+    }
 }
