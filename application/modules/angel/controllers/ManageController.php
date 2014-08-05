@@ -1351,16 +1351,32 @@ class Angel_ManageController extends Angel_Controller_Action {
                     $this->view->photo = $saveObj;
                 }
 
-                $notOwnPrograms = $programModel->getProgramNotOwn($programIds);
+                $all_programs = $programModel->getAll(false);
                 
+                $OwnPrograms = $programModel->getProgramOwn($programIds);
+
+                        
                 $programs = array();
 
-                foreach ($notOwnPrograms as $program) {
-                    $programs[] = $program;
-                }
-                
-                foreach ($target->program as $program) {
-                    $programs[] = $program;
+                foreach ($all_programs as $program) {
+                    $isLoad = true;
+                    
+                    foreach ($OwnPrograms as $o) {
+                        
+                        if ($program->id == $o->id) {
+                            $isLoad = false;
+                            
+                            foreach ($target->program as $p) {
+                                if ($program->id == $p->id) {
+                                    $isLoad = true;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if ($isLoad) {
+                        $programs[] = $program;
+                    }
                 }
                 
                 $this->view->authors = $authorModel->getAll(false);

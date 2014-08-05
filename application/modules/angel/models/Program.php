@@ -152,6 +152,32 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         return $result;
     }
     
+    public function getProgramOwn($programs_id) { 
+        $query = null;
+        
+        if (count($programs_id) < 1 || $programs_id[0] == "") {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->find()->sort('created_at', -1);
+        }
+        else {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->in($programs_id)->sort('created_at', -1);
+        }
+
+        $result = $query
+                ->getQuery();
+        
+        return $result;
+    }
+    
+//    public function getAll() { 
+//        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+//
+//        $result = $query
+//                ->getQuery()
+//                ->execute();
+//
+//        return $result;
+//    }
+    
     public function getProgramBySpecialId($programs_id) {
         if (count($programs_id) < 1 || $programs_id[0] == "") {
             return null;
