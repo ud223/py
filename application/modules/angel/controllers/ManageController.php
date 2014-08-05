@@ -1274,7 +1274,10 @@ class Angel_ManageController extends Angel_Controller_Action {
             $photo = $this->decodePhoto();
             $categoryId = $this->request->getParam('categoryId');
 
-            $programs_id = $this->request->getParam('programs');
+            $tmp_program_id = $this->request->getParam('programs');
+         //   echo $programs_id; exit;
+             
+            $programs_id = explode(",", $tmp_program_id);
             
             $programs = array();
             
@@ -1351,36 +1354,12 @@ class Angel_ManageController extends Angel_Controller_Action {
                     $this->view->photo = $saveObj;
                 }
 
-                $all_programs = $programModel->getAll(false);
-                
-                $OwnPrograms = $programModel->getProgramOwn($programIds);
-
-                        
-                $programs = array();
-
-                foreach ($all_programs as $program) {
-                    $isLoad = true;
-                    
-                    foreach ($OwnPrograms as $o) {
-                        
-                        if ($program->id == $o->id) {
-                            $isLoad = false;
-                            
-                            foreach ($target->program as $p) {
-                                if ($program->id == $p->id) {
-                                    $isLoad = true;
-                                }
-                            }
-                        }
-                    }
-                    
-                    if ($isLoad) {
-                        $programs[] = $program;
-                    }
-                }
+                $own_programs = $programModel->getProgramOwn($programIds);
+                $not_own_programs = $programModel->getProgramNotOwn($programIds);
                 
                 $this->view->authors = $authorModel->getAll(false);
-                $this->view->programs = $programs;
+                $this->view->own_programs = $target->program;
+                $this->view->not_own_programs = $not_own_programs;
                 $this->view->categorys = $categoryModel->getAll();
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
