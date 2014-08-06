@@ -1162,7 +1162,9 @@ class Angel_ManageController extends Angel_Controller_Action {
             $authorId = $this->request->getParam('authorId');
             $photo = $this->decodePhoto();
             $categoryId = $this->request->getParam('categoryId');
-            $programs_id = $this->request->getParam('programs');
+            $tmp_program_id = $this->request->getParam('programs');
+
+            $programs_id = explode(",", $tmp_program_id);
             
             $programs = array();
             
@@ -1183,8 +1185,8 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
         } else {
-            $result = $specialModel->getAll();
-
+            $result = $specialModel->getAll(false);
+                
             $ownProgramIds = "";
 
             foreach ($result as $special) {
@@ -1202,9 +1204,11 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             $programIds = explode(",", $ownProgramIds);
             
+            $not_own_programs = $programModel->getProgramNotOwn($programIds);
+            
             $this->view->title = "创建专辑";
             $this->view->authors = $authorModel->getAll(false);
-            $this->view->programs = $programModel->getProgramNotOwn($programIds);
+            $this->view->not_own_programs = $not_own_programs;
             $this->view->categorys = $categoryModel->getRoot();
         }
     }
@@ -1275,8 +1279,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $categoryId = $this->request->getParam('categoryId');
 
             $tmp_program_id = $this->request->getParam('programs');
-         //   echo $programs_id; exit;
-             
+
             $programs_id = explode(",", $tmp_program_id);
             
             $programs = array();
