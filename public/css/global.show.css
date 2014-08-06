@@ -467,7 +467,7 @@ h3 {
 #tv #tv-prog-title {
     background:rgba(0,0,0,0.2);
     border-radius:100px;
-    bottom:140px;
+    bottom:190px;
     color: #FFF;
     font-size: 18px;
     font-weight: bold;
@@ -699,7 +699,7 @@ h3 {
     border-radius: 8px;
     box-sizing: content-box;
     box-shadow: inset 0 0 1px rgba(255,255,255,0.5), 0 0 6px rgba(0,0,0,0.5);
-    top: 42%;
+    top: 38%;
     display: none;
     height: 300px;
     overflow: hidden;
@@ -708,7 +708,7 @@ h3 {
     width: 360px;
     margin-left:-181px;
     margin-top:-150px;
-    z-index: 2;
+    z-index: 3;
 }
 #tv #tv-listbar-title {
     background: url(../img/title-bg-dark.png) center bottom;
@@ -815,7 +815,7 @@ h3 {
     background:url(../img/title-bg.png) center bottom;
     border: 1px solid rgba(0,0,0,0.5);
     border-radius:1000px;
-    bottom:50px;
+    bottom:100px;
     box-sizing:content-box;
     box-shadow:inset 0 0 1px rgba(255,255,255,0.32), 0 0 12px rgba(0,0,0,0.6);
     height:auto;
