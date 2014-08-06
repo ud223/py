@@ -35,3 +35,9 @@ form[role='form'] {
 #save-btn {
     margin-top:20px;
 }
+.gy-program {
+    padding:10px;
+}
+.gy-program .gy-sd {
+    float:left;
+}
