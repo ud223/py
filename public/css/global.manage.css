@@ -35,9 +35,20 @@ form[role='form'] {
 #save-btn {
     margin-top:20px;
 }
-.gy-program {
+.gy-program-block {
     padding:10px;
 }
-.gy-program .gy-sd {
+.gy-program-block .gy-sd {
     float:left;
+    padding:40px;
+}
+.gy-program-block .gy-sd .sel {
+    background:#04CC54;
+    color:#FFF;
+    font-size:smaller;
+    padding:2px 5px;
+    position:absolute;
+    right:0;
+    top:0;
+    width:auto;
 }
