@@ -131,10 +131,10 @@
         
         for (var i = 0; i < buttons.length; i++) {
             if ($(buttons[i]).html() != "O") {
-                $(buttons[i]).css('display', 'none');
+                $(buttons[i]).hide();
             }
             else {
-                $(buttons[i]).css('display', '');
+                $(buttons[i]).show();
             }
         }
         
@@ -176,10 +176,10 @@
         
         for (var i = 0; i < buttons.length; i++) {
             if ($(buttons[i]).html() == "O") {
-                $(buttons[i]).css('display', 'none');
+                $(buttons[i]).hide();
             }
             else {
-                $(buttons[i]).css('display', '');
+                $(buttons[i]).show();
             }
         }
         
