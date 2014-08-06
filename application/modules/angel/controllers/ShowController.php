@@ -366,6 +366,9 @@ class Angel_ShowController extends Angel_Controller_Action {
     public function paypalReturnAction() {
         //获取 PayPal 交易流水号 tx 
         $tx_token = $_GET['tx']; 
+        echo $tx_token;  
+        echo '??php??';
+        exit;
         //定义您的身份标记 
         $auth_token = "CHANGE-TO-YOUR-TOKEN"; 
         //形成验证字符串 
