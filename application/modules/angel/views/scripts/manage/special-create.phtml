@@ -44,13 +44,25 @@
                 <input type="hidden" name="photo" id="photo"/>
             </div>
             <div class="form-group">
-                <label>选择节目：</label>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <?php foreach ($this->programs as $program): ?>
-                            <span class="label label-default pull-left marginright10px marginbottom10px">
-                                <input type="checkbox" name="programs[]" value="<?php echo $program->id ?>" id="<?php echo $program->id ?>"> <label for="<?php echo $program->id ?>"><?php echo $program->name ?></label><br>
-                            </span>
+                <label>拥有节目：</label>
+                <div class="panel panel-info">
+                    <div id="gy-program">
+                    </div>
+                </div>
+                <input type="hidden" name="programs" id="programs"/>
+            </div>
+            <div class="form-group">
+                <label>未绑定节目：</label>
+                <div class="panel panel-info">
+                    <div id="not-program">
+                        <?php foreach ($this->not_own_programs as $p): ?>
+                            <div class="gy-sd" style="width: 100px; height: 100px" id="<?php echo $p->id ?>" name="<?php echo $p->id ?>">
+                                <button type="button" class="rm" style="display: none" onclick="del('<?php echo $p->id ?>')" >×</button>
+                                <button type="button" class="lt" style="display: none" onclick="left('<?php echo $p->id ?>')">&lt;</button>
+                                <button type="button" class="rt" style="display: none" onclick="right('<?php echo $p->id ?>')">&gt;</button>
+                                <button type="button" class="rt" onclick="addProgram('<?php echo $p->id ?>')">O</button>
+                                <?php echo $p->name ?>
+                            </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -75,4 +87,104 @@
             $(this).closest('.label').toggleClass('label-success');
         });
     })(jQuery);
+    
+    function left(id) {
+        var own_programs = $('#gy-program').children();
+
+        if ($(own_programs[0]).attr('id') == id) {
+            return;
+        }
+
+        var cur_program = $('#'+ id);
+        var lf_program = $(cur_program).prev('div');
+        
+        $(lf_program).remove();
+        
+        $(cur_program).after(lf_program);
+        
+        sortValue();
+    }
+    
+    function right(id) {
+        var own_programs = $('#gy-program').children();
+
+        if ($(own_programs[own_programs.length - 1]).attr('id') == id) {
+            return;
+        }
+
+        var cur_program = $('#'+ id);
+        var rt_program = $(cur_program).next('div');
+        
+        $(rt_program).remove();
+        
+        $(cur_program).before(rt_program);
+        
+        sortValue();
+    }
+    
+    function del(id) {
+        var del_program = $('#'+ id);
+        
+        $(del_program).remove();
+        
+        var buttons = $(del_program).children('button');
+        
+        for (var i = 0; i < buttons.length; i++) {
+            if ($(buttons[i]).html() != "O") {
+                $(buttons[i]).css('display', 'none');
+            }
+            else {
+                $(buttons[i]).css('display', '');
+            }
+        }
+        
+        $(del_program).on("click", addProgram($(del_program).attr('id')));
+        
+        $('#not-program').append(del_program);
+        
+        sortValue();
+    }
+    
+    function sortValue() {
+        $('#programs').val("");
+        
+        var own_programs = $('#gy-program').children();
+        
+        for (var i = 0; i < own_programs.length;i++) {
+            if ($('#programs').val() != "") {
+                var val = $('#programs').val();
+                
+                $('#programs').val(val + ',');
+            }
+            
+            var val = $('#programs').val();
+            
+            $('#programs').val(val + $(own_programs[i]).attr('id'));
+        }
+    }
+    
+    function addProgram(id) {
+        var add_programs = $('#'+ id);
+        
+        var par_ele = $(add_programs).parent();
+        
+        if ($(par_ele).attr('id') == 'gy-program') {
+            return;
+        }
+        
+        var buttons = $(add_programs).children('button');
+        
+        for (var i = 0; i < buttons.length; i++) {
+            if ($(buttons[i]).html() == "O") {
+                $(buttons[i]).css('display', 'none');
+            }
+            else {
+                $(buttons[i]).css('display', '');
+            }
+        }
+        
+        $('#gy-program').append(add_programs);
+        
+        sortValue();
+    }
 </script>
