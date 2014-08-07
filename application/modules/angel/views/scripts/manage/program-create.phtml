@@ -103,14 +103,26 @@
             </div>
             <div class="form-group">
                 <?php foreach ($this->keywords as $keyword): ?>
-                    <input type="checkbox" name="keyword[]" value="<?php echo $keyword->id ?>"> <?php echo $keyword->name ?><br>
+                    <div  style="float:left" >
+                        <input id="<?php echo $keyword->id ?>" type="checkbox" name="keyword[]" value="<?php echo $keyword->id ?>" 
+                        <?php
+                            foreach ($this->model->keyword as $p) {
+                                if ($keyword->id == $p->id) {
+                                    echo "checked='checked'";
+
+                                    break;
+                                }
+                            }
+                            ?>/> <label class="marginright10px" for="<?php echo $keyword->id ?>"><?php echo $keyword->name ?></label>
+                        </div>
                 <?php endforeach; ?>
-                 <?php 
+                <?php
                     if (count($this->keywords) == 0) {
-                        echo '<a href="'.$this->url(array(), "manage-keyword-list-home").'" class="butn btn-default" target="_blank">暂时没有关键词可以关联， 现在添加</a>';
-                    }    
-                ?>     
+                        echo '<a href="' . $this->url(array(), "manage-keyword-list-home") . '" class="butn btn-default" target="_blank">暂时没有关键词可以关联， 现在添加</a>';
+                    }
+                ?>
             </div>
+            <div class="clear-20"></div>
             <div class="form-group">
                 <label>音频文件：</label>
                 <select id="oss_audio" name="oss_audio" value="">

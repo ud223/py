@@ -24,17 +24,25 @@
             </div>
             <div class="form-group">
                 <label>分类：</label>
-                <select id="categoryId" name="categoryId" value="">
-                    <option value="">分类</option>
-                    <?php foreach ($this->categorys as $category): ?>
-                        <option value="<?php echo $category->id ?>">
-                            <?php
-                            echo $category->name;
-                            ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
             </div>
+            <div class="form-group">
+                <?php foreach ($this->categorys as $category): ?>
+                    <div  style="float:left" >
+                        <input id="<?php echo $category->id ?>" type="radio" name="categoryId" value="<?php echo $category->id ?>" 
+                        <?php
+                            if ($this->model->categoryId == $category->id) {
+                                echo "checked='checked'";
+                            }
+                        ?>/> <label class="marginright10px" for="<?php echo $category->id ?>"><?php echo $category->name ?></label>
+                        </div>
+                <?php endforeach; ?>
+                <?php
+                    if (count($this->categorys) == 0) {
+                        echo '<a href="' . $this->url(array(), "manage-category-list-home") . '" class="butn btn-default" target="_blank">暂时没有分类可以关联， 现在添加</a>';
+                    }
+                ?>
+            </div>
+            <div class="clear-20"></div>
             <div class="form-group">
                 <label>专辑图片：</label>
                 <div class='panel panel-info'>
@@ -60,7 +68,7 @@
                                 <button type="button" class="rm" style="display: none" onclick="del('<?php echo $p->id ?>')" >×</button>
                                 <button type="button" class="lt" style="display: none" onclick="left('<?php echo $p->id ?>')">&lt;</button>
                                 <button type="button" class="rt" style="display: none" onclick="right('<?php echo $p->id ?>')">&gt;</button>
-                                <button type="button" class="rt" onclick="addProgram('<?php echo $p->id ?>')">选择</button>
+                                <button type="button" class="rt sel" onclick="addProgram('<?php echo $p->id ?>')">选择</button>
                                 <?php echo $p->name ?>
                             </div>
                         <?php endforeach; ?>
@@ -130,7 +138,7 @@
         var buttons = $(del_program).children('button');
         
         for (var i = 0; i < buttons.length; i++) {
-            if ($(buttons[i]).html() != "选择") {
+            if ($(buttons[i]).html() != "O") {
                 $(buttons[i]).hide();
             }
             else {
@@ -175,7 +183,7 @@
         var buttons = $(add_programs).children('button');
         
         for (var i = 0; i < buttons.length; i++) {
-            if ($(buttons[i]).html() == "选择") {
+            if ($(buttons[i]).html() == "O") {
                 $(buttons[i]).hide();
             }
             else {
