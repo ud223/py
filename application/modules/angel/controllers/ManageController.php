@@ -1213,7 +1213,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->title = "创建专辑";
             $this->view->authors = $authorModel->getAll(false);
             $this->view->not_own_programs = $not_own_programs;
-            $this->view->categorys = $categoryModel->getAll();
+            $this->view->categorys = $categoryModel->getAll(false);
         }
     }
 
@@ -1364,10 +1364,12 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $own_programs = $programModel->getProgramOwn($programIds);
                 $not_own_programs = $programModel->getProgramNotOwn($programIds);
                 
+                $categorys = $categoryModel->getAll(false);
+  
+                $this->view->categorys = $categorys;
                 $this->view->authors = $authorModel->getAll(false);
                 $this->view->own_programs = $target->program;
                 $this->view->not_own_programs = $not_own_programs;
-                $this->view->categorys = $categoryModel->getAll();
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
             }
