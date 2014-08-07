@@ -1271,15 +1271,15 @@ class Angel_ManageController extends Angel_Controller_Action {
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
+            
             $id = $this->request->getParam('id');
             $name = $this->request->getParam('name');
             $authorId = $this->request->getParam('authorId');
 
             $photo = $this->decodePhoto();
             $categoryId = $this->request->getParam('categoryId');
-
             $tmp_program_id = $this->request->getParam('programs');
-
+            
             $programs_id = explode(",", $tmp_program_id);
             
             $programs = array();
