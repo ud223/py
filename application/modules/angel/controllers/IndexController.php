@@ -13,6 +13,9 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->_forward('login');
     }
 
+    public function upgradeAction() {
+    }
+    
     public function subscribeAction() {
         if ($this->request->isXmlHttpRequest() && $this->request->isPost()) {
             try {
