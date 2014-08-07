@@ -28,17 +28,17 @@
     <?php if ($this->resource): ?>
         <?php foreach ($this->resource as $p): ?>
             <?php
-            $root = $p['root'];
-            $children = $p['children'];
+//            $root = $p['root'];
+//            $children = $p['children'];
             ?>
             <div class="col-md-2">
                 <div class="itm">
                     <div class="paddingbox10px relative">
-                        <p><?php echo $root->name ?></p>
+                        <p><?php echo $p->name ?></p>
                         <div class="btn-group">
-                            <a type="button" href="<?php echo $this->url(array(id => $root->id), 'manage-category-save') ?>" class="btn btn-info btn-sm">编辑</a>
+                            <a type="button" href="<?php echo $this->url(array(id => $p->id), 'manage-category-save') ?>" class="btn btn-info btn-sm">编辑</a>
                             <!--<button type="button" class="btn btn-danger btn-sm remove-category">删除</button>-->
-                            <?php if (!$this->specialMode->getSpecialByCategory($root->id)): ?>
+                            <?php if (!$this->specialMode->getSpecialByCategory($p->id)): ?>
                                 <button type="button" class="btn btn-danger btn-sm remove-category">删除</button>
                             <?php else: ?>
                                 <label class="xs">被引用</label>

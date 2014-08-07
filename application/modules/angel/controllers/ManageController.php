@@ -835,24 +835,28 @@ class Angel_ManageController extends Angel_Controller_Action {
     public function categoryListAction() {
         $categoryModel = $this->getModel('category');
         $programModel = $this->getModel('program');
-        $root = $categoryModel->getRoot();
+        $resource = $categoryModel->getAll(false);
+        
         $this->view->title = "分类列表";
         $this->view->categoryModel = $categoryModel;
         $this->view->programModel = $programModel;
-        if (count($root)) {
-            $resource = array();
-            foreach ($root as $r) {
-                $resource[] = array('root' => $r, 'children' => $categoryModel->getByParent($r->id));
-            }
-            // JSON FORMAT
-            if ($this->getParam('format') == 'json') {
-                $this->_helper->json(array('data' => $resource,
-                    'code' => 200));
-            } else {
-                $this->view->resource = $resource;
-                $this->view->specialMode = $this->getModel('special');
-            }
-        }
+//        if (count($root)) {
+//            $resource = array();
+//            foreach ($root as $r) {
+//                $resource[] = array('root' => $r, 'children' => $categoryModel->getByParent($r->id));
+//            }
+//            // JSON FORMAT
+//            if ($this->getParam('format') == 'json') {
+//                $this->_helper->json(array('data' => $resource,
+//                    'code' => 200));
+//            } else {
+//                $this->view->resource = $resource;
+//                $this->view->specialMode = $this->getModel('special');
+//            }
+//        }
+
+        $this->view->resource = $resource;
+        $this->view->specialMode = $this->getModel('special');
     }
 
     public function categoryRemoveAction() {
@@ -1209,7 +1213,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->title = "创建专辑";
             $this->view->authors = $authorModel->getAll(false);
             $this->view->not_own_programs = $not_own_programs;
-            $this->view->categorys = $categoryModel->getRoot();
+            $this->view->categorys = $categoryModel->getAll();
         }
     }
 
