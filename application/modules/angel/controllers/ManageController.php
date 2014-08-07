@@ -1168,7 +1168,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             
             $programs = array();
             
-            if (is_array($programs_id)) {
+            if (is_array($programs_id) && $programs_id[0] != "") {
                 foreach ($programs_id as $p) {
                     $programs[] = $programModel->getById($p);
                 }
@@ -1271,7 +1271,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
-            
+
             $id = $this->request->getParam('id');
             $name = $this->request->getParam('name');
             $authorId = $this->request->getParam('authorId');
@@ -1283,8 +1283,8 @@ class Angel_ManageController extends Angel_Controller_Action {
             $programs_id = explode(",", $tmp_program_id);
             
             $programs = array();
-            
-            if (is_array($programs_id)) {
+
+            if (is_array($programs_id) && $programs_id[0] != "") {
                 foreach ($programs_id as $p) {
                     $programs[] = $programModel->getById($p);
                 }
