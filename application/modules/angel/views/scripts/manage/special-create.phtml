@@ -60,7 +60,7 @@
                                 <button type="button" class="rm" style="display: none" onclick="del('<?php echo $p->id ?>')" >×</button>
                                 <button type="button" class="lt" style="display: none" onclick="left('<?php echo $p->id ?>')">&lt;</button>
                                 <button type="button" class="rt" style="display: none" onclick="right('<?php echo $p->id ?>')">&gt;</button>
-                                <button type="button" class="rt" onclick="addProgram('<?php echo $p->id ?>')">O</button>
+                                <button type="button" class="rt" onclick="addProgram('<?php echo $p->id ?>')">选择</button>
                                 <?php echo $p->name ?>
                             </div>
                         <?php endforeach; ?>
@@ -130,7 +130,7 @@
         var buttons = $(del_program).children('button');
         
         for (var i = 0; i < buttons.length; i++) {
-            if ($(buttons[i]).html() != "O") {
+            if ($(buttons[i]).html() != "选择") {
                 $(buttons[i]).hide();
             }
             else {
@@ -175,7 +175,7 @@
         var buttons = $(add_programs).children('button');
         
         for (var i = 0; i < buttons.length; i++) {
-            if ($(buttons[i]).html() == "O") {
+            if ($(buttons[i]).html() == "选择") {
                 $(buttons[i]).hide();
             }
             else {
