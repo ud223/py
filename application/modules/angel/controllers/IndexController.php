@@ -2,7 +2,7 @@
 
 class Angel_IndexController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('index', 'subscribe', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password', 'version-get', 'device', 'device-count');
+    protected $login_not_required = array('index', 'upgrade', 'subscribe', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password', 'version-get', 'device', 'device-count');
 
     public function init() {
         $this->_helper->layout->setLayout('normal');
@@ -13,6 +13,10 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->_forward('login');
     }
 
+    public function upgradeAction() {
+        $this->_helper->layout->setLayout('upgrade');
+    }
+    
     public function subscribeAction() {
         if ($this->request->isXmlHttpRequest() && $this->request->isPost()) {
             try {
