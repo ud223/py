@@ -366,6 +366,9 @@ class Angel_ShowController extends Angel_Controller_Action {
     public function paypalReturnAction() {
         //获取 PayPal 交易流水号 tx 
         $tx_token = $_GET['tx']; 
+        echo $tx_token;  
+        echo '??php??';
+        exit;
         //定义您的身份标记 
         $auth_token = "CHANGE-TO-YOUR-TOKEN"; 
         //形成验证字符串 
@@ -374,7 +377,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n"; 
         $header .= "Content-Type: application/x-www-form-urlencoded\r\n"; 
         $header .= "Content-Length: " . strlen($req) . "\r\n\r\n"; 
-        $fp = fsockopen ('www.paypal.com', 80, $errno, $errstr, 30); 
+        $fp = fsockopen ('www.sandbox.paypal.com', 80, $errno, $errstr, 30); 
 
         if (!$fp) { 
         // HTTP ERROR 
