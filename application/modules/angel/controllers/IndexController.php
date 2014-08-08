@@ -139,7 +139,7 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function versionGetAction() {
         $versionModel = $this->getModel('version');
         
-        $sys = $this->request->getParam('name');
+        $sys = $this->request->getParam('sys');
         
         $result = $versionModel->getNewVersion($sys);
         
@@ -153,10 +153,10 @@ class Angel_IndexController extends Angel_Controller_Action {
             $version["update"] = $result->update;
             $version["url"] = $result->url;
             
-            $this->_helper->json(array('data' => $result->count, 'code' => 200));
+            $this->_helper->json(array('data' => $result->name, 'code' => 200));
         }
         else {
-            $this->_helper->json(array('data' => '1.0', 'code' => 200));
+            $this->_helper->json(array('data' => '1.0', 'code' => 0));
         }
     }
 }

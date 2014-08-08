@@ -38,13 +38,12 @@ class Angel_Model_Version extends Angel_Model_AbstractModel {
     
     public function getNewVersion($sys) {
         $result = false;
-        
+
         $version = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('sys')->equals($sys)->sort('created_at', -1)
-                ->getQuery()
-                ->getSingleResult();
-        
-        if (!empty($version)) {
+                ->getQuery()->getSingleResult();
+
+        if ($version) {
             $result = $version;
         }
 
