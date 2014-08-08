@@ -153,7 +153,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             $version["update"] = $result->update;
             $version["url"] = $result->url;
             
-            $this->_helper->json(array('data' => $result->name, 'code' => 200));
+            $this->_helper->json(array('data' => $version, 'code' => 200));
         }
         else {
             $this->_helper->json(array('data' => '1.0', 'code' => 0));

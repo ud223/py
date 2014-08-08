@@ -10,19 +10,34 @@
             </div>
             <div class="form-group">
                 <label>系统：</label>
-                <input type="text" class="form-control" id="name" name="sys" data-toggle="popover" value="<?php echo $this->model->sys ?>">
+                <!--<input type="text" class="form-control" id="sys" name="sys" data-toggle="popover" value="<?php echo $this->model->sys ?>">-->
+                <select  class="form-control" id="sys" name="sys" data-toggle="popover" >
+                    <option value ="ios" 
+                        <?php 
+                            if ($this->model->sys == 'ios') { 
+                                echo 'selected'; 
+                                
+                            } 
+                        ?>>ios</option>
+                    <option value ="android" <?php 
+                            if ($this->model->sys == 'android') { 
+                                echo 'selected'; 
+                                
+                            } 
+                        ?>>android</option>
+                </select>
             </div>
             <div class="form-group">
                 <label>更新：</label>
-                <input type="text" class="form-control" id="name" name="fix" data-toggle="popover" value="<?php echo $this->model->fix ?>">
+                <input type="text" class="form-control" id="fix" name="fix" data-toggle="popover" value="<?php echo $this->model->fix ?>">
             </div>
             <div class="form-group">
                 <label>修复：</label>
-                <input type="text" class="form-control" id="name" name="update" data-toggle="popover" value="<?php echo $this->model->update ?>">
+                <input type="text" class="form-control" id="update" name="update" data-toggle="popover" value="<?php echo $this->model->update ?>">
             </div>
             <div class="form-group">
                 <label>链接：</label>
-                <input type="text" class="form-control" id="name" name="url" data-toggle="popover" value="<?php echo $this->model->url ?>">
+                <input type="text" class="form-control" id="url" name="url" data-toggle="popover" value="<?php echo $this->model->url ?>">
             </div>
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
         </form>
