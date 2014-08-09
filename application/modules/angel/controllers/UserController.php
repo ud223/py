@@ -28,7 +28,7 @@ class Angel_UserController extends Angel_Controller_Action {
                
         $this->view->model = $user;
         $this->view->userId = $uid;
-        $this->view->categories = $categoryModel->getRoot();
+        $this->view->categories = $categoryModel->getAll(false);
         $this->view->title = "我的兴趣";    
     }
 

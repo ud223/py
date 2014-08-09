@@ -835,26 +835,14 @@ class Angel_ManageController extends Angel_Controller_Action {
     public function categoryListAction() {
         $categoryModel = $this->getModel('category');
         $programModel = $this->getModel('program');
+        $userModel = $this->getModel('User');
+        
         $resource = $categoryModel->getAll(false);
         
         $this->view->title = "分类列表";
         $this->view->categoryModel = $categoryModel;
         $this->view->programModel = $programModel;
-//        if (count($root)) {
-//            $resource = array();
-//            foreach ($root as $r) {
-//                $resource[] = array('root' => $r, 'children' => $categoryModel->getByParent($r->id));
-//            }
-//            // JSON FORMAT
-//            if ($this->getParam('format') == 'json') {
-//                $this->_helper->json(array('data' => $resource,
-//                    'code' => 200));
-//            } else {
-//                $this->view->resource = $resource;
-//                $this->view->specialMode = $this->getModel('special');
-//            }
-//        }
-
+        $this->view->userModel = $userModel;
         $this->view->resource = $resource;
         $this->view->specialMode = $this->getModel('special');
     }
@@ -885,6 +873,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $name = $this->request->getParam('name');
             $description = $this->request->getParam('description');
             $parentId = $this->request->getParam('parent');
+            
             try {
                 $result = $categoryModel->saveCategory($id, $name, $description, $parentId);
             } catch (Angel_Exception_Category $e) {
@@ -906,6 +895,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             if ($id) {
                 $categoryModel = $this->getModel('category');
                 $target = $categoryModel->getById($id);
+
                 if (!$target) {
                     $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
                 }

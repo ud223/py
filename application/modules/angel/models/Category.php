@@ -1,7 +1,6 @@
 <?php
 
 class Angel_Model_Category extends Angel_Model_AbstractModel {
-
     protected $_document_class = '\Documents\Category';
 
     public function addCategory($name, $description, $parent_id) {
@@ -61,6 +60,19 @@ class Angel_Model_Category extends Angel_Model_AbstractModel {
                     ->getQuery()
                     ->execute();
         }
+        return $result;
+    }
+    
+    public function getByIds($categorys_id) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('id')->in($categorys_id)->sort('created_at', -1);
+        
+        $result = null;
+        $result = $query->getQuery();
+        
+        if (empty($result))
+            return false;
+
         return $result;
     }
 

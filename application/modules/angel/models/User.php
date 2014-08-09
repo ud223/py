@@ -117,12 +117,18 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             $username = $user->username;
             $salt = $user->salt;
             $usertype = $user->user_type;
-            $password = $user->password;
+            $password = $user->password_src;
             $active_bln = true;
             $email_validated_bln = !$checkemail;
             $validated_bln = false;
+            
+            $user->clearCategory();
 
-            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $category);
+            foreach ($category as $c) {
+                $user->addCategory($c);
+            }
+
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category);
 
             $this->save($uesrId, $data);
         } catch (Exception $e) {
@@ -195,6 +201,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
      */
     public function getUserById($id) {
         $result = false;
+        
         $user = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->equals($id)
                 ->getQuery()
@@ -747,4 +754,20 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
+    public function getUserByCategoryId($category_id) {
+        $result = false;
+        
+        if ($category_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)
+                    ->field('category.$id')->equals(new MongoId($category_id))
+                    ->sort('created_at', -1);
+            
+            $result = $query->getQuery()->getSingleResult();
+        }
+        
+        if ($result)
+            return true;
+        else
+            return false;
+    }
 }

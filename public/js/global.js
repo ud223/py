@@ -9,9 +9,11 @@ function removeObject($this, url, containerSelector, valSelector) {
     if (!valSelector) {
         valSelector = '.tmp';
     }
+    
     var container = $this.closest(containerSelector);
     var id = container.find(valSelector).val();
     var data = {id: id};
+
     $.ajax({
         url: url,
         dataType: 'json',

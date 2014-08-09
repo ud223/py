@@ -82,7 +82,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         
         //获取喜好热点专辑
         $hot = $hotModel->getLikeNotRecommendHot($like_category_id);
-        
+
         if ($hot) {
             foreach ($hot as $h) {
                 foreach ($h->special as $p) {
@@ -164,7 +164,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                     $special = $specialModel->getLastOne();
             }
         }
-
+        
         //获取该专辑作者
         $author = $authorModel->getAuthorById($special->authorId);
 
@@ -203,18 +203,16 @@ class Angel_ShowController extends Angel_Controller_Action {
         $userId = $this->request->getParam('uid');
         $categorys_id = $this->request->getParam('category');
 
-        $categorys = array();
+        $categorys = null;
         
         if ($categorys_id != 'none') {
             $tmpCategorys_id = explode(";",$categorys_id);
             
             if (is_array($tmpCategorys_id)) {
-                foreach ($tmpCategorys_id as $id) {
-                    $categorys[] = $categoryModel->getById($id);
-                }
+                $categorys = $categoryModel->getByIds($tmpCategorys_id);
             }
         }
-        
+
         try {
             $userModel->saveUser($userId, $categorys);
             
@@ -224,51 +222,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
         }
     }
-    
-//    public function keywordGoodAction() {
-//        $voteModel = $this->getModel('vote');
-//        $programModel = $this->getModel('program');//$_POST['uid']
-//        
-//        $program_id = $this->getParam('pid');
-//        $time = $this->getParam('time');
-//        $user_id = $this->getParam('uid');
-//
-//        $program = $programModel->getById($program_id);
-//
-//        foreach ($program->keyword as $p) {
-//            $vote = $voteModel->getByKeywordIdAndUid($p->id, $user_id);
-//            $score = 0;
-//
-//            if ($vote) {
-//                $score = $vote->score;
-//
-//                if (!$score)
-//                    $score = 0;
-//
-//                $score = $score + 1;
-//
-//                try {
-//                    $voteModel->saveVote($vote->id, $user_id, $p->id, $score);
-//                }
-//                catch (Exception $e){
-//                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-//                }
-//            }
-//            else {
-//                $score = 1;
-//
-//                try {
-//                    $voteModel->addVote($user_id, $p->id, $score);
-//                }
-//                catch (Exception $e){
-//                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-//                }
-//            }  
-//
-//            $this->_helper->json(array('data' => 'save success!', 'code' => 200));
-//        }
-//    }
-    
+ 
     public function keywordVoteAction() {
         $voteModel = $this->getModel('vote');
         $programModel = $this->getModel('program');
@@ -319,50 +273,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             $this->_helper->json(array('data' => 'success', 'code' => 200));
         }
     }
-    
-//    public function keywordBadAction() {
-//        $voteModel = $this->getModel('vote');
-//        $programModel = $this->getModel('program');
-//
-//        $program_id = $this->getParam('pid');
-//        $user_id = $this->getParam('uid');
-//
-//        $program = $programModel->getById($program_id);
-//
-//        foreach ($program->keyword as $p) {
-//            $vote = $voteModel->getByKeywordIdAndUid($p->id, $user_id);
-//            $score = 0;
-//
-//            if ($vote) {
-//                $score = $vote->score;
-//
-//                if (!$score)
-//                    $score = 0;
-//
-//                $score = $score - 1;
-//
-//                try {
-//                    $voteModel->saveVote($vote->id, $user_id, $p->id, $score);
-//                }
-//                catch (Exception $e){
-//                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-//                }
-//            }
-//            else {
-//                $score = -1;
-//
-//                try {
-//                    $voteModel->addVote($user_id, $p->id, $score);
-//                }
-//                catch (Exception $e){
-//                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-//                }
-//            }  
-//        }
-//
-//        $this->_helper->json(array('data' => 'save success!', 'code' => 200));
-//    }
-    
+
     public function paypalReturnAction() {
         //获取 PayPal 交易流水号 tx 
         $tx_token = $_GET['tx']; 
