@@ -957,6 +957,7 @@
             $.extend(_settings, options);
             _settings.modal = true;
             var $popupsettings = $.extend({}, $.POPUPSETTINGSTMP, _settings);
+//            $popupsettings.closebtn = false;
             var id = "P_confirm";
 
             var header = "";
