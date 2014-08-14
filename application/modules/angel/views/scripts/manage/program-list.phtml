@@ -7,13 +7,14 @@
         background:#F0F0F0;
         margin-bottom:30px;
         padding:15px;
+        height:150px;
     }
     .wp p {
         font-size:12px;
         margin:0;
     }
     .iwp {
-        height:230px;
+        height:270px;
         margin-top:15px;
         overflow:hidden;
         position:relative;
@@ -59,16 +60,12 @@
             <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
             <div class="wp">
                 <p><?php echo $p['owner']->email . ' 上传' ?>
-                    <!--<button class="pull-right btn btn-xs btn-danger remove-program">删除</button>-->
                     <?php if (!$this->specialModel->getSpecialByProgram($p["id"])): ?>
                         <button type="button" class="btn btn-danger btn-sm remove-program">删除</button>
                     <?php else: ?>
                         <label class="xs">被引用</label>
                     <?php endif; ?>
                 </p>
-<!--                <div class="iwp">
-                    <img width="100%" src="<?php echo $p['path'] ?>"/>
-                </div>-->
                 <div class='pwp'>
                     <p><?php echo $p['name'] ?></p>
                     <p><i><?php echo $p['sub_title'] ?></i></p>

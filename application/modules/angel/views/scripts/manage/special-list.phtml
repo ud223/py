@@ -1,14 +1,49 @@
 <style>
-    .btn-group {
-        margin-top:15px;
+
+
+    .itm {
     }
-    .itm:hover {
+    .wp {
         background:#F0F0F0;
+        margin-bottom:30px;
+        padding:15px;
+        height:140px;
     }
-    label.xs {
-        color:#aaa;
-        font-size:smaller;
-        margin-left:5px;
+    .wp p {
+        font-size:12px;
+        margin:0;
+    }
+    .iwp {
+        height:270px;
+        margin-top:15px;
+        overflow:hidden;
+        position:relative;
+        width:100%;
+    }
+    .iwp img {
+        left:0;
+        position:absolute;
+        top:0;
+    }
+    .pwp {
+        margin:10px 0;
+    }
+    .wp label {
+        color:#5cb85c;
+    }
+    .wp ul {
+        display:block;
+        margin:5px 0 0;
+        padding:0;
+    }
+    .wp ul li {
+        display:inline-block;
+        margin-bottom:10px;
+        margin-right:5px;
+        list-style: none;
+    }
+    .btn-group {
+        margin-top:0;
     }
 </style>
 <?php
@@ -23,18 +58,22 @@ $model = $this->model;
     $c = 0;
     ?>
     <?php foreach ($this->resource as $p): ?>
-        <div class="col-md-2 itm">
-            <div class="paddingbox20px relative">
-                <p><?php echo $p['name'] ?> </p>
-                <div class="btn-group">
-                    <a type="button" href="<?php echo $this->url(array(id => $p["id"]), 'manage-special-save') ?>" class="btn btn-info btn-sm">编辑</a>
-                    <button type="button" class="btn btn-danger btn-sm remove-special">删除</button>
+        <div class="col-md-3 itm">
+            <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
+            <div class="wp">
+                <p style="text-align:right">
+                    <button type="button" class="btn btn-danger btn-sm remove-program">删除</button>
+                </p>
+                <div class='pwp'>
+                    <p><?php echo $p['name'] ?></p>
                 </div>
-                <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
+                <div class="btn-group">
+                    <a href="<?php echo $this->url(array(id => $p["id"]), 'manage-special-save') ?>" class="btn btn-info btn-sm">编辑</a>
+                </div>
             </div>
         </div>
         <?php $c ++; ?>
-        <?php if ($c % 6 == 0): ?>
+        <?php if ($c % 4 == 0): ?>
             <div class="clearfix"></div>
         <?php endif; ?>
     <?php endforeach; ?>

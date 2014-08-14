@@ -1222,6 +1222,7 @@ class Angel_ManageController extends Angel_Controller_Action {
 
         $resource = array();
         setcookie("userId", "");
+        
         foreach ($root as $r) {
             $resource[] = array(
                 'id' => $r->id,
