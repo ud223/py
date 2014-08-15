@@ -270,7 +270,10 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                         cancelCallback: function() {
                             $('#btn-refresh').click();
                         },
-                        confirmCallback: nextFunc
+                        confirmCallback: function(){
+                            installList(response);
+                            nextFunc();
+                        }
                     };
                     $.confirm(options);
                     console.log(response);
@@ -278,7 +281,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                 }, 2500);
             }
             // "endWaiting" in "callback"
-            getApiData(callback);
+            getApiData(callback, true);
         });
 
         $('.tv-toggle-unit').click(function() {
@@ -444,8 +447,27 @@ $uid = $this->uid;
     var tmpUrl = "<?php echo $url ?>";
     var myUrl = tmpUrl;
 
-
-    function getApiData(callback) {
+    function installList(response) {
+        $("#tv-special-name").html(response.data.name);
+        $("#tv-author-name").html(response.data.author);
+        $("#tv-author-img").css('background-image', 'url(' + response.data.photo + ')');
+        $("#tv-listbar-content").empty();
+        if (response.data.programs) {
+            $.each(response.data.programs, function() {
+                var item = $(".P_tmp .list-item").clone(true);
+                item.click(function() {
+                    playFunc($(this).closest('.list-item'));
+                });
+                item.attr('video', this.oss_video);
+                item.attr('audio', this.oss_audio);
+                item.attr('id', this.id);
+                item.find('.col2').html(this.name);
+                item.find('.col3').html(parseInt(this.time).timeFormat());
+                $("#tv-listbar-content").append(item);
+            });
+        }
+    }
+    function getApiData(callback, installListInCallback) {
         $('#tv-screen').video('pause');
         $.ajax({
             url: myUrl,
@@ -454,25 +476,11 @@ $uid = $this->uid;
                 if (response.code === 200) {
                     myUrl = tmpUrl;
                     myUrl = myUrl.replace('none', response.data.id);
-
-                    $("#tv-special-name").html(response.data.name);
-                    $("#tv-author-name").html(response.data.author);
-                    $("#tv-author-img").css('background-image', 'url(' + response.data.photo + ')');
-                    $("#tv-listbar-content").empty();
-                    if (response.data.programs) {
-                        $.each(response.data.programs, function() {
-                            var item = $(".P_tmp .list-item").clone(true);
-                            item.click(function() {
-                                playFunc($(this).closest('.list-item'));
-                            });
-                            item.attr('video', this.oss_video);
-                            item.attr('audio', this.oss_audio);
-                            item.attr('id', this.id);
-                            item.find('.col2').html(this.name);
-                            item.find('.col3').html(parseInt(this.time).timeFormat());
-                            $("#tv-listbar-content").append(item);
-                        });
+                    if (!installListInCallback) {
+                        // execute installList now;
+                        installList(response);
                     }
+                    // else execute installList in callback;
                     if (typeof callback === 'function') {
                         callback(response);
                     }
