@@ -283,6 +283,9 @@ class Angel_ShowController extends Angel_Controller_Action {
             
             exit;
         }
+        else {
+            echo 'file downloading...';
+        }
         
         $file = fopen($file_url, "r");
         
