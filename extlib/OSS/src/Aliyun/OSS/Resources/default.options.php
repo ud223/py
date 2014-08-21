@@ -8,6 +8,6 @@
 use \Aliyun\OSS\Models\OSSOptions;
 
 return array(
-	OSSOptions::ENDPOINT => 'http://oss-cn-beijing.aliyuncs.com',// 'oss-cn-hongkong.aliyuncs.com'
+	OSSOptions::ENDPOINT => 'http://oss-cn-beijing.aliyuncs.com',
 );
 

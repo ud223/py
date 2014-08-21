@@ -1509,7 +1509,7 @@ class Angel_ManageController extends Angel_Controller_Action {
 //        }
         
         $this->view->resource = $result;
-        $this->view->title = "分类列表";
+        $this->view->title = "热点推荐列表";
         $this->view->paginator = $paginator;
     }
     
@@ -1549,7 +1549,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $this->view->title = "编辑热点";
+            $this->view->title = "编辑热点推荐";
 
             $id = $this->request->getParam("id");
 
@@ -1573,6 +1573,12 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
     
     public function ossPreviewAction() {
+        $video = urldecode($this->request->getParam('video'));
+ 
+        $this->view->video = $video;
+    }
+    
+    public function ossTestAction() {
         $video = urldecode($this->request->getParam('video'));
  
         $this->view->video = $video;

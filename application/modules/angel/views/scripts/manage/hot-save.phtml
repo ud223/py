@@ -5,15 +5,15 @@
     <div class="col-md-8">
         <form role="form" method="post">
             <div class="form-group">
-                <label>分类名称：</label>
+                <label>热点推荐名称：</label>
                 <input type="text" class="form-control" id="name" name="name" data-toggle="popover" value="<?php echo $this->model->name ?>">
             </div>
             <div class="form-group">
-                <label>分类描述：</label>
+                <label>热点推荐描述：</label>
                 <input type="text" class="form-control" id="description" name="description" data-toggle="popover" value="<?php echo $this->model->description ?>">
             </div>
             <div class="form-group">
-                <label>专辑：</label>
+                <label>热点推荐专辑：</label>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <?php foreach ($this->specials as $special): ?>
