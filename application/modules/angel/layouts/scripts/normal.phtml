@@ -47,7 +47,9 @@ if ($this->me) {
         <div id="tv">
             <div id='tv-normal-header' style='text-align:center;padding-top:30px;'>
                 <a href='#'><img src='/img/logo.png'/></a>
-                <a href="<?php echo $this->url(array(), 'show-play') ?>"class="btn" style="position:absolute;right:30px;">看电视</a>
+                <?php if ($this->me): ?>
+                    <a href="<?php echo $this->url(array(), 'show-play') ?>"class="btn" style="position:absolute;right:30px;">看电视</a>
+                <?php endif; ?>
             </div>
             <?php echo $this->layout()->content; ?>
 

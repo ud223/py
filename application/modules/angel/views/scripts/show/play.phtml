@@ -270,7 +270,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                         cancelCallback: function() {
                             $('#btn-refresh').click();
                         },
-                        confirmCallback: function(){
+                        confirmCallback: function() {
                             installList(response);
                             nextFunc();
                         }
@@ -288,36 +288,42 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
             // change classr
             var obj = $(this);
             if (!obj.hasClass('selected')) {
-                // change player ui
-                $('#tv-louds').toggle();
-                $('#tv-video-player').toggleClass('move-away');
-                if (obj.attr('rel') === 'audio') {
-                    $('#tv-louds-c').attr('status', 'play');
-                    $('body').data('auto-toggle-list-switch', 'off');
-                } else {
-                    $('#tv-louds-c').attr('status', 'stop');
-                    $('body').data('auto-toggle-list-switch', 'on');
-                }
-                // save mode status
-                obj.addClass('selected').siblings('.tv-toggle-unit').removeClass('selected');
-                var mode = obj.attr('rel');
-                var data = {'value': mode};
-                var url = "<?php echo $this->url(array(), 'user-player-mode') ?>";
-                $.ajax({
-                    url: url,
-                    data: data,
-                    dataType: 'json',
-                    method: 'post',
-                    success: function(response) {
-                        if (response.code === 200) {
-                        } else {
-                        }
-                    },
-                    error: function() {
+                $.waiting('正在为您切换 ...');
+                setTimeout(function() {
+                    // change player ui
+                    $('#tv-louds').toggle();
+                    $('#tv-video-player').toggleClass('move-away');
+                    if (obj.attr('rel') === 'audio') {
+                        $('#tv-louds-c').attr('status', 'play');
+                        $('body').data('auto-toggle-list-switch', 'off');
+                    } else {
+                        $('#tv-louds-c').attr('status', 'stop');
+                        $('body').data('auto-toggle-list-switch', 'on');
                     }
-                });
-                // change url path
-                continuePlayFunc();
+                    // save mode status
+                    obj.addClass('selected').siblings('.tv-toggle-unit').removeClass('selected');
+                    var mode = obj.attr('rel');
+                    var data = {'value': mode};
+                    var url = "<?php echo $this->url(array(), 'user-player-mode') ?>";
+
+                    $.ajax({
+                        url: url,
+                        data: data,
+                        dataType: 'json',
+                        method: 'post',
+                        success: function(response) {
+                            if (response.code === 200) {
+                            } else {
+                            }
+                        },
+                        error: function() {
+                        }
+                    });
+                    // change url path
+                    continuePlayFunc();
+                    $.endWaiting();
+                }, 3000);
+
             }
         });
 
