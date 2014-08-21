@@ -276,7 +276,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     
     public function downloadAndroidAction() {
         $version = $this->getParam('version');
-        $file_url = $_SERVER['DOCUMENT_ROOT'] . '/download/android/CheeseTV'. $version . '.apk';//'../controllers/download/android/'. 
+        $file_url = $_SERVER['DOCUMENT_ROOT'] . '/download/android/CheeseTV'. $version . '.apk';
         
         if (!file_exists($file_url)) {
             echo 'file not found!';
@@ -293,6 +293,33 @@ class Angel_ShowController extends Angel_Controller_Action {
         Header("Accept-Ranges:bytes");
         Header("Accept-Length:".  filesize($file_url));
         Header("Content-Disposition:attachment;filename=".'CheeseTV'. $version . '.apk');
+        
+        echo fread($file, filesize($file_url));
+        
+        fclose($file);
+        
+        exit();
+    }
+    
+    public function downloadIosAction() {
+        $version = $this->getParam('version');
+        $file_url = $_SERVER['DOCUMENT_ROOT'] . '/download/ios/CheeseTV'. $version . '.ipa';
+        
+        if (!file_exists($file_url)) {
+            echo 'file not found!';
+            
+            exit;
+        }
+        else {
+            echo 'file downloading...';
+        }
+        
+        $file = fopen($file_url, "r");
+        
+        Header("Content-type:application/octet-stream");
+        Header("Accept-Ranges:bytes");
+        Header("Accept-Length:".  filesize($file_url));
+        Header("Content-Disposition:attachment;filename=".'CheeseTV'. $version . '.ipa');
         
         echo fread($file, filesize($file_url));
         
