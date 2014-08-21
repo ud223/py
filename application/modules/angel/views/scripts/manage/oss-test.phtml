@@ -1,0 +1,28 @@
+<script src="http://api.html5media.info/1.1.4/html5media.min.js"></script>
+<div id="tv" name="tv">
+    <video id="tv-screen" width="800" height="374" controls>
+        <source src="<?php echo $this->video ?>" type="video/mp4" />
+        你浏览器不支持 video 功能
+    </video>
+    <button id="save-btn" type="button" onclick="test()" class="btn btn-default">turn</button>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+//        $('#video-control').on('ended', function(){
+//            alert('ended');
+//        });
+//        
+//        setInterval(function(){
+//            console.log($('#video-control').get(0).ended);
+//        }, 200);
+    });
+    
+    function test()
+    {
+        var url = "http://cheesetv.oss-cn-beijing.aliyuncs.com/53e06f35e620a.mp4";
+        
+        $('#tv').html("");
+        
+        $('#tv').html('<video id="tv-screen" width="800" height="374" controls><source src="'+ url +'" type="video/mp4" />');
+    }
+</script>
