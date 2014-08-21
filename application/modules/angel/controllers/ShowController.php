@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'paypal-return', 'paypal-notify', 'paypal-pay', 'download-android');
+    protected $login_not_required = array('detail', 'save-user-category', 'paypal-return', 'paypal-notify', 'paypal-pay', 'download-android', 'download-ios');
 
     public function init() {
         parent::init();
