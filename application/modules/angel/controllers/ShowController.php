@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'paypal-return', 'paypal-notify', 'paypal-pay', 'download-android', 'download-ios');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file');
 
     public function init() {
         parent::init();
@@ -326,5 +326,94 @@ class Angel_ShowController extends Angel_Controller_Action {
         fclose($file);
         
         exit();
+    }
+    
+    public function favouriteAddAction() {
+        $favouriteModel = $this->getModel('favourite');
+        $specialModel = $this->getModel('special');
+        
+        $special_id = $this->getParam('sid');
+        $user_id = $this->me->getUser()->id;
+
+        $special = $specialModel->getById($special_id);
+        $favourite = $favouriteModel->getFavouriteByUserId($user_id);
+
+        
+            try {
+                if ($favourite) {
+                    $favouriteModel->saveFavourite($favourite, $special);
+                }  
+                else {
+                    $favouriteModel->addFavourite($user_id, $special);
+                }
+            }
+            catch (Exception $e) {
+                $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+            }
+
+        $this->_helper->json(array('data' => 'success', 'code' => 200));
+    }
+    
+    public function favouriteRemoveAction() {
+        $favouriteModel = $this->getModel('favourite');
+        $specialModel = $this->getModel('special');
+        
+        $special_id = $this->getParam('sid');
+        $user_id = $this->me->getUser()->id;
+
+        $favourite = $favouriteModel->getFavouriteByUserId($user_id);
+
+            try {
+                if ($favourite) {
+                    $favouriteModel->RemoveFavouriteByUserId($favourite, $special_id);
+                }  
+                else {
+                    $this->_helper->json(array('data' => '没有找到任何所属收藏！', 'code' => 0));
+                }
+            }
+            catch (Exception $e) {
+                $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+            }
+
+        $this->_helper->json(array('data' => 'success', 'code' => 200));
+    }
+    
+    //根据当前用户的id来获取收藏专辑
+    public function favouriteListAction() {
+        $favouriteModel = $this->getModel('favourite');
+        
+        $user_id = $this->me->getUser()->id;
+        
+        $favourite = $favouriteModel->getFavouriteByUserId($user_id);
+        
+        if ($favourite) {
+            foreach ($favourite->special as $p) {
+                $result["specials"][] = array("id" => $p->id, "name" => $p->name);
+            }
+            
+             $this->_helper->json(array('data' => $result, 'code' => 200));
+        }
+        else {
+            $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));
+        }
+    }
+    
+    public function uploadFileAction() {
+        $ossModel = $this->getModel('oss');
+        
+        $name = $this->getParam('filename');
+        $fsize = $this->getParam('size');
+        $key = $this->getParam('key');
+        $type = $this->getParam('type');
+        $ext = $this->getParam('ext');
+
+        try {
+            $ossModel->addOss($name, '', $status, $key, $fsize, $type, $ext, null);
+        }
+        catch (Exception $e) {
+            $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+        }
+        
+         $this->_helper->json(array('data' => 'success', 'code' => 200));
     }
 }

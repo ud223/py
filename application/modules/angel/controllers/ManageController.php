@@ -1583,4 +1583,8 @@ class Angel_ManageController extends Angel_Controller_Action {
  
         $this->view->video = $video;
     }
+    
+    public function apiTestAction() {
+        
+    }
 }

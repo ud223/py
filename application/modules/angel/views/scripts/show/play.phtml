@@ -348,9 +348,9 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
             var tmpPer = currentTime / duration * 100;
             var per = Math.floor(tmpPer);
 
-<?php
-$url = $this->url(array(), "api-keyword-vote");
-?>
+            <?php
+                $url = $this->url(array(), "api-keyword-vote");
+            ?>
 
             var url = '<?php echo $url ?>';
             var data = {'time': per, 'pid': pid};

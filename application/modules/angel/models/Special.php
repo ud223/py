@@ -108,7 +108,7 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
             
             $index = $index + 1;
         }
-      //  echo $arrSpecials[$index + 1]->id; exit;
+
         if (count($arrSpecials) == $index)
             return false;
 
