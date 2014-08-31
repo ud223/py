@@ -137,8 +137,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                     }
                 }
             }
-        }
-        
+        } 
         //获取喜好分类专辑
         if (!$special) {
             $special = $specialModel->getSpecialByCategoryId($recommend_special_id, $like_category_id);
@@ -178,7 +177,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
         $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];
-        
+
         if (count($special->photo)) {
             $photo = $special->photo[0];
             $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
@@ -228,7 +227,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $programModel = $this->getModel('program');
         
         $program_id = $this->getParam('pid');
-        $time = $this->getParam('time');
+        $time = intval($this->getParam('time'));
         $user_id = $this->me->getUser()->id;
 
         $program = $programModel->getById($program_id);
@@ -237,38 +236,35 @@ class Angel_ShowController extends Angel_Controller_Action {
             $vote = $voteModel->getByKeywordIdAndUid($p->id, $user_id);
             $score = 0;
 
-            if ($vote) {
-                $score = $vote->score;
+            $score = $vote->score;
 
-                if (!$score)
-                    $score = 0;
-                
-                if ($time <  20)
-                    $score = $score - 1;
-                else if ($time > 49)
-                    $score = $score + 1;
-                else if ($time > 79)
-                    $score = $score + 2;
-                else
-                    $score = $score;
-                    
-                try {
-                    $voteModel->saveVote($vote->id, $user_id, $p->id, $score);
-                }
-                catch (Exception $e){
-                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-                }
+            if (!$score)
+                $score = 0;
+
+            if ($time <  20) {
+                $score = $score - 1;
+            }
+            elseif ($time > 49 && $time < 80) {
+                $score = $score + 1;
+            }
+            elseif ($time > 79) {
+                $score = $score + 2;
             }
             else {
-                $score = 1;
+                $score = $score;
+            }
 
-                try {
+            try {
+                if ($vote) {
+                    $voteModel->saveVote($vote->id, $user_id, $p->id, $score);
+                }
+                else {
                     $voteModel->addVote($user_id, $p->id, $score);
-                }
-                catch (Exception $e){
-                    $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-                }
-            }  
+                } 
+            }
+            catch (Exception $e){
+                $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+            }
 
             $this->_helper->json(array('data' => 'success', 'code' => 200));
         }
@@ -391,7 +387,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $result["specials"][] = array("id" => $p->id, "name" => $p->name);
             }
             
-             $this->_helper->json(array('data' => $result, 'code' => 200));
+            $this->_helper->json(array('data' => $result, 'code' => 200));
         }
         else {
             $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));

@@ -56,14 +56,16 @@ class Angel_Session_SaveHandler_Mongo implements Zend_Session_SaveHandler_Interf
         $sessionDocument = $this->_session->findOne(array('session_id' => $id));
         if(!$sessionDocument){
             $sessionDocument = array();
-            $sessionDocument['createdAt'] = new \MongoDate();
+            $sessionDocument['createdAt'] = new MongoDate();
         }
         
         $sessionDocument['session_id'] = $id;
-        $sessionDocument['updatedAt'] = new \MongoDate();
+        $sessionDocument['updatedAt'] = new MongoDate();
         $sessionDocument['data'] = $data;
         
-        return $this->_session->save($sessionDocument);
+        $result = $this->_session->save($sessionDocument);
+    
+        return $result;
     }
     
     public function destroy($id){

@@ -254,4 +254,8 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
 
         return $result;
     }
+    
+    private function getSpecialsByVote($user_id) {
+        
+    }
 }
