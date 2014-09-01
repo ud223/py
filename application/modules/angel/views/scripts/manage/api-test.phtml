@@ -11,7 +11,7 @@ and open the template in the editor.
         <script type="text/javascript">
             
             function favoAddTest() {
-                var url = 'http://localhost/api/favourite/add';
+                var url = '/api/favourite/add';
                 
                 var data = {'sid': '53fc0d5fb3580ee0313611a0'};
 
@@ -30,7 +30,7 @@ and open the template in the editor.
             }
             
             function favoSaveTest() {
-                var url = 'http://localhost/api/favourite/add';
+                var url = '/api/favourite/add';
                 
                 var data = {'sid': '53f6ebacb3580e1d2f8b4568'};
 
@@ -49,7 +49,7 @@ and open the template in the editor.
             }
             
             function favoRemoveTest() {
-                var url = 'http://localhost/api/favourite/remove';
+                var url = '/api/favourite/remove';
                 
                 var data = {'sid': '53f6ebacb3580e1d2f8b4568'};
 
@@ -68,7 +68,7 @@ and open the template in the editor.
             }
             
             function favoListTest() {
-                var url = 'http://localhost/api/favourite/list';
+                var url = '/api/favourite/list';
                 
                 $.ajax({
                     url: url,
