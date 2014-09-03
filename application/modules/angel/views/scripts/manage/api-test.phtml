@@ -123,6 +123,26 @@ and open the template in the editor.
                     }
                 });
             }
+            
+            function regUser() {
+                var url = 'http://localhost/register';
+                
+                var data = {'email': 'ud223@qq.com', 'username': 'ud223', 'password': '123123', 'age': '20', 'gander': '男', 'format': 'json'};
+                
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    data: data,
+                    method: 'post',
+                    success: function(response) {
+                        alert(response.code);
+                        alert(JSON.stringify(response.data));
+                    },
+                    error: function() {
+                        $.endWaiting();
+                    }
+                });
+            }
         </script>
     </head>
     <body>
@@ -133,5 +153,7 @@ and open the template in the editor.
         <br>
         <button type="button" onclick="VoteUp()">测试节目加分</button>
         <button type="button" onclick="VoteDown()">测试节目减分</button>
+        <br>
+        <button type="button" onclick="regUser()">测试注册用户</button>
     </body>
 </html>

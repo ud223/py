@@ -40,6 +40,12 @@ class User extends AbstractDocument{
     /** @ODM\String */
     protected $password_src;
     
+    /** @ODM\Int */
+    protected $age;
+    
+    /** @ODM\String */
+    protected $gander;
+    
     /** @ODM\String */
     protected $salt;
     
