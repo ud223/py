@@ -15,6 +15,28 @@
                 <div class="bdrow">
                     <input type="password" autocomplete="off" placeholder="登录密码" id="password" name="password" class="required" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
                 </div>
+                <div class="bdrow">
+                    <input type="radio" name="gander" value="男" checked="checked" />男 
+                    <input type="radio" name="gander" value="女" />女
+                </div>
+                <div class="bdrow">
+                    <select name="age">
+                        <?php
+                            $age = 1900;
+                        
+                            for ($i = 0; $i < 150; $i++) {
+                                $tmp = $age + $i;
+                                
+                                $select = "";
+                                
+                                if ($tmp == date('Y',time()))
+                                        $select = "selected";
+                                
+                                echo "<option value ='". $tmp ."' ". $select .">". $tmp ."</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
                 <?php 
                     $style = ""; 
   
