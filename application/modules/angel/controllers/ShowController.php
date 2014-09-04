@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'api-fi-add', 'api-fi-list');
 
     public function init() {
         parent::init();
@@ -411,5 +411,39 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
         
          $this->_helper->json(array('data' => 'success', 'code' => 200));
+    }
+    
+    public function fiAddAction() {
+        $fiModel = $this->getModel('fi');
+
+        $name = $this->getParam('name');
+        $email = $this->getParam('email');
+        $phone = $this->getParam('phone');        
+
+            try {
+                $fiModel->addFi($name, $email, $phone);
+            }
+            catch (Exception $e) {
+                $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+            }
+
+        $this->_helper->json(array('data' => 'success', 'code' => 200));
+    }
+    
+    public function fiListAction() {
+        $fiModel = $this->getModel('fi');
+
+        $fis = $favouriteModel->getAll();
+        
+        if ($fis) {
+            foreach (fis as $p) {
+                $result["fi"][] = array("name" => $p->name, "email" => $p->email, "phone"=> $p->phone);
+            }
+            
+            $this->_helper->json(array('data' => $result, 'code' => 200));
+        }
+        else {
+            $this->_helper->json(array('data' => "没有找到任何报名！", 'code' => 0));
+        }
     }
 }

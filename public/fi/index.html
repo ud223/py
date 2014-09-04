@@ -10,6 +10,34 @@
 		<link rel="stylesheet" href="css/global.css" />
 		<script type="text/javascript" src="js/jquery_bootstrap.js"></script>
 		<script type="text/javascript" src="js/global.js"></script>
+                <script type="text/javascript">
+                    function fiAdd() {
+                        var url = '/api/fi/add';
+
+                        var data = {'name': $('#name').val(), 'email': $('#email').val(), 'phone': $('#phone').val()};
+
+                        $.ajax({
+                            url: url,
+                            dataType: 'json',
+                            data: data,
+                            method: 'post',
+                            success: function(response) {
+                                if (response.code == 200) {
+                                    alert('注册成功!');
+                                
+                                    $('#name').val('');
+                                    $('#email').val('');
+                                    $('#phone').val('');
+                                }
+                                else
+                                    alert('注册失败');
+                            },
+                            error: function() {
+                                $.endWaiting();
+                            }
+                        });
+                    }
+                </script>
 	</head>
 
 	<body>
@@ -42,25 +70,25 @@
 						<tr>
 							<td>姓名</td>
 							<td class="col2">
-								<input type="text" />
+								<input id="name" type="text" />
 							</td>
 						</tr>
 						<tr>
 							<td>邮箱</td>
 							<td class="col2">
-								<input type="email" />
+								<input id="email" type="email" />
 							</td>
 						</tr>
 						<tr>
 							<td>电话</td>
 							<td class="col2">
-								<input type="text" />
+								<input id="phone" type="text" />
 							</td>
 						</tr>
 						<tr>
 							<td></td>
 							<td class="col2">
-								<button type="button" class="btn">确认提交</button>
+								<button type="button" onclick="fiAdd()" class="btn">确认提交</button>
 							</td>
 						</tr>
 					</table>
