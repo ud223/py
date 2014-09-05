@@ -44,7 +44,7 @@ class User extends AbstractDocument{
     protected $age;
     
     /** @ODM\String */
-    protected $gander;
+    protected $gender;
     
     /** @ODM\String */
     protected $salt;

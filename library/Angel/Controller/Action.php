@@ -215,11 +215,11 @@ class Angel_Controller_Action extends Zend_Controller_Action {
             $username = $this->request->getParam('username');
             $password = $this->request->getParam('password');
             $age = 0;
-            $gander = '男';
+            $gender = '男';
             
             if ($userType == 'user') {
                 $age = $this->request->getParam('age');
-                $gander = $this->request->getParam('gander');
+                $gender = $this->request->getParam('gender');
             }
             
             $result = false;
@@ -234,7 +234,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                     $result = null;
 
                     if ($userType == 'user') {
-                        $result = $userModel->addUser($email, $password, $username,  $age, $gander, Zend_Session::getId(), false);
+                        $result = $userModel->addUser($email, $password, $username,  $age, $gender, Zend_Session::getId(), false);
                     } else if ($userType == 'admin') {
                         $result = $userModel->addManageUser($email, $password,  Zend_Session::getId(), false);
                     } else {
