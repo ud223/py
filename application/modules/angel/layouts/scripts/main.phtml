@@ -31,7 +31,30 @@ if ($this->me) {
 
         <script type="text/javascript">
             $('document').ready(function() {
+                // ddl init
+                var profile_img = $('#profile-img');
+                if (profile_img.length > 0) {
+                    profile_img.click(function() {
+                        $('#tv-header-ddl').clickToggle();
+                    });
+                }
 
+//                $('.model-switch-btn').click(function() {
+//                    var $this = $(this).closest('.model-switch-btn');
+//                    if ($this.hasClass('selected')) {
+//                        return;
+//                    }
+//                    $('.model-switch-btn').removeClass('selected');
+//                    $this.addClass('selected');
+//                    var id = $this.attr('id');
+//                    if (id.indexOf('video') >= 0) {
+//                        // video
+//                        $('#tv-screen, #tv-cover').css('left', 0).css('position', 'absolute');
+//                    } else {
+//                        // audio
+//                        $('#tv-screen, #tv-cover').css('left', 1000000).css('position', 'fixed');
+//                    }
+//                });
             });
         </script>
     </head>
@@ -39,6 +62,46 @@ if ($this->me) {
     <body>
 
         <div id="tv">
+            <div id="tv-header">
+                <div class="wp clearfix">
+                    <img id="tv-logo" src="../img/logo-sm.png"/>
+                    <a href='javascript:void(0)' id="fullscreen" class="ico unvisiable"></a>
+                    <div class="spliter" id="rt-spliter"></div>
+                    <?php if ($user): ?>
+                        <a href="javascript:void(0)" id="profile-img"><img src="/img/user-default.jpg"/></a>
+                    <?php else: ?>
+                        <div class="pull-right" id="login-and-register-blk">
+                            <a href="<?php echo $this->url(array(), 'login') ?>">登录</a>
+                            <span> - or - </span>
+                            <a href="<?php echo $this->url(array(), 'register') ?>">注册</a>
+                        </div>
+                    <?php endif; ?>
+                        
+                    
+<!--                    <div id="volume-ctrl" class="pull-right">
+                        <button id="volume-speaker" class="ico pull-left"></button>
+                        <div id="volume-holder" class="pull-left">
+                            <div id="volume-in"></div>
+                        </div>
+                    </div>-->
+                    <div class="spliter" id="rt-spliter"></div>
+                    <ul id="tv-header-ddl" class="ddl">
+                        <li>
+                            <a href="<?php echo $this->url(array(), 'reset-password') ?>"><i class='ico profile'></i> <span class="txt">重设密码</span></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url(array(), 'hobby') ?>"><span class="txt">我的兴趣</span></a>
+                        </li>
+                        <!--                        <li>
+                                                    <a href="#"><i class='ico list'></i> <span class="txt">查看节目列表</span></a>
+                                                </li>-->
+                        <li class="hspliter">
+                            <a href="<?php echo $this->url(array(), 'logout') ?>"><i class='ico logout'></i> <span class="txt">退出登录</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <!--<div class="spliter"></div>-->
+            </div>
 
             <?php echo $this->layout()->content; ?>
         </div>
