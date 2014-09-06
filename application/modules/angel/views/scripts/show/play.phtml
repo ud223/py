@@ -4,15 +4,6 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
     $player_mode = $this->me->getUser()->attribute['player_mode'];
 }
 ?>
-<div id="tv-footer" style="display:none">
-
-    <div id="tv-footer-rtbar">
-        <div class="wp">
-        </div>
-    </div>
-
-</div>
-
 
 
 <div id="tv-main-container" class="layer">
@@ -23,12 +14,31 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
             <button id='btn-toggle' class='ico tv-side-btn'></button>
         </div>
     </div>
-
+    <div id="tv-listbar">
+        <div class="tv-tab-content">
+        </div>
+        <div class="tv-tab-list">
+            <ul>
+                <li>
+                    <span class="selected">专辑播放列表</span>
+                </li>
+                <li>
+                    <span>我的收藏夹</span>
+                </li>
+                <li>
+                    <span>兴趣设置</span>
+                </li>
+                <li>
+                    <button type="button">安全退出</button>
+                </li>
+            </ul>
+        </div>
+        <button class="tv-tab-close"><i class="ico"></i></button>
+    </div>
 
     <div id="tv-screen" class="layer text-center">
 
-        <video id="tv-video-player" preload oncontextmenu="return false;">
-            <source>
+        <video id="tv-video-player" src="http://cheesetv.oss-cn-beijing.aliyuncs.com/%E6%A0%BC%E5%BC%8F%E5%B7%A5%E5%8E%8201%E9%A3%9F%E5%93%81%E4%BF%9D%E8%B4%A8%E6%9C%9F%E6%98%AF%E4%B8%8D%E6%98%AF%E6%9C%80%E5%90%8E%E5%8F%AF%E9%A3%9F%E7%94%A8%E6%9C%9F%E9%99%90.mp4" preload oncontextmenu="return false;">
         </video>
     </div>
 
@@ -97,7 +107,12 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
             {htmlObject: $('#tv-sider')},
             {htmlObject: $('#tv-ctrl-block')}
         ];
-
+        $('#tv-sider, #tv-ctrl-block, #tv-listbar').mouseenter(function() {
+            $.autoToggleListStop();
+        });
+        $('#tv-sider, #tv-ctrl-block, #tv-listbar').mouseleave(function() {
+            $.autoToggleListRestart();
+        });
         $.autoToggleList(list);
 
         $('#tv-screen').video({
@@ -227,7 +242,6 @@ $url = $this->url(array(), "api-keyword-vote");
         var url = video_url;
         if ($('.tv-toggle-unit.selected').attr('rel') === 'audio')
             url = audio_url;
-        var title = target.find('.tv-current-title').html();
         $('#tv-screen').video("restart", function() {
 //            $('#tv-cover').hide();
         }, url, delayPlay);
