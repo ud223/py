@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<link rel="stylesheet" href="css/global.css" />
+		<script type="text/javascript" src="js/jquery_bootstrap.js"></script>
+		<script type="text/javascript" src="js/global.js"></script>
+                <script type="text/javascript">
+                    function getFi() {
+                        var url = '/api/fi/list';
+
+
+                        $.ajax({
+                            url: url,
+                            dataType: 'json',
+                            method: 'get',
+                            success: function(response) {
+                                if (response.code == 200) {
+                                    alert('报名成功, 我们会马上联系您!');
+                                
+                                    $('#name').val('');
+                                    $('#email').val('');
+                                    $('#phone').val('');
+                                }
+                                else
+                                    alert('注册失败');
+                            },
+                            error: function() {
+                                $.endWaiting();
+                            }
+                        });
+                    }
+                </script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div id="t1" class="col-sm-12">
+				<p id="sub-title"><span>世界知名创业孵化器FI联手天使圈</span> 
+					<img src="img/fi-logo.png" />
+					<img src="img/angelhere-logo.png" />
+				</p>
+			</div>
+			<div class="col-sm-12">
+				<p style="font-size:16px;margin:10px 0;">
+					创业者 101：从一个想法开始创业
+				</p>
+				<img width="100%" src="http://fi.co/system/upload/Event-Startup_Founder_101.jpg" />
+			</div>
+			<div class="col-sm-12 ulbk">
+				<div style="padding:10px 0 0 0">
+					<p>时间：9月1日</p>
+					<p>地点：天使圈</p>
+					<p>嘉宾：天使圈CEO Rocky等</p>
+					
+					<p style="font-size:smaller;color:#04CC54;">任何问题请联系天使圈(邮箱)，Founder Institute 深圳授权公司。</p>
+				</div>
+			</div>
+			<div id="input-board" class="col-sm-12 input-board">
+				<div class="pad-10">
+					<p class="st1">报名参加</p>
+					<table>
+						<tr>
+							<td>姓名</td>
+							<td class="col2">
+								<input id="name" type="text" />
+							</td>
+						</tr>
+						<tr>
+							<td>邮箱</td>
+							<td class="col2">
+								<input id="email" type="email" />
+							</td>
+						</tr>
+						<tr>
+							<td>电话</td>
+							<td class="col2">
+								<input id="phone" type="text" />
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td class="col2">
+								<button type="button" onclick="fiAdd()" class="btn">确认提交</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-12 ulbk" style="background:#fffde5">
+				<div class="pad-10">
+					如果你想要知道怎么运营一个成功的创业公司，请来参加我们的创业者101活动。 聆听成功创业者的心里话，分享经验、战略以及从过来人的失误中学习如何避免同样错误。你会了解到如何开始创建一个公司？怎么样去找靠谱的人加入你的团队？怎么样真正的建立一个成功的公司？	
+				</div>
+				
+			</div>
+			
+			<div class="col-sm-12 ulbk">
+				<p class="tt">什么样的人应该参加？</p>
+				<ul id="summary">
+					<li>
+						任何有创业想法的人，已经有公司的早期创业者。
+					</li>
+					<li class="l2">
+						任何想要加入创业公司，或者是在寻找创业团队的人。
+					</li>
+					<li class="l3">
+						任何对创业感兴趣的人
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-sm-12 ulbk">
+				<p class="tt">活动覆盖哪些话题？</p>
+				<ul id="summary">
+					<li>
+						任何有创业想法的人，已经有公司的早期创业者。
+					</li>
+					<li class="l2">
+						任何想要加入创业公司，或者是在寻找创业团队的人。
+					</li>
+					<li class="l3">
+						任何对创业感兴趣的人
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-sm-12 ulbk">
+				<p class="tt">活动流程：</p>
+				<ul id="summary">
+					<li>
+						签到
+					</li>
+					<li class="l2">
+						创业者学院介绍
+					</li>
+					<li class="l3">
+						主题演讲：如何从一个想法开始创建公司
+					</li>
+					<li class="l4">
+						观众问答
+					</li>
+					<li class="l5">
+						观众一分钟路演
+					</li>
+					<li class="l6">
+						会后在附近酒吧或餐馆继续讨论和交流
+					</li>
+				</ul>
+			</div>
+			
+			
+			<div style="height:2px;background:#b3d99b;"></div>
+			
+			<div class="col-sm-12 ulbk">
+				<p class="tt marginbottom10px">创业者学院是什么？</p>
+				<img width="75%" src="img/fi-big-logo.png" />
+				<div class="clear-10"></div>
+				<p class="marginbottom10px">
+					创业者学院是一个在构想阶段为创业者助跑的孵化器，帮助早期创业者成立有意义且可持续发展的科技公司。全球范围内有 1300 家公司通过我们一流创业家导师所教授的系统性的课程，来验证他们的构想，制定计划，改进产品，找到顾问团队，获得种子资金等等。
+				</p>
+				<p class="marginbottom10px">
+					创业者学院是真正意义上的培养创业者的孵化器而不是筛选项目，帮助创业者迈出最艰难的第一步。
+				</p>
+				<p class="marginbottom10px">
+					我们孵化的模式：
+				</p>
+				<p class="marginbottom10px">
+					人才+成功创业家的指导+合作共赢机制=更高的成功机会
+				</p>
+				<p class="marginbottom10px">
+					了解更多：<a href="http://fi.co/contents/china" style="text-shadow:none;color:#04CC54 !important" target="_blank">http://fi.co/contents/china</a>.
+				</p>
+				
+			</div>
+			
+			<div class="col-sm-12 ulbk">
+				<p class="tt marginbottom10px">创业者学院学员感言：</p>
+				<p class="marginbottom10px xbud">
+					<span class="xid">“这就像是参与了一个为你公司量身定做的4个月的MBA课程 。他们不拿理论说事，只注重于迈向成功之路背后的实质内容。”</span> 
+					<i class="xod">–Branden Spikes，Spikes.com 创始人。曾任Space X CIO,</i>
+					<img src="img/xm1.jpg" width="50" />
+				</p>
+				<p class="marginbottom10px xbud">
+					<span class="xid">“就像是从消防栓里喝水一样。这种经历是难以形容的，并且让我和一个满是顶尖创业者的网络联系在一起，他们将我还没有意识到我所缺乏的知识教给了我。”</span> 
+					<i class="xod">–Adriana Herrera， Fashioning Change 创始人和首席执行官及创业者学院毕业生</i>
+					<img src="img/xm2.jpg" width="50" />
+				</p>
+				<p class="marginbottom10px xbud">
+					<span class="xid">“这就像是参与了一个为你公司量身定做的4个月的MBA课程 。他们不拿理论说事，只注重于迈向成功之路背后的实质内容。”</span> 
+					<i class="xod">–Branden Spikes，Spikes.com 创始人。曾任Space X CIO,</i>
+					<img src="img/xm3.jpg" width="50" />
+				</p>
+				
+			</div>
+			
+			
+			<div class="col-sm-12 ulbk costa">
+				<p class="tt">媒体报道：</p>
+				<img src="img/t/1.png" />
+				<img src="img/t/2.png" />
+				<img src="img/t/3.png" />
+				<img src="img/t/4.png" />
+			</div>
+			
+			<div class="col-sm-12 ulbk costa">
+				<p class="tt">部分毕业公司：</p>
+				<img src="img/t/5.png" />
+				<img src="img/t/6.png" />
+				<img src="img/t/7.png" />
+				<img src="img/t/8.png" />
+				<img src="img/t/9.png" />
+				<img src="img/t/10.jpg" />
+				<img src="img/t/11.png" />
+			</div>
+			
+			<div style="height:2px;background:#b3d99b;"></div>
+			
+			<div class="col-sm-12 ulbk">
+				<p class="tt">天使圈介绍</p>
+				<img width="100%" src="img/ag1.jpg" />
+				<div class="clear-10"></div>
+				<img width="100%" src="img/ag2.jpg" />
+			</div>
+			
+			<div class="col-sm-12 ulbk">
+				<p class="tt marginbottom10px">天使圈是什么？</p>
+				<img width="70%" src="img/angelhere-big-logo.jpg" />
+				<div class="clear-10"></div>
+				<p class="marginbottom10px">
+					天使圈是一个跨中美两地，由多位硅谷海归创办的新型超早期高科技孵化器。与传统的孵化器不同，天使圈结合自身的天使基金从理念、产品、盈利模式、销售、市场、融资等角度全方位地帮助创业公司。我们专注于产品，我们专注于数据，我们用硅谷先进的理念和经验，帮助互联网创业公司找到合适自身、可持续、可扩展的成长模式，同时将传统行业资源与互联网思维对接。培养专注于TMT, 移动，教育等领域能为人类社会带来积极影响意义的科技创业公司。
+				</p>
+				
+			</div>
+			
+			<div class="col-sm-12 ulbk costa">
+				<a href="#input-board" style="background:#04CC54;color:#FFF;padding:10px 20px;border-radius:5px;">名额有限，赶快报名</a>
+			</div>
+			<div class="clear-30"></div>
+		</div>
+	</body>
+
+</html>
