@@ -100,6 +100,9 @@ class User extends AbstractDocument{
     /** @ODM\Int */
     protected $like = 1; //1为喜好0为随机
     
+     /** @ODM\Int */
+    protected $author = 0; 
+    
     /** @ODM\Hash */
     protected $attribute = array();    // 用户属性，各种设置存放的地方
     
