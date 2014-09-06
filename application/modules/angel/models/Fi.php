@@ -23,13 +23,12 @@ class Angel_Model_Fi extends Angel_Model_AbstractModel {
         return $result;
     }
     
-    public function getAll() {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
-
-        $result = $query
-                ->getQuery()
-                ->execute();
-        
-        return $result;
-    }
+//    public function getAll() {
+//        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+//
+//        $result = $query
+//                ->getQuery();
+//        
+//        return $result;
+//    }
 }

@@ -433,10 +433,10 @@ class Angel_ShowController extends Angel_Controller_Action {
     public function fiListAction() {
         $fiModel = $this->getModel('fi');
 
-        $fis = $fiModel->getAll();
-        
+        $fis = $fiModel->getAll(false);
+
         if ($fis) {
-            foreach (fis as $p) {
+            foreach ($fis as $p) {
                 $result["fi"][] = array("name" => $p->name, "email" => $p->email, "phone"=> $p->phone);
             }
             
