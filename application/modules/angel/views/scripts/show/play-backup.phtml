@@ -30,7 +30,13 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
     <div id="tv-footer-mdbar">
 
         <div id="tv-prog">
-
+            <!--            <div id="tv-prog-timer">
+                            <span id="t1">--:--</span><span id="t2">/</span><span id="t3">--:--</span>
+                        </div>-->
+            <!--            <div id="tv-prog-title">
+                        </div>-->
+            <!--            <div id="tv-prog-seekbar" class="rr"></div>
+                        <div id="tv-prog-loaded" class="rr"></div>-->
         </div>
     </div>
 </div>
@@ -46,7 +52,21 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
 
 <div id="tv-main-container" class="layer">
 
-
+    <div id="tv-listbar">
+        <div id="tv-listbar-title">
+            <a href="javascript:void(0)" id="tv-author-img"></a>
+            <div class="wp">
+                <div id="tvidx02">
+                    <p id="tv-special-name">
+                    </p>
+                    <span id="tvidx01">By </span><a id="tv-author-name" href="javascript:void(0)"></a>
+                </div>
+                <button class="empty-btn close-btn" id="tv-listbar-close"></button>
+            </div>
+        </div>
+        <div id="tv-listbar-content">
+        </div>
+    </div>
 
     <div id="tv-screen" class="layer text-center">
 
@@ -59,7 +79,12 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
             <source>
         </video>
     </div>
-
+    <div id="tv-prog-title">
+        <span class="tt"></span>
+        <div id="tv-prog-timer">
+            <span id="t1">--:--</span><span id="t2">/</span><span id="t3">--:--</span>
+        </div>
+    </div>
     <div id="tv-ctrl-block">
         <div style="padding:10px;">
             <button class="ico pull-left" id="tv-listbtn"></button>
@@ -169,13 +194,21 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         });
 
         $('#tv-listbtn').click(function() {
+            $('#tv-listbar').clickToggle();
         });
 
         var list = [
+            {htmlObject: $('#tv-header')},
             {htmlObject: $('#tv-sider')},
-            {htmlObject: $('#tv-ctrl-block')}
+            {htmlObject: $('#tv-ctrl-block')},
+            {htmlObject: $('#tv-prog-title')}
         ];
-
+        $('#tv-header, #tv-sider, #tv-ctrl-block, #tv-listbar').mouseenter(function() {
+            $.autoToggleListStop();
+        });
+        $('#tv-header, #tv-sider, #tv-ctrl-block, #tv-listbar').mouseleave(function() {
+            $.autoToggleListRestart();
+        });
         $.autoToggleList(list);
 
         $('#tv-screen').video({
@@ -214,6 +247,9 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         $('#prev').click(function() {
             prevFunc();
         });
+
+        // 显示“换一批”按钮
+        $('#tv-header .unvisiable').removeClass('unvisiable');
 
         $('#btn-refresh').click(function() {
 
@@ -343,6 +379,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         var title = target.find('.tv-current-title').html();
         $('#tv-screen').video("restart", function() {
 //            $('#tv-cover').hide();
+            $('#tv-prog-title .tt').html(title);
         }, url, delayPlay);
     }
     function continuePlayFunc() {
@@ -370,15 +407,42 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
             return false;
         }
     }
-    function _getSelectedItem() {
-        // refer
+    function _getSelectedItem(direction) {
+        var selected = null;
+        var current = $('#tv-listbar-content .list-item.selected');
+        var jumpOne;
+        if (direction === 'next') {
+            jumpOne = $($('#tv-listbar-content .list-item').get(0));
+        } else if (direction === 'prev') {
+            jumpOne = $($('#tv-listbar-content .list-item').get($('#tv-listbar-content .list-item').length - 1));
+        }
+        if (current.length) {
+            var one;
+            if (direction === 'next')
+                one = current.next('.list-item');
+            else if (direction === 'prev')
+                one = current.prev('.list-item');
+            if (one.length) {
+                selected = one;
+            } else {
+                selected = jumpOne;
+            }
+        } else {
+            selected = jumpOne;
+        }
+        return selected;
     }
 
     function switchFunc() {
 
     }
     function playListCount() {
-        // refer
+        var list_item = $('#tv-listbar-content .list-item');
+        if (list_item.length) {
+            return list_item.length;
+        } else {
+            return false;
+        }
     }
 
 <?php
@@ -390,6 +454,10 @@ $uid = $this->uid;
     var myUrl = tmpUrl;
 
     function installList(response) {
+        $("#tv-special-name").html(response.data.name);
+        $("#tv-author-name").html(response.data.author);
+        $("#tv-author-img").css('background-image', 'url(' + response.data.photo + ')');
+        $("#tv-listbar-content").empty();
         if (response.data.programs) {
             $.each(response.data.programs, function() {
                 var item = $(".P_tmp .list-item").clone(true);
@@ -401,6 +469,7 @@ $uid = $this->uid;
                 item.attr('id', this.id);
                 item.find('.col2').html(this.name);
                 item.find('.col3').html(parseInt(this.time).timeFormat());
+                $("#tv-listbar-content").append(item);
             });
         }
     }
