@@ -16,6 +16,107 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
     </div>
     <div id="tv-listbar">
         <div class="tv-tab-content">
+            <div class="tv-tab-content-head">
+                <div class="alt alt-list hidden">
+                    <img class="alt-img" src="/img/user-default.jpg"/>
+                    <div class="alt-title">
+                        <p class="t1">梁振英:勿以香港青少年前途作政治筹码</p>
+                        <div class="t2">by 梁振英</div>
+                    </div>
+                    <div class="alt-opera">
+                        <button class="ico"></button>
+                    </div>
+                </div>
+                <div class="alt alt-favor hidden">
+                    <div class="alt-title">
+                        <p class="t1">梁振英:勿以香港青少年前途作政治筹码</p>
+                        <div class="t2">by 梁振英</div>
+                    </div>
+                </div>
+                <div class="alt alt-hobby">
+                    <div class="alt-title">
+                        <p class="t1">设置兴趣</p>
+                        <div class="t2">根据您的兴趣推送节目</div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="tv-tab-content-body">
+                <div class="alt alt-list">
+                    <div class="list-item clearfix">
+                        <div class="list-item-cell lt">1. 农民或获15万奖励</div>
+                        <div class="list-item-cell rt sharing ico"></div>
+                        <div class="list-item-cell rt duration">05:45</div>
+                    </div>
+                    <div class="list-item clearfix">
+                        <div class="list-item-cell lt">2. 农民或获15万奖励</div>
+                        <div class="list-item-cell rt sharing ico"></div>
+                        <div class="list-item-cell rt duration">06:29</div>
+                    </div>
+                </div>
+                <div class="alt alt-favor hidden">
+                    <div class="list-item clearfix">
+                        <div class="list-item-cell lt">1. 农民或获15万奖励</div>
+                        <div class="list-item-cell rt remove-favor ico"></div>
+                        <div class="list-item-cell rt sharing ico"></div>
+                    </div>
+                    <div class="list-item clearfix">
+                        <div class="list-item-cell lt">2. 农民或获15万奖励</div>
+                        <div class="list-item-cell rt remove-favor ico"></div>
+                        <div class="list-item-cell rt sharing ico"></div>
+                    </div>
+                </div>
+                <div class="alt alt-hobby hidden">
+                    <div class="unit-items">
+                        <div class="unit-item">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item selected">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item selected">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item selected">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item selected">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item selected">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item selected">
+                            <p>历史文化</p>
+                        </div>
+                        <div class="unit-item">
+                            <p>历史文化</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
         <div class="tv-tab-list">
             <ul>
@@ -28,19 +129,24 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                 <li>
                     <span>兴趣设置</span>
                 </li>
-                <li>
-                    <button type="button">安全退出</button>
-                </li>
             </ul>
+            <div class="logout-btn-content">
+                <button class="btn btn-gray btn-sm">安全退出</button>
+            </div>
         </div>
         <button class="tv-tab-close"><i class="ico"></i></button>
     </div>
 
-    <div id="tv-screen" class="layer text-center">
+    <!--    <div id="tv-screen" class="layer text-center">
+    
+            <video id="tv-video-player" src="http://cheesetv.oss-cn-beijing.aliyuncs.com/%E6%A0%BC%E5%BC%8F%E5%B7%A5%E5%8E%8201%E9%A3%9F%E5%93%81%E4%BF%9D%E8%B4%A8%E6%9C%9F%E6%98%AF%E4%B8%8D%E6%98%AF%E6%9C%80%E5%90%8E%E5%8F%AF%E9%A3%9F%E7%94%A8%E6%9C%9F%E9%99%90.mp4" preload oncontextmenu="return false;">
+            </video>
+        </div>-->
 
-        <video id="tv-video-player" src="http://cheesetv.oss-cn-beijing.aliyuncs.com/%E6%A0%BC%E5%BC%8F%E5%B7%A5%E5%8E%8201%E9%A3%9F%E5%93%81%E4%BF%9D%E8%B4%A8%E6%9C%9F%E6%98%AF%E4%B8%8D%E6%98%AF%E6%9C%80%E5%90%8E%E5%8F%AF%E9%A3%9F%E7%94%A8%E6%9C%9F%E9%99%90.mp4" preload oncontextmenu="return false;">
-        </video>
+    <div id="tv-disk">
+        <div id="tv-disk-page"></div>
     </div>
+
 
     <div id="tv-ctrl-block">
         <div id="tv-ctrl-c">
