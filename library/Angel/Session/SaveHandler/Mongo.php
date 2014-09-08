@@ -17,7 +17,7 @@ class Angel_Session_SaveHandler_Mongo implements Zend_Session_SaveHandler_Interf
     public function open($save_path, $name){
         $result = false;
         try{
-            $mongo = new \Mongo($this->_options['mongo']['server']);
+            $mongo = new MongoClient($this->_options['mongo']['server']);
             $this->_session = $mongo->selectCollection($this->_options['mongo']['dbname'], 'Session');
         }
         catch(Exception $e){
