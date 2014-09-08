@@ -49,6 +49,8 @@ class Angel_ShowController extends Angel_Controller_Action {
                 // 如/play?special=xxxxxx
             }
         } else {
+            // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+            
             // 由于专辑ID一定存在， 而节目ID可能存在
             // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
             // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
