@@ -1696,19 +1696,59 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
     
-    public function setVip() {
+    public function setVipAction() {
         $user_id = $this->request->getParam("id");
+        $error = "参数不齐全！";
         
         if (!$user_id) {
-            $this->_helper->json(array('data' => "参数不齐全！", 'code' => 0)); return;
+            $this->_helper->json(array('data' => $error, 'code' => 0)); return;
         }
         
         $userModel = $this->getModel('user');
         
         $user = $userModel->getById($user_id);
+        $result = false;
+        
+        try {
+            $result = $userModel->saveVip($user->id, $user->email, $user->username, $user->password_src, Zend_Session::getId(), false, $user->age, $user->gender, $user->name, 1);
+        }
+        catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+        
+        if ($result) {
+            $this->_helper->json(array('data' => 'success', 'code' => 200)); 
+        }
+        else {
+            $this->_helper->json(array('data' => $error, 'code' => 0)); 
+        }
     }
     
-    public function unsetVip() {
+    public function unsetVipAction() {
+        $user_id = $this->request->getParam("id");
+        $error = "参数不齐全！";
         
+        if (!$user_id) {
+            $this->_helper->json(array('data' => $error, 'code' => 0)); return;
+        }
+        
+        $userModel = $this->getModel('user');
+        
+        $user = $userModel->getById($user_id);
+        $result = false;
+        
+        try {
+            $result = $userModel->saveVip($user->id, $user->email, $user->username, $user->password_src, Zend_Session::getId(), false, $user->age, $user->gender, $user->name, 0);
+        }
+        catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+        
+        if ($result) {
+            $this->_helper->json(array('data' => 'success', 'code' => 200)); 
+        }
+        else {
+            $this->_helper->json(array('data' => $error, 'code' => 0)); 
+        }
     }
 }

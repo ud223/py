@@ -181,8 +181,8 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
         }
 
-        //获取该专辑作者
-        $author = $authorModel->getAuthorById($special->authorId);
+        //获取该专辑上传达人
+        $author = $userModel->getUserById($special->authorId);//$authorModel->getAuthorById($special->authorId);
 
         $result["id"] = $special->id;
         $result["name"] = $special->name;
@@ -190,7 +190,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         if ($author == "")
             $result["author"] = "";
         else
-            $result["author"] = $author->name;
+            $result["author"] = $author->username;
 
         $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
         $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];

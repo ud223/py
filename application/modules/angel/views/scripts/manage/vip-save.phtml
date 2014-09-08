@@ -1,0 +1,89 @@
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<form role="form" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <?php if ($this->error): ?>
+                <div class="alert alert-danger"><?php echo $this->error ?></div>
+            <?php endif; ?>
+            <div class="form-group">
+                <label for="email">邮箱</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="输入邮箱" value="<?php echo $this->model->email ?>">
+            </div>
+                <div class="form-group">
+                <label for="email">用户名</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="输入用户名" value="<?php echo $this->model->username ?>">
+            </div>
+                <div class="form-group">
+                <label for="email">真实姓名</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="输入真实姓名" value="<?php echo $this->model->name ?>">
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" class="form-control" maxlength="18" id="password" name="password" placeholder="输入密码">
+            </div>
+            <div class="form-group">
+                <label for="repwd">确认密码</label>
+                <input type="pafontrol" class="form-control" id="repwd" placeholder="再次输入密码">
+            </div>
+            <div class="form-group">
+                <ul class="pik-ul">
+                    <li class="c1">性别</li>
+                    <li class="c2"><input type="radio" name="gender" value="男" 
+                        <?php  
+                            if ($this->model->gender == "男") { 
+                                echo "checked='checked'";
+                            } 
+                        ?> 
+                    /></li>
+                    <li class="c3">男</li>
+                    <li class="c4"><input type="radio" name="gender" value="女"  
+                        <?php  
+                            if ($this->model->gender == "女") { 
+                                echo "checked='checked'";
+                            } 
+                        ?>
+                    /></li>
+                    <li class="c5">女</li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <ul class="pik-ul">
+                    <li class="c1">出生年份</li>
+                    <li class="c2">
+                        <select name="age">
+                            <?php
+                                $curYear  = date('Y', time());
+                                $age = $curYear - 99;
+
+                                for ($i = 0; $i < 100; $i++) {
+                                    $tmp = $age + $i;
+
+                                    $select = "";
+
+                                    if ($tmp == $this->model->age)
+                                        $select = "selected";
+
+                                    echo "<option value ='" . $tmp . "' " . $select . ">" . $tmp . "</option>";
+                                }
+                            ?>
+                        </select>
+                    </li>
+
+                </ul>
+            </div>
+            <button type="submit" id="reg" class="btn btn-default">确认提交</button>           
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</form>
+<script type="text/javascript">
+    (function($) {
+        $('#reg').click(function() {
+            if ($('#password').val() !== $('#repwd').val()) {
+                alert('两次输入密码不相同，请重试');
+                return false;
+            }
+        });
+    })(jQuery);
+    
+</script>

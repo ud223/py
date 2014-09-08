@@ -115,8 +115,6 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         try {
             $user = $this->getUserById($uesrId);
    
-            $salt = $user->salt;
-            
             if (!$password) {
                 $password = $user->password_src;
             }
@@ -124,7 +122,6 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             $active_bln = true;
             $email_validated_bln = !$checkemail;
             $validated_bln = false;
-            $author = $user->author;
             $user_type = $user->user_type;
             
             $data = array("email" => $email, "name"=>$name, "username" => $username, "salt" => $salt, "user_type" => $user_type, "password" => $password, "age"=> $age, "gender"=>$gender, "user_type"=> $user_type, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category, "author"=> $author);
