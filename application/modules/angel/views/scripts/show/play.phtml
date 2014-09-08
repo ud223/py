@@ -1,3 +1,7 @@
+
+<script type="text/javascript" src="<?php echo $this->jsPath('player.js'); ?>"></script>
+
+
 <?php
 $player_mode = "video";
 if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
@@ -17,7 +21,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
     <div id="tv-listbar">
         <div class="tv-tab-content">
             <div class="tv-tab-content-head">
-                <div class="alt alt-list hidden">
+                <div class="alt alt-list">
                     <img class="alt-img" src="/img/user-default.jpg"/>
                     <div class="alt-title">
                         <p class="t1">梁振英:勿以香港青少年前途作政治筹码</p>
@@ -33,7 +37,7 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                         <div class="t2">by 梁振英</div>
                     </div>
                 </div>
-                <div class="alt alt-hobby">
+                <div class="alt alt-hobby hidden">
                     <div class="alt-title">
                         <p class="t1">设置兴趣</p>
                         <div class="t2">根据您的兴趣推送节目</div>
@@ -114,7 +118,6 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
                             <p>历史文化</p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -137,16 +140,16 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
         <button class="tv-tab-close"><i class="ico"></i></button>
     </div>
 
-    <!--    <div id="tv-screen" class="layer text-center">
-    
+    <?php if ($player_mode == 'video'): ?>
+        <div id="tv-screen" class="layer text-center">
             <video id="tv-video-player" src="http://cheesetv.oss-cn-beijing.aliyuncs.com/%E6%A0%BC%E5%BC%8F%E5%B7%A5%E5%8E%8201%E9%A3%9F%E5%93%81%E4%BF%9D%E8%B4%A8%E6%9C%9F%E6%98%AF%E4%B8%8D%E6%98%AF%E6%9C%80%E5%90%8E%E5%8F%AF%E9%A3%9F%E7%94%A8%E6%9C%9F%E9%99%90.mp4" preload oncontextmenu="return false;">
             </video>
-        </div>-->
-
-    <div id="tv-disk">
-        <div id="tv-disk-page"></div>
-    </div>
-
+        </div>
+    <?php else: ?>
+        <div id="tv-disk">
+            <div id="tv-disk-page"></div>
+        </div>
+    <?php endif; ?>
 
     <div id="tv-ctrl-block">
         <div id="tv-ctrl-c">
@@ -188,258 +191,37 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
     var init_player_mode = '<?php echo $player_mode; ?>';
 
     $('document').ready(function() {
-
-        $('.tv-toggle-unit[rel="' + init_player_mode + '"]').addClass('selected');
-        if (init_player_mode === 'audio') {
-            $('#tv-video-player').addClass('move-away');
-            $('body').data('auto-toggle-list-switch', 'off');
-        }
-
-        // 网速失速
-        $('#player').on('stalled', function() {
-            console.log('stalled');
-            var new_one = $('#player').clone(true);
-            $('#player').after(new_one).remove();
-        });
-        // 网速错误
-        $('#player').on('error', function() {
-            console.log('error');
-            var new_one = $('#player').clone(true);
-            $('#player').after(new_one).remove();
-        });
-
-
-        var list = [
-            {htmlObject: $('#tv-sider')},
-            {htmlObject: $('#tv-ctrl-block')}
-        ];
-        $('#tv-sider, #tv-ctrl-block, #tv-listbar').mouseenter(function() {
-            $.autoToggleListStop();
-        });
-        $('#tv-sider, #tv-ctrl-block, #tv-listbar').mouseleave(function() {
-            $.autoToggleListRestart();
-        });
-        $.autoToggleList(list);
-
-        $('#tv-screen').video({
-            onPause: function() {
-            },
-            onEnded: function() {
-                nextFunc();
-            },
-            onPlay: function() {
-            }
-        });
-
-
-        $('#btn-refresh').click(function() {
-
-            $.waiting('一大波精彩节目正在向您走来 ...', $('#tv'));
-            var callback = function(response) {
-                var msg = '<p>推送新专辑</p>';
-                msg += '<p style="color:#FFD800">' + response.data.name + '</p>';
-                msg += '<p style="opacity:0.5">作者：' + response.data.author + '</p>';
-                setTimeout(function() {
-                    $.endWaiting();
-                    var options = {
-                        msg: msg,
-                        confirmText: '立即收看',
-                        width: 500,
-                        height: 'auto',
-                        cancelText: '换一波',
-                        containerBoxSelector: '#tv',
-                        cancelCallback: function() {
-                            $('#btn-refresh').click();
-                        },
-                        confirmCallback: function() {
-                            installList(response);
-                            nextFunc();
-                        }
-                    };
-                    $.confirm(options);
-                    console.log(response);
-//                    nextFunc
-                }, 2500);
-            }
-            // "endWaiting" in "callback"
-            getApiData(callback, true);
-        });
-
-        $('.tv-toggle-unit').click(function() {
-            // change classr
-            var obj = $(this);
-            if (!obj.hasClass('selected')) {
-                $.waiting('正在为您切换 ...');
-                setTimeout(function() {
-                    // change player ui
-                    $('#tv-video-player').toggleClass('move-away');
-                    if (obj.attr('rel') === 'audio') {
-                        $('body').data('auto-toggle-list-switch', 'off');
-                    } else {
-                        $('body').data('auto-toggle-list-switch', 'on');
-                    }
-                    // save mode status
-                    obj.addClass('selected').siblings('.tv-toggle-unit').removeClass('selected');
-                    var mode = obj.attr('rel');
-                    var data = {'value': mode};
-                    var url = "<?php echo $this->url(array(), 'user-player-mode') ?>";
-
-                    $.ajax({
-                        url: url,
-                        data: data,
-                        dataType: 'json',
-                        method: 'post',
-                        success: function(response) {
-                            if (response.code === 200) {
-                            } else {
-                            }
-                        },
-                        error: function() {
-                        }
-                    });
-                    // change url path
-                    continuePlayFunc();
-                    $.endWaiting();
-                }, 3000);
-
-            }
-        });
-
-        getApiData(nextFunc);
-
     });
-    function playFunc(target, delayPlay) {
-        var playing = $('.list-item.selected');
+    $('.tv-toggle-unit[rel="' + init_player_mode + '"]').addClass('selected');
+    if (init_player_mode === 'audio') {
 
-        if (playing.length) {
-            // send keyword preference here
-            var duration = $('#tv-screen').video("duration");
-            var currentTime = $('#tv-screen').video("currentTime");
-            var pid = playing.attr('id');
-
-            var tmpPer = currentTime / duration * 100;
-            var per = Math.floor(tmpPer);
-
-<?php
-$url = $this->url(array(), "api-keyword-vote");
-?>
-
-            var url = '<?php echo $url ?>';
-            var data = {'time': per, 'pid': pid};
-
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                data: data,
-                method: 'post',
-                success: function(response) {
-//                    alert(response.code);
-                },
-                error: function() {
-                    $.endWaiting();
-                }
-            });
-        }
-
-        target.addClass('selected').find('.ico').removeClass('null').addClass('play');
-        target.siblings('.list-item').removeClass('selected').find('.ico').addClass('null');
-        var video_url = target.attr('video');
-        var audio_url = target.attr('audio');
-        var url = video_url;
-        if ($('.tv-toggle-unit.selected').attr('rel') === 'audio')
-            url = audio_url;
-        $('#tv-screen').video("restart", function() {
-//            $('#tv-cover').hide();
-        }, url, delayPlay);
-    }
-    function continuePlayFunc() {
-        var target = $('.list-item.itm.selected');
-        var video_url = target.attr('video');
-        var audio_url = target.attr('audio');
-        var url = video_url;
-        if ($('.tv-toggle-unit.selected').attr('rel') === 'audio')
-            url = audio_url;
-        var currentTime = $('#tv-screen').video("currentTime");
-        $('#tv-screen').video("restart", false, url);
-        $('#tv-screen').video("seek", false, currentTime);
-    }
-    function nextFunc() {
-        if (playListCount()) {
-            playFunc(_getSelectedItem('next'));
-        } else {
-            return false;
-        }
-    }
-    function prevFunc() {
-        if (playListCount()) {
-            playFunc(_getSelectedItem('prev'));
-        } else {
-            return false;
-        }
-    }
-    function _getSelectedItem() {
-        // refer
-    }
-
-    function switchFunc() {
+    } else {
 
     }
-    function playListCount() {
-        // refer
-    }
 
-<?php
-$url = $this->url(array("uid" => $this->uid, "sid" => "none"), "api-special-recommend");
-$uid = $this->uid;
-?>
-    var userId = "<?php echo $uid ?>";
-    var tmpUrl = "<?php echo $url ?>";
-    var myUrl = tmpUrl;
+    // 网速失速
+    $('#player').on('stalled', function() {
+        console.log('stalled');
+        var new_one = $('#player').clone(true);
+        $('#player').after(new_one).remove();
+    });
+    // 网速错误
+    $('#player').on('error', function() {
+        console.log('error');
+        var new_one = $('#player').clone(true);
+        $('#player').after(new_one).remove();
+    });
+    var list = [
+        {htmlObject: $('#tv-sider')},
+        {htmlObject: $('#tv-ctrl-block')}
+    ];
+    $('#tv-sider, #tv-ctrl-block, #tv-listbar').mouseenter(function() {
+        $.autoToggleListStop();
+    });
+    $('#tv-sider, #tv-ctrl-block, #tv-listbar').mouseleave(function() {
+        $.autoToggleListRestart();
+    });
+    $.autoToggleList(list);
 
-    function installList(response) {
-        if (response.data.programs) {
-            $.each(response.data.programs, function() {
-                var item = $(".P_tmp .list-item").clone(true);
-                item.click(function() {
-                    playFunc($(this).closest('.list-item'));
-                });
-                item.attr('video', this.oss_video);
-                item.attr('audio', this.oss_audio);
-                item.attr('id', this.id);
-                item.find('.col2').html(this.name);
-                item.find('.col3').html(parseInt(this.time).timeFormat());
-            });
-        }
-    }
-    function getApiData(callback, installListInCallback) {
-        $('#tv-screen').video('pause');
-        $.ajax({
-            url: myUrl,
-            dataType: 'json',
-            success: function(response) {
-                if (response.code === 200) {
-                    myUrl = tmpUrl;
-                    myUrl = myUrl.replace('none', response.data.id);
-                    if (!installListInCallback) {
-                        // execute installList now;
-                        installList(response);
-                    }
-                    // else execute installList in callback;
-                    if (typeof callback === 'function') {
-                        callback(response);
-                    }
-                }
-            },
-            error: function() {
-                $.endWaiting();
-            }
-        });
-    }
 </script>
 
-<style>
-    .move-away {
-        position:fixed;
-        left:100000px;
-    }
-</style>

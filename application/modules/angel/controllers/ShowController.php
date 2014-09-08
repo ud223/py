@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'fi-add', 'fi-list');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list');
 
     public function init() {
         parent::init();
@@ -34,9 +34,25 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
 
     public function playAction() {
-        $uid = $this->me->getUser()->id;
-        $this->view->uid = $uid;
-        setcookie('userId', $uid);
+//        $uid = $this->me->getUser()->id;
+//        $this->view->uid = $uid;
+//        setcookie('userId', $uid);
+
+        $specialId = $this->request->getParam('special');
+        if (!$specialId) {
+            // 未请求节目ID
+            if (!$this->me) {
+                $loginPath = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
+                $this->_redirect($loginPath);
+            } else {
+                // 随机获取一个新的专辑并且redirect到获取到的专辑地址
+                // 如/play?special=xxxxxx
+            }
+        } else {
+            // 由于专辑ID一定存在， 而节目ID可能存在
+            // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
+            // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
+        }
     }
 
     public function specialRecommendAction() {
@@ -53,21 +69,21 @@ class Angel_ShowController extends Angel_Controller_Action {
         if ($userId == null || $userId == "") {
             $userId = $this->request->getParam('uid');
         }
-        
+
         $user = $userModel->getUserById($userId);
 
         $curSpecialId = $this->request->getParam('sid');
 
         if ($curSpecialId == "none")
             $curSpecialId = false;
-       
-        $special = false; 
-        
+
+        $special = false;
+
         //获取该用户已经推荐过的专辑ID集合
-        $recommends = $recommendModel->getRecommend($userId);       
-        
+        $recommends = $recommendModel->getRecommend($userId);
+
         $recommend_special_id = array();
-        
+
         if ($recommends) {
             foreach ($recommends as $r) {
                 $recommend_special_id[] = $r->specialId;
@@ -75,11 +91,11 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         $like_category_id = array();
-        
+
         foreach ($user->category as $c) {
             $like_category_id[] = $c->id;
         }
-        
+
         //获取喜好热点专辑
         $hot = $hotModel->getLikeNotRecommendHot($like_category_id);
 
@@ -100,12 +116,12 @@ class Angel_ShowController extends Angel_Controller_Action {
                         break;
                     }
                 }
-                
+
                 if ($special)
                     break;
             }
         }
-        
+
         //获取非喜好热点专辑
         if (!$special) {
             //获取喜好热点专辑
@@ -115,12 +131,12 @@ class Angel_ShowController extends Angel_Controller_Action {
                 foreach ($hot as $h) {
                     foreach ($h->special as $p) {
                         $isRecommend = false;
-                        
+
                         foreach ($recommend_special_id as $r) {
                             if ($p->id == $r) {
-                                
+
                                 $isRecommend = true;
-                                
+
                                 break;
                             }
                         }
@@ -131,45 +147,44 @@ class Angel_ShowController extends Angel_Controller_Action {
                             break;
                         }
                     }
-                    
+
                     if ($special) {
                         break;
                     }
                 }
             }
-        } 
+        }
         //获取喜好分类专辑
         if (!$special) {
             $special = $specialModel->getSpecialByCategoryId($recommend_special_id, $like_category_id);
         }
-        
+
         //获取非喜好分类专辑
         if (!$special) {
             $special = $specialModel->getSpecialByNotCategoryId($recommend_special_id, $like_category_id);
         }
-        
+
         //没有热点，也没有没看过的视频，
-        if (!$special) {    
+        if (!$special) {
             //没有获取到当前视频id的极端情况
             if (!$curSpecialId) {
                 $special = $specialModel->getLastOne();
-            }
-            else {
+            } else {
                 $tmpSpecial = $specialModel->getById($curSpecialId);
-                
+
                 $special = $specialModel->getNext($tmpSpecial);
 
                 if (!$special)
                     $special = $specialModel->getLastOne();
             }
         }
-        
+
         //获取该专辑作者
         $author = $authorModel->getAuthorById($special->authorId);
 
         $result["id"] = $special->id;
         $result["name"] = $special->name;
-        
+
         if ($author == "")
             $result["author"] = "";
         else
@@ -183,30 +198,30 @@ class Angel_ShowController extends Angel_Controller_Action {
             $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
             $result["photo_main"] = $this->view->photoImage($photo->name . $photo->type, 'main');
         }
-        
+
         foreach ($special->program as $program) {
             $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
-        
+
         //保存推荐记录
         $recommendModel->addRecommend($special->id, $userId);
         setcookie('specialId', $special->id);
         $this->_helper->json(array('data' => $result, 'code' => 200));
     }
-    
+
     public function saveUserCategoryAction() {
         $categoryModel = $this->getModel('category');
         $userModel = $this->getModel('user');
-        
+
         //获取当前需要推荐的用户ID
         $userId = $this->request->getParam('uid');
         $categorys_id = $this->request->getParam('category');
 
         $categorys = null;
-        
+
         if ($categorys_id != 'none') {
-            $tmpCategorys_id = explode(";",$categorys_id);
-            
+            $tmpCategorys_id = explode(";", $categorys_id);
+
             if (is_array($tmpCategorys_id)) {
                 $categorys = $categoryModel->getByIds($tmpCategorys_id);
             }
@@ -214,18 +229,17 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         try {
             $userModel->saveUser($userId, $categorys);
-            
+
             $this->_helper->json(array('data' => 'save success!', 'code' => 200));
-        }
-        catch (Exception $e){
+        } catch (Exception $e) {
             $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
         }
     }
- 
+
     public function keywordVoteAction() {
         $voteModel = $this->getModel('vote');
         $programModel = $this->getModel('program');
-        
+
         $program_id = $this->getParam('pid');
         $time = intval($this->getParam('time'));
         $user_id = $this->me->getUser()->id;
@@ -241,162 +255,150 @@ class Angel_ShowController extends Angel_Controller_Action {
             if (!$score)
                 $score = 0;
 
-            if ($time <  20) {
+            if ($time < 20) {
                 $score = $score - 1;
-            }
-            elseif ($time > 49 && $time < 80) {
+            } elseif ($time > 49 && $time < 80) {
                 $score = $score + 1;
-            }
-            elseif ($time > 79) {
+            } elseif ($time > 79) {
                 $score = $score + 2;
-            }
-            else {
+            } else {
                 $score = $score;
             }
 
             try {
                 if ($vote) {
                     $voteModel->saveVote($vote->id, $user_id, $p->id, $score);
-                }
-                else {
+                } else {
                     $voteModel->addVote($user_id, $p->id, $score);
-                } 
-            }
-            catch (Exception $e){
+                }
+            } catch (Exception $e) {
                 $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
             }
 
             $this->_helper->json(array('data' => 'success', 'code' => 200));
         }
     }
-    
+
     public function downloadAndroidAction() {
         $version = $this->getParam('version');
-        $file_url = $_SERVER['DOCUMENT_ROOT'] . '/download/android/CheeseTV'. $version . '.apk';
-        
+        $file_url = $_SERVER['DOCUMENT_ROOT'] . '/download/android/CheeseTV' . $version . '.apk';
+
         if (!file_exists($file_url)) {
             echo 'file not found!';
-            
+
             exit;
-        }
-        else {
+        } else {
             echo 'file downloading...';
         }
-        
+
         $file = fopen($file_url, "r");
-        
+
         Header("Content-type:application/octet-stream");
         Header("Accept-Ranges:bytes");
-        Header("Accept-Length:".  filesize($file_url));
-        Header("Content-Disposition:attachment;filename=".'CheeseTV'. $version . '.apk');
-        
+        Header("Accept-Length:" . filesize($file_url));
+        Header("Content-Disposition:attachment;filename=" . 'CheeseTV' . $version . '.apk');
+
         echo fread($file, filesize($file_url));
-        
+
         fclose($file);
-        
+
         exit();
     }
-    
+
     public function downloadIosAction() {
         $version = $this->getParam('version');
-        $file_url = $_SERVER['DOCUMENT_ROOT'] . '/download/ios/CheeseTV'. $version . '.ipa';
-        
+        $file_url = $_SERVER['DOCUMENT_ROOT'] . '/download/ios/CheeseTV' . $version . '.ipa';
+
         if (!file_exists($file_url)) {
             echo 'file not found!';
-            
+
             exit;
-        }
-        else {
+        } else {
             echo 'file downloading...';
         }
-        
+
         $file = fopen($file_url, "r");
-        
+
         Header("Content-type:application/octet-stream");
         Header("Accept-Ranges:bytes");
-        Header("Accept-Length:".  filesize($file_url));
-        Header("Content-Disposition:attachment;filename=".'CheeseTV'. $version . '.ipa');
-        
+        Header("Accept-Length:" . filesize($file_url));
+        Header("Content-Disposition:attachment;filename=" . 'CheeseTV' . $version . '.ipa');
+
         echo fread($file, filesize($file_url));
-        
+
         fclose($file);
-        
+
         exit();
     }
-    
+
     public function favouriteAddAction() {
         $favouriteModel = $this->getModel('favourite');
         $specialModel = $this->getModel('special');
-        
+
         $special_id = $this->getParam('sid');
         $user_id = $this->me->getUser()->id;
 
         $special = $specialModel->getById($special_id);
         $favourite = $favouriteModel->getFavouriteByUserId($user_id);
 
-        
-            try {
-                if ($favourite) {
-                    $favouriteModel->saveFavourite($favourite, $special);
-                }  
-                else {
-                    $favouriteModel->addFavourite($user_id, $special);
-                }
+
+        try {
+            if ($favourite) {
+                $favouriteModel->saveFavourite($favourite, $special);
+            } else {
+                $favouriteModel->addFavourite($user_id, $special);
             }
-            catch (Exception $e) {
-                $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-            }
+        } catch (Exception $e) {
+            $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+        }
 
         $this->_helper->json(array('data' => 'success', 'code' => 200));
     }
-    
+
     public function favouriteRemoveAction() {
         $favouriteModel = $this->getModel('favourite');
         $specialModel = $this->getModel('special');
-        
+
         $special_id = $this->getParam('sid');
         $user_id = $this->me->getUser()->id;
 
         $favourite = $favouriteModel->getFavouriteByUserId($user_id);
 
-            try {
-                if ($favourite) {
-                    $favouriteModel->RemoveFavouriteByUserId($favourite, $special_id);
-                }  
-                else {
-                    $this->_helper->json(array('data' => '没有找到任何所属收藏！', 'code' => 0));
-                }
+        try {
+            if ($favourite) {
+                $favouriteModel->RemoveFavouriteByUserId($favourite, $special_id);
+            } else {
+                $this->_helper->json(array('data' => '没有找到任何所属收藏！', 'code' => 0));
             }
-            catch (Exception $e) {
-                $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-            }
+        } catch (Exception $e) {
+            $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+        }
 
         $this->_helper->json(array('data' => 'success', 'code' => 200));
     }
-    
+
     //根据当前用户的id来获取收藏专辑
     public function favouriteListAction() {
         $favouriteModel = $this->getModel('favourite');
-        
+
         $user_id = $this->me->getUser()->id;
-        
+
         $favourite = $favouriteModel->getFavouriteByUserId($user_id);
-        
+
         if ($favourite) {
             foreach ($favourite->special as $p) {
                 $result["specials"][] = array("id" => $p->id, "name" => $p->name);
             }
-            
+
             $this->_helper->json(array('data' => $result, 'code' => 200));
-        }
-        else {
+        } else {
             $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));
         }
     }
-    
+
     public function uploadFileAction() {
         $ossModel = $this->getModel('oss');
-        
+
         $name = $this->getParam('filename');
         $fsize = $this->getParam('size');
         $key = $this->getParam('key');
@@ -405,31 +407,29 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         try {
             $ossModel->addOss($name, '', $status, $key, $fsize, $type, $ext, null);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
         }
-        
-         $this->_helper->json(array('data' => 'success', 'code' => 200));
+
+        $this->_helper->json(array('data' => 'success', 'code' => 200));
     }
-    
+
     public function fiAddAction() {
         $fiModel = $this->getModel('fi');
 
         $name = $this->getParam('name');
         $email = $this->getParam('email');
-        $phone = $this->getParam('phone');        
+        $phone = $this->getParam('phone');
 
-            try {
-                $fiModel->addFi($name, $email, $phone);
-            }
-            catch (Exception $e) {
-                $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-            }
+        try {
+            $fiModel->addFi($name, $email, $phone);
+        } catch (Exception $e) {
+            $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+        }
 
         $this->_helper->json(array('data' => 'success', 'code' => 200));
     }
-    
+
     public function fiListAction() {
         $fiModel = $this->getModel('fi');
 
@@ -437,13 +437,13 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         if ($fis) {
             foreach ($fis as $p) {
-                $result["fi"][] = array("name" => $p->name, "email" => $p->email, "phone"=> $p->phone);
+                $result["fi"][] = array("name" => $p->name, "email" => $p->email, "phone" => $p->phone);
             }
-            
+
             $this->_helper->json(array('data' => $result, 'code' => 200));
-        }
-        else {
+        } else {
             $this->_helper->json(array('data' => "没有找到任何报名！", 'code' => 0));
         }
     }
+
 }
