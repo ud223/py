@@ -84,11 +84,12 @@ class Angel_ShowController extends Angel_Controller_Action {
                         }
                     }
                     $this->view->cur_program = $cur_program;
+                    $this->view->resource = $result;
                 }
             }
 
             // 判断用户来自于PC端还是手机端，render不同的模板和Layout
-            if (true) {
+            if (false) {
                 $this->_helper->layout->setLayout('mobile');
                 $this->_helper->viewRenderer->render('mplay');
             }
