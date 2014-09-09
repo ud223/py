@@ -37,6 +37,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 //        $uid = $this->me->getUser()->id;
 //        $this->view->uid = $uid;
 //        setcookie('userId', $uid);
+        $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');
         $programModel = $this->getModel('program');
 
@@ -93,6 +94,11 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $this->_helper->layout->setLayout('mobile');
                 $this->_helper->viewRenderer->render('mplay');
             }
+            //获取当前需要推荐的用户ID
+            $userId = $this->me->getUser()->id;
+            
+            //保存推荐记录  可能调整一下位置
+            $recommendModel->addRecommend($specialBean->id, $userId);
         }
     }
 
@@ -404,15 +410,13 @@ class Angel_ShowController extends Angel_Controller_Action {
             $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
 
-        //保存推荐记录  可能调整一下位置
-        $recommendModel->addRecommend($special->id, $userId);
+        
 
         return $result;
     }
 
     public function specialRecommendAction() {
         $specialModel = $this->getModel('special');
-        $recommendModel = $this->getModel('recommend');
         $programModel = $this->getModel('program');
         $authorModel = $this->getModel('author');
         $categoryModel = $this->getModel('category');
