@@ -39,10 +39,10 @@ class Angel_ShowController extends Angel_Controller_Action {
 //        setcookie('userId', $uid);
         $specialModel = $this->getModel('special');
         $programModel = $this->getModel('program');
-        
+
         $specialId = $this->request->getParam('special');
         $specialBean = false;
-        
+
         if (!$specialId) {
             // 未请求专辑ID
             if (!$this->me) {
@@ -53,53 +53,46 @@ class Angel_ShowController extends Angel_Controller_Action {
                 // 如/play?special=xxxxxx
                 setcookie('userId', $this->me->getUser()->id);
                 $specialBean = $this->getRecommendSpecial();
-                
+
                 $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
-                
+
                 $this->_redirect($playPath);
             }
         } else {
             $specialId = $this->request->getParam('special');
             $programId = $this->request->getParam('program');
             $cur_program = false;
-            
+
             $specialBean = $specialModel->getById($specialId);
             // 由于专辑ID一定存在， 而节目ID可能存在
             // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
             // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
-            
             //如果当前专辑不存在或已被删除
             if (!$specialBean) {
                 
-            }
-            else {
+            } else {
                 $result = $this->getSpecialInfo($specialBean);
-                
-                if (!$programId) {  //如果没有节目id就直接播放当前专辑第一个
-                    $cur_program = $result["programs"][0]["oss_video"];
-                }
-                else {  //根据program_id 获取当前要播放的节目
-                    foreach ($result["programs"] as $p) {
-                        if ($p->id == $programId) {
-                            $cur_program = $p["oss_video"];
+                if (count($result)) {
+                    //如果没有查询到节目id就直接播放当前专辑第一个
+                    $cur_program = $result["programs"][0];
+                    if ($programId) {  //根据program_id 获取当前要播放的节目
+                        foreach ($result["programs"] as $p) {
+                            if ($p->id == $programId) {
+                                $cur_program = $p;
+                                break;
+                            }
                         }
                     }
-                    //如果没有查询到节目id就直接播放当前专辑第一个
-                    if (!$cur_program)
-                        $cur_program = $result["programs"][0]["oss_video"];
+                    $this->view->cur_program = $cur_program;
                 }
             }
-            
+
             // 判断用户来自于PC端还是手机端，render不同的模板和Layout
-            if(true) {
+            if (true) {
                 $this->_helper->layout->setLayout('mobile');
                 $this->_helper->viewRenderer->render('mplay');
-                
-                
             }
-            
-            
-        }    
+        }
     }
 
     protected function specialRecommend() {
@@ -253,10 +246,10 @@ class Angel_ShowController extends Angel_Controller_Action {
         //保存推荐记录
         $recommendModel->addRecommend($special->id, $userId);
         setcookie('specialId', $special->id);
-        
+
         return $result;
     }
-    
+
     protected function getRecommendSpecial() {
         $specialModel = $this->getModel('special');
         $recommendModel = $this->getModel('recommend');
@@ -378,16 +371,16 @@ class Angel_ShowController extends Angel_Controller_Action {
                     $special = $specialModel->getLastOne();
             }
         }
-        
+
         return $special;
     }
 
-    protected  function getSpecialInfo($special) {
+    protected function getSpecialInfo($special) {
         $recommendModel = $this->getModel('recommend');
         $programModel = $this->getModel('program');
         $userModel = $this->getModel('user');
         //获取该专辑上传达人
-        $author = $userModel->getUserById($special->authorId);//$authorModel->getAuthorById($special->authorId);
+        $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
 
         $result["id"] = $special->id;
         $result["name"] = $special->name;
@@ -412,7 +405,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         //保存推荐记录  可能调整一下位置
         $recommendModel->addRecommend($special->id, $userId);
-        
+
         return $result;
     }
 
@@ -541,7 +534,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 //-------------------------------------------------------------------------------
         //获取该专辑上传达人
-        $author = $userModel->getUserById($special->authorId);//$authorModel->getAuthorById($special->authorId);
+        $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
 
         $result["id"] = $special->id;
         $result["name"] = $special->name;
