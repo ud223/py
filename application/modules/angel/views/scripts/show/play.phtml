@@ -7,7 +7,8 @@ $player_mode = "video";
 if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
     $player_mode = $this->me->getUser()->attribute['player_mode'];
 }
-$bean = $this->special_bean;
+$bean = $this->resource;
+$programs = $bean['programs'];
 ?>
 
 
@@ -15,18 +16,18 @@ $bean = $this->special_bean;
     <div id='tv-sider'>
         <div class="pxt">
             <button id='btn-list' class='ico tv-side-btn'></button>
-            <button id='btn-refresh' class='ico tv-side-btn'></button>
+            <button id='btn-refresh' onclick="location.href = '<?php echo $this->url(array(), 'show-play') ?>'" class='ico tv-side-btn'></button>
             <button id='btn-toggle' class='ico tv-side-btn'></button>
         </div>
     </div>
-    <div id="tv-listbar" sid="<?php echo $bean->id ?>">
+    <div id="tv-listbar" sid="<?php echo $bean['id'] ?>">
         <div class="tv-tab-content">
             <div class="tv-tab-content-head">
                 <div class="alt alt-list">
-                    <img class="alt-img" src="<?php echo $bean->photo ?>"/>
+                    <img class="alt-img" src="<?php echo $bean['photo'] ?>"/>
                     <div class="alt-title">
-                        <p class="t1"><?php echo $bean->name ?></p>
-                        <div class="t2">by <?php echo $bean->author ?></div>
+                        <p class="t1"><?php echo $bean['name'] ?></p>
+                        <div class="t2">by <?php echo $bean['author'] ?></div>
                     </div>
                     <div class="alt-opera">
                         <button class="ico"></button>
@@ -48,17 +49,23 @@ $bean = $this->special_bean;
             </div>
             <div class="tv-tab-content-body">
                 <div class="alt alt-list">
-                    <div class="list-item clearfix">
-                        <div class="list-item-cell lt">1. 农民或获15万奖励</div>
-                        <div class="list-item-cell rt sharing ico"></div>
-                        <div class="list-item-cell rt duration">05:45</div>
-                    </div>
-                    <div class="list-item clearfix">
-                        <div class="list-item-cell lt">2. 农民或获15万奖励</div>
-                        <div class="list-item-cell rt sharing ico"></div>
-                        <div class="list-item-cell rt duration">06:29</div>
-                    </div>
+                    <?php foreach ($programs as $program): ?>
+                        <?php
+                        $cls = "";
+                        if ($this->cur_program['id'] == $program['id']) {
+                            $cls = " selected";
+                        }
+                        ?>
+                        <div class="list-item clearfix<?php echo $cls ?>" id="<?php echo $program['id'] ?>">
+                            <div class="list-item-cell lt"><?php echo $program['name'] ?></div>
+                            <div class="list-item-cell rt sharing ico"></div>
+                            <div class="list-item-cell rt duration" time="<?php echo $program['time'] ?>"></div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
+
+
+
                 <div class="alt alt-favor hidden">
                     <div class="list-item clearfix">
                         <div class="list-item-cell lt">1. 农民或获15万奖励</div>
@@ -134,22 +141,25 @@ $bean = $this->special_bean;
                     <span>兴趣设置</span>
                 </li>
             </ul>
-            <div class="logout-btn-content">
-                <button class="btn btn-gray btn-sm">安全退出</button>
-            </div>
+            <?php if ($this->me): ?>
+                <div class="logout-btn-content">
+                    <button class="btn btn-gray btn-sm">安全退出</button>
+                </div>
+            <?php endif; ?>
         </div>
         <button class="tv-tab-close"><i class="ico"></i></button>
     </div>
 
     <?php if ($player_mode == 'video'): ?>
         <div id="tv-screen" class="layer text-center">
-            <video id="tv-video-player" src="http://cheesetv.oss-cn-beijing.aliyuncs.com/%E6%A0%BC%E5%BC%8F%E5%B7%A5%E5%8E%8201%E9%A3%9F%E5%93%81%E4%BF%9D%E8%B4%A8%E6%9C%9F%E6%98%AF%E4%B8%8D%E6%98%AF%E6%9C%80%E5%90%8E%E5%8F%AF%E9%A3%9F%E7%94%A8%E6%9C%9F%E9%99%90.mp4" preload oncontextmenu="return false;">
+            <video id="tv-video-player" src="<?php echo $this->cur_program['oss_video'] ?>" preload oncontextmenu="return false;">
             </video>
         </div>
     <?php else: ?>
         <div id="tv-disk">
             <div id="tv-disk-page"></div>
         </div>
+        <audio id="tv-video-player" src="<?php echo $this->cur_program['oss_audio'] ?>" preload></audio>
     <?php endif; ?>
 
     <div id="tv-ctrl-block">
@@ -159,6 +169,9 @@ $bean = $this->special_bean;
             </div>
         </div>
         <div id="tv-ctrl-play" class="tv-ctrl-s">
+            <i class="ico"></i>
+        </div>
+        <div id="tv-ctrl-pause" class="tv-ctrl-s">
             <i class="ico"></i>
         </div>
         <div id="tv-ctrl-fullscreen" full='no' class="tv-ctrl-s">
@@ -190,8 +203,14 @@ $bean = $this->special_bean;
 
 <script type="text/javascript">
     var init_player_mode = '<?php echo $player_mode; ?>';
-
+    var PLAYER = document.getElementsByTagName(init_player_mode)[0];
     $('document').ready(function() {
+        $.each($('.duration'), function() {
+            var $this = $(this);
+            var time = parseInt($this.attr('time'));
+            var timeStr = time.timeFormat();
+            $this.html(timeStr);
+        });
     });
     $('.tv-toggle-unit[rel="' + init_player_mode + '"]').addClass('selected');
     if (init_player_mode === 'audio') {
@@ -224,5 +243,29 @@ $bean = $this->special_bean;
     });
     $.autoToggleList(list);
 
+    $('#tv-ctrl-play').click(function() {
+        PLAYER.play();
+        $('#tv-ctrl-play').toggle();
+        $('#tv-ctrl-pause').toggle();
+    });
+    $('#tv-ctrl-pause').click(function() {
+        PLAYER.pause();
+        $('#tv-ctrl-play').toggle();
+        $('#tv-ctrl-pause').toggle();
+    });
+
+    $('.alt-list .list-item').click(function() {
+        var programId = $(this).closest('.list-item').attr('id');
+        var specialId = $('#tv-listbar').attr('sid');
+        var url = "<?php echo $this->url(array(), 'show-play') ?>?special=" + specialId + "&&program=" + programId;
+//        alert(url);
+        location.href = url;
+    });
+
+    $('.alt-list .list-item .sharing').click(function() {
+        var programId = $(this).closest('.list-item').attr('id');
+        alert('sharing: ' + programId);
+        return false;
+    });
 </script>
 

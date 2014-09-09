@@ -350,6 +350,9 @@ h3 {
     line-height:60px;
     padding:0 30px;
 }
+#tv .tv-tab-content-body .alt .list-item.selected {
+    color:#FFD800;
+}
 #tv .tv-tab-content-body .alt .unit-items {
     padding:30px;
 }
@@ -597,14 +600,23 @@ h3 {
     margin-top:15px;
     width:100px;
 }
-#tv-ctrl-play {
+#tv-ctrl-play, #tv-ctrl-pause {
     left:0
+}
+#tv-ctrl-pause {
+    display:none;
 }
 #tv-ctrl-play .ico {
     background-position: 0 -498px;
 }
+#tv-ctrl-pause .ico {
+    background-position: -100px -498px;
+}
 #tv-ctrl-play:hover .ico {
     background-position: 0 -548px;
+}
+#tv-ctrl-pause:hover .ico {
+    background-position: -100px -548px;
 }
 #tv-ctrl-fullscreen {
     right:0;
