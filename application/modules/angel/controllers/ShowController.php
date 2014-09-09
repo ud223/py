@@ -91,6 +91,14 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
             
             // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+            if(true) {
+                $this->_helper->layout->setLayout('mobile');
+                $this->_helper->viewRenderer->render('mplay');
+                
+                
+            }
+            
+            
         }    
     }
 
