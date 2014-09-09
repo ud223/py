@@ -2,16 +2,11 @@ var top = window.screen.height / 2 - 250;
 var left = window.screen.width / 2 - 300;  
   
 /*title是标题，rLink链接，summary内容，site分享来源，pic分享图片路径,分享到新浪微博*/  
-function shareTSina(title,rLink,site,pic) {  
-    title = "标题。";  
-  // pic = $(".p-img img").attr("src");  
-   rLink = "http://www.abc.com/heeh.html";  
-     
+function shareTSina(title,rLink,site,pic) {    
     window.open("http://service.weibo.com/share/share.php?pic=" +encodeURIComponent(pic) +"&title=" +   
     encodeURIComponent(title.replace(/&nbsp;/g, " ").replace(/<br \/>/g, " "))+ "&url=" + encodeURIComponent(rLink),  
     "分享至新浪微博",  
-    "height=500,width=600,top=" + top + ",left=" + left + ",toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no");  
-      
+    "height=500,width=600,top=" + top + ",left=" + left + ",toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no");       
 }  
   
 /*,分享到qq空间*/  
@@ -19,6 +14,7 @@ function shareQzone(title,rLink,summary,site,pic) {
      title = "标题。";  
      rLink = "http://www.abc.com/heeh.html";  
      site = "http://www.abc.com/heeh.html";  
+     
       window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?title='+  
                        encodeURIComponent(title)+'&url='+encodeURIComponent(rLink)+'&summary='+  
                        encodeURIComponent(summary)+ '&site='+encodeURIComponent(site)  
@@ -48,9 +44,7 @@ function shareKX(title,rLink,summary){
   
 //腾讯微博  
 function shareToWb(title,rLink,site,pic){     
-      title = "标题。";  
-      rLink = "http://www.abc.com/heeh.html";  
-         window.open('http://v.t.qq.com/share/share.php?url='+encodeURIComponent(rLink)+  
+         window.open('http://v.t.qq.com/share/share.php?pic=' +encodeURIComponent(pic) +'&url='+encodeURIComponent(rLink)+  
           '&title='+encodeURI(title)+'&appkey='+encodeURI(site),'_blank',  
            'scrollbars=no,width=600,height=450,left=' + left + ',top=' + top + ',status=no,resizable=yes');       
 }  
