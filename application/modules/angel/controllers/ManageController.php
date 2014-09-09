@@ -1148,6 +1148,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         $authorModel = $this->getModel('author');
         $programModel = $this->getModel('program');
         $categoryModel = $this->getModel('category');
+        $userModel = $this->getModel('user');
 
         if ($this->request->isPost()) {
             $result = 0;
@@ -1201,7 +1202,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $not_own_programs = $programModel->getProgramNotOwn($programIds);
             
             $this->view->title = "创建专辑";
-            $this->view->authors = $authorModel->getAll(false);
+            $this->view->authors = $userModel->getVipList(false);
             $this->view->not_own_programs = $not_own_programs;
             $this->view->categorys = $categoryModel->getAll(false);
         }
@@ -1257,11 +1258,12 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
 
     public function specialSaveAction() {
-        $notFoundMsg = '未找到目标分类';
+        $notFoundMsg = '未找到目标专辑';
         $specialModel = $this->getModel('special');
         $authorModel = $this->getModel('author');
         $programModel = $this->getModel('program');
         $categoryModel = $this->getModel('category');
+        $userModel = $this->getModel('user');
 
         if ($this->request->isPost()) {
             $result = 0;
@@ -1358,7 +1360,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $categorys = $categoryModel->getAll(false);
   
                 $this->view->categorys = $categorys;
-                $this->view->authors = $authorModel->getAll(false);
+                $this->view->authors = $userModel->getVipList(false);
                 $this->view->own_programs = $target->program;
                 $this->view->not_own_programs = $not_own_programs;
             } else {
@@ -1397,7 +1399,7 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
     
     public function versionSaveAction() {
-        $notFoundMsg = '未找到目标分类';
+        $notFoundMsg = '未找到目标版本';
         $versionModel = $this->getModel('version');
 
         if ($this->request->isPost()) {
@@ -1586,5 +1588,167 @@ class Angel_ManageController extends Angel_Controller_Action {
     
     public function apiTestAction() {
         
+    }
+    
+    public function vipCreateAction() {
+        $userModel = $this->getModel('user');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $name = $this->request->getParam('name');
+            $email = $this->request->getParam('email');
+            $username = $this->request->getParam('username');
+            $password = $this->request->getParam('password');
+            $age = $this->request->getParam('age');
+            $gender = $this->request->getParam('gender');
+            $user_type = 'user';
+            $author = 1;
+
+            try {
+                $result = $userModel->addVip($email, $password, $username, $user_type, Zend_Session::getId(), false, $age, $gender, $name, $author);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-vip-list'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            $this->view->title = "创建达人";
+        }
+    }
+    
+    public function vipListAction() {
+        $userModel = $this->getModel('user');
+        $specialModel = $this->getModel('special');
+        $page = $this->request->getParam('page');
+        
+        if (!$page) {
+            $page = 1;
+        }
+        
+        $paginator = $userModel->getAll();
+        $result= $userModel->getAll(false);
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
+        $resource = array();
+
+        foreach ($result as $r) {
+            $resource[] = array( 'id' => $r->id, 'email' => $r->email, 'author'=>$r->author);
+        }
+
+        $this->view->resource = $resource;
+        $this->view->title = "达人列表";
+        $this->view->paginator = $paginator;
+        $this->view->specialModel = $specialModel;
+    }
+    
+    public function vipSaveAction() {
+        $notFoundMsg = '未找到目标达人';
+        $userModel = $this->getModel('user');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $user_id = $this->request->getParam("id");
+            $name = $this->request->getParam('name');
+            $email = $this->request->getParam('email');
+            $username = $this->request->getParam('username');
+            $password = $this->request->getParam('password');
+            $age = $this->request->getParam('age');
+            $gender = $this->request->getParam('gender');
+ 
+            $author = 1;
+
+            try {
+                $result = $userModel->saveVip($user_id, $email, $username,$password, Zend_Session::getId(), false, $age, $gender, $name, $author);
+            } catch (Angel_Exception_Special $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-vip-list'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑达人";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                $target = $userModel->getById($id);
+
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+                
+                $this->view->model = $target;
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
+    }
+    
+    public function setVipAction() {
+        $user_id = $this->request->getParam("id");
+        $error = "参数不齐全！";
+        
+        if (!$user_id) {
+            $this->_helper->json(array('data' => $error, 'code' => 0)); return;
+        }
+        
+        $userModel = $this->getModel('user');
+        
+        $user = $userModel->getById($user_id);
+        $result = false;
+        
+        try {
+            $result = $userModel->saveVip($user->id, $user->email, $user->username, $user->password_src, Zend_Session::getId(), false, $user->age, $user->gender, $user->name, 1);
+        }
+        catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+        
+        if ($result) {
+            $this->_helper->json(array('data' => 'success', 'code' => 200)); 
+        }
+        else {
+            $this->_helper->json(array('data' => $error, 'code' => 0)); 
+        }
+    }
+    
+    public function unsetVipAction() {
+        $user_id = $this->request->getParam("id");
+        $error = "参数不齐全！";
+        
+        if (!$user_id) {
+            $this->_helper->json(array('data' => $error, 'code' => 0)); return;
+        }
+        
+        $userModel = $this->getModel('user');
+        
+        $user = $userModel->getById($user_id);
+        $result = false;
+        
+        try {
+            $result = $userModel->saveVip($user->id, $user->email, $user->username, $user->password_src, Zend_Session::getId(), false, $user->age, $user->gender, $user->name, 0);
+        }
+        catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+        
+        if ($result) {
+            $this->_helper->json(array('data' => 'success', 'code' => 200)); 
+        }
+        else {
+            $this->_helper->json(array('data' => $error, 'code' => 0)); 
+        }
     }
 }

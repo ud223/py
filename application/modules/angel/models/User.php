@@ -43,6 +43,99 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         $usertype = "user";
         return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $age, $gender);
     }
+    
+    public function AddVip($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name, $author) {
+        $result = false;
+        if (empty($email)) {
+            throw new Angel_Exception_User(Angel_Exception_User::EMAIL_EMPTY);
+        } else {
+            $validation = new Zend_Validate_EmailAddress();
+            if (!$validation->isValid($email)) {
+                throw new Angel_Exception_User(Angel_Exception_User::EMAIL_INVALID);
+            } else {
+                if ($this->isEmailExist($email)) {
+                    throw new Angel_Exception_User(Angel_Exception_User::EMAIL_NOT_UNIQUE);
+                }
+                if ($this->isUsernameExist($username)) {
+                    throw new Angel_Exception_User(Angel_Exception_User::USERNAME_NOT_UNIQUE);
+                }
+            }
+        }
+
+        $user = new $this->_document_class();
+
+        $user->email = $email;
+        $user->username = $username;
+        $user->salt = $salt;
+        $user->user_type = $usertype;
+        $user->password = $password;
+        $user->age = $age;
+        $user->gender = $gender;
+        $user->active_bln = true;
+        $user->email_validated_bln = !$checkemail;
+        $user->validated_bln = false;
+        $user->name = $name;
+        $user->author = $author;
+
+        try {
+            $this->_dm->persist($user);
+            $this->_dm->flush();
+
+            $result = $user->id;
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
+        }
+
+        // send email to the new user to notice him to active his account
+        if ($result && $checkemail) {
+            $this->sendAccountValidationEmail($user);
+        }
+        // send email to the new user to welcome them
+        if ($result && !$checkemail) {
+            
+        }
+        return $result;
+    }
+    
+    public function getVipList($return_as_paginator = true) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('author')->equals(1)->sort('created_at', -1);
+        $result = null;
+        if ($return_as_paginator) {
+            $result = $this->paginator($query);
+        } else {
+            $result = $query->getQuery()->execute();
+        }
+        return $result;
+    }
+    
+    public function saveVip($uesrId, $email, $username, $password, $salt, $checkmail, $age, $gender, $name, $author) {
+        $result = false;
+        
+        try {
+            $user = $this->getUserById($uesrId);
+   
+            if (!$password) {
+                $password = $user->password_src;
+            }
+            
+            $active_bln = true;
+            $email_validated_bln = !$checkemail;
+            $validated_bln = false;
+            $user_type = $user->user_type;
+            
+            $data = array("email" => $email, "name"=>$name, "username" => $username, "salt" => $salt, "user_type" => $user_type, "password" => $password, "age"=> $age, "gender"=>$gender, "user_type"=> $user_type, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category, "author"=> $author);
+
+            $this->save($uesrId, $data);
+            
+            $result = true;
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
+        }
+        
+        return $result;
+    }
 
     public function setAttribute($user, $key, $value) {
         $validated_key = array('player_mode');
@@ -125,6 +218,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             $active_bln = true;
             $email_validated_bln = !$checkemail;
             $validated_bln = false;
+            $author = $user->author;
             
             $user->clearCategory();
 
@@ -132,7 +226,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
                 $user->addCategory($c);
             }
 
-            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age"=> $age, "gender"=>$gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category);
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age"=> $age, "gender"=>$gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category, "author"=> $author);
 
             $this->save($uesrId, $data);
         } catch (Exception $e) {
