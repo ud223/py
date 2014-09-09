@@ -37,9 +37,12 @@ class Angel_ShowController extends Angel_Controller_Action {
 //        $uid = $this->me->getUser()->id;
 //        $this->view->uid = $uid;
 //        setcookie('userId', $uid);
-
+        $specialModel = $this->getModel('special');
+        $programModel = $this->getModel('program');
+        
         $specialId = $this->request->getParam('special');
         $specialBean = false;
+        
         if (!$specialId) {
             // 未请求专辑ID
             if (!$this->me) {
@@ -49,17 +52,46 @@ class Angel_ShowController extends Angel_Controller_Action {
                 // 随机获取一个新的专辑并且redirect到获取到的专辑地址
                 // 如/play?special=xxxxxx
                 setcookie('userId', $this->me->getUser()->id);
-                $specialBean = $this->specialRecommend();
-                $this->view->special_bean = $specialBean;
+                $specialBean = $this->getRecommendSpecial();
+                
+                $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
+                
+                $this->_redirect($playPath);
             }
         } else {
-            // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+            $specialId = $this->request->getParam('special');
+            $programId = $this->request->getParam('program');
+            $cur_program = false;
             
+            $specialBean = $specialModel->getById($specialId);
             // 由于专辑ID一定存在， 而节目ID可能存在
             // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
             // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
-        }
-        
+            
+            //如果当前专辑不存在或已被删除
+            if (!$specialBean) {
+                
+            }
+            else {
+                $result = $this->getSpecialInfo($specialBean);
+                
+                if (!$programId) {  //如果没有节目id就直接播放当前专辑第一个
+                    $cur_program = $result["programs"][0]["oss_video"];
+                }
+                else {  //根据program_id 获取当前要播放的节目
+                    foreach ($result["programs"] as $p) {
+                        if ($p->id == $programId) {
+                            $cur_program = $p["oss_video"];
+                        }
+                    }
+                    //如果没有查询到节目id就直接播放当前专辑第一个
+                    if (!$cur_program)
+                        $cur_program = $result["programs"][0]["oss_video"];
+                }
+            }
+            
+            // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+        }    
     }
 
     protected function specialRecommend() {
@@ -217,6 +249,165 @@ class Angel_ShowController extends Angel_Controller_Action {
         return $result;
     }
     
+    protected function getRecommendSpecial() {
+        $specialModel = $this->getModel('special');
+        $recommendModel = $this->getModel('recommend');
+        $categoryModel = $this->getModel('category');
+        $hotModel = $this->getModel("hot");
+        $userModel = $this->getModel('user');
+        //获取当前需要推荐的用户ID
+        $userId = $this->me->getUser()->id;
+
+        if ($userId == null || $userId == "") {
+            $userId = $this->request->getParam('uid');
+        }
+
+        $user = $userModel->getUserById($userId);
+
+        $curSpecialId = $this->request->getParam('sid');
+
+        if ($curSpecialId == "none")
+            $curSpecialId = false;
+
+        $special = false;
+
+        //获取该用户已经推荐过的专辑ID集合
+        $recommends = $recommendModel->getRecommend($userId);
+
+        $recommend_special_id = array();
+
+        if ($recommends) {
+            foreach ($recommends as $r) {
+                $recommend_special_id[] = $r->specialId;
+            }
+        }
+
+        $like_category_id = array();
+
+        foreach ($user->category as $c) {
+            $like_category_id[] = $c->id;
+        }
+
+        //获取喜好热点专辑
+        $hot = $hotModel->getLikeNotRecommendHot($like_category_id);
+
+        if ($hot) {
+            foreach ($hot as $h) {
+                foreach ($h->special as $p) {
+                    $isRecommend = false;
+
+                    foreach ($recommend_special_id as $r) {
+                        if ($p->id == $r) {
+                            $isRecommend = true;
+                        }
+                    }
+
+                    if (!$isRecommend) {
+                        $special = $p;
+
+                        break;
+                    }
+                }
+
+                if ($special)
+                    break;
+            }
+        }
+
+        //获取非喜好热点专辑
+        if (!$special) {
+            //获取喜好热点专辑
+            $hot = $hotModel->getNotRecommendHot($like_category_id);
+
+            if ($hot) {
+                foreach ($hot as $h) {
+                    foreach ($h->special as $p) {
+                        $isRecommend = false;
+
+                        foreach ($recommend_special_id as $r) {
+                            if ($p->id == $r) {
+
+                                $isRecommend = true;
+
+                                break;
+                            }
+                        }
+
+                        if (!$isRecommend) {
+                            $special = $p;
+
+                            break;
+                        }
+                    }
+
+                    if ($special) {
+                        break;
+                    }
+                }
+            }
+        }
+        //获取喜好分类专辑
+        if (!$special) {
+            $special = $specialModel->getSpecialByCategoryId($recommend_special_id, $like_category_id);
+        }
+
+        //获取非喜好分类专辑
+        if (!$special) {
+            $special = $specialModel->getSpecialByNotCategoryId($recommend_special_id, $like_category_id);
+        }
+
+        //没有热点，也没有没看过的视频，
+        if (!$special) {
+            //没有获取到当前视频id的极端情况
+            if (!$curSpecialId) {
+                $special = $specialModel->getLastOne();
+            } else {
+                $tmpSpecial = $specialModel->getById($curSpecialId);
+
+                $special = $specialModel->getNext($tmpSpecial);
+
+                if (!$special)
+                    $special = $specialModel->getLastOne();
+            }
+        }
+        
+        return $special;
+    }
+
+    protected  function getSpecialInfo($special) {
+        $recommendModel = $this->getModel('recommend');
+        $programModel = $this->getModel('program');
+        $userModel = $this->getModel('user');
+        //获取该专辑上传达人
+        $author = $userModel->getUserById($special->authorId);//$authorModel->getAuthorById($special->authorId);
+
+        $result["id"] = $special->id;
+        $result["name"] = $special->name;
+
+        if ($author == "")
+            $result["author"] = "";
+        else
+            $result["author"] = $author->username;
+
+        $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
+        $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];
+
+        if (count($special->photo)) {
+            $photo = $special->photo[0];
+            $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
+            $result["photo_main"] = $this->view->photoImage($photo->name . $photo->type, 'main');
+        }
+
+        foreach ($special->program as $program) {
+            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
+        }
+
+        //保存推荐记录  可能调整一下位置
+        $recommendModel->addRecommend($special->id, $userId);
+        
+        return $result;
+    }
+
     public function specialRecommendAction() {
         $specialModel = $this->getModel('special');
         $recommendModel = $this->getModel('recommend');
@@ -340,7 +531,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                     $special = $specialModel->getLastOne();
             }
         }
-
+//-------------------------------------------------------------------------------
         //获取该专辑上传达人
         $author = $userModel->getUserById($special->authorId);//$authorModel->getAuthorById($special->authorId);
 
