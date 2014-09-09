@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list');
 
     public function init() {
         parent::init();
@@ -109,7 +109,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
 
             // 判断用户来自于PC端还是手机端，render不同的模板和Layout
-            if (!$this->isMobile()) {
+            if ($this->isMobile()) {
                 $this->_helper->layout->setLayout('mobile');
                 $this->_helper->viewRenderer->render('mplay');
             }
@@ -428,9 +428,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         foreach ($special->program as $program) {
             $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
-
         
-
         return $result;
     }
 
@@ -612,6 +610,21 @@ class Angel_ShowController extends Angel_Controller_Action {
         } catch (Exception $e) {
             $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
         }
+    }
+    
+    public function userCategoryListAction() {
+        $userModel = $this->getModel('user');
+        $user_id = $this->me->getUser()->id;
+        
+        $user = $userModel->getById($user_id);
+        
+        $category = array();
+        
+        foreach ($user->category as $c) {
+            $category[] = $c;
+        }
+        
+        $this->_helper->json(array('data' => $category, 'code' => 200));
     }
 
     public function keywordVoteAction() {
