@@ -7,6 +7,7 @@ $player_mode = "video";
 if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
     $player_mode = $this->me->getUser()->attribute['player_mode'];
 }
+$bean = $this->special_bean;
 ?>
 
 
@@ -18,14 +19,14 @@ if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_m
             <button id='btn-toggle' class='ico tv-side-btn'></button>
         </div>
     </div>
-    <div id="tv-listbar">
+    <div id="tv-listbar" sid="<?php echo $bean->id ?>">
         <div class="tv-tab-content">
             <div class="tv-tab-content-head">
                 <div class="alt alt-list">
-                    <img class="alt-img" src="/img/user-default.jpg"/>
+                    <img class="alt-img" src="<?php echo $bean->photo ?>"/>
                     <div class="alt-title">
-                        <p class="t1">梁振英:勿以香港青少年前途作政治筹码</p>
-                        <div class="t2">by 梁振英</div>
+                        <p class="t1"><?php echo $bean->name ?></p>
+                        <div class="t2">by <?php echo $bean->author ?></div>
                     </div>
                     <div class="alt-opera">
                         <button class="ico"></button>
