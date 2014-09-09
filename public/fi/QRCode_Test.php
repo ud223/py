@@ -16,11 +16,8 @@ and open the template in the editor.
         <script type="text/javascript" src="/fi/js/jquery.qrcode.min.js"></script>
         <div id="qrcode"></div>
         <script type="text/javascript">
-     //   $("#qrcode").qrcode("helin");
-        //或者你可以设置生成的二维码的宽和高还有颜色等
         $("#qrcode").qrcode({
           render: 'canvas',// render method: 'canvas' or 'div'
-         // width and height in pixel
           width: 200,
           height: 200,
           color: '#3a3',// QR code color
