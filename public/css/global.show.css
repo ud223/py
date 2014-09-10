@@ -285,7 +285,7 @@ h3 {
     margin-left:-1px;
     padding-left:20px;
 }
-#tv .tv-tab-list ul li span.selected {
+#tv .tv-tab-list ul li.selected span {
     border-color:#FFD800;
     color:#FFD800;
 }

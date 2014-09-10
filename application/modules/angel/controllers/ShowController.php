@@ -32,6 +32,21 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
         }
     }
+
+    private function isMobile() {
+        $mobile = array();
+        static $mobilebrowser_list = 'Mobile|iPhone|Android|WAP|NetFront|JAVA|OperasMini|UCWEB|WindowssCE|Symbian|Series|webOS|SonyEricsson|Sony|BlackBerry|Cellphone|dopod|Nokia|samsung|PalmSource|Xphone|Xda|Smartphone|PIEPlus|MEIZU|MIDP|CLDC';
+        //note 获取手机浏览器
+        if (preg_match("/$mobilebrowser_list/i", $_SERVER['HTTP_USER_AGENT'], $mobile)) {
+            return true;
+        } else {
+            if (preg_match('/(mozilla|chrome|safari|opera|m3gate|winwap|openwave)/i', $_SERVER['HTTP_USER_AGENT'])) {
+                return false;
+            } else {
+                if ($_GET['mobile'] === 'yes') {
+                    return true;
+                } else {
+                    return false;
     
     public function phonePlayAction() {
         $recommendModel = $this->getModel('recommend');
@@ -168,7 +183,8 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $this->_redirect($registerPath);
             }
             //获取当前需要推荐的用户ID
-            $userId = $this->me->getUser()->id;         
+            $userId = $this->me->getUser()->id;
+
             //保存推荐记录  可能调整一下位置
             $recommendModel->addRecommend($specialBean->id, $userId);
         }
@@ -481,7 +497,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         foreach ($special->program as $program) {
             $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
-        
+
         return $result;
     }
 
@@ -664,19 +680,19 @@ class Angel_ShowController extends Angel_Controller_Action {
             $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
         }
     }
-    
+
     public function userCategoryListAction() {
         $userModel = $this->getModel('user');
         $user_id = $this->me->getUser()->id;
-        
+
         $user = $userModel->getById($user_id);
-        
+
         $category = array();
-        
+
         foreach ($user->category as $c) {
             $category[] = $c;
         }
-        
+
         $this->_helper->json(array('data' => $category, 'code' => 200));
     }
 
@@ -824,9 +840,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     //根据当前用户的id来获取收藏专辑
     public function favouriteListAction() {
         $favouriteModel = $this->getModel('favourite');
-
         $user_id = $this->me->getUser()->id;
-
         $favourite = $favouriteModel->getFavouriteByUserId($user_id);
 
         if ($favourite) {
@@ -837,6 +851,22 @@ class Angel_ShowController extends Angel_Controller_Action {
             $this->_helper->json(array('data' => $result, 'code' => 200));
         } else {
             $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));
+        }
+    }
+
+    // 判断用户所否收藏了某个专辑
+    public function isUserFavouriteAction() {
+        if ($this->request->isPost()) {
+            if ($this->me) {
+                $favouriteModel = $this->getModel('favourite');
+                $user_id = $this->me->getUser()->id;
+                $special_id = $this->request->getParam('sid');
+                $result = $favouriteModel->isUserFavourite($user_id, $special_id);
+                if ($result) {
+                    $this->_helper->json(array('code' => 200));
+                }
+            }
+            $this->_helper->json(array('code' => 404));
         }
     }
 
