@@ -33,22 +33,74 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
     }
     
-    private function isMobile() {
-        $mobile = array();
-        static $mobilebrowser_list ='Mobile|iPhone|Android|WAP|NetFront|JAVA|OperasMini|UCWEB|WindowssCE|Symbian|Series|webOS|SonyEricsson|Sony|BlackBerry|Cellphone|dopod|Nokia|samsung|PalmSource|Xphone|Xda|Smartphone|PIEPlus|MEIZU|MIDP|CLDC';
-        //note 获取手机浏览器
-        if(preg_match("/$mobilebrowser_list/i", $_SERVER['HTTP_USER_AGENT'], $mobile)) {
-            return true;
-        }else{
-            if(preg_match('/(mozilla|chrome|safari|opera|m3gate|winwap|openwave)/i', $_SERVER['HTTP_USER_AGENT'])) {
-                return false;
-            }else{
-                if($_GET['mobile'] === 'yes') {
-                    return true;
-                }else{
-                    return false;
+    public function phonePlayAction() {
+        $recommendModel = $this->getModel('recommend');
+        $specialModel = $this->getModel('special');
+        $programModel = $this->getModel('program');
+
+        $specialId = $this->request->getParam('special');
+        $specialBean = false;
+
+        if (!$specialId) {
+            // 未请求专辑ID
+            if (!$this->me) {
+                $loginPath = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
+                $this->_redirect($loginPath);
+            } else {
+                // 随机获取一个新的专辑并且redirect到获取到的专辑地址
+                // 如/play?special=xxxxxx
+                setcookie('userId', $this->me->getUser()->id);
+                $specialBean = $this->getRecommendSpecial();
+
+                $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
+
+                $this->_redirect($playPath);
+            }
+        } else {
+            $specialId = $this->request->getParam('special');
+            $programId = $this->request->getParam('program');
+            $cur_program = false;
+
+            $specialBean = $specialModel->getById($specialId);
+            // 由于专辑ID一定存在， 而节目ID可能存在
+            // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
+            // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
+            //如果当前专辑不存在或已被删除
+            if (!$specialBean) {
+                
+            } else {
+                $result = $this->getSpecialInfo($specialBean);
+                if (count($result)) {
+                    //如果没有查询到节目id就直接播放当前专辑第一个
+                    $cur_program = $result["programs"][0];
+                     //根据program_id 获取当前要播放的节目
+                    if ($programId) { 
+                        foreach ($result["programs"] as $p) {
+                            if ($p['id'] == $programId) {
+                                $cur_program = $p;
+                                break;
+                            }
+                        }
+                    }
+                   
+                    $this->view->cur_program = $cur_program;
+                    $this->view->resource = $result;
                 }
             }
+
+            // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+            if (!$this->isMobile()) {
+                $registerPath = $this->view->url(array(), 'play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
+
+                $this->_redirect($registerPath);
+            }
+            //获取当前需要推荐的用户ID
+            $userId = $this->me->getUser()->id;           
+            //保存推荐记录  可能调整一下位置
+            $recommendModel->addRecommend($specialBean->id, $userId);
+            
+            $this->_helper->layout->setLayout('mobile');
+            $this->_helper->viewRenderer->render('mplay');
         }
     }
 
@@ -95,7 +147,8 @@ class Angel_ShowController extends Angel_Controller_Action {
                 if (count($result)) {
                     //如果没有查询到节目id就直接播放当前专辑第一个
                     $cur_program = $result["programs"][0];
-                    if ($programId) {  //根据program_id 获取当前要播放的节目
+                    //根据program_id 获取当前要播放的节目
+                    if ($programId) {  
                         foreach ($result["programs"] as $p) {
                             if ($p['id'] == $programId) {
                                 $cur_program = $p;
@@ -110,12 +163,12 @@ class Angel_ShowController extends Angel_Controller_Action {
 
             // 判断用户来自于PC端还是手机端，render不同的模板和Layout
             if ($this->isMobile()) {
-                $this->_helper->layout->setLayout('mobile');
-                $this->_helper->viewRenderer->render('mplay');
+                $registerPath = $this->view->url(array(), 'phone-register') . '?special=' . $specialBean->id . '&program='. $cur_program;
+
+                $this->_redirect($registerPath);
             }
             //获取当前需要推荐的用户ID
-            $userId = $this->me->getUser()->id;
-            
+            $userId = $this->me->getUser()->id;         
             //保存推荐记录  可能调整一下位置
             $recommendModel->addRecommend($specialBean->id, $userId);
         }

@@ -2,7 +2,7 @@
 
 class Angel_IndexController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('index', 'upgrade', 'subscribe', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password', 'version-get', 'device', 'device-count');
+    protected $login_not_required = array('index', 'upgrade', 'subscribe', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password', 'version-get', 'device', 'device-count', 'phone-login', 'phone-register');
 
     public function init() {
         $this->_helper->layout->setLayout('normal');
@@ -38,14 +38,34 @@ class Angel_IndexController extends Angel_Controller_Action {
      * 登录
      */
     public function loginAction() {
-        $this->userLogin('show-play', "登录芝士电视");
+        if ($this->request->isPost()) {
+            $this->userLogin('show-play', "登录芝士电视");
+        }
+        else {
+            //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
+            if ($this->isMobile()) {
+                $loginPath = $this->view->url(array(), 'phone-login') ;
+
+                $this->_redirect($loginPath);
+            }
+        }
     }
 
     /**
-     * 注册 
+     * 注册
      */
     public function registerAction() {
-        $this->userRegister('login', "注册芝士电视", "user");
+        if ($this->request->isPost()) {
+            $this->userRegister('login', "注册芝士电视", "user");
+        }
+        else {
+            //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
+            if ($this->isMobile()) {
+                $registerPath = $this->view->url(array(), 'phone-register') ;
+
+                $this->_redirect($registerPath);
+            }
+        }
     }
 
 //    public function isEmailExistAction() {
@@ -158,5 +178,19 @@ class Angel_IndexController extends Angel_Controller_Action {
         else {
             $this->_helper->json(array('data' => '1.0', 'code' => 0));
         }
+    }
+    
+    public function phoneLoginAction() {
+        $this->_helper->layout->setLayout('mobile');
+        $this->_helper->viewRenderer->render('mplay');
+    }
+    
+    public function phoneRegisterAction() {
+        if ($this->request->isPost()) {
+            $this->userRegister('login', "注册芝士电视", "user");
+        }
+        
+        $this->_helper->layout->setLayout('mobile');
+        $this->_helper->viewRenderer->render('mplay');
     }
 }
