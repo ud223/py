@@ -30,13 +30,15 @@ $programs = $bean['programs'];
                         <div class="t2">by <?php echo $bean['author'] ?></div>
                     </div>
                     <div class="alt-opera">
-                        <button class="ico"></button>
+                        <?php if ($this->me): ?>
+                            <button class="ico" id="add-to-favor"></button>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="alt alt-favor hidden">
                     <div class="alt-title">
-                        <p class="t1">梁振英:勿以香港青少年前途作政治筹码</p>
-                        <div class="t2">by 梁振英</div>
+                        <p class="t1">我的收藏夹</p>
+                        <div class="t2"></div>
                     </div>
                 </div>
                 <div class="alt alt-hobby hidden">
@@ -67,16 +69,7 @@ $programs = $bean['programs'];
 
 
                 <div class="alt alt-favor hidden">
-                    <div class="list-item clearfix">
-                        <div class="list-item-cell lt">1. 农民或获15万奖励</div>
-                        <div class="list-item-cell rt remove-favor ico"></div>
-                        <div class="list-item-cell rt sharing ico"></div>
-                    </div>
-                    <div class="list-item clearfix">
-                        <div class="list-item-cell lt">2. 农民或获15万奖励</div>
-                        <div class="list-item-cell rt remove-favor ico"></div>
-                        <div class="list-item-cell rt sharing ico"></div>
-                    </div>
+
                 </div>
                 <div class="alt alt-hobby hidden">
                     <div class="unit-items">
@@ -131,13 +124,13 @@ $programs = $bean['programs'];
         </div>
         <div class="tv-tab-list">
             <ul>
-                <li>
-                    <span class="selected">专辑播放列表</span>
+                <li id="list" loaded="true" class="tv-tab-list-item selected">
+                    <span>专辑播放列表</span>
                 </li>
-                <li>
+                <li id="favor" class="tv-tab-list-item">
                     <span>我的收藏夹</span>
                 </li>
-                <li>
+                <li id="hobby" class="tv-tab-list-item">
                     <span>兴趣设置</span>
                 </li>
             </ul>
@@ -211,6 +204,20 @@ $programs = $bean['programs'];
             var timeStr = time.timeFormat();
             $this.html(timeStr);
         });
+
+        if ($('#add-to-favor').length) {
+            $.ajax({
+                url: '<?php echo $this->url(array(), 'api-favourite-is') ?>',
+                dataType: 'json',
+                type: 'post',
+                data: {sid: $('#tv-listbar').attr('sid')},
+                success: function(response) {
+                    if (response.code === 200) {
+                        $('#add-to-favor').addClass('selected');
+                    }
+                }
+            });
+        }
     });
     $('.tv-toggle-unit[rel="' + init_player_mode + '"]').addClass('selected');
     if (init_player_mode === 'audio') {
@@ -267,5 +274,115 @@ $programs = $bean['programs'];
         alert('sharing: ' + programId);
         return false;
     });
+    $('.tv-tab-list-item').click(function() {
+        // 翻页
+        var $this = $(this).closest('.tv-tab-list-item');
+        if ($this.hasClass('.selected')) {
+            return;
+        }
+        $('.tv-tab-list-item').removeClass('selected');
+        $this.addClass('selected');
+        var id = $this.attr('id');
+        $('.alt').addClass('hidden');
+        $('.alt-' + id).removeClass('hidden');
+
+        if ($this.attr('loaded') !== 'true') {
+            $.waiting("读取中 ...");
+            switch (id) {
+                case 'list':
+                    break;
+                case 'favor':
+                    var url = '<?php echo $this->url(array(), 'api-favourite-list') ?>';
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        type: 'get',
+                        success: function(response) {
+                            if (response.code === 200) {
+                                var body = $('.tv-tab-content-body .alt-favor');
+                                body.empty();
+                                if (response.data && response.data.specials && response.data.specials.length) {
+                                    var txt = "已收藏 " + response.data.specials.length + " 个专辑";
+                                    var header = $('.tv-tab-content-head .alt-favor');
+                                    header.find('.t2').html(txt);
+
+                                    $.each(response.data.specials, function() {
+                                        var html = '<div class="list-item clearfix">';
+                                        html += '<div class="list-item-cell lt">';
+                                        html += this.name;
+                                        html += '</div>';
+                                        html += '<div class="list-item-cell rt remove-favor ico"></div>';
+                                        html += '</div>';
+                                        html = $(html);
+                                        html.attr('sid', this.id);
+                                        html.find('.remove-favor').click(function() {
+                                            var $this = $(this);
+                                            var sid = $this.closest('.list-item').attr('sid');
+                                            removeFavor(sid, function() {
+                                                $('.list-item[sid="' + sid + '"]').remove();
+                                            });
+                                            return false;
+                                        });
+                                        body.append(html);
+                                    });
+
+                                    $this.attr('loaded', 'true');
+                                }
+                            }
+                            $.endWaiting();
+                        }
+                    });
+                    break;
+                case 'hobby':
+                    break;
+            }
+        }
+    });
+
+    $('#add-to-favor').click(function() {
+        var $this = $(this);
+        var sid = $('#tv-listbar').attr('sid');
+        if ($this.hasClass('selected')) {
+            // remove
+            removeFavor(sid, function() {
+                $('#favor').attr('loaded', 'false');
+                $('#add-to-favor').removeClass('selected');
+            });
+        } else {
+            // add
+            $.ajax({
+                url: '<?php echo $this->url(array(), 'api-favourite-add') ?>',
+                data: {sid: sid},
+                type: 'post',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.code === 200) {
+                        $this.addClass('selected');
+                        $('#favor').attr('loaded', 'false');
+                    }
+                }
+            });
+        }
+    });
+
+    function removeFavor(sid, callback) {
+        $.confirm({
+            msg: '确定移除该项收藏吗？',
+            confirmCallback: function() {
+                $.ajax({
+                    url: '<?php echo $this->url(array(), 'api-favourite-remove') ?>',
+                    data: {sid: sid},
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.code === 200) {
+                            if (typeof callback === 'function')
+                                callback();
+                        }
+                    }
+                });
+            }
+        });
+    }
 </script>
 
