@@ -85,7 +85,16 @@ class Angel_ShowController extends Angel_Controller_Action {
                                 
                                 break;
                             }
-                        }
+                        }  
+                    }
+
+                    // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+                    if (!$this->isMobile()) {
+                         $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
+
+                         $this->_redirect($playPath);
+                     }
+                     else {
                         //获取当前需要推荐的用户ID
                         $userId = $this->me->getUser()->id;           
                         //保存推荐记录  可能调整一下位置
@@ -96,15 +105,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                         setcookie('sid', $specialBean->id);
                         $this->view->cur_program = $cur_program;
                         $this->view->resource = $result;
-                    }
-                   else {
-                       // 判断用户来自于PC端还是手机端，render不同的模板和Layout
-                       if (!$this->isMobile()) {
-                            $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
-
-                            $this->_redirect($playPath);
-                        }
-                   }                 
+                     }
                 }
                 else {
                     //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
@@ -168,25 +169,25 @@ class Angel_ShowController extends Angel_Controller_Action {
                             }
                         }
                     }
-                    else {
-                        // 判断用户来自于PC端还是手机端，render不同的模板和Layout
-                        if ($this->isMobile()) {
-                            $playPath = $this->view->url(array(), 'phone-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
 
-                            $this->_redirect($playPath);
+                     // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+                    if ($this->isMobile()) {
+                        $playPath = $this->view->url(array(), 'phone-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
+
+                        $this->_redirect($playPath);
+                    }
+                    else {
+                        if ($this->me) {
+                            //获取当前需要推荐的用户ID
+                           $userId = $this->me->getUser()->id;
+                           //保存推荐记录  可能调整一下位置
+                           $recommendModel->addRecommend($specialBean->id, $userId);
                         }
+                        //记录上一次的播放专辑
+                        setcookie('sid', $specialBean->id);
+                        $this->view->cur_program = $cur_program;
+                        $this->view->resource = $result;
                     }
-                    
-                    if ($this->me) {
-                        //获取当前需要推荐的用户ID
-                       $userId = $this->me->getUser()->id;
-                       //保存推荐记录  可能调整一下位置
-                       $recommendModel->addRecommend($specialBean->id, $userId);
-                    }
-                    //记录上一次的播放专辑
-                    setcookie('sid', $specialBean->id);
-                    $this->view->cur_program = $cur_program;
-                    $this->view->resource = $result;
                 }
                 else {
                     //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
