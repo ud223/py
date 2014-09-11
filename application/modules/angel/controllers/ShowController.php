@@ -125,8 +125,8 @@ class Angel_ShowController extends Angel_Controller_Action {
         $specialBean = false;
 
         $played_special_id = $_COOKIE["sid"];
-        //如果当前url 专辑id等于上一次的播放专辑id，重新获取推荐
-        if (!$specialId && $specialId == $played_special_id) {
+        //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
+        if (!$specialId || $specialId == $played_special_id) {
             // 未请求专辑ID
             //未登陆且有一次播放记录
             if (!$this->me && $played_special_id) {
