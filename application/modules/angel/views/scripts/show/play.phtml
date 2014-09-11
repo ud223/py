@@ -325,12 +325,17 @@ $programs = $bean['programs'];
                                                 var $this = $(this).closest('.unit-item');
                                                 arr.push($this.attr('cid'));
                                             });
+                                            var data = {
+                                                uid:'<?php echo $this->me->getUser()->id ?>',
+                                                category: arr.join(';')
+                                            };
                                             $.ajax({
                                                 url: '<?php echo $this->url(array(), 'api-user-category-save') ?>',
                                                 dataType: 'json',
                                                 type: 'post',
-                                                data: {},
-                                                success: function() {
+                                                data: data,
+                                                success: function(response) {
+                                                    console.log(response);
                                                 }
                                             });
                                             $this.toggleClass('selected');
