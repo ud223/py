@@ -294,8 +294,6 @@ $programs = $bean['programs'];
                     });
                     break;
                 case 'hobby':
-
-
                     var url = '<?php echo $this->url(array(), 'api-category-list') ?>';
                     $.ajax({
                         url: url,
@@ -311,15 +309,7 @@ $programs = $bean['programs'];
                                         var html = $('.P_tmp .hobby-item').clone(true);
                                         html.attr('cid', this.id).find('p').html(this.name);
                                         html.click(function() {
-//                                            var $this = $(this).closest('.unit-item');
-//                                            var cid = $this.attr('cid');
-//                                            if ($this.hasClass('selected')) {
-//                                                // remove
-//                                                alert('remove :' + cid);
-//                                            } else {
-//                                                // add
-//                                                alert('add :' + cid);
-//                                            }
+                                            $(this).closest('.unit-item').toggleClass('selected');
                                             var arr = new Array();
                                             $.each($('.unit-item.selected'), function() {
                                                 var $this = $(this).closest('.unit-item');
@@ -338,7 +328,6 @@ $programs = $bean['programs'];
                                                     console.log(response);
                                                 }
                                             });
-                                            $this.toggleClass('selected');
                                         });
                                         body.find('.unit-items').append(html);
                                     });
