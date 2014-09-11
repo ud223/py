@@ -311,15 +311,28 @@ $programs = $bean['programs'];
                                         var html = $('.P_tmp .hobby-item').clone(true);
                                         html.attr('cid', this.id).find('p').html(this.name);
                                         html.click(function() {
-                                            var $this = $(this).closest('.unit-item');
-                                            var cid = $this.attr('cid');
-                                            if ($this.hasClass('selected')) {
-                                                // remove
-                                                alert('remove :' + cid);
-                                            } else {
-                                                // add
-                                                alert('add :' + cid);
-                                            }
+//                                            var $this = $(this).closest('.unit-item');
+//                                            var cid = $this.attr('cid');
+//                                            if ($this.hasClass('selected')) {
+//                                                // remove
+//                                                alert('remove :' + cid);
+//                                            } else {
+//                                                // add
+//                                                alert('add :' + cid);
+//                                            }
+                                            var arr = new Array();
+                                            $.each($('.unit-item.selected'), function() {
+                                                var $this = $(this).closest('.unit-item');
+                                                arr.push($this.attr('cid'));
+                                            });
+                                            $.ajax({
+                                                url: '<?php echo $this->url(array(), 'api-user-category-save') ?>',
+                                                dataType: 'json',
+                                                type: 'post',
+                                                data: {},
+                                                success: function() {
+                                                }
+                                            });
                                             $this.toggleClass('selected');
                                         });
                                         body.find('.unit-items').append(html);
