@@ -127,13 +127,13 @@ class Angel_ShowController extends Angel_Controller_Action {
         //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
         if (!$specialId || $specialId == $played_special_id) {
             // 未请求专辑ID
-            //未登陆且有一次播放记录
+            //未登录且有一次播放记录
             if (!$this->me && $played_special_id) {
                 $this->view->message = "请先登陆然后继续观看, 谢谢!";
             } else {
                 // 随机获取一个新的专辑并且redirect到获取到的专辑地址
                 // 如/play?special=xxxxxx
-                $specialBean = $this->getRecommendSpecial();
+                $specialBean = $this->getRecommendSpecial($specialId);
 
                 $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
 
@@ -345,7 +345,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 //        return $result;
 //    }
 
-    protected function getRecommendSpecial() {
+    protected function getRecommendSpecial($curSpecialId) {
         $specialModel = $this->getModel('special');
         $recommendModel = $this->getModel('recommend');
         $categoryModel = $this->getModel('category');
@@ -358,10 +358,10 @@ class Angel_ShowController extends Angel_Controller_Action {
 
             $user = $userModel->getUserById($userId);
 
-            $curSpecialId = $this->request->getParam('sid');
-
-            if ($curSpecialId == "none")
-                $curSpecialId = false;
+//            $curSpecialId = $this->request->getParam('special');
+//
+//            if ($curSpecialId == "none")
+//                $curSpecialId = false;
 
             $special = false;
 
@@ -514,7 +514,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
             $user = $userModel->getUserById($userId);
 
-            $curSpecialId = $this->request->getParam('sid');
+            $curSpecialId = $this->request->getParam('special');
 
             if ($curSpecialId == "none")
                 $curSpecialId = false;

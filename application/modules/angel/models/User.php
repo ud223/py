@@ -11,7 +11,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
     const FILETYPE_IDENTITY_BACK = 'fib';
 
     /**
-     * 通过emai和password登陆
+     * 通过emai和password登录
      * @param String $email
      * @param String $password
      * @return boolean 
@@ -402,7 +402,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
     }
 
     /**
-     * 纪录用户最后一次登陆的信息
+     * 记录用户最后一次登录的信息
      * @param string $user_id
      * @param string $ip 
      */
