@@ -1,16 +1,65 @@
 $(document).ready(function() {
-    
+
 });
 
-function installListbar() {
-    
+
+
+
+function switchFullscreen() {
+    var docElm = $(document).get(0);
+    var ff = $('#tv-ctrl-fullscreen').attr('full');
+    var isFullscreen = ff === 'yes' ? true : false;
+    if (isFullscreen) {
+        if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        }
+    } else {
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        } else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        } else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        }
+    }
+    $('#tv-ctrl-fullscreen').attr('full', isFullscreen ? 'no' : 'yes');
 }
-function _installList() {
-    
+
+function clickSeek(obj) {
+    seek(xClick(obj));
 }
-function _installHobby() {
-    
+
+function xClick(obj) {
+    var x = event.clientX - $(obj).offset().left;
+    var w = $(obj).width();
+    var perc = Math.ceil(x / w * 100);
+    if (perc >= 99) {
+        perc = 99;
+    }
+    return perc;
 }
-function _installFavor() {
-    
+
+function seek(perc, time) {
+    var self = PLAYER;
+    var seeking_id = setInterval(function() {
+        var seeking_in_id = $('body').data('seeking_id');
+        var readyState = self.readyState;
+        if (readyState === 4) {
+            $('body').data('seeking_id', null);
+            clearInterval(seeking_in_id);
+
+            var val = 0;
+            if (perc) {
+                val = self.duration * (perc / 100);
+            } else if (time) {
+                val = time;
+            }
+            self.currentTime = val;
+        }
+    }, 500);
+    $('body').data('seeking_id', seeking_id);
 }
