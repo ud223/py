@@ -621,10 +621,23 @@ class Angel_ShowController extends Angel_Controller_Action {
         $category = array();
 
         foreach ($user->category as $c) {
-            $category[] = $c;
+            $category[] = array('id' => $c->id, 'name' => $c->name);
         }
 
         $this->_helper->json(array('data' => $category, 'code' => 200));
+    }
+
+    public function categoryListAction() {
+        if ($this->request->isPost()) {
+            $categoryModel = $this->getModel('category');
+            $resource = $categoryModel->getAll(false);
+            $category = array();
+            foreach ($resource as $c) {
+                $category[] = array('id' => $c->id, 'name' => $c->name);
+            }
+
+            $this->_helper->json(array('data' => $category, 'code' => 200));
+        }
     }
 
     public function keywordVoteAction() {

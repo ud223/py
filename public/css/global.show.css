@@ -584,7 +584,7 @@ h3 {
     margin:0 100px;
 }
 #tv #tv-ctrl-prog {
-    background:yellow;
+    background:rgba(255,255,0,.85);
     height:100%;
     width:40%;
 }
