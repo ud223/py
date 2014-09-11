@@ -124,9 +124,12 @@ class Angel_ShowController extends Angel_Controller_Action {
         $specialId = $this->request->getParam('special');
         $specialBean = false;
 
-        if (!$specialId) {
+        $played_special_id = $_COOKIE["sid"];
+        //如果当前url 专辑id等于上一次的播放专辑id，重新获取推荐
+        if (!$specialId && $specialId == $played_special_id) {
             // 未请求专辑ID
-            if (!$this->me) {
+            //未登陆且有一次播放记录
+            if (!$this->me && $played_special_id) {
                 $loginPath = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
                 $this->_redirect($loginPath);
             } else {
@@ -179,11 +182,14 @@ class Angel_ShowController extends Angel_Controller_Action {
                         }
                     }
                     
-                    //获取当前需要推荐的用户ID
-                    $userId = $this->me->getUser()->id;
-                    //保存推荐记录  可能调整一下位置
-                    $recommendModel->addRecommend($specialBean->id, $userId);
-            
+                    if ($this->me) {
+                        //获取当前需要推荐的用户ID
+                       $userId = $this->me->getUser()->id;
+                       //保存推荐记录  可能调整一下位置
+                       $recommendModel->addRecommend($specialBean->id, $userId);
+                    }
+                    //记录上一次的播放专辑
+                    setcookie('sid', $specialBean->id);
                     $this->view->cur_program = $cur_program;
                     $this->view->resource = $result;
                 }
@@ -694,7 +700,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $category = array();
 
         foreach ($user->category as $c) {
-            $category[] = $c;
+            $category[] = array('id' => $c->id, 'name' => $c->name);
         }
 
         $this->_helper->json(array('data' => $category, 'code' => 200));
@@ -714,6 +720,19 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
             echo $result;
             exit;
+        }
+    }
+
+    public function categoryListAction() {
+        if ($this->request->isPost()) {
+            $categoryModel = $this->getModel('category');
+            $resource = $categoryModel->getAll(false);
+            $category = array();
+            foreach ($resource as $c) {
+                $category[] = array('id' => $c->id, 'name' => $c->name);
+            }
+
+            $this->_helper->json(array('data' => $category, 'code' => 200));
         }
     }
 

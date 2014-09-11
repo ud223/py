@@ -15,8 +15,8 @@ $programs = $bean['programs'];
 <div id="tv-main-container" class="layer">
     <div id='tv-sider'>
         <div class="pxt">
-            <button id='btn-list' class='ico tv-side-btn'></button>
             <button id='btn-refresh' onclick="location.href = '<?php echo $this->url(array(), 'show-play') ?>'" class='ico tv-side-btn'></button>
+            <button id='btn-list' class='ico tv-side-btn'></button>
             <button id='btn-toggle' class='ico tv-side-btn'></button>
         </div>
     </div>
@@ -67,59 +67,14 @@ $programs = $bean['programs'];
                 </div>
 
 
+                <?php if ($this->me): ?>
+                    <div class="alt alt-favor hidden">
 
-                <div class="alt alt-favor hidden">
-
-                </div>
-                <div class="alt alt-hobby hidden">
-                    <div class="unit-items">
-                        <div class="unit-item">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item selected">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item selected">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item selected">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item selected">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item selected">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item selected">
-                            <p>历史文化</p>
-                        </div>
-                        <div class="unit-item">
-                            <p>历史文化</p>
-                        </div>
                     </div>
-                </div>
+                    <div class="alt alt-hobby hidden">
+
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
         <div class="tv-tab-list">
@@ -127,12 +82,14 @@ $programs = $bean['programs'];
                 <li id="list" loaded="true" class="tv-tab-list-item selected">
                     <span>专辑播放列表</span>
                 </li>
-                <li id="favor" class="tv-tab-list-item">
-                    <span>我的收藏夹</span>
-                </li>
-                <li id="hobby" class="tv-tab-list-item">
-                    <span>兴趣设置</span>
-                </li>
+                <?php if ($this->me): ?>
+                    <li id="favor" class="tv-tab-list-item">
+                        <span>我的收藏夹</span>
+                    </li>
+                    <li id="hobby" class="tv-tab-list-item">
+                        <span>兴趣设置</span>
+                    </li>
+                <?php endif; ?>
             </ul>
             <?php if ($this->me): ?>
                 <div class="logout-btn-content">
@@ -175,17 +132,17 @@ $programs = $bean['programs'];
 </div>
 
 <div class="P_tmp">
-    <ul class="list-item itm">
-        <li class="col col1">
-            <i class="ico null"></i>
-        </li>
-        <li class="col col2 tv-current-title">
 
-        </li>
-        <li class="col col3">
-            time here
-        </li>
-    </ul>
+    <div class="list-item clearfix favor-item">
+        <div class="list-item-cell lt"></div>
+        <div class="list-item-cell rt remove-favor ico"></div>
+    </div>
+
+
+    <div class="unit-item hobby-item">
+        <p></p>
+    </div>
+
 </div>
 
 
@@ -307,21 +264,24 @@ $programs = $bean['programs'];
                                     header.find('.t2').html(txt);
 
                                     $.each(response.data.specials, function() {
-                                        var html = '<div class="list-item clearfix">';
-                                        html += '<div class="list-item-cell lt">';
-                                        html += this.name;
-                                        html += '</div>';
-                                        html += '<div class="list-item-cell rt remove-favor ico"></div>';
-                                        html += '</div>';
-                                        html = $(html);
-                                        html.attr('sid', this.id);
+                                        var html = $('.P_tmp .favor-item').clone(true);
+                                        html.attr('sid', this.id).find('.list-item-cell.lt').html(this.name);
                                         html.find('.remove-favor').click(function() {
                                             var $this = $(this);
                                             var sid = $this.closest('.list-item').attr('sid');
                                             removeFavor(sid, function() {
                                                 $('.list-item[sid="' + sid + '"]').remove();
+                                                if (sid === $('#tv-listbar').attr('sid')) {
+                                                    $('#add-to-favor').removeClass('selected');
+                                                }
                                             });
                                             return false;
+                                        });
+                                        html.click(function() {
+                                            var $this = $(this).closest('.list-item');
+                                            var sid = $this.attr('sid');
+                                            var url = "<?php echo $this->url(array(), 'show-play') ?>?special=" + sid;
+                                            location.href = url;
                                         });
                                         body.append(html);
                                     });
@@ -334,6 +294,60 @@ $programs = $bean['programs'];
                     });
                     break;
                 case 'hobby':
+
+
+                    var url = '<?php echo $this->url(array(), 'api-category-list') ?>';
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        type: 'post',
+                        success: function(response) {
+                            if (response.code === 200) {
+                                var body = $('.tv-tab-content-body .alt-hobby');
+                                body.empty();
+                                if (response.data && response.data && response.data.length) {
+                                    body.append($('<div>').addClass('unit-items'));
+                                    $.each(response.data, function() {
+                                        var html = $('.P_tmp .hobby-item').clone(true);
+                                        html.attr('cid', this.id).find('p').html(this.name);
+                                        html.click(function() {
+                                            var $this = $(this).closest('.unit-item');
+                                            var cid = $this.attr('cid');
+                                            if ($this.hasClass('selected')) {
+                                                // remove
+                                                alert('remove :' + cid);
+                                            } else {
+                                                // add
+                                                alert('add :' + cid);
+                                            }
+                                            $this.toggleClass('selected');
+                                        });
+                                        body.find('.unit-items').append(html);
+                                    });
+
+                                    // 默认选中用户保存的兴趣
+                                    $.ajax({
+                                        url: '<?php echo $this->url(array(), 'api-user-category-list') ?>',
+                                        dataType: 'json',
+                                        type: 'get',
+                                        success: function(response) {
+                                            if (response.code === 200) {
+                                                var data = response.data;
+                                                if (data && data.length) {
+                                                    $.each(data, function() {
+                                                        $('.unit-item[cid="' + this.id + '"]').addClass('selected');
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    });
+                                    $this.attr('loaded', 'true');
+                                }
+                            }
+                            $.endWaiting();
+                        }
+                    });
+
                     break;
             }
         }
