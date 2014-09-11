@@ -213,6 +213,9 @@ h3 {
 #tv #btn-list:hover {
     background-position:-100px -300px;
 }
+#tv #btn-list.selected {
+    background-position: -200px -300px !important;
+}
 #tv #btn-refresh {
     background-position: left -400px;
 }
@@ -228,17 +231,15 @@ h3 {
 #tv #tv-listbar {
     background:rgba(0,0,0,0.25);
     bottom:80px;
-    /*display:none;*/
+    display:none;
     left:0;
     position:absolute;
     right:100px;
     top:0;
     z-index:8;
 }
-#tv #tv-listbar {
 
-}
-#tv .tv-tab-close, #tv .tv-tab-list {
+#tv #tv-tab-close, #tv .tv-tab-list {
     background:rgba(0,0,0,0.15);
     border:none;
     box-sizing:border-box;
@@ -250,13 +251,13 @@ h3 {
     top:0;
     width:50px;
 }
-#tv .tv-tab-close .ico{
+#tv #tv-tab-close .ico{
     background-position: -425px -500px;
     height:50px;
     width:50px;
 }
 
-#tv .tv-tab-close:hover .ico{
+#tv #tv-tab-close:hover .ico{
     background-position: -425px -550px;
 }
 #tv .tv-tab-list {
@@ -580,13 +581,28 @@ h3 {
     z-index:10;
 }
 #tv #tv-ctrl-c {
+    cursor:pointer;
     height:100%;
     margin:0 100px;
+    position:relative;
 }
 #tv #tv-ctrl-prog {
     background:rgba(255,255,0,.85);
     height:100%;
-    width:40%;
+    position:relative;
+    width:0%;
+}
+#tv #tv-ctrl-st, #tv #tv-ctrl-ct {
+    color:#FFF;
+    right:20px;
+    position:absolute;
+    text-shadow:0 1px 0 rgba(0,0,0,0.2);
+    top:32px;
+    z-index:5;
+}
+#tv #tv-ctrl-ct {
+    left:20px;
+    right:auto;
 }
 #tv .tv-ctrl-s {
     background:url(../img/title-bg.png);
@@ -603,7 +619,7 @@ h3 {
 #tv-ctrl-play, #tv-ctrl-pause {
     left:0
 }
-#tv-ctrl-pause {
+#tv-ctrl-play {
     display:none;
 }
 #tv-ctrl-play .ico {
