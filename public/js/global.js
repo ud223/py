@@ -154,11 +154,9 @@ function inArray(val, arr) {
 
 
     $.autoToggleListRestart = function() {
-        console.log('stop : false');
         $('body').data('auto-toggle-list-stop', false);
     };
     $.autoToggleListStop = function() {
-        console.log('stop : true');
         $('body').data('auto-toggle-list-stop', true);
     };
     $.autoToggleList = function(targets) {
@@ -206,7 +204,6 @@ function inArray(val, arr) {
                 if (Math.abs(prevMouse.x - currentMouse.x) < MINDIST && Math.abs(prevMouse.y - currentMouse.y) < MINDIST) {
                     return;
                 } else {
-                    console.log('recorded');
                     // nothing to do for now
                 }
             }
