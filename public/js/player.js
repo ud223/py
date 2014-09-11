@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 
 function switchFullscreen() {
-    var docElm = $(document).get(0);
+    var docElm = $('#tv').get(0);
     var ff = $('#tv-ctrl-fullscreen').attr('full');
     var isFullscreen = ff === 'yes' ? true : false;
     if (isFullscreen) {

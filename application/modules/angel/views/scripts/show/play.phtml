@@ -93,7 +93,7 @@ $programs = $bean['programs'];
             </ul>
             <?php if ($this->me): ?>
                 <div class="logout-btn-content">
-                    <button class="btn btn-gray btn-sm">安全退出</button>
+                    <button class="btn btn-gray btn-sm" id="logout-btn">安全退出</button>
                 </div>
             <?php endif; ?>
         </div>
@@ -109,7 +109,7 @@ $programs = $bean['programs'];
         <div id="tv-disk">
             <div id="tv-disk-page"></div>
         </div>
-    <audio id="tv-video-player" src="<?php echo $this->cur_program['oss_audio'] ?>" preload autoplay="autoplay"></audio>
+        <audio id="tv-video-player" src="<?php echo $this->cur_program['oss_audio'] ?>" preload autoplay="autoplay"></audio>
     <?php endif; ?>
 
     <div id="tv-ctrl-block">
@@ -178,6 +178,15 @@ $programs = $bean['programs'];
 
         $('#tv-tab-close').click(function() {
             $('#btn-list').click();
+        });
+
+        $('#logout-btn').click(function() {
+            $.confirm({
+                msg: '确定登出吗？',
+                confirmCallback: function() {
+                    location.href="<?php echo $this->url(array(), 'logout') ?>";
+                }
+            });
         });
 
         $(PLAYER).on('ended', function() {
@@ -444,7 +453,7 @@ $programs = $bean['programs'];
                     }
                 });
             },
-            containerBoxSelector:'#tv'
+            containerBoxSelector: '#tv'
         });
     }
 </script>
