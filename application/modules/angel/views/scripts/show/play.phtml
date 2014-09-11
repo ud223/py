@@ -97,25 +97,26 @@ $programs = $bean['programs'];
                 </div>
             <?php endif; ?>
         </div>
-        <button class="tv-tab-close"><i class="ico"></i></button>
+        <button id="tv-tab-close"><i class="ico"></i></button>
     </div>
 
     <?php if ($player_mode == 'video'): ?>
         <div id="tv-screen" class="layer text-center">
-            <video id="tv-video-player" src="<?php echo $this->cur_program['oss_video'] ?>" preload oncontextmenu="return false;">
+            <video id="tv-video-player" src="<?php echo $this->cur_program['oss_video'] ?>" preload autoplay="autoplay" oncontextmenu="return false;">
             </video>
         </div>
     <?php else: ?>
         <div id="tv-disk">
             <div id="tv-disk-page"></div>
         </div>
-        <audio id="tv-video-player" src="<?php echo $this->cur_program['oss_audio'] ?>" preload></audio>
+    <audio id="tv-video-player" src="<?php echo $this->cur_program['oss_audio'] ?>" preload autoplay="autoplay"></audio>
     <?php endif; ?>
 
     <div id="tv-ctrl-block">
         <div id="tv-ctrl-c">
+            <span id="tv-ctrl-st">00:00</span>
+            <span id="tv-ctrl-ct">00:00</span>
             <div id="tv-ctrl-prog">
-
             </div>
         </div>
         <div id="tv-ctrl-play" class="tv-ctrl-s">
@@ -155,6 +156,43 @@ $programs = $bean['programs'];
     var init_player_mode = '<?php echo $player_mode; ?>';
     var PLAYER = document.getElementsByTagName(init_player_mode)[0];
     $('document').ready(function() {
+        // set interval per second
+        setInterval(function() {
+            $('#tv-ctrl-prog').css('width', (PLAYER.currentTime / PLAYER.duration) * 100 + '%');
+            $('#tv-ctrl-st').html(PLAYER.duration.timeFormat());
+            $('#tv-ctrl-ct ').html(PLAYER.currentTime.timeFormat());
+        }, 100);
+
+        $('#tv-ctrl-fullscreen').click(function() {
+            switchFullscreen();
+        });
+
+        $('#tv-ctrl-c').click(function() {
+            clickSeek($('#tv-ctrl-c'));
+        });
+
+        $('#btn-list').click(function() {
+            $('#tv-listbar').toggle();
+            $(this).toggleClass('selected');
+        });
+
+        $('#tv-tab-close').click(function() {
+            $('#btn-list').click();
+        });
+
+        $(PLAYER).on('ended', function() {
+            // next program
+            var current = $('.tv-tab-content-body .list-item.selected');
+            if (current.length) {
+                var next = current.next();
+                if (next.length) {
+                    location.href = "<?php echo $this->url(array(), 'show-play') ?>?special=" + $('#tv-listbar').attr('sid') + "&&program=" + next.attr('id');
+                } else {
+                    location.href = "<?php echo $this->url(array(), 'show-play') ?>";
+                }
+            }
+        });
+
         $.each($('.duration'), function() {
             var $this = $(this);
             var time = parseInt($this.attr('time'));
@@ -311,13 +349,17 @@ $programs = $bean['programs'];
                                         html.click(function() {
                                             $(this).closest('.unit-item').toggleClass('selected');
                                             var arr = new Array();
-                                            $.each($('.unit-item.selected'), function() {
-                                                var $this = $(this).closest('.unit-item');
-                                                arr.push($this.attr('cid'));
-                                            });
+                                            var categories = 'none';
+                                            if ($('.unit-item.selected').length) {
+                                                $.each($('.unit-item.selected'), function() {
+                                                    var $this = $(this).closest('.unit-item');
+                                                    arr.push($this.attr('cid'));
+                                                });
+                                                categories = arr.join(';');
+                                            }
                                             var data = {
-                                                uid:'<?php echo $this->me->getUser()->id ?>',
-                                                category: arr.join(';')
+                                                uid: '<?php echo $this->me->getUser()->id ?>',
+                                                category: categories
                                             };
                                             $.ajax({
                                                 url: '<?php echo $this->url(array(), 'api-user-category-save') ?>',
@@ -325,7 +367,6 @@ $programs = $bean['programs'];
                                                 type: 'post',
                                                 data: data,
                                                 success: function(response) {
-                                                    console.log(response);
                                                 }
                                             });
                                         });
@@ -402,7 +443,8 @@ $programs = $bean['programs'];
                         }
                     }
                 });
-            }
+            },
+            containerBoxSelector:'#tv'
         });
     }
 </script>
