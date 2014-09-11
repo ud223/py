@@ -3,12 +3,14 @@
 
 
 <?php
-$player_mode = "video";
-if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
-    $player_mode = $this->me->getUser()->attribute['player_mode'];
-}
-$bean = $this->resource;
-$programs = $bean['programs'];
+    $player_mode = "video";
+    if ($this->me) {
+        if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
+            $player_mode = $this->me->getUser()->attribute['player_mode'];
+        }
+    }
+    $bean = $this->resource;
+    $programs = $bean['programs'];
 ?>
 
 
@@ -148,8 +150,6 @@ $programs = $bean['programs'];
 
 
 <!--<button id="seeking-testing-btn" style="position:fixed;z-index:100;bottom:100px;left:100px;padding:10px;">SEEKING BTN</button>-->
-
-<input type="hidden" id="uid" value="<?php echo $this->uid ?>"/>
 
 <script type="text/javascript">
     var init_player_mode = '<?php echo $player_mode; ?>';
@@ -325,19 +325,22 @@ $programs = $bean['programs'];
                                                 var $this = $(this).closest('.unit-item');
                                                 arr.push($this.attr('cid'));
                                             });
-                                            var data = {
-                                                uid:'<?php echo $this->me->getUser()->id ?>',
-                                                category: arr.join(';')
-                                            };
-                                            $.ajax({
-                                                url: '<?php echo $this->url(array(), 'api-user-category-save') ?>',
-                                                dataType: 'json',
-                                                type: 'post',
-                                                data: data,
-                                                success: function(response) {
-                                                    console.log(response);
-                                                }
-                                            });
+                                            <?php if ($this->me) :?>
+                                                var data = {
+                                                    uid:'<?php echo $this->me->getUser()->id ?>',
+                                                    category: arr.join(';')
+                                                };
+                                                
+                                                $.ajax({
+                                                    url: '<?php echo $this->url(array(), 'api-user-category-save') ?>',
+                                                    dataType: 'json',
+                                                    type: 'post',
+                                                    data: data,
+                                                    success: function(response) {
+                                                        console.log(response);
+                                                    }
+                                                });
+                                            <?php endif?>
                                             $this.toggleClass('selected');
                                         });
                                         body.find('.unit-items').append(html);
@@ -416,5 +419,16 @@ $programs = $bean['programs'];
             }
         });
     }
+    
+    function needLogin() {
+        msg = '<?php if ($this->message != "") {
+                echo $this->message;
+            } ?>';
+                
+        if (msg != '')
+            alert(msg);
+    }
+    
+    needLogin();
 </script>
 

@@ -1,3 +1,52 @@
-<video src="<?php echo $this->cur_program["oss_video"] ?>" controls="controls" autoplay>
+<?php
+    $player_mode = "video";
+    
+    if ($this->me) {
+        if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
+            $player_mode = $this->me->getUser()->attribute['player_mode'];
+        }
+    }
+    
+    $bean = $this->resource;
+    $programs = $bean['programs'];
+?>
+<script type="text/javascript">
+    var msg = "";
+</script>
+<div class="alt alt-list">
+    <img class="alt-img" src="<?php echo $bean['photo'] ?>"/>
+    <div class="alt-title">
+        <p class="t1"><?php echo $bean['name'] ?></p>
+        <div class="t2">by <?php echo $bean['author'] ?></div>
+    </div>
+</div>
+<div class="alt alt-list">
+    <?php foreach ($programs as $program): ?>
+        <?php
+            $cls = "";
+            if ($this->cur_program['id'] == $program['id']) {
+                $cls = " selected";
+            }
+        ?>
+        <div class="list-item clearfix<?php echo $cls ?>" id="<?php echo $program['id'] ?>">
+            <div class="list-item-cell lt"><?php echo $program['name'] ?></div>
+            <div class="list-item-cell rt sharing ico"></div>
+            <div class="list-item-cell rt duration" time="<?php echo $program['time'] ?>"></div>
+        </div>
+    <?php endforeach; ?>
+</div>
+<video src="<?php
+            if ($this->message == "") {
+                echo $this->cur_program["oss_video"];
+            }
+        ?>" controls="controls" autoplay>
     您的浏览器不支持 video 标签。
 </video>
+<script type="text/javascript">
+        msg = '<?php if ($this->message != "") {
+                echo $this->message;
+            } ?>';
+                
+        if (msg != '')
+            alert(msg);
+</script>

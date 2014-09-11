@@ -33,91 +33,89 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
     }
 
-    public function phonePlayAction() {
-        $recommendModel = $this->getModel('recommend');
-        $specialModel = $this->getModel('special');
-        $programModel = $this->getModel('program');
-
-        $specialId = $this->request->getParam('special');
-        $specialBean = false;
-
-        $played_special_id = $_COOKIE["sid"];
-        //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
-        if (!$specialId || $specialId == $played_special_id) {
-            // 未请求专辑ID
-            //未登陆且有一次播放记录
-            if (!$this->me && $played_special_id) {
-//                $loginPath = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
-//                $this->_redirect($loginPath);
-                $this->view->message = "请先登陆然后继续观看, 谢谢!";
-            } else {
-                // 随机获取一个新的专辑并且redirect到获取到的专辑地址
-                // 如/play?special=xxxxxx
-                $specialBean = $this->getRecommendSpecial();
-
-                $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
-
-                $this->_redirect($playPath);
-            }
-        } else {
-            $specialId = $this->request->getParam('special');
-            $programId = $this->request->getParam('program');
-            $cur_program = false;
-
-            $specialBean = $specialModel->getById($specialId);
-            // 由于专辑ID一定存在， 而节目ID可能存在
-            // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
-            // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
-            //如果当前专辑不存在或已被删除
-            if (!$specialBean) {
-                
-            } else {
-                $result = $this->getSpecialInfo($specialBean);
-                
-                if (count($result["programs"])) {
-                    //如果没有查询到节目id就直接播放当前专辑第一个
-                    $cur_program = $result["programs"][0];
-                     //根据program_id 获取当前要播放的节目
-                    if ($programId) { 
-                        foreach ($result["programs"] as $p) {
-                            if ($p['id'] == $programId) {
-                                $cur_program = $p;
-                                
-                                break;
-                            }
-                        }  
-                    }
-
-                    // 判断用户来自于PC端还是手机端，render不同的模板和Layout
-                    if (!$this->isMobile()) {
-                         $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
-
-                         $this->_redirect($playPath);
-                     }
-                     else {
-                        //获取当前需要推荐的用户ID
-                        $userId = $this->me->getUser()->id;           
-                        //保存推荐记录  可能调整一下位置
-                        $recommendModel->addRecommend($specialBean->id, $userId);
-
-                        $this->_helper->layout->setLayout('mobile'); 
-                        //记录上一次的播放专辑
-                        setcookie('sid', $specialBean->id);
-                        $this->view->cur_program = $cur_program;
-                        $this->view->resource = $result;
-                     }
-                }
-                else {
-                    //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
-                }
-            } 
-        }
-    }
+//    public function phonePlayAction() {
+//        $recommendModel = $this->getModel('recommend');
+//        $specialModel = $this->getModel('special');
+//        $programModel = $this->getModel('program');
+//
+//        $specialId = $this->request->getParam('special');
+//        $specialBean = false;
+//
+//        $played_special_id = $_COOKIE["sid"];
+//        //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
+//        if (!$specialId || $specialId == $played_special_id) {
+//            // 未请求专辑ID
+//            //未登陆且有一次播放记录
+//            if (!$this->me && $played_special_id) {
+////                $loginPath = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
+////                $this->_redirect($loginPath);
+//                $this->view->message = "请先登陆然后继续观看, 谢谢!";
+//            } else {
+//                // 随机获取一个新的专辑并且redirect到获取到的专辑地址
+//                // 如/play?special=xxxxxx
+//                $specialBean = $this->getRecommendSpecial();
+//
+//                $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
+//
+//                $this->_redirect($playPath);
+//            }
+//        } else {
+//            $specialId = $this->request->getParam('special');
+//            $programId = $this->request->getParam('program');
+//            $cur_program = false;
+//
+//            $specialBean = $specialModel->getById($specialId);
+//            // 由于专辑ID一定存在， 而节目ID可能存在
+//            // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
+//            // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
+//            //如果当前专辑不存在或已被删除
+//            if (!$specialBean) {
+//                
+//            } else {
+//                $result = $this->getSpecialInfo($specialBean);
+//                
+//                if (count($result["programs"])) {
+//                    //如果没有查询到节目id就直接播放当前专辑第一个
+//                    $cur_program = $result["programs"][0];
+//                     //根据program_id 获取当前要播放的节目
+//                    if ($programId) { 
+//                        foreach ($result["programs"] as $p) {
+//                            if ($p['id'] == $programId) {
+//                                $cur_program = $p;
+//                                
+//                                break;
+//                            }
+//                        }  
+//                    }
+//
+//                    // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+//                    if (!$this->isMobile()) {
+//                         $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
+//
+//                         $this->_redirect($playPath);
+//                     }
+//                     else {
+//                        //获取当前需要推荐的用户ID
+//                        $userId = $this->me->getUser()->id;           
+//                        //保存推荐记录  可能调整一下位置
+//                        $recommendModel->addRecommend($specialBean->id, $userId);
+//
+//                        $this->_helper->layout->setLayout('mobile'); 
+//                        //记录上一次的播放专辑
+//                        setcookie('sid', $specialBean->id);
+//                        $this->view->cur_program = $cur_program;
+//                        $this->view->resource = $result;
+//                        $this->view->message = "";
+//                     }
+//                }
+//                else {
+//                    //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
+//                }
+//            } 
+//        }
+//    }
 
     public function playAction() {
-//        $uid = $this->me->getUser()->id;
-//        $this->view->uid = $uid;
-//        setcookie('userId', $uid);
         $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');
         $programModel = $this->getModel('program');
@@ -131,8 +129,6 @@ class Angel_ShowController extends Angel_Controller_Action {
             // 未请求专辑ID
             //未登陆且有一次播放记录
             if (!$this->me && $played_special_id) {
-//                $loginPath = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
-//                $this->_redirect($loginPath);
                 $this->view->message = "请先登陆然后继续观看, 谢谢!";
             } else {
                 // 随机获取一个新的专辑并且redirect到获取到的专辑地址
@@ -170,29 +166,27 @@ class Angel_ShowController extends Angel_Controller_Action {
                         }
                     }
 
-                     // 判断用户来自于PC端还是手机端，render不同的模板和Layout
-                    if ($this->isMobile()) {
-                        $playPath = $this->view->url(array(), 'phone-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
-
-                        $this->_redirect($playPath);
+                    if ($this->me) {
+                        //获取当前需要推荐的用户ID
+                       $userId = $this->me->getUser()->id;
+                       //保存推荐记录  可能调整一下位置
+                       $recommendModel->addRecommend($specialBean->id, $userId);
                     }
-                    else {
-                        if ($this->me) {
-                            //获取当前需要推荐的用户ID
-                           $userId = $this->me->getUser()->id;
-                           //保存推荐记录  可能调整一下位置
-                           $recommendModel->addRecommend($specialBean->id, $userId);
-                        }
-                        //记录上一次的播放专辑
-                        setcookie('sid', $specialBean->id);
-                        $this->view->cur_program = $cur_program;
-                        $this->view->resource = $result;
-                    }
+                        
+                    setcookie('sid', $specialBean->id);
+                    $this->view->cur_program = $cur_program;
+                    $this->view->resource = $result;
                 }
                 else {
                     //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
                 }
             }
+        }
+        
+        // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+        if ($this->isMobile()) {
+            $this->_helper->layout->setLayout('mobile'); 
+            $this->render('phone-play ');
         }
     }
 
