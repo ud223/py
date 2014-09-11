@@ -235,6 +235,44 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         }
     }
     
+    public function removeUserCategory($user_id, $category_id) {
+        try {
+            $user = $this->getUserById($uesrId);
+   
+            $email = $user->email;
+            $username = $user->username;
+            $salt = $user->salt;
+            $usertype = $user->user_type;
+            $password = $user->password_src;
+            $age = $user->age;
+            $gender = $user->gender;
+            $active_bln = true;
+            $email_validated_bln = !$checkemail;
+            $validated_bln = false;
+            $author = $user->author;
+            
+            $categorys = array();
+            
+            foreach ($user->category as $c) {
+                if ($c ->id != $category_id)
+                    $categorys[] = $c;
+            }
+            
+            $user->clearCategory();
+
+            foreach ($categorys as $c) {
+                $user->addCategory($c);
+            }
+
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age"=> $age, "gender"=>$gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category, "author"=> $author);
+
+            $this->save($uesrId, $data);
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
+        }
+    }
+    
     public function setAuthor($user_id) {
         try {
             $user = $this->getUserById($uesrId);

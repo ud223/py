@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play');
 
     public function init() {
         parent::init();
@@ -70,7 +70,8 @@ class Angel_ShowController extends Angel_Controller_Action {
                 
             } else {
                 $result = $this->getSpecialInfo($specialBean);
-                if (count($result)) {
+                
+                if (count($result["programs"])) {
                     //如果没有查询到节目id就直接播放当前专辑第一个
                     $cur_program = $result["programs"][0];
                      //根据program_id 获取当前要播放的节目
@@ -78,29 +79,37 @@ class Angel_ShowController extends Angel_Controller_Action {
                         foreach ($result["programs"] as $p) {
                             if ($p['id'] == $programId) {
                                 $cur_program = $p;
+                                
                                 break;
                             }
                         }
+                        //获取当前需要推荐的用户ID
+                        $userId = $this->me->getUser()->id;           
+                        //保存推荐记录  可能调整一下位置
+                        $recommendModel->addRecommend($specialBean->id, $userId);
+
+                        $this->_helper->layout->setLayout('mobile');                       
+                        $this->view->cur_program = $cur_program;
+                        $this->view->resource = $result;
                     }
-                   
-                    $this->view->cur_program = $cur_program;
-                    $this->view->resource = $result;
+                   else {
+                       // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+                       if (!$this->isMobile()) {
+                            $playPath = $this->view->url(array(), 'play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
+
+                            $this->_redirect($playPath);
+                        }
+                        else {
+                            $playPath = $this->view->url(array(), 'phone-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
+
+                            $this->_redirect($playPath);
+                        }
+                   }                 
                 }
-            }
-
-            // 判断用户来自于PC端还是手机端，render不同的模板和Layout
-            if (!$this->isMobile()) {
-                $registerPath = $this->view->url(array(), 'play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
-
-                $this->_redirect($registerPath);
-            }
-            //获取当前需要推荐的用户ID
-            $userId = $this->me->getUser()->id;           
-            //保存推荐记录  可能调整一下位置
-            $recommendModel->addRecommend($specialBean->id, $userId);
-            
-            $this->_helper->layout->setLayout('mobile');
-            $this->_helper->viewRenderer->render('mplay');
+                else {
+                    //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
+                }
+            } 
         }
     }
 
@@ -144,7 +153,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 
             } else {
                 $result = $this->getSpecialInfo($specialBean);
-                if (count($result)) {
+                if (count($result["programs"])) {
                     //如果没有查询到节目id就直接播放当前专辑第一个
                     $cur_program = $result["programs"][0];
                     //根据program_id 获取当前要播放的节目
@@ -156,22 +165,32 @@ class Angel_ShowController extends Angel_Controller_Action {
                             }
                         }
                     }
+                    else {
+                        // 判断用户来自于PC端还是手机端，render不同的模板和Layout
+                        if ($this->isMobile()) {
+                            $playPath = $this->view->url(array(), 'phone-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
+
+                            $this->_redirect($playPath);
+                        }
+                        else {
+                            $playPath = $this->view->url(array(), 'play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
+
+                            $this->_redirect($playPath);
+                        }
+                    }
+                    
+                    //获取当前需要推荐的用户ID
+                    $userId = $this->me->getUser()->id;
+                    //保存推荐记录  可能调整一下位置
+                    $recommendModel->addRecommend($specialBean->id, $userId);
+            
                     $this->view->cur_program = $cur_program;
                     $this->view->resource = $result;
                 }
+                else {
+                    //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
+                }
             }
-
-            // 判断用户来自于PC端还是手机端，render不同的模板和Layout
-            if ($this->isMobile()) {
-                $registerPath = $this->view->url(array(), 'phone-register') . '?special=' . $specialBean->id . '&program='. $cur_program;
-
-                $this->_redirect($registerPath);
-            }
-            //获取当前需要推荐的用户ID
-            $userId = $this->me->getUser()->id;
-
-            //保存推荐记录  可能调整一下位置
-            $recommendModel->addRecommend($specialBean->id, $userId);
         }
     }
 
@@ -336,69 +355,39 @@ class Angel_ShowController extends Angel_Controller_Action {
         $categoryModel = $this->getModel('category');
         $hotModel = $this->getModel("hot");
         $userModel = $this->getModel('user');
-        //获取当前需要推荐的用户ID
-        $userId = $this->me->getUser()->id;
+        
+        if ($this->me) {
+            //获取当前需要推荐的用户ID
+            $userId = $this->me->getUser()->id;
 
-        if ($userId == null || $userId == "") {
-            $userId = $this->request->getParam('uid');
-        }
+            $user = $userModel->getUserById($userId);
 
-        $user = $userModel->getUserById($userId);
+            $curSpecialId = $this->request->getParam('sid');
 
-        $curSpecialId = $this->request->getParam('sid');
+            if ($curSpecialId == "none")
+                $curSpecialId = false;
 
-        if ($curSpecialId == "none")
-            $curSpecialId = false;
+            $special = false;
 
-        $special = false;
+            //获取该用户已经推荐过的专辑ID集合
+            $recommends = $recommendModel->getRecommend($userId);
 
-        //获取该用户已经推荐过的专辑ID集合
-        $recommends = $recommendModel->getRecommend($userId);
+            $recommend_special_id = array();
 
-        $recommend_special_id = array();
-
-        if ($recommends) {
-            foreach ($recommends as $r) {
-                $recommend_special_id[] = $r->specialId;
-            }
-        }
-
-        $like_category_id = array();
-
-        foreach ($user->category as $c) {
-            $like_category_id[] = $c->id;
-        }
-
-        //获取喜好热点专辑
-        $hot = $hotModel->getLikeNotRecommendHot($like_category_id);
-
-        if ($hot) {
-            foreach ($hot as $h) {
-                foreach ($h->special as $p) {
-                    $isRecommend = false;
-
-                    foreach ($recommend_special_id as $r) {
-                        if ($p->id == $r) {
-                            $isRecommend = true;
-                        }
-                    }
-
-                    if (!$isRecommend) {
-                        $special = $p;
-
-                        break;
-                    }
+            if ($recommends) {
+                foreach ($recommends as $r) {
+                    $recommend_special_id[] = $r->specialId;
                 }
-
-                if ($special)
-                    break;
             }
-        }
 
-        //获取非喜好热点专辑
-        if (!$special) {
+            $like_category_id = array();
+
+            foreach ($user->category as $c) {
+                $like_category_id[] = $c->id;
+            }
+
             //获取喜好热点专辑
-            $hot = $hotModel->getNotRecommendHot($like_category_id);
+            $hot = $hotModel->getLikeNotRecommendHot($like_category_id);
 
             if ($hot) {
                 foreach ($hot as $h) {
@@ -407,10 +396,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
                         foreach ($recommend_special_id as $r) {
                             if ($p->id == $r) {
-
                                 $isRecommend = true;
-
-                                break;
                             }
                         }
 
@@ -421,20 +407,52 @@ class Angel_ShowController extends Angel_Controller_Action {
                         }
                     }
 
-                    if ($special) {
+                    if ($special)
                         break;
+                }
+            }
+
+            //获取非喜好热点专辑
+            if (!$special) {
+                //获取喜好热点专辑
+                $hot = $hotModel->getNotRecommendHot($like_category_id);
+
+                if ($hot) {
+                    foreach ($hot as $h) {
+                        foreach ($h->special as $p) {
+                            $isRecommend = false;
+
+                            foreach ($recommend_special_id as $r) {
+                                if ($p->id == $r) {
+
+                                    $isRecommend = true;
+
+                                    break;
+                                }
+                            }
+
+                            if (!$isRecommend) {
+                                $special = $p;
+
+                                break;
+                            }
+                        }
+
+                        if ($special) {
+                            break;
+                        }
                     }
                 }
             }
-        }
-        //获取喜好分类专辑
-        if (!$special) {
-            $special = $specialModel->getSpecialByCategoryId($recommend_special_id, $like_category_id);
-        }
+            //获取喜好分类专辑
+            if (!$special) {
+                $special = $specialModel->getSpecialByCategoryId($recommend_special_id, $like_category_id);
+            }
 
-        //获取非喜好分类专辑
-        if (!$special) {
-            $special = $specialModel->getSpecialByNotCategoryId($recommend_special_id, $like_category_id);
+            //获取非喜好分类专辑
+            if (!$special) {
+                $special = $specialModel->getSpecialByNotCategoryId($recommend_special_id, $like_category_id);
+            }
         }
 
         //没有热点，也没有没看过的视频，
@@ -493,69 +511,39 @@ class Angel_ShowController extends Angel_Controller_Action {
         $categoryModel = $this->getModel('category');
         $hotModel = $this->getModel("hot");
         $userModel = $this->getModel('user');
-        //获取当前需要推荐的用户ID
-        $userId = $this->me->getUser()->id;
+        
+        if ($this->me) {
+            //获取当前需要推荐的用户ID
+            $userId = $this->me->getUser()->id;
 
-        if ($userId == null || $userId == "") {
-            $userId = $this->request->getParam('uid');
-        }
+            $user = $userModel->getUserById($userId);
 
-        $user = $userModel->getUserById($userId);
+            $curSpecialId = $this->request->getParam('sid');
 
-        $curSpecialId = $this->request->getParam('sid');
+            if ($curSpecialId == "none")
+                $curSpecialId = false;
 
-        if ($curSpecialId == "none")
-            $curSpecialId = false;
+            $special = false;
 
-        $special = false;
+            //获取该用户已经推荐过的专辑ID集合
+            $recommends = $recommendModel->getRecommend($userId);
 
-        //获取该用户已经推荐过的专辑ID集合
-        $recommends = $recommendModel->getRecommend($userId);
+            $recommend_special_id = array();
 
-        $recommend_special_id = array();
-
-        if ($recommends) {
-            foreach ($recommends as $r) {
-                $recommend_special_id[] = $r->specialId;
-            }
-        }
-
-        $like_category_id = array();
-
-        foreach ($user->category as $c) {
-            $like_category_id[] = $c->id;
-        }
-
-        //获取喜好热点专辑
-        $hot = $hotModel->getLikeNotRecommendHot($like_category_id);
-
-        if ($hot) {
-            foreach ($hot as $h) {
-                foreach ($h->special as $p) {
-                    $isRecommend = false;
-
-                    foreach ($recommend_special_id as $r) {
-                        if ($p->id == $r) {
-                            $isRecommend = true;
-                        }
-                    }
-
-                    if (!$isRecommend) {
-                        $special = $p;
-
-                        break;
-                    }
+            if ($recommends) {
+                foreach ($recommends as $r) {
+                    $recommend_special_id[] = $r->specialId;
                 }
-
-                if ($special)
-                    break;
             }
-        }
 
-        //获取非喜好热点专辑
-        if (!$special) {
+            $like_category_id = array();
+
+            foreach ($user->category as $c) {
+                $like_category_id[] = $c->id;
+            }
+
             //获取喜好热点专辑
-            $hot = $hotModel->getNotRecommendHot($like_category_id);
+            $hot = $hotModel->getLikeNotRecommendHot($like_category_id);
 
             if ($hot) {
                 foreach ($hot as $h) {
@@ -564,10 +552,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
                         foreach ($recommend_special_id as $r) {
                             if ($p->id == $r) {
-
                                 $isRecommend = true;
-
-                                break;
                             }
                         }
 
@@ -578,20 +563,52 @@ class Angel_ShowController extends Angel_Controller_Action {
                         }
                     }
 
-                    if ($special) {
+                    if ($special)
                         break;
+                }
+            }
+
+            //获取非喜好热点专辑
+            if (!$special) {
+                //获取喜好热点专辑
+                $hot = $hotModel->getNotRecommendHot($like_category_id);
+
+                if ($hot) {
+                    foreach ($hot as $h) {
+                        foreach ($h->special as $p) {
+                            $isRecommend = false;
+
+                            foreach ($recommend_special_id as $r) {
+                                if ($p->id == $r) {
+
+                                    $isRecommend = true;
+
+                                    break;
+                                }
+                            }
+
+                            if (!$isRecommend) {
+                                $special = $p;
+
+                                break;
+                            }
+                        }
+
+                        if ($special) {
+                            break;
+                        }
                     }
                 }
             }
-        }
-        //获取喜好分类专辑
-        if (!$special) {
-            $special = $specialModel->getSpecialByCategoryId($recommend_special_id, $like_category_id);
-        }
+            //获取喜好分类专辑
+            if (!$special) {
+                $special = $specialModel->getSpecialByCategoryId($recommend_special_id, $like_category_id);
+            }
 
-        //获取非喜好分类专辑
-        if (!$special) {
-            $special = $specialModel->getSpecialByNotCategoryId($recommend_special_id, $like_category_id);
+            //获取非喜好分类专辑
+            if (!$special) {
+                $special = $specialModel->getSpecialByNotCategoryId($recommend_special_id, $like_category_id);
+            }
         }
 
         //没有热点，也没有没看过的视频，
@@ -633,8 +650,10 @@ class Angel_ShowController extends Angel_Controller_Action {
             $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
 
-        //保存推荐记录
-        $recommendModel->addRecommend($special->id, $userId);
+        if ($this->me) {
+            //保存推荐记录
+            $recommendModel->addRecommend($special->id, $userId);
+        }
         setcookie('specialId', $special->id);
         $this->_helper->json(array('data' => $result, 'code' => 200));
     }
@@ -644,7 +663,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
 
         //获取当前需要推荐的用户ID
-        $userId = $this->request->getParam('uid');
+        $user_id = $this->me->getUser()->id;
         $categorys_id = $this->request->getParam('category');
 
         $categorys = null;
@@ -658,7 +677,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         try {
-            $userModel->saveUser($userId, $categorys);
+            $userModel->saveUser($user_id, $categorys);
 
             $this->_helper->json(array('data' => 'save success!', 'code' => 200));
         } catch (Exception $e) {
@@ -679,6 +698,23 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         $this->_helper->json(array('data' => $category, 'code' => 200));
+    }
+    
+    public function removeUserCategoryAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $category_id = $this->getParam('id');
+            $user_id = $this->me->getUser()->id;
+            
+            if ($category_id) {
+                $userModel = $this->getModel('user');
+                
+                $result = $userModel->removeUserCategory($user_id, $category_id);
+            }
+            echo $result;
+            exit;
+        }
     }
 
     public function keywordVoteAction() {

@@ -181,8 +181,19 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
     
     public function phoneLoginAction() {
+        if ($this->request->isPost()) {
+            $this->userLogin('show-play', "登录芝士电视");
+        }
+        else {
+            //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
+            if (!$this->isMobile()) {
+                $loginPath = $this->view->url(array(), 'login') ;
+
+                $this->_redirect($loginPath);
+            }
+        }
+        
         $this->_helper->layout->setLayout('mobile');
-        $this->_helper->viewRenderer->render('mplay');
     }
     
     public function phoneRegisterAction() {
@@ -191,6 +202,5 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
         
         $this->_helper->layout->setLayout('mobile');
-        $this->_helper->viewRenderer->render('mplay');
     }
 }
