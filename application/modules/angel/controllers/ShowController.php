@@ -53,7 +53,6 @@ class Angel_ShowController extends Angel_Controller_Action {
             } else {
                 // 随机获取一个新的专辑并且redirect到获取到的专辑地址
                 // 如/play?special=xxxxxx
-                setcookie('userId', $this->me->getUser()->id);
                 $specialBean = $this->getRecommendSpecial();
 
                 $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
@@ -105,11 +104,6 @@ class Angel_ShowController extends Angel_Controller_Action {
 
                             $this->_redirect($playPath);
                         }
-                        else {
-                            $playPath = $this->view->url(array(), 'phone-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
-
-                            $this->_redirect($playPath);
-                        }
                    }                 
                 }
                 else {
@@ -142,7 +136,6 @@ class Angel_ShowController extends Angel_Controller_Action {
             } else {
                 // 随机获取一个新的专辑并且redirect到获取到的专辑地址
                 // 如/play?special=xxxxxx
-                setcookie('userId', $this->me->getUser()->id);
                 $specialBean = $this->getRecommendSpecial();
 
                 $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
@@ -179,11 +172,6 @@ class Angel_ShowController extends Angel_Controller_Action {
                         // 判断用户来自于PC端还是手机端，render不同的模板和Layout
                         if ($this->isMobile()) {
                             $playPath = $this->view->url(array(), 'phone-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
-
-                            $this->_redirect($playPath);
-                        }
-                        else {
-                            $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id . '&program='. $cur_program->id;
 
                             $this->_redirect($playPath);
                         }
