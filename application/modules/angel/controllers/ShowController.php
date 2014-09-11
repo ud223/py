@@ -133,7 +133,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             } else {
                 // 随机获取一个新的专辑并且redirect到获取到的专辑地址
                 // 如/play?special=xxxxxx
-                $specialBean = $this->getRecommendSpecial($specialId);
+                $specialBean = $this->getRecommendSpecial($played_special_id);
 
                 $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
 
