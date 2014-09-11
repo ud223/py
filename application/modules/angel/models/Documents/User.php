@@ -80,10 +80,10 @@ class User extends AbstractDocument{
     protected $address;
     
     /** @ODM\String */
-    protected $ip;  // 用户最后一次登陆的ip
+    protected $ip;  // 用户最后一次登录的ip
     
     /** @ODM\Date */
-    protected $last_login;  // 用户最后一次登陆的时间
+    protected $last_login;  // 用户最后一次登录的时间
     
     /** @ODM\EmbedOne(targetDocument="\Documents\UserDoc") */
     protected $identity_front_doc; // 身份照正面

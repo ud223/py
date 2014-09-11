@@ -45,11 +45,11 @@ class Angel_ShowController extends Angel_Controller_Action {
         //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
         if (!$specialId || $specialId == $played_special_id) {
             // 未请求专辑ID
-            //未登陆且有一次播放记录
+            //未登录且有一次播放记录
             if (!$this->me && $played_special_id) {
 //                $loginPath = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
 //                $this->_redirect($loginPath);
-                $this->view->message = "请先登陆然后继续观看, 谢谢!";
+                $this->view->message = "请先登录然后继续观看, 谢谢!";
             } else {
                 // 随机获取一个新的专辑并且redirect到获取到的专辑地址
                 // 如/play?special=xxxxxx
@@ -129,11 +129,11 @@ class Angel_ShowController extends Angel_Controller_Action {
         //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
         if (!$specialId || $specialId == $played_special_id) {
             // 未请求专辑ID
-            //未登陆且有一次播放记录
+            //未登录且有一次播放记录
             if (!$this->me && $played_special_id) {
 //                $loginPath = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
 //                $this->_redirect($loginPath);
-                $this->view->message = "请先登陆然后继续观看, 谢谢!";
+                $this->view->message = "请先登录然后继续观看, 谢谢!";
             } else {
                 // 随机获取一个新的专辑并且redirect到获取到的专辑地址
                 // 如/play?special=xxxxxx
