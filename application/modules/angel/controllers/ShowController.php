@@ -474,6 +474,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $programModel = $this->getModel('program');
         $favouriteModel = $this->getModel('favourite');
         $userModel = $this->getModel('user');
+        $favouriteModel = $this->getModel('favourite');
         //获取该专辑上传达人
         $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
         
