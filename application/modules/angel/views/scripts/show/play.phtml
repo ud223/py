@@ -397,22 +397,22 @@ $programs = $bean['programs'];
                                         body.find('.unit-items').append(html);
                                     });
 
-                                    // 默认选中用户保存的兴趣
-                                    $.ajax({
-                                        url: '<?php echo $this->url(array(), 'api-user-category-list') ?>',
-                                        dataType: 'json',
-                                        type: 'get',
-                                        success: function(response) {
-                                            if (response.code === 200) {
-                                                var data = response.data;
-                                                if (data && data.length) {
-                                                    $.each(data, function() {
-                                                        $('.unit-item[cid="' + this.id + '"]').addClass('selected');
-                                                    });
-                                                }
-                                            }
-                                        }
-                                    });
+//                                    // 默认选中用户保存的兴趣
+//                                    $.ajax({
+//                                        url: '<?php echo $this->url(array(), 'api-user-category-list') ?>',
+//                                        dataType: 'json',
+//                                        type: 'get',
+//                                        success: function(response) {
+//                                            if (response.code === 200) {
+//                                                var data = response.data;
+//                                                if (data && data.length) {
+//                                                    $.each(data, function() {
+//                                                        $('.unit-item[cid="' + this.id + '"]').addClass('selected');
+//                                                    });
+//                                                }
+//                                            }
+//                                        }
+//                                    });
                                     $this.attr('loaded', 'true');
                                 }
                             }
