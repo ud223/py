@@ -150,6 +150,17 @@ $programs = $bean['programs'];
         <p></p>
     </div>
 
+    <div class="sharing-popup">
+        <div class="ctss">
+            <div class="cts-1">
+                <a class="sharing-ico weibo" href="#"><i></i> 分享到新浪微博</a>
+                <div class="clear"></div>
+                <a class="sharing-ico qqweibo" href="#"><i></i> 分享到腾讯微博</a>
+                <a class="sharing-ico weixin" href="javascript:void(0)"><i></i> 微信扫一扫</a>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -163,8 +174,10 @@ $programs = $bean['programs'];
         // set interval per second
         setInterval(function() {
             $('#tv-ctrl-prog').css('width', (PLAYER.currentTime / PLAYER.duration) * 100 + '%');
-            $('#tv-ctrl-st').html(PLAYER.duration.timeFormat());
-            $('#tv-ctrl-ct ').html(PLAYER.currentTime.timeFormat());
+            if (!isNaN(PLAYER.duration) && !isNaN(PLAYER.currentTime)) {
+                $('#tv-ctrl-st').html(PLAYER.duration.timeFormat());
+                $('#tv-ctrl-ct ').html(PLAYER.currentTime.timeFormat());
+            }
         }, 100);
 
         $('#tv-ctrl-fullscreen').click(function() {
@@ -189,7 +202,8 @@ $programs = $bean['programs'];
                 msg: '确定登出吗？',
                 confirmCallback: function() {
                     location.href = "<?php echo $this->url(array(), 'logout') ?>";
-                }
+                },
+                containerBoxSelector: '#tv'
             });
         });
 
@@ -271,8 +285,13 @@ $programs = $bean['programs'];
     });
 
     $('.alt-list .list-item .sharing').click(function() {
-        var programId = $(this).closest('.list-item').attr('id');
-        alert('sharing: ' + programId);
+        var pid = $(this).closest('.list-item').attr('id');
+        var sid = $('#tv-listbar').attr('sid');
+        var content = $('.sharing-popup').clone(true);
+        $.popup({
+            content: content,
+            containerBoxSelector: '#tv',
+            width: 260});
         return false;
     });
     $('.tv-tab-list-item').click(function() {
