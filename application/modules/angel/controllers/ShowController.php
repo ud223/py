@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play', 'special-program-list');
 
     public function init() {
         parent::init();
@@ -992,4 +992,23 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
     }
 
+    public function specialProgramListAction() {
+        $specialModel = $this->getModel('special');
+
+        $special_id = $this->getParam('sid');
+
+        $programs = array();
+
+        if ($special_id) {
+            $special = $specialModel->getById($special_id);
+
+            if ($special) {
+                foreach ($special->program as $program) {
+                    $programs[] =array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
+                }
+            }
+        }
+        
+        $this->_helper->json(array('data' => $programs, 'code' => 200));
+    }
 }

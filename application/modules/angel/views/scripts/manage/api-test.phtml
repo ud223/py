@@ -144,22 +144,43 @@ and open the template in the editor.
                 });
            }
            
-           function categoryList() {
-                var url = '/api/user/categorylist';
+        function categoryList() {
+            var url = '/api/user/categorylist';
 
-                $.ajax({
-                    url: url,
-                    dataType: 'json',
-                    method: 'get',
-                    success: function(response) {
-                        alert(response.code);
-                        alert(JSON.stringify(response.data));
-                    },
-                    error: function() {
-                        $.endWaiting();
-                    }
-                });
-           }
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                method: 'get',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+        }
+        
+        function specialProgramList() {
+            var url = '/api/special/program/list';
+
+            var data = {'sid': '53fc0d5fb3580ee0313611a0'};
+            
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: data,
+                method: 'get',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+        }
+        
         function sinaTest() {
                shareTSina('夏季达沃斯聚焦创新 李克强将出席年会并致开幕辞',"http://china.haiwainet.cn/n/2014/0907/c345646-21054873.html", "http://china.haiwainet.cn", "http://www.cnr.cn/2012zt/58/22/201209/W020120912658056608064.jpg") ;
          }
@@ -184,5 +205,7 @@ and open the template in the editor.
         <button type="button" onclick="TenXunTest()">测试腾讯微博分享</button>
         <br>
         <button type="button" onclick="categoryList()">测试分类列表</button>
+        
+        <button type="button" onclick="specialProgramList()">测试分类列表</button>
     </body>
 </html>
