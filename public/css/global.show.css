@@ -748,16 +748,31 @@ h3 {
 .sharing-popup {
 }
 .sharing-popup .ctss {
-    padding-top:20px;
+    height:300px;
+    margin-top:30px;
+    overflow:hidden;
+    position:relative;
+    width:300px;
+}
+.sharing-popup .cts-1, .sharing-popup .cts-2 {
+    height:100%;
+    left:0;
+    position:absolute;
+    top:0;
+    width:100%;
 }
 .sharing-popup .cts-1 {
-    
+
+}
+.sharing-popup .cts-1 p {
+    font-size:16px;
+    margin-bottom:20px;
 }
 .sharing-popup .cts-2 {
-    
+    left:100%;
 }
 .sharing-popup .cts-2 .qr {
-    
+
 }
 .sharing-popup .sharing-ico {
     background:#ef3546;
@@ -792,6 +807,14 @@ h3 {
 }
 .sharing-popup .sharing-ico.weixin i {
     background-position: center -72px;
+}
+
+.sharing-popup .hide-qrcode {
+    display:none;
+    left:25px;
+    position:absolute;
+    top:17px;
+    z-index:4;
 }
 /*
  *	untitle id & class

@@ -17,17 +17,38 @@ function sharingIt(obj, pagePrefix) {
         var pid = $this.attr('id');
         pagePrefix += "&program=" + pid;
     }
+
     var content = $('.sharing-popup').clone(true);
+    content.find('.cts-1 p span').html("\"" + title + "\"");
     content.find('.weibo').click(function() {
         shareTSina(title, pagePrefix, '', img);
     });
     content.find('.qqweibo').click(function() {
         shareToWb(title, pagePrefix, '', img);
     });
+    content.find('.weixin').click(function() {
+        var container = $(this).closest('.sharing-popup');
+        container.find('.hide-qrcode').show();
+        new QRCode(container.find('.cts-2').get(0), {
+            text: pagePrefix,
+            width: 300,
+            height: 300,
+            colorDark: "#333333",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+        //qrcode.clear(); // clear the code. 
+        //qrcode.makeCode("http://naver.com"); // make another code.
+        
+        container.find('.cts-2').animate({
+            left: 0
+        }, 200, 'linear');
+    });
     $.popup({
         content: content,
         containerBoxSelector: '#tv',
-        width: 260});
+        height: 382,
+        width: 352});
     return false;
 }
 

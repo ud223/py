@@ -1,5 +1,5 @@
-
 <script type="text/javascript" src="<?php echo $this->jsPath('player.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->jsPath('qrcode.js'); ?>"></script>
 
 
 <?php
@@ -152,12 +152,19 @@ $programs = $bean['programs'];
     </div>
 
     <div class="sharing-popup">
+        <button class="btn btn-sm hide-qrcode">&lt; 返回</button>
         <div class="ctss">
             <div class="cts-1">
+                <p>
+                    分享 <span></span>
+                </p>
                 <a class="sharing-ico weibo" href="#"><i></i> 分享到新浪微博</a>
                 <div class="clear"></div>
                 <a class="sharing-ico qqweibo" href="#"><i></i> 分享到腾讯微博</a>
                 <a class="sharing-ico weixin" href="javascript:void(0)"><i></i> 微信扫一扫</a>
+            </div>
+            <div class="cts-2">
+
             </div>
         </div>
     </div>
@@ -285,7 +292,7 @@ $programs = $bean['programs'];
         location.href = url;
     });
 
-var page_prefix = "<?php echo $this->serverUrl() ?>";
+    var page_prefix = "<?php echo $this->serverUrl() ?>";
     $('.alt-list .list-item .sharing').click(function() {
         return sharingIt($(this), page_prefix);
     });
@@ -473,6 +480,13 @@ var page_prefix = "<?php echo $this->serverUrl() ?>";
             }
         }
     });
+
+    $('.hide-qrcode').click(function() {
+        var container = $(this).hide().closest('.sharing-popup');
+        container.find('.cts-2').animate({
+            left: '100%'
+        }, 200, 'linear');
+    })
 
     function switchMode(mode) {
         var data = {'value': mode};
