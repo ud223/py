@@ -591,13 +591,19 @@
         wp.fadeIn('fast');
         wp.attr('intid', intervalId);
     };
-    $.rotateDiv = function(easing) {
+    $.rotateDiv = function(easing, selector, duration) {
         if (!easing) {
             easing = 'linear';
         }
-        $('.rotatediv').animate({
+        if (!selector) {
+            selector = '.rotatediv';
+        }
+        if (!duration) {
+            duration = 500;
+        }
+        $(selector).animate({
             rotate: '+=360deg'
-        }, 500, easing);
+        }, duration, easing);
     };
     $.endWaiting = function() {
         var wp = $('.rotatedivwrapper');
@@ -876,7 +882,7 @@
             width: 500,
             padding: 25,
             textAlign: 'left',
-            containerBoxSelector : 'body'
+            containerBoxSelector: 'body'
         },
         popup: function(options) {
             var $popupsettings = $.extend({}, $.POPUPSETTINGSTMP, options);
