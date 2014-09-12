@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play', 'special-program-list');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play', 'special-program-list', 'special-recommend');
 
     public function init() {
         parent::init();
