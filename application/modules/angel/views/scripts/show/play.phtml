@@ -334,7 +334,7 @@ $programs = $bean['programs'];
                                             });
                                             return false;
                                         });
-                                        html.find('.sharing').click(function(){
+                                        html.find('.sharing').click(function() {
                                             return sharingIt($(this));
                                         });
                                         html.click(function() {
@@ -360,6 +360,7 @@ $programs = $bean['programs'];
                         dataType: 'json',
                         type: 'post',
                         success: function(response) {
+                            console.log(response);
                             if (response.code === 200) {
                                 var body = $('.tv-tab-content-body .alt-hobby');
                                 body.empty();
@@ -394,6 +395,10 @@ $programs = $bean['programs'];
                                                 });
 <?php endif ?>
                                         });
+                                        console.log(this);
+                                        if (this.like) {
+                                            html.addClass('selected');
+                                        }
                                         body.find('.unit-items').append(html);
                                     });
 
