@@ -142,6 +142,7 @@ $programs = $bean['programs'];
 
     <div class="list-item clearfix favor-item">
         <div class="list-item-cell lt"></div>
+        <div class="list-item-cell rt sharing ico"></div>
         <div class="list-item-cell rt remove-favor ico"></div>
     </div>
 
@@ -285,14 +286,7 @@ $programs = $bean['programs'];
     });
 
     $('.alt-list .list-item .sharing').click(function() {
-        var pid = $(this).closest('.list-item').attr('id');
-        var sid = $('#tv-listbar').attr('sid');
-        var content = $('.sharing-popup').clone(true);
-        $.popup({
-            content: content,
-            containerBoxSelector: '#tv',
-            width: 260});
-        return false;
+        return sharingIt($(this));
     });
     $('.tv-tab-list-item').click(function() {
         // 翻页
@@ -339,6 +333,9 @@ $programs = $bean['programs'];
                                                 }
                                             });
                                             return false;
+                                        });
+                                        html.find('.sharing').click(function(){
+                                            return sharingIt($(this));
                                         });
                                         html.click(function() {
                                             var $this = $(this).closest('.list-item');

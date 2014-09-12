@@ -472,6 +472,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     protected function getSpecialInfo($special) {
         $recommendModel = $this->getModel('recommend');
         $programModel = $this->getModel('program');
+        $favouriteModel = $this->getModel('favourite');
         $userModel = $this->getModel('user');
         $favouriteModel = $this->getModel('favourite');
         //获取该专辑上传达人
