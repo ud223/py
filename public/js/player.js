@@ -2,19 +2,28 @@ $(document).ready(function() {
 
 });
 
-function sharingIt(obj) {
+function sharingIt(obj, pagePrefix) {
     var $this = $(obj).closest('.list-item');
     var sid = $this.attr('sid');
+    var title = $this.find('.lt').html();
+    var img = pagePrefix + $('.alt-img').attr('src');
     if (sid) {
         // sharing special
-        alert('sharing special');
+        pagePrefix = "?special=" + sid;
     } else {
         // sharing program
-        var pid = $this.attr('id');
         sid = $('#tv-listbar').attr('sid');
-        alert('sharing program')
+        pagePrefix += "?special=" + sid;
+        var pid = $this.attr('id');
+        pagePrefix += "&program=" + pid;
     }
     var content = $('.sharing-popup').clone(true);
+    content.find('.weibo').click(function() {
+        shareTSina(title, pagePrefix, '', img);
+    });
+    content.find('.qqweibo').click(function() {
+        shareToWb(title, pagePrefix, '', img);
+    });
     $.popup({
         content: content,
         containerBoxSelector: '#tv',

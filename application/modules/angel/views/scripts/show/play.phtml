@@ -285,8 +285,9 @@ $programs = $bean['programs'];
         location.href = url;
     });
 
+var page_prefix = "<?php echo $this->serverUrl() ?>";
     $('.alt-list .list-item .sharing').click(function() {
-        return sharingIt($(this));
+        return sharingIt($(this), page_prefix);
     });
     $('.tv-tab-list-item').click(function() {
         // 翻页
@@ -354,13 +355,12 @@ $programs = $bean['programs'];
                     });
                     break;
                 case 'hobby':
-                    var url = '<?php echo $this->url(array(), 'api-category-list') ?>';
+                    var url = '<?php echo $this->url(array(), 'api-user-category-list') ?>';
                     $.ajax({
                         url: url,
                         dataType: 'json',
                         type: 'post',
                         success: function(response) {
-                            console.log(response);
                             if (response.code === 200) {
                                 var body = $('.tv-tab-content-body .alt-hobby');
                                 body.empty();
@@ -385,17 +385,18 @@ $programs = $bean['programs'];
                                                     uid: '<?php echo $this->me->getUser()->id ?>',
                                                     category: categories
                                                 };
+                                                $.waiting(null, $('#tv'));
                                                 $.ajax({
                                                     url: '<?php echo $this->url(array(), 'api-user-category-save') ?>',
                                                     dataType: 'json',
                                                     type: 'post',
                                                     data: data,
-                                                    success: function(response) {
+                                                    complete: function() {
+                                                        $.endWaiting();
                                                     }
                                                 });
 <?php endif ?>
                                         });
-                                        console.log(this);
                                         if (this.like) {
                                             html.addClass('selected');
                                         }
