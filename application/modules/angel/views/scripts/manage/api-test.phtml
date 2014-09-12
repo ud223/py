@@ -181,6 +181,26 @@ and open the template in the editor.
             });
         }
         
+        function userCategroy() {
+            var url = '/api/user/category';    
+            
+            var data = {'category': '53e34c0bb3580ee10f8b45df;53e34c05b3580ee10f8b45de;53e34be7b3580ee10f8b45da;53e34be2b3580ee10f8b45d9;53e34bdab3580ee10f8b45d8;53e34bd4b3580ee10f8b45d7;53e34b67b3580ee10f8b45d2;53e34b5fb3580ee10f8b45d1;53e34b59b3580ee10f8b45d0;53e34b35b3580ee10f8b45cb;53e34b2db3580ee10f8b45ca;53e34b25b3580ee10f8b45c9' };
+            
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: data,
+                method: 'get',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+        }
+        
         function sinaTest() {
                shareTSina('夏季达沃斯聚焦创新 李克强将出席年会并致开幕辞',"http://china.haiwainet.cn/n/2014/0907/c345646-21054873.html", "http://china.haiwainet.cn", "http://www.cnr.cn/2012zt/58/22/201209/W020120912658056608064.jpg") ;
          }
@@ -207,5 +227,6 @@ and open the template in the editor.
         <button type="button" onclick="categoryList()">测试分类列表</button>
         
         <button type="button" onclick="specialProgramList()">测试分类列表</button>
+        <button type="button" onclick="userCategroy()">测试保存分类</button>
     </body>
 </html>
