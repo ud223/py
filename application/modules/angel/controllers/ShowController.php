@@ -515,6 +515,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
 
     public function specialRecommendAction() {
+        $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');
         $programModel = $this->getModel('program');
         $authorModel = $this->getModel('author');
