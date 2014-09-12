@@ -222,11 +222,17 @@ h3 {
 #tv #btn-refresh:hover {
     background-position:-100px -400px;
 }
-#tv #btn-toggle {
+#tv #btn-toggle-audio {
     background-position: -300px -300px;
 }
-#tv #btn-toggle:hover {
+#tv #btn-toggle-video {
+    background-position: -300px -400px;
+}
+#tv #btn-toggle-audio:hover {
     background-position:-400px -300px;
+}
+#tv #btn-toggle-video:hover {
+    background-position:-400px -400px;
 }
 #tv #tv-listbar {
     background:rgba(0,0,0,0.25);
@@ -738,6 +744,55 @@ h3 {
     margin:-30px 0 15px 0;
 }
 
+
+.sharing-popup {
+}
+.sharing-popup .ctss {
+    padding-top:20px;
+}
+.sharing-popup .cts-1 {
+    
+}
+.sharing-popup .cts-2 {
+    
+}
+.sharing-popup .cts-2 .qr {
+    
+}
+.sharing-popup .sharing-ico {
+    background:#ef3546;
+    box-sizing: content-box;
+    border-radius:5px;
+    display:block;
+    height:36px;
+    line-height:36px;
+    margin-bottom:5px;
+    padding:5px 25px 5px 45px;
+    position:relative;
+    text-align:center;
+}
+.sharing-popup .sharing-ico.weixin {
+    background-color:#6bca41;
+}
+.sharing-popup .sharing-ico.qqweibo {
+    background-color:#5faad1;
+}
+.sharing-popup .sharing-ico i {
+    background:url(../img/sharing-ico.png) center top no-repeat;
+    display:inline-block;
+    height:36px;
+    left:15px;
+    margin-right:10px;
+    position:absolute;
+    top:5px;
+    width:36px;
+}
+.sharing-popup .sharing-ico.qqweibo i {
+    background-position: center -36px;
+}
+.sharing-popup .sharing-ico.weixin i {
+    background-position: center -72px;
+}
 /*
  *	untitle id & class
  * */

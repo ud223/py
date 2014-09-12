@@ -3,14 +3,14 @@
 
 
 <?php
-    $player_mode = "video";
-    if ($this->me) {
-        if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
-            $player_mode = $this->me->getUser()->attribute['player_mode'];
-        }
+$player_mode = "video";
+if ($this->me) {
+    if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
+        $player_mode = $this->me->getUser()->attribute['player_mode'];
     }
-    $bean = $this->resource;
-    $programs = $bean['programs'];
+}
+$bean = $this->resource;
+$programs = $bean['programs'];
 ?>
 
 
@@ -19,7 +19,11 @@
         <div class="pxt">
             <button id='btn-refresh' onclick="location.href = '<?php echo $this->url(array(), 'show-play') ?>'" class='ico tv-side-btn'></button>
             <button id='btn-list' class='ico tv-side-btn'></button>
-            <button id='btn-toggle' class='ico tv-side-btn'></button>
+            <?php if ($player_mode == 'video'): ?>
+                <button id='btn-toggle-audio' rel="audio" class='ico tv-side-btn'></button>
+            <?php else: ?>
+                <button id='btn-toggle-video' rel="video" class='ico tv-side-btn'></button>
+            <?php endif; ?>
         </div>
     </div>
     <div id="tv-listbar" sid="<?php echo $bean['id'] ?>">
@@ -95,7 +99,7 @@
             </ul>
             <?php if ($this->me): ?>
                 <div class="logout-btn-content">
-                    <button class="btn btn-gray btn-sm">安全退出</button>
+                    <button class="btn btn-gray btn-sm" id="logout-btn">安全退出</button>
                 </div>
             <?php endif; ?>
         </div>
@@ -111,7 +115,7 @@
         <div id="tv-disk">
             <div id="tv-disk-page"></div>
         </div>
-    <audio id="tv-video-player" src="<?php echo $this->cur_program['oss_audio'] ?>" preload autoplay="autoplay"></audio>
+        <audio id="tv-video-player" src="<?php echo $this->cur_program['oss_audio'] ?>" preload autoplay="autoplay"></audio>
     <?php endif; ?>
 
     <div id="tv-ctrl-block">
@@ -146,6 +150,17 @@
         <p></p>
     </div>
 
+    <div class="sharing-popup">
+        <div class="ctss">
+            <div class="cts-1">
+                <a class="sharing-ico weibo" href="#"><i></i> 分享到新浪微博</a>
+                <div class="clear"></div>
+                <a class="sharing-ico qqweibo" href="#"><i></i> 分享到腾讯微博</a>
+                <a class="sharing-ico weixin" href="javascript:void(0)"><i></i> 微信扫一扫</a>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -159,8 +174,10 @@
         // set interval per second
         setInterval(function() {
             $('#tv-ctrl-prog').css('width', (PLAYER.currentTime / PLAYER.duration) * 100 + '%');
-            $('#tv-ctrl-st').html(PLAYER.duration.timeFormat());
-            $('#tv-ctrl-ct ').html(PLAYER.currentTime.timeFormat());
+            if (!isNaN(PLAYER.duration) && !isNaN(PLAYER.currentTime)) {
+                $('#tv-ctrl-st').html(PLAYER.duration.timeFormat());
+                $('#tv-ctrl-ct ').html(PLAYER.currentTime.timeFormat());
+            }
         }, 100);
 
         $('#tv-ctrl-fullscreen').click(function() {
@@ -178,6 +195,16 @@
 
         $('#tv-tab-close').click(function() {
             $('#btn-list').click();
+        });
+
+        $('#logout-btn').click(function() {
+            $.confirm({
+                msg: '确定登出吗？',
+                confirmCallback: function() {
+                    location.href = "<?php echo $this->url(array(), 'logout') ?>";
+                },
+                containerBoxSelector: '#tv'
+            });
         });
 
         $(PLAYER).on('ended', function() {
@@ -214,12 +241,6 @@
             });
         }
     });
-    $('.tv-toggle-unit[rel="' + init_player_mode + '"]').addClass('selected');
-    if (init_player_mode === 'audio') {
-
-    } else {
-
-    }
 
     // 网速失速
     $('#player').on('stalled', function() {
@@ -260,13 +281,17 @@
         var programId = $(this).closest('.list-item').attr('id');
         var specialId = $('#tv-listbar').attr('sid');
         var url = "<?php echo $this->url(array(), 'show-play') ?>?special=" + specialId + "&&program=" + programId;
-//        alert(url);
         location.href = url;
     });
 
     $('.alt-list .list-item .sharing').click(function() {
-        var programId = $(this).closest('.list-item').attr('id');
-        alert('sharing: ' + programId);
+        var pid = $(this).closest('.list-item').attr('id');
+        var sid = $('#tv-listbar').attr('sid');
+        var content = $('.sharing-popup').clone(true);
+        $.popup({
+            content: content,
+            containerBoxSelector: '#tv',
+            width: 260});
         return false;
     });
     $('.tv-tab-list-item').click(function() {
@@ -357,7 +382,7 @@
                                                 });
                                                 categories = arr.join(';');
                                             }
-                                            <?php if ($this->me): ?>
+<?php if ($this->me): ?>
                                                 var data = {
                                                     uid: '<?php echo $this->me->getUser()->id ?>',
                                                     category: categories
@@ -370,7 +395,7 @@
                                                     success: function(response) {
                                                     }
                                                 });
-                                            <?php endif?>
+<?php endif ?>
                                         });
                                         body.find('.unit-items').append(html);
                                     });
@@ -429,6 +454,43 @@
         }
     });
 
+    $('#btn-toggle-audio, #btn-toggle-video').click(function() {
+        var mode = $(this).attr('rel');
+        switchMode(mode);
+        var bean = $('#tv-listbar').attr('sid') + ';' + $('.tv-tab-content-body .list-item.selected').attr('id') + ';' + PLAYER.currentTime;
+        localStorage.setItem('switch-mode', bean);
+    });
+    $(document).ready(function() {
+        var ls = localStorage.getItem('switch-mode');
+        if (ls) {
+            var lss = ls.split(';');
+            if (lss[0] === $('#tv-listbar').attr('sid') && lss[1] === $('.tv-tab-content-body .list-item.selected').attr('id')) {
+                seek(null, parseFloat(lss[2]));
+                localStorage.getItem('switch-mode', null);
+            }
+        }
+    });
+
+    function switchMode(mode) {
+        var data = {'value': mode};
+        var url = "<?php echo $this->url(array(), 'user-player-mode') ?>";
+
+        $.ajax({
+            url: url,
+            data: data,
+            dataType: 'json',
+            method: 'post',
+            success: function(response) {
+                if (response.code === 200) {
+                    location.reload();
+                } else {
+                }
+            },
+            error: function() {
+            }
+        });
+    }
+
     function removeFavor(sid, callback) {
         $.confirm({
             msg: '确定移除该项收藏吗？',
@@ -446,19 +508,21 @@
                     }
                 });
             },
-            containerBoxSelector:'#tv'
+            containerBoxSelector: '#tv'
         });
     }
-    
+
     function needLogin() {
-        msg = '<?php if ($this->message != "") {
-                echo $this->message;
-            } ?>';
-                
+        msg = '<?php
+if ($this->message != "") {
+    echo $this->message;
+}
+?>';
+
         if (msg != '')
             alert(msg);
     }
-    
+
     needLogin();
 </script>
 
