@@ -475,14 +475,28 @@ class Angel_ShowController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
         //获取该专辑上传达人
         $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
+        
+        $like = 0;
+        
+        if ($this->me) {
+            $favourites = $favouriteModel->getFavouriteByUserId($userId);
 
+            foreach ($favourites->special as $p) {
+                if ($p->id == $special->id) {
+                    $like = 1;
+
+                    break;
+                }
+            }
+        }
+        
         $result["id"] = $special->id;
         $result["name"] = $special->name;
 
         if ($author == "")
             $result["author"] = "";
         else
-            $result["author"] = $author->username;
+            $result["author"] = $author->name;
 
         $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
         $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];
@@ -494,7 +508,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         foreach ($special->program as $program) {
-            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
+            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "like"=>$like, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
 
         return $result;
@@ -507,6 +521,9 @@ class Angel_ShowController extends Angel_Controller_Action {
         $categoryModel = $this->getModel('category');
         $hotModel = $this->getModel("hot");
         $userModel = $this->getModel('user');
+        $favouriteModel = $this->getModel('Favourite');
+        
+        $like = 0;
         
         if ($this->me) {
             //获取当前需要推荐的用户ID
@@ -624,7 +641,19 @@ class Angel_ShowController extends Angel_Controller_Action {
 //-------------------------------------------------------------------------------
         //获取该专辑上传达人
         $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
+        //首先判断当前用户是否登录，如果登录再判断当前专辑是否当前已收藏的专辑
+        if ($this->me) {
+            $favourites = $favouriteModel->getFavouriteByUserId($userId);
 
+            foreach ($favourites->special as $p) {
+                if ($p->id == $special->id) {
+                    $like = 1;
+
+                    break;
+                }
+            }
+        }
+        
         $result["id"] = $special->id;
         $result["name"] = $special->name;
 
@@ -643,7 +672,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         foreach ($special->program as $program) {
-            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
+            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "like"=>$like, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
 
         if ($this->me) {
@@ -683,14 +712,27 @@ class Angel_ShowController extends Angel_Controller_Action {
 
     public function userCategoryListAction() {
         $userModel = $this->getModel('user');
+        $categoryModel = $this->getModel('category');
+        
         $user_id = $this->me->getUser()->id;
-
+        
+        $result = $categoryModel->getAll(false);
         $user = $userModel->getById($user_id);
 
         $category = array();
-
-        foreach ($user->category as $c) {
-            $category[] = array('id' => $c->id, 'name' => $c->name);
+        
+        foreach ($result as $p) {
+            $like = 0;
+            
+            foreach ($user->category as $c) {
+                if ($p->id == $c->id) {
+                    $like = 1;
+                    
+                    break;
+                }   
+            }
+            
+            $category[] = array('id' => $p->id, 'name' => $p->name, 'like'=>$like);
         }
 
         $this->_helper->json(array('data' => $category, 'code' => 200));
