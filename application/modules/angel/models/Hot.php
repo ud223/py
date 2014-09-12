@@ -82,7 +82,7 @@ class Angel_Model_Hot extends Angel_Model_AbstractModel {
         $result = $query
                 ->getQuery();
                // ->getSingleResult();
-        echo count($result); exit;
+//        echo count($result); exit;
         if (empty($result))
             return false;
         
