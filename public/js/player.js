@@ -2,7 +2,25 @@ $(document).ready(function() {
 
 });
 
-
+function sharingIt(obj) {
+    var $this = $(obj).closest('.list-item');
+    var sid = $this.attr('sid');
+    if (sid) {
+        // sharing special
+        alert('sharing special');
+    } else {
+        // sharing program
+        var pid = $this.attr('id');
+        sid = $('#tv-listbar').attr('sid');
+        alert('sharing program')
+    }
+    var content = $('.sharing-popup').clone(true);
+    $.popup({
+        content: content,
+        containerBoxSelector: '#tv',
+        width: 260});
+    return false;
+}
 
 
 function switchFullscreen() {
