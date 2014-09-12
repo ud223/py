@@ -98,28 +98,29 @@
         }
         $("#categories").val(hd);
     }
-    
+
 
 
     function saveUserCategory(callback) {
-        <?php
-            $url = $this->url(array("uid" => $this->userId, "category" => "none"), "api-user-category-save");
-        ?>
+<?php
+$url = $this->url(array(), "api-user-category-save");
+?>
 
-        var tmpUrl = "<?php echo $url ?>";
-        var myUrl = tmpUrl;
-        
+        var curl = "<?php echo $url ?>";
+
         var category = $('#categories').val();
-        
-        if (category != null && category != '')
-            myUrl = myUrl.replace('none', category);
+        if (!category) {
+            category = 'none';
+        }
+        var data = {category: category};
 
         $.ajax({
-            url: myUrl,
+            url: curl,
             dataType: 'json',
+            type: 'post',
+            data: data,
             success: function(result) {
                 if (result.code === 0) {
-                    alert("save failed!");
                 }
             }
         });

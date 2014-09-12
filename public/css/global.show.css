@@ -769,22 +769,32 @@ h3 {
     margin-bottom:20px;
 }
 .sharing-popup .cts-2 {
+    background:#FFF;
+    border-radius:4px;
     left:100%;
 }
 .sharing-popup .cts-2 .qr {
-
+    height:270px;
+    left:15px;
+    position:absolute;
+    top:15px;
+    width:270px;
 }
 .sharing-popup .sharing-ico {
     background:#ef3546;
     box-sizing: content-box;
     border-radius:5px;
     display:block;
-    height:36px;
-    line-height:36px;
+    font-size:16px;
+    height:60px;
+    line-height:60px;
     margin-bottom:5px;
     padding:5px 25px 5px 45px;
     position:relative;
     text-align:center;
+}
+.sharing-popup .sharing-ico:hover {
+    color:#FFF;
 }
 .sharing-popup .sharing-ico.weixin {
     background-color:#6bca41;
@@ -799,7 +809,7 @@ h3 {
     left:15px;
     margin-right:10px;
     position:absolute;
-    top:5px;
+    top:17px;
     width:36px;
 }
 .sharing-popup .sharing-ico.qqweibo i {

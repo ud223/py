@@ -29,10 +29,10 @@ function sharingIt(obj, pagePrefix) {
     content.find('.weixin').click(function() {
         var container = $(this).closest('.sharing-popup');
         container.find('.hide-qrcode').show();
-        new QRCode(container.find('.cts-2').get(0), {
+        new QRCode(container.find('.cts-2 .qr').empty().get(0), {
             text: pagePrefix,
-            width: 300,
-            height: 300,
+            width: 270,
+            height: 270,
             colorDark: "#333333",
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H
