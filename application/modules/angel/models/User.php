@@ -44,7 +44,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $age, $gender);
     }
     
-    public function AddVip($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name, $author) {
+    public function addVip($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name, $author) {
         $result = false;
         if (empty($email)) {
             throw new Angel_Exception_User(Angel_Exception_User::EMAIL_EMPTY);
