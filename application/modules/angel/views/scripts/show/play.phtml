@@ -334,6 +334,7 @@ $programs = $bean['programs'];
                                     $.each(response.data.specials, function() {
                                         var html = $('.P_tmp .favor-item').clone(true);
                                         html.attr('sid', this.id).find('.list-item-cell.lt').html(this.name);
+                                        html.attr('sharing_photo', this.sharing_photo);
                                         html.find('.remove-favor').click(function() {
                                             var $this = $(this);
                                             var sid = $this.closest('.list-item').attr('sid');

@@ -10,6 +10,7 @@ function sharingIt(obj, pagePrefix) {
     if (sid) {
         // sharing special
         pagePrefix = "?special=" + sid;
+        img = $this.attr('sharing_photo');
     } else {
         // sharing program
         sid = $('#tv-listbar').attr('sid');

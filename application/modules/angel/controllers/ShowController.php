@@ -32,7 +32,6 @@ class Angel_ShowController extends Angel_Controller_Action {
 //            }
 //        }
 //    }
-
 //    public function playAction() {
 //        $recommendModel = $this->getModel('recommend');
 //        $specialModel = $this->getModel('special');
@@ -111,7 +110,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 //            $this->render('phone-play ');
 //        }
 //    }
-    
+
     public function playAction() {
         $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');
@@ -119,20 +118,20 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         $specialId = $this->request->getParam('special');
         $programId = $this->request->getParam('program');
-        
+
         $specialBean = false;
 
         $played_special_id = $_COOKIE["sid"];
         $played_program_id = $_COOKIE["pid"];
-        
+
         // 未请求专辑ID
         //未登录且有一次播放记录
-         if (!$this->me && $played_special_id) {
-                $this->view->message = "请先登陆然后继续观看, 谢谢!";
-                
-                return;
-        } 
-        
+        if (!$this->me && $played_special_id) {
+            $this->view->message = "请先登陆然后继续观看, 谢谢!";
+
+            return;
+        }
+
         //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
         if (!$specialId) {
             // 随机获取一个新的专辑并且redirect到获取到的专辑地址
@@ -160,7 +159,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                     //如果没有查询到节目id就直接播放当前专辑第一个
                     $cur_program = $result["programs"][0];
                     //根据program_id 获取当前要播放的节目
-                    if ($programId) {  
+                    if ($programId) {
                         foreach ($result["programs"] as $p) {
                             if ($p['id'] == $programId) {
                                 $cur_program = $p;
@@ -171,25 +170,24 @@ class Angel_ShowController extends Angel_Controller_Action {
 
                     if ($this->me) {
                         //获取当前需要推荐的用户ID
-                       $userId = $this->me->getUser()->id;
-                       //保存推荐记录  可能调整一下位置
-                       $recommendModel->addRecommend($specialBean->id, $userId);
+                        $userId = $this->me->getUser()->id;
+                        //保存推荐记录  可能调整一下位置
+                        $recommendModel->addRecommend($specialBean->id, $userId);
                     }
-                        
+
                     setcookie('sid', $specialBean->id);
                     setcookie('pid', $cur_program->id);
                     $this->view->cur_program = $cur_program;
                     $this->view->resource = $result;
-                }
-                else {
+                } else {
                     //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
                 }
             }
         }
-        
+
         // 判断用户来自于PC端还是手机端，render不同的模板和Layout
         if ($this->isMobile()) {
-            $this->_helper->layout->setLayout('mobile'); 
+            $this->_helper->layout->setLayout('mobile');
             $this->render('phone-play ');
         }
     }
@@ -200,7 +198,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $categoryModel = $this->getModel('category');
         $hotModel = $this->getModel("hot");
         $userModel = $this->getModel('user');
-        
+
         if ($this->me) {
             //获取当前需要推荐的用户ID
             $userId = $this->me->getUser()->id;
@@ -296,7 +294,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         //没有热点，也没有没看过的视频，
-        if (!$special) {           
+        if (!$special) {
             $played_special_id = $_COOKIE["sid"];
             $played_program_id = $_COOKIE["pid"];
 
@@ -325,9 +323,9 @@ class Angel_ShowController extends Angel_Controller_Action {
         $favouriteModel = $this->getModel('favourite');
         //获取该专辑上传达人
         $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
-        
+
         $like = 0;
-        
+
         if ($this->me) {
             $favourites = $favouriteModel->getFavouriteByUserId($userId);
 
@@ -339,10 +337,10 @@ class Angel_ShowController extends Angel_Controller_Action {
                 }
             }
         }
-        
+
         $result["id"] = $special->id;
         $result["name"] = $special->name;
-        $result["like"] = $like; 
+        $result["like"] = $like;
 
         if ($author == "")
             $result["author"] = "";
@@ -374,9 +372,9 @@ class Angel_ShowController extends Angel_Controller_Action {
         $hotModel = $this->getModel("hot");
         $userModel = $this->getModel('user');
         $favouriteModel = $this->getModel('Favourite');
-        
+
         $like = 0;
-        
+
         if ($this->me) {
             //获取当前需要推荐的用户ID
             $userId = $this->me->getUser()->id;
@@ -505,7 +503,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 }
             }
         }
-        
+
         $result["id"] = $special->id;
         $result["name"] = $special->name;
 
@@ -524,7 +522,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         foreach ($special->program as $program) {
-            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "like"=>$like, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
+            $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "like" => $like, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
         }
 
         if ($this->me) {
@@ -565,41 +563,41 @@ class Angel_ShowController extends Angel_Controller_Action {
     public function userCategoryListAction() {
         $userModel = $this->getModel('user');
         $categoryModel = $this->getModel('category');
-        
+
         $user_id = $this->me->getUser()->id;
-        
+
         $result = $categoryModel->getAll(false);
         $user = $userModel->getById($user_id);
 
         $category = array();
-        
+
         foreach ($result as $p) {
             $like = 0;
-            
+
             foreach ($user->category as $c) {
                 if ($p->id == $c->id) {
                     $like = 1;
-                    
+
                     break;
-                }   
+                }
             }
-            
-            $category[] = array('id' => $p->id, 'name' => $p->name, 'like'=>$like);
+
+            $category[] = array('id' => $p->id, 'name' => $p->name, 'like' => $like);
         }
 
         $this->_helper->json(array('data' => $category, 'code' => 200));
     }
-    
+
     public function removeUserCategoryAction() {
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
             $category_id = $this->getParam('id');
             $user_id = $this->me->getUser()->id;
-            
+
             if ($category_id) {
                 $userModel = $this->getModel('user');
-                
+
                 $result = $userModel->removeUserCategory($user_id, $category_id);
             }
             echo $result;
@@ -769,7 +767,12 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         if ($favourite) {
             foreach ($favourite->special as $p) {
-                $result["specials"][] = array("id" => $p->id, "name" => $p->name);
+                $sharing_photo_path = $this->view->serverUrl() . $this->bootstrap_options['image_broken_ico']['small'];
+                if (count($p->photo)) {
+                    $photo = $p->photo[0];
+                    $sharing_photo_path = $this->view->serverUrl() . $this->view->photoImage($photo->name . $photo->type, 'small');
+                }
+                $result["specials"][] = array("id" => $p->id, "name" => $p->name, "sharing_photo" => $sharing_photo_path);
             }
 
             $this->_helper->json(array('data' => $result, 'code' => 200));
@@ -824,11 +827,12 @@ class Angel_ShowController extends Angel_Controller_Action {
 
             if ($special) {
                 foreach ($special->program as $program) {
-                    $programs[] =array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
+                    $programs[] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
                 }
             }
         }
-        
+
         $this->_helper->json(array('data' => $programs, 'code' => 200));
     }
+
 }
