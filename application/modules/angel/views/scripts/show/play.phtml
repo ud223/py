@@ -44,7 +44,7 @@ $programs = $bean['programs'];
                 <div class="alt alt-favor hidden">
                     <div class="alt-title">
                         <p class="t1">我的收藏夹</p>
-                        <div class="t2"></div>
+                        <div class="t2">已收藏 <span></span> 个专辑</div>
                     </div>
                 </div>
                 <div class="alt alt-hobby hidden">
@@ -325,10 +325,11 @@ $programs = $bean['programs'];
                             if (response.code === 200) {
                                 var body = $('.tv-tab-content-body .alt-favor');
                                 body.empty();
+                                var header = $('.tv-tab-content-head .alt-favor');
+                                header.find('.t2 span').html('0');
                                 if (response.data && response.data.specials && response.data.specials.length) {
-                                    var txt = "已收藏 " + response.data.specials.length + " 个专辑";
-                                    var header = $('.tv-tab-content-head .alt-favor');
-                                    header.find('.t2').html(txt);
+                                    
+                                    header.find('.t2 span').html(response.data.specials.length);
 
                                     $.each(response.data.specials, function() {
                                         var html = $('.P_tmp .favor-item').clone(true);
@@ -340,6 +341,10 @@ $programs = $bean['programs'];
                                                 $('.list-item[sid="' + sid + '"]').remove();
                                                 if (sid === $('#tv-listbar').attr('sid')) {
                                                     $('#add-to-favor').removeClass('selected');
+                                                }
+                                                var ci = parseInt(header.find('.t2 span').html());
+                                                if (ci) {
+                                                    header.find('.t2 span').html(ci - 1);
                                                 }
                                             });
                                             return false;
