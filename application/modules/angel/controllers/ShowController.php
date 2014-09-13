@@ -763,22 +763,26 @@ class Angel_ShowController extends Angel_Controller_Action {
     //根据当前用户的id来获取收藏专辑
     public function favouriteListAction() {
         $favouriteModel = $this->getModel('favourite');
-        $user_id = $this->me->getUser()->id;
-        $favourite = $favouriteModel->getFavouriteByUserId($user_id);
+        if ($this->me) {
+            $user_id = $this->me->getUser()->id;
+            $favourite = $favouriteModel->getFavouriteByUserId($user_id);
 
-        if ($favourite) {
-            foreach ($favourite->special as $p) {
-                $sharing_photo_path = $this->view->serverUrl() . $this->bootstrap_options['image_broken_ico']['small'];
-                if (count($p->photo)) {
-                    $photo = $p->photo[0];
-                    $sharing_photo_path = $this->view->serverUrl() . $this->view->photoImage($photo->name . $photo->type, 'small');
+            if ($favourite) {
+                foreach ($favourite->special as $p) {
+                    $sharing_photo_path = $this->view->serverUrl() . $this->bootstrap_options['image_broken_ico']['small'];
+                    if (count($p->photo)) {
+                        $photo = $p->photo[0];
+                        $sharing_photo_path = $this->view->serverUrl() . $this->view->photoImage($photo->name . $photo->type, 'small');
+                    }
+                    $result["specials"][] = array("id" => $p->id, "name" => $p->name, "sharing_photo" => $sharing_photo_path);
                 }
-                $result["specials"][] = array("id" => $p->id, "name" => $p->name, "sharing_photo" => $sharing_photo_path);
-            }
 
-            $this->_helper->json(array('data' => $result, 'code' => 200));
+                $this->_helper->json(array('data' => $result, 'code' => 200));
+            } else {
+                $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));
+            }
         } else {
-            $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));
+            $this->_helper->json(array('data' => "didn't login", 'code' => 0));
         }
     }
 
