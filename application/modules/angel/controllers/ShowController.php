@@ -123,9 +123,8 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         $played_special_id = $_COOKIE["sid"];
         $played_program_id = $_COOKIE["pid"];
-        
-//        $result = $specialModel->getSepecialLikeQuery("龙珠");
 
+//        $result = $specialModel->getSepecialLikeQuery("龙珠");
         // 未请求专辑ID
         //未登录且有一次播放记录
         if (!$this->me && $played_special_id) {
@@ -374,7 +373,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $hotModel = $this->getModel("hot");
         $userModel = $this->getModel('user');
         $favouriteModel = $this->getModel('favourite');
-        
+
         $like = 0;
 
         if ($this->me) {
@@ -821,7 +820,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $specialModel = $this->getModel('special');
         $userModel = $this->getModel('user');
         $favouriteModel = $this->getModel('favourite');
-        
+
         $special_id = $this->getParam('sid');
         $like = 0;
         $result = array();
@@ -843,7 +842,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                         }
                     }
                 }
-                
+
                 $result["id"] = $special->id;
                 $result["name"] = $special->name;
 
@@ -862,12 +861,29 @@ class Angel_ShowController extends Angel_Controller_Action {
                 }
 
                 foreach ($special->program as $program) {
-                    $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "like"=>$like, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
+                    $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "like" => $like, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
                 }
             }
         }
-        
+
         $this->_helper->json(array('data' => $result, 'code' => 200));
+    }
+
+    public function getLinkAction() {
+        if ($this->request->isPost()) {
+            $sid = $this->request->getParam('special');
+            $pid = $this->request->getParam('program');
+            if ($sid) {
+                $url = $this->view->url(array(special => $sid), 'show-play-special');
+                if ($pid) {
+                    $url = $this->view->url(array(special => $sid, program => $pid), 'show-play-program');
+                }
+                $url = $this->view->serverUrl() . $url;
+                $this->_helper->json(array('url' => $url, 'code' => 200));
+            } else {
+                $this->_helper->json(array('data' => 'need special id', 'code' => 500));
+            }
+        }
     }
 
 }
