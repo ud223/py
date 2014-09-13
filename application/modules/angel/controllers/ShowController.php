@@ -125,7 +125,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $played_special_id = $_COOKIE["sid"];
         $played_program_id = $_COOKIE["pid"];
         
-        $result = $specialModel->getSepecialLikeQuery("龙珠");
+//        $result = $specialModel->getSepecialLikeQuery("龙珠");
 
         // 未请求专辑ID
         //未登录且有一次播放记录
@@ -375,7 +375,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $categoryModel = $this->getModel('category');
         $hotModel = $this->getModel("hot");
         $userModel = $this->getModel('user');
-        $favouriteModel = $this->getModel('Favourite');
+        $favouriteModel = $this->getModel('favourite');
         
         $like = 0;
         
@@ -816,21 +816,54 @@ class Angel_ShowController extends Angel_Controller_Action {
 
     public function specialProgramListAction() {
         $specialModel = $this->getModel('special');
-
+        $userModel = $this->getModel('user');
+        $favouriteModel = $this->getModel('favourite');
+        
         $special_id = $this->getParam('sid');
-
-        $programs = array();
+        $like = 0;
+        $result = array();
 
         if ($special_id) {
             $special = $specialModel->getById($special_id);
 
             if ($special) {
+                $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
+                //首先判断当前用户是否登录，如果登录再判断当前专辑是否当前已收藏的专辑
+                if ($this->me) {
+                    $favourites = $favouriteModel->getFavouriteByUserId($userId);
+
+                    foreach ($favourites->special as $p) {
+                        if ($p->id == $special->id) {
+                            $like = 1;
+
+                            break;
+                        }
+                    }
+                }
+                
+                $result["id"] = $special->id;
+                $result["name"] = $special->name;
+
+                if ($author == "")
+                    $result["author"] = "";
+                else
+                    $result["author"] = $author->username;
+
+                $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
+                $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];
+
+                if (count($special->photo)) {
+                    $photo = $special->photo[0];
+                    $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
+                    $result["photo_main"] = $this->view->photoImage($photo->name . $photo->type, 'main');
+                }
+
                 foreach ($special->program as $program) {
-                    $programs[] =array("id" => $program->id, "name" => $program->name, "time" => $program->time, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
+                    $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "like"=>$like, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
                 }
             }
         }
         
-        $this->_helper->json(array('data' => $programs, 'code' => 200));
+        $this->_helper->json(array('data' => $result, 'code' => 200));
     }
 }
