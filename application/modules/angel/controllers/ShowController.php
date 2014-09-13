@@ -8,7 +8,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         parent::init();
         $this->_helper->layout->setLayout('main');
     }
-    
+
 //    模糊查询使用范例
 //    $parameters = array();
 //    $options = array();
@@ -16,7 +16,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 //    $parameters['name'] = new MongoRegex("/龙珠/i");
 //
 //    $result = $specialModel->getLikeQuery($parameters, $options);
-    
+
     public function playAction() {
         $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');
@@ -29,7 +29,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         $played_special_id = $_COOKIE["sid"];
         $played_program_id = $_COOKIE["pid"];
-        
+
         // 未请求专辑ID
         //未登录且有一次播放记录
         if (!$this->me && $played_special_id) {
@@ -101,15 +101,13 @@ class Angel_ShowController extends Angel_Controller_Action {
     protected function getRecommendSpecial($curSpecialId) {
         $specialModel = $this->getModel('special');
         $recommendModel = $this->getModel('recommend');
-        $categoryModel = $this->getModel('category');
         $hotModel = $this->getModel("hot");
-        $userModel = $this->getModel('user');
 
         if ($this->me) {
-            //获取当前需要推荐的用户ID
-            $userId = $this->me->getUser()->id;
 
-            $user = $userModel->getUserById($userId);
+            $user = $this->me->getUser();
+            //获取当前需要推荐的用户ID
+            $userId = $user->id;
 
             $special = false;
 
@@ -202,8 +200,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         //没有热点，也没有没看过的视频，
         if (!$special) {
             $played_special_id = $_COOKIE["sid"];
-            $played_program_id = $_COOKIE["pid"];
-
+//            $played_program_id = $_COOKIE["pid"];
             //没有获取到当前视频id的极端情况
             if (!$played_special_id) {
                 $special = $specialModel->getLastOne();
@@ -222,18 +219,18 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
 
     protected function getSpecialInfo($special) {
-        $recommendModel = $this->getModel('recommend');
-        $programModel = $this->getModel('program');
-        $favouriteModel = $this->getModel('favourite');
+//        $recommendModel = $this->getModel('recommend');
+//        $programModel = $this->getModel('program');
+//        $favouriteModel = $this->getModel('favourite');
         $userModel = $this->getModel('user');
         $favouriteModel = $this->getModel('favourite');
         //获取该专辑上传达人
-        $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
+        $author = $userModel->getById($special->authorId); //$authorModel->getAuthorById($special->authorId);
 
         $like = 0;
 
         if ($this->me) {
-            $favourites = $favouriteModel->getFavouriteByUserId($userId);
+            $favourites = $favouriteModel->getFavouriteByUserId($this->me->getUser()->id);
 
             foreach ($favourites->special as $p) {
                 if ($p->id == $special->id) {
@@ -248,9 +245,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $result["name"] = $special->name;
         $result["like"] = $like;
 
-        if ($author == "")
-            $result["author"] = "";
-        else
+        if ($author)
             $result["author"] = $author->name;
 
         $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
@@ -272,9 +267,9 @@ class Angel_ShowController extends Angel_Controller_Action {
     public function specialRecommendAction() {
         $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');
-        $programModel = $this->getModel('program');
-        $authorModel = $this->getModel('author');
-        $categoryModel = $this->getModel('category');
+//        $programModel = $this->getModel('program');
+//        $authorModel = $this->getModel('author');
+//        $categoryModel = $this->getModel('category');
         $hotModel = $this->getModel("hot");
         $userModel = $this->getModel('user');
         $favouriteModel = $this->getModel('favourite');
@@ -283,10 +278,9 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         if ($this->me) {
             //获取当前需要推荐的用户ID
-            $userId = $this->me->getUser()->id;
-
-            $user = $userModel->getUserById($userId);
-
+            $user = $this->me->getUser();
+            $userId = $user->id;
+            
             $curSpecialId = $this->request->getParam('special');
 
             if ($curSpecialId == "none")
@@ -396,7 +390,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 //-------------------------------------------------------------------------------
         //获取该专辑上传达人
-        $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
+        $author = $userModel->getById($special->authorId); //$authorModel->getAuthorById($special->authorId);
         //首先判断当前用户是否登录，如果登录再判断当前专辑是否当前已收藏的专辑
         if ($this->me) {
             $favourites = $favouriteModel->getFavouriteByUserId($userId);
@@ -413,10 +407,8 @@ class Angel_ShowController extends Angel_Controller_Action {
         $result["id"] = $special->id;
         $result["name"] = $special->name;
 
-        if ($author == "")
-            $result["author"] = "";
-        else
-            $result["author"] = $author->username;
+        if ($author)
+            $result["author"] = $author->name;
 
         $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
         $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];
@@ -627,17 +619,17 @@ class Angel_ShowController extends Angel_Controller_Action {
         $user_id = $this->me->getUser()->id;
 
         $favourite = $favouriteModel->getFavouriteByUserId($user_id);
-        
+
         foreach ($favourite->special as $p) {
             if ($p->id == $special_id) {
                 $this->_helper->json(array('data' => '该专辑已被收藏!', 'code' => 0));
-                
+
                 return;
             }
         }
-        
+
         $special = $specialModel->getById($special_id);
-        
+
         try {
             if ($favourite) {
                 $favouriteModel->saveFavourite($favourite, $special);
@@ -746,7 +738,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             $special = $specialModel->getById($special_id);
 
             if ($special) {
-                $author = $userModel->getUserById($special->authorId); //$authorModel->getAuthorById($special->authorId);
+                $author = $userModel->getById($special->authorId); //$authorModel->getAuthorById($special->authorId);
                 //首先判断当前用户是否登录，如果登录再判断当前专辑是否当前已收藏的专辑
                 if ($this->me) {
                     $favourites = $favouriteModel->getFavouriteByUserId($userId);
@@ -763,10 +755,8 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $result["id"] = $special->id;
                 $result["name"] = $special->name;
 
-                if ($author == "")
-                    $result["author"] = "";
-                else
-                    $result["author"] = $author->username;
+                if ($author)
+                    $result["author"] = $author->name;
 
                 $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
                 $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];

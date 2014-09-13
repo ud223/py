@@ -43,7 +43,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         $usertype = "user";
         return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $age, $gender);
     }
-    
+
     public function addVip($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name, $author) {
         $result = false;
         if (empty($email)) {
@@ -97,7 +97,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         }
         return $result;
     }
-    
+
     public function getVipList($return_as_paginator = true) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)->field('author')->equals(1)->sort('created_at', -1);
         $result = null;
@@ -108,32 +108,32 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         }
         return $result;
     }
-    
+
     public function saveVip($uesrId, $email, $username, $password, $salt, $checkmail, $age, $gender, $name, $author) {
         $result = false;
-        
+
         try {
             $user = $this->getUserById($uesrId);
-   
+
             if (!$password) {
                 $password = $user->password_src;
             }
-            
+
             $active_bln = true;
             $email_validated_bln = !$checkemail;
             $validated_bln = false;
             $user_type = $user->user_type;
-            
-            $data = array("email" => $email, "name"=>$name, "username" => $username, "salt" => $salt, "user_type" => $user_type, "password" => $password, "age"=> $age, "gender"=>$gender, "user_type"=> $user_type, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category, "author"=> $author);
+
+            $data = array("email" => $email, "name" => $name, "username" => $username, "salt" => $salt, "user_type" => $user_type, "password" => $password, "age" => $age, "gender" => $gender, "user_type" => $user_type, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category" => $user->category, "author" => $author);
 
             $this->save($uesrId, $data);
-            
+
             $result = true;
         } catch (Exception $e) {
             $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
             throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
         }
-        
+
         return $result;
     }
 
@@ -203,11 +203,11 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         }
         return $result;
     }
-    
+
     public function saveUser($uesrId, $category) {
-         try {
+        try {
             $user = $this->getUserById($uesrId);
-   
+
             $email = $user->email;
             $username = $user->username;
             $salt = $user->salt;
@@ -219,14 +219,14 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             $email_validated_bln = !$checkemail;
             $validated_bln = false;
             $author = $user->author;
-            
+
             $user->clearCategory();
 
             foreach ($category as $c) {
                 $user->addCategory($c);
             }
 
-            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age"=> $age, "gender"=>$gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category, "author"=> $author);
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age" => $age, "gender" => $gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category" => $user->category, "author" => $author);
 
             $this->save($uesrId, $data);
         } catch (Exception $e) {
@@ -234,11 +234,11 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
         }
     }
-    
+
     public function removeUserCategory($user_id, $category_id) {
         try {
             $user = $this->getUserById($uesrId);
-   
+
             $email = $user->email;
             $username = $user->username;
             $salt = $user->salt;
@@ -250,21 +250,21 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             $email_validated_bln = !$checkemail;
             $validated_bln = false;
             $author = $user->author;
-            
+
             $categorys = array();
-            
+
             foreach ($user->category as $c) {
-                if ($c ->id != $category_id)
+                if ($c->id != $category_id)
                     $categorys[] = $c;
             }
-            
+
             $user->clearCategory();
 
             foreach ($categorys as $c) {
                 $user->addCategory($c);
             }
 
-            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age"=> $age, "gender"=>$gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category, "author"=> $author);
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age" => $age, "gender" => $gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category" => $user->category, "author" => $author);
 
             $this->save($uesrId, $data);
         } catch (Exception $e) {
@@ -272,11 +272,11 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
         }
     }
-    
+
     public function setAuthor($user_id) {
         try {
             $user = $this->getUserById($uesrId);
-   
+
             $email = $user->email;
             $username = $user->username;
             $salt = $user->salt;
@@ -288,14 +288,14 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             $email_validated_bln = !$checkemail;
             $validated_bln = false;
             $author = 1;
-            
+
             $user->clearCategory();
 
             foreach ($category as $c) {
                 $user->addCategory($c);
             }
 
-            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age"=> $age, "gender"=>$gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category"=> $user->category, "author"=> $author);
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age" => $age, "gender" => $gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category" => $user->category, "author" => $author);
 
             $this->save($uesrId, $data);
         } catch (Exception $e) {
@@ -303,7 +303,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
         }
     }
-    
+
     public function getUserByEmail($email) {
         $result = false;
         $user = $this->_dm->createQueryBuilder($this->_document_class)
@@ -368,11 +368,9 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
      */
     public function getUserById($id) {
         $result = false;
-        
-        $user = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('id')->equals($id)
-                ->getQuery()
-                ->getSingleResult();
+        if (!$id)
+            return $result;
+        $user = $this->getById($id);
 
         if (!empty($user)) {
             $result = $user;
@@ -923,18 +921,19 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
 
     public function getUserByCategoryId($category_id) {
         $result = false;
-        
+
         if ($category_id) {
             $query = $this->_dm->createQueryBuilder($this->_document_class)
                     ->field('category.$id')->equals(new MongoId($category_id))
                     ->sort('created_at', -1);
-            
+
             $result = $query->getQuery()->getSingleResult();
         }
-        
+
         if ($result)
             return true;
         else
             return false;
     }
+
 }
