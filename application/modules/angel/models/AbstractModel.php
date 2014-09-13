@@ -171,4 +171,15 @@ abstract class Angel_Model_AbstractModel {
         return $models[$modelName];
     }
 
+        public function getLikeQuery($parameters = array(), $options = array()) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class);
+        
+        foreach ($parameters as $field => $value) {
+            $query->field($field)->equals($value);
+        }
+        
+        $result = $query->getQuery();
+                      
+        return $result;
+    }
 }
