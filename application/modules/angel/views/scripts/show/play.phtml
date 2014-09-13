@@ -522,12 +522,23 @@ $programs = $bean['programs'];
 <?php if ($player_mode == 'audio'): ?>
         // rotate the disk
         var __DURATION = 20000;
+        var __CHECKINGDISK = 10;
         $(document).ready(function() {
-            $.rotateDiv(false, '#tv-disk-page', __DURATION);
-            setInterval(function() {
+            $(PLAYER).on('play', function() {
                 $.rotateDiv(false, '#tv-disk-page', __DURATION);
-            }, __DURATION);
+                var disk_rotate_interval = setInterval(function() {
+                    $.rotateDiv(false, '#tv-disk-page', __DURATION);
+                }, __DURATION);
+                $('body').data('disk_rotate_interval', disk_rotate_interval);
+            });
 
+            $(PLAYER).on('pause', function() {
+                var disk_rotate_interval = $('body').data('disk_rotate_interval');
+                if (disk_rotate_interval) {
+                    clearInterval(disk_rotate_interval);
+                }
+                $('#tv-disk-page').stop(true);
+            });
         });
 <?php endif; ?>
 
