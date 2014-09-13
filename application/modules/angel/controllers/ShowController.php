@@ -9,29 +9,29 @@ class Angel_ShowController extends Angel_Controller_Action {
         $this->_helper->layout->setLayout('main');
     }
 
-    public function detailAction() {
-        $id = $this->request->getParam('id');
-        if ($id) {
-            $programModel = $this->getModel('program');
-            $program = $programModel->getById($id);
-            $this->view->model = $program;
-            $this->view->title = $program->name;
-//            if ($program->oss_video) {
-//                $this->view->video_url = $this->bootstrap_options['oss_prefix'] . $program->oss_video->key;
+//    public function detailAction() {
+//        $id = $this->request->getParam('id');
+//        if ($id) {
+//            $programModel = $this->getModel('program');
+//            $program = $programModel->getById($id);
+//            $this->view->model = $program;
+//            $this->view->title = $program->name;
+////            if ($program->oss_video) {
+////                $this->view->video_url = $this->bootstrap_options['oss_prefix'] . $program->oss_video->key;
+////            }
+////            if ($program->oss_audio) {
+////                $this->view->audio_url = $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key;
+////            }
+//        }
+//
+//        if (!$this->request->isPost()) {
+//            if ($_COOKIE["userId"] == null || $_COOKIE["userId"] == "") {
+//                $guidModel = $this->getModel('guid');
+//
+//                setcookie('userId', $guidModel->toString());
 //            }
-//            if ($program->oss_audio) {
-//                $this->view->audio_url = $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key;
-//            }
-        }
-
-        if (!$this->request->isPost()) {
-            if ($_COOKIE["userId"] == null || $_COOKIE["userId"] == "") {
-                $guidModel = $this->getModel('guid');
-
-                setcookie('userId', $guidModel->toString());
-            }
-        }
-    }
+//        }
+//    }
 
 //    public function playAction() {
 //        $recommendModel = $this->getModel('recommend');
@@ -810,38 +810,6 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         $this->_helper->json(array('data' => 'success', 'code' => 200));
-    }
-
-    public function fiAddAction() {
-        $fiModel = $this->getModel('fi');
-
-        $name = $this->getParam('name');
-        $email = $this->getParam('email');
-        $phone = $this->getParam('phone');
-
-        try {
-            $fiModel->addFi($name, $email, $phone);
-        } catch (Exception $e) {
-            $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
-        }
-
-        $this->_helper->json(array('data' => 'success', 'code' => 200));
-    }
-
-    public function fiListAction() {
-        $fiModel = $this->getModel('fi');
-
-        $fis = $fiModel->getAll(false);
-
-        if ($fis) {
-            foreach ($fis as $p) {
-                $result["fi"][] = array("name" => $p->name, "email" => $p->email, "phone" => $p->phone);
-            }
-
-            $this->_helper->json(array('data' => $result, 'code' => 200));
-        } else {
-            $this->_helper->json(array('data' => "没有找到任何报名！", 'code' => 0));
-        }
     }
 
     public function specialProgramListAction() {
