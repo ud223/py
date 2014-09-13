@@ -125,6 +125,8 @@ class Angel_ShowController extends Angel_Controller_Action {
         $played_special_id = $_COOKIE["sid"];
         $played_program_id = $_COOKIE["pid"];
         
+        $result = $specialModel->getSepecialLikeQuery("龙珠");
+
         // 未请求专辑ID
         //未登录且有一次播放记录
          if (!$this->me && $played_special_id) {

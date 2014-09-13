@@ -258,4 +258,30 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
     private function getSpecialsByVote($user_id) {
         
     }
+    
+    public function getSepecialLikeQuery($key) {
+//        $result = false;
+//        
+//        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('name')->equals(new MongoException("/". $key ."/"))->sort('created_at', -1);;//
+//
+//        $result = $query->getQuery();
+//
+//        if (empty($result))
+//            return false;
+//
+//        return $result;
+        
+//        $regexObj = new MongoRegex("/". $key ."/");
+//
+//        // I attach the regexObj to my Where Condition
+//        $where = array("name" => $regexObj);
+
+        // Execute the request
+        $col = $this->_dm->getRepository('Special');
+                
+        
+        var_dump($result); 
+        
+        exit;
+    }
 }
