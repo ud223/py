@@ -278,7 +278,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $hotModel = $this->getModel("hot");
         $userModel = $this->getModel('user');
         $favouriteModel = $this->getModel('favourite');
-        
+
         $like = 0;
 
         if ($this->me) {
@@ -676,22 +676,26 @@ class Angel_ShowController extends Angel_Controller_Action {
     //根据当前用户的id来获取收藏专辑
     public function favouriteListAction() {
         $favouriteModel = $this->getModel('favourite');
-        $user_id = $this->me->getUser()->id;
-        $favourite = $favouriteModel->getFavouriteByUserId($user_id);
+        if ($this->me) {
+            $user_id = $this->me->getUser()->id;
+            $favourite = $favouriteModel->getFavouriteByUserId($user_id);
 
-        if ($favourite) {
-            foreach ($favourite->special as $p) {
-                $sharing_photo_path = $this->view->serverUrl() . $this->bootstrap_options['image_broken_ico']['small'];
-                if (count($p->photo)) {
-                    $photo = $p->photo[0];
-                    $sharing_photo_path = $this->view->serverUrl() . $this->view->photoImage($photo->name . $photo->type, 'small');
+            if ($favourite) {
+                foreach ($favourite->special as $p) {
+                    $sharing_photo_path = $this->view->serverUrl() . $this->bootstrap_options['image_broken_ico']['small'];
+                    if (count($p->photo)) {
+                        $photo = $p->photo[0];
+                        $sharing_photo_path = $this->view->serverUrl() . $this->view->photoImage($photo->name . $photo->type, 'small');
+                    }
+                    $result["specials"][] = array("id" => $p->id, "name" => $p->name, "sharing_photo" => $sharing_photo_path);
                 }
-                $result["specials"][] = array("id" => $p->id, "name" => $p->name, "sharing_photo" => $sharing_photo_path);
-            }
 
-            $this->_helper->json(array('data' => $result, 'code' => 200));
+                $this->_helper->json(array('data' => $result, 'code' => 200));
+            } else {
+                $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));
+            }
         } else {
-            $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));
+            $this->_helper->json(array('data' => "didn't login", 'code' => 0));
         }
     }
 
@@ -733,7 +737,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $specialModel = $this->getModel('special');
         $userModel = $this->getModel('user');
         $favouriteModel = $this->getModel('favourite');
-        
+
         $special_id = $this->getParam('sid');
         $like = 0;
         $result = array();
@@ -755,7 +759,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                         }
                     }
                 }
-                
+
                 $result["id"] = $special->id;
                 $result["name"] = $special->name;
 
@@ -774,12 +778,29 @@ class Angel_ShowController extends Angel_Controller_Action {
                 }
 
                 foreach ($special->program as $program) {
-                    $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "like"=>$like, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
+                    $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "like" => $like, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
                 }
             }
         }
-        
+
         $this->_helper->json(array('data' => $result, 'code' => 200));
+    }
+
+    public function getLinkAction() {
+        if ($this->request->isPost()) {
+            $sid = $this->request->getParam('special');
+            $pid = $this->request->getParam('program');
+            if ($sid) {
+                $url = $this->view->url(array(special => $sid), 'show-play-special');
+                if ($pid) {
+                    $url = $this->view->url(array(special => $sid, program => $pid), 'show-play-program');
+                }
+                $url = $this->view->serverUrl() . $url;
+                $this->_helper->json(array('url' => $url, 'code' => 200));
+            } else {
+                $this->_helper->json(array('data' => 'need special id', 'code' => 500));
+            }
+        }
     }
 
 }
