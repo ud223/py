@@ -113,7 +113,7 @@ $programs = $bean['programs'];
         </div>
     <?php else: ?>
         <div id="tv-disk">
-            <div id="tv-disk-page"></div>
+            <div id="tv-disk-page" style="background-image:url(<?php echo $bean['photo_main'] ?>)"></div>
         </div>
         <audio id="tv-video-player" src="<?php echo $this->cur_program['oss_audio'] ?>" preload autoplay="autoplay"></audio>
     <?php endif; ?>
