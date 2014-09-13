@@ -351,7 +351,7 @@ $programs = $bean['programs'];
                                             return false;
                                         });
                                         html.find('.sharing').click(function() {
-                                            return sharingIt($(this));
+                                            return sharingIt($(this), page_prefix);
                                         });
                                         html.click(function() {
                                             var $this = $(this).closest('.list-item');

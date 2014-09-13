@@ -9,16 +9,15 @@ function sharingIt(obj, pagePrefix) {
     var img = pagePrefix + $('.alt-img').attr('src');
     if (sid) {
         // sharing special
-        pagePrefix = "?special=" + sid;
+        pagePrefix = "/play/" + sid;
         img = $this.attr('sharing_photo');
     } else {
         // sharing program
         sid = $('#tv-listbar').attr('sid');
-        pagePrefix += "?special=" + sid;
+        pagePrefix += "/play/" + sid;
         var pid = $this.attr('id');
-        pagePrefix += "&program=" + pid;
+        pagePrefix += "/" + pid;
     }
-
     var content = $('.sharing-popup').clone(true);
     content.find('.cts-1 p span').html("\"" + title + "\"");
     content.find('.weibo').click(function() {
