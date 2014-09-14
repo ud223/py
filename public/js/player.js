@@ -7,26 +7,25 @@ function sharingIt(obj) {
     var sid = $this.attr('sid');
     var title = $this.find('.lt').html();
     var img = SERVER_URL + $('.alt-img').attr('src');
-    var rlink = SERVER_URL + PLAY_PAGE_URL;
+    var rlink;
     if (sid) {
         // sharing special
-//        rlink = rlink + "/" + sid;
         rlink = generatePlayLink(sid, false, 1, true);
         img = $this.attr('sharing_photo');
     } else {
         // sharing program
         sid = $('#tv-listbar').attr('sid');
-//        rlink = rlink + "/" + sid;
         var pid = $this.attr('id');
-//        rlink += "/" + pid;
         rlink = generatePlayLink(sid, pid, 1, true);
     }
     var content = $('.sharing-popup').clone(true);
     content.find('.cts-1 p span').html("\"" + title + "\"");
     content.find('.weibo').click(function() {
+//        PLAYER.pause();
         shareTSina(title, rlink, '', img);
     });
     content.find('.qqweibo').click(function() {
+//        PLAYER.pause();
         shareToWb(title, rlink, '', img);
     });
     content.find('.weixin').click(function() {
@@ -51,6 +50,7 @@ function sharingIt(obj) {
         content: content,
         containerBoxSelector: '#tv',
         height: 382,
+        modal:true,
         width: 352});
     return false;
 }
@@ -143,7 +143,7 @@ function generatePlayLink(special, program, mode, isUrl) {
     if (mode === 1) {
         result = result + '?special=' + special;
         if (program)
-            result = '&program=' + program;
+            result = result + '&program=' + program;
 
     } else {
         result = result + '/' + special;
