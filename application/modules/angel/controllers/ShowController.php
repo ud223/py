@@ -462,11 +462,11 @@ class Angel_ShowController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
         $categoryModel = $this->getModel('category');
 
-        $user_id = $this->me->getUser()->id;
+        $user = $this->me->getUser();
+        $user_id = $user->id;
 
         $result = $categoryModel->getAll(false);
-        $user = $userModel->getById($user_id);
-
+        
         $category = array();
 
         foreach ($result as $p) {

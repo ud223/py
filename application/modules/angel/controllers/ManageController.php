@@ -836,14 +836,24 @@ class Angel_ManageController extends Angel_Controller_Action {
         $categoryModel = $this->getModel('category');
         $programModel = $this->getModel('program');
         $userModel = $this->getModel('User');
-        
-        $resource = $categoryModel->getAll(false);
+
+        $page = $this->request->getParam('page');
+
+        if (!$page) {
+            $page = 1;
+        }
+
+//        $root = $keyWordModel->getRoot();
+        $paginator = $categoryModel->getAll();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
         
         $this->view->title = "分类列表";
         $this->view->categoryModel = $categoryModel;
         $this->view->programModel = $programModel;
         $this->view->userModel = $userModel;
-        $this->view->resource = $resource;
+        $this->view->resource = $paginator;
+        $this->view->paginator = $paginator;
         $this->view->specialMode = $this->getModel('special');
     }
 
@@ -1387,7 +1397,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $error = $e->getMessage();
             }
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-version-list'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-version-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
@@ -1421,7 +1431,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
 
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-version-list'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-version-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
@@ -1496,21 +1506,10 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
         
         $paginator = $categoryModel->getAll();
-        $result = $categoryModel->getRoot();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
-
-//        $resource = array();
-//
-//        foreach ($paginator as $r) {
-//           echo $r->id; exit;
-////            $resource[] = array(
-////                'id' => $r->id,
-////                'name' => $r->name
-////            );
-//        }
         
-        $this->view->resource = $result;
+        $this->view->resource = $paginator;
         $this->view->title = "热点推荐列表";
         $this->view->paginator = $paginator;
     }
@@ -1545,7 +1544,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
 
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-hot-list'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-hot-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
@@ -1611,7 +1610,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $error = $e->getMessage();
             }
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-vip-list'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-vip-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
@@ -1630,13 +1629,12 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
         
         $paginator = $userModel->getAll();
-        $result= $userModel->getAll(false);
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
 
         $resource = array();
 
-        foreach ($result as $r) {
+        foreach ($paginator as $r) {
             $resource[] = array( 'id' => $r->id, 'email' => $r->email, 'author'=>$r->author);
         }
 
@@ -1672,7 +1670,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
 
             if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-vip-list'));
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-vip-list-home'));
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
