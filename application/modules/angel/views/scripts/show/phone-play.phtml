@@ -89,9 +89,7 @@ $programs = $bean['programs'];
         padding-bottom:20px;
         padding-top:20px;
     }
-    .login-tip .txt {
-        margin-bottom:15px;
-    }
+    
     #refresh-btn {
         background:#04CC54;
         border-radius:4px;
@@ -163,16 +161,19 @@ $programs = $bean['programs'];
 
 <div class="P_tmp">
     <a class="btn btn-success btn-sm logout-link rtbtn pull-right" href="<?php echo $this->url(array(), 'logout') ?>">安全退出</a>
-    
+
     <div class="login-tip">
         <div class="txt">请先登录，更多精彩节目等着您</div>
         <div>
-            <a class="btn" href='<?php echo $this->url(array(), 'login') ?>?returnUrl=xxxx'>立即登录</a>
+            <a class="btn" href=>立即登录</a>
         </div>
     </div>
+    
+    <?php echo $this->partial('show/partials/_login_tip.phtml', array('url'=>$this->login_goto_url)); ?>
 </div>
 
 <script type="text/javascript">
+    var PLAYER = document.getElementsByTagName('video')[0];
     msg = '<?php
             if ($this->message != "") {
                 echo $this->message;
@@ -204,15 +205,15 @@ $programs = $bean['programs'];
                 location.href = link;
             });
             $('#refresh-btn').click(function() {
-                var param = {
-                    content: $('.login-tip').clone(true),
-                    width:($(window).width() - 50)
-                };
-                $.popup(param);
+                location.href = PLAY_PAGE_URL;
             });
 <?php else: ?>
+
             $('#refresh-btn').click(function() {
+                loginTipFunc();
             });
+
+            
 <?php endif; ?>
     })(jQuery);
 </script>

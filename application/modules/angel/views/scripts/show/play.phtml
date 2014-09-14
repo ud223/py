@@ -19,7 +19,7 @@ $programs = $bean['programs'];
 <div id="tv-main-container" class="layer">
     <div id='tv-sider'>
         <div class="pxt">
-            <button id='btn-refresh' onclick="location.href = PLAY_PAGE_URL" class='ico tv-side-btn'></button>
+            <button id='btn-refresh' class='ico tv-side-btn'></button>
             <button id='btn-list' class='ico tv-side-btn'></button>
             <?php if ($player_mode == 'video'): ?>
                 <button id='btn-toggle-audio' rel="audio" class='ico tv-side-btn'></button>
@@ -180,6 +180,8 @@ $programs = $bean['programs'];
             </div>
         </div>
     </div>
+
+    <?php echo $this->partial('show/partials/_login_tip.phtml', array('url' => $this->login_goto_url)); ?>
 
 </div>
 
@@ -549,7 +551,15 @@ $programs = $bean['programs'];
         });
 <?php endif; ?>
 
-
+<?php if ($user): ?>
+        $('#btn-refresh').click(function() {
+            location.href = PLAY_PAGE_URL;
+        });
+<?php else: ?>
+        $('#btn-refresh').click(function() {
+            loginTipFunc();
+        });
+<?php endif; ?>
 
 <?php if ($player_mode == 'audio'): ?>
         // rotate the disk

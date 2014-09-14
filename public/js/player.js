@@ -47,7 +47,7 @@ function sharingIt(obj) {
         content: content,
         containerBoxSelector: '#tv',
         height: 382,
-        modal:true,
+        modal: true,
         width: 352});
     return false;
 }
@@ -137,4 +137,13 @@ function generatePlayLink(special, program, mode, isUrl) {
     }
 
     return result;
+}
+
+
+function loginTipFunc() {
+    var param = {
+        content: $('.login-tip').clone(true),
+        width: 280
+    };
+    $.popup(param);
 }
