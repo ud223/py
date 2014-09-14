@@ -184,7 +184,7 @@ h3 {
     width:100%;
 }
 #search-btn {
-   
+
     background-image:url(../img/n-icon.png);
     background-position: -136px -211px;
     background-repeat:no-repeat;
@@ -862,6 +862,10 @@ h3 {
     position:absolute;
     top:17px;
     z-index:4;
+}
+
+.login-tip .txt {
+    margin-bottom:15px;
 }
 /*
  *	untitle id & class

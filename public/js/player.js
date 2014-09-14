@@ -1,36 +1,35 @@
-$(document).ready(function() {
 
-});
-
-function sharingIt(obj, pagePrefix) {
+function sharingIt(obj) {
     var $this = $(obj).closest('.list-item');
     var sid = $this.attr('sid');
     var title = $this.find('.lt').html();
-    var img = pagePrefix + $('.alt-img').attr('src');
+    var img = SERVER_URL + $('.alt-img').attr('src');
+    var rlink;
     if (sid) {
         // sharing special
-        pagePrefix = "/play/" + sid;
+        rlink = generatePlayLink(sid, false, 1, true);
         img = $this.attr('sharing_photo');
     } else {
         // sharing program
         sid = $('#tv-listbar').attr('sid');
-        pagePrefix += "/play/" + sid;
         var pid = $this.attr('id');
-        pagePrefix += "/" + pid;
+        rlink = generatePlayLink(sid, pid, 1, true);
     }
     var content = $('.sharing-popup').clone(true);
-    content.find('.cts-1 p span').html("\"" + title + "\"");
+    content.find('.cts-1 p span').html("快来芝士电视看吧，几分钟学到这么多～～ \"" + title + "\"");
     content.find('.weibo').click(function() {
-        shareTSina(title, pagePrefix, '', img);
+//        PLAYER.pause();
+        shareTSina(title, rlink, '', img);
     });
     content.find('.qqweibo').click(function() {
-        shareToWb(title, pagePrefix, '', img);
+//        PLAYER.pause();
+        shareToWb(title, rlink, '', img);
     });
     content.find('.weixin').click(function() {
         var container = $(this).closest('.sharing-popup');
         container.find('.hide-qrcode').show();
         new QRCode(container.find('.cts-2 .qr').empty().get(0), {
-            text: pagePrefix,
+            text: rlink,
             width: 270,
             height: 270,
             colorDark: "#333333",
@@ -39,7 +38,7 @@ function sharingIt(obj, pagePrefix) {
         });
         //qrcode.clear(); // clear the code. 
         //qrcode.makeCode("http://naver.com"); // make another code.
-        
+
         container.find('.cts-2').animate({
             left: 0
         }, 200, 'linear');
@@ -48,6 +47,7 @@ function sharingIt(obj, pagePrefix) {
         content: content,
         containerBoxSelector: '#tv',
         height: 382,
+        modal: true,
         width: 352});
     return false;
 }
@@ -110,4 +110,40 @@ function seek(perc, time) {
         }
     }, 500);
     $('body').data('seeking_id', seeking_id);
+}
+
+function generatePlayLink(special, program, mode, isUrl) {
+    // mode=1 : /play?special=xxx&program=xxx
+    // mode=2 : /play/special/program
+    if (!special)
+        return false;
+
+    if (!mode) {
+        mode = 1;
+    }
+    var result = PLAY_PAGE_URL;
+    if (isUrl) {
+        result = SERVER_URL + PLAY_PAGE_URL;
+    }
+    if (mode === 1) {
+        result = result + '?special=' + special;
+        if (program)
+            result = result + '&program=' + program;
+
+    } else {
+        result = result + '/' + special;
+        if (program)
+            result = result + '/' + program;
+    }
+
+    return result;
+}
+
+
+function loginTipFunc() {
+    var param = {
+        content: $('.login-tip').clone(true),
+        width: 280
+    };
+    $.popup(param);
 }

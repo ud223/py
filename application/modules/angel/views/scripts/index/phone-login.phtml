@@ -1,37 +1,57 @@
-<h1 class="page-title"><?php echo $this->title ?></h1>
+<style>
 
+</style>
 <form role="form" method="post">
-    <div class="row">
-        <div class="col-md-4">
 
-            <?php if ($this->register): ?>
-                <div class="alert alert-success">注册成功，请登录</div>
-            <?php endif; ?>
-            <?php if ($this->error): ?>
-                <div class="alert alert-danger"><?php echo $this->error ?></div>
-            <?php endif; ?>
-
-            <div class="form-group">
-                <label for="email">邮箱</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="输入邮箱">
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-title">会员登录</h1>
             </div>
-            <div class="form-group">
-                <label for="password">密码</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="输入密码">
+            <div class="col-md-12">
+                <?php if ($this->register): ?>
+                    <div class="alert alert-success">注册成功，请登录</div>
+                <?php endif; ?>
+                <?php if ($this->error): ?>
+                    <div class="alert alert-danger"><?php echo $this->error ?></div>
+                <?php endif; ?>
             </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" id="remember" name="remember"> 记住登录状态
-                </label>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="输入邮箱">
+                </div>
             </div>
-            <button type="submit" class="btn btn-default">安全登录</button>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="输入密码">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="remember" name="remember"> 记住登录状态
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success">安全登录</button>
+            </div>
         </div>
-        <div class="col-md-4"></div>
+
+
     </div>
 </form>
-
+<div class="P_tmp">
+    <a class="btn btn-success btn-sm login-link rtbtn pull-right" href="<?php echo $this->url(array(), 'register') ?>">注册新会员</a>
+</div>
 <script type="text/javascript">
     (function($) {
-
+        $(document).ready(function() {
+            var n = $('.login-link').clone(true);
+            $('#m3g-header .col-md-12').append(n);
+        });
     })(jQuery);
 </script>
