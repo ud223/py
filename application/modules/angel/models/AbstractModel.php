@@ -181,7 +181,7 @@ abstract class Angel_Model_AbstractModel {
         }
 
         $result = $query->getQuery();
-var_dump(count($result));exit;
+
         return $result;
     }
 

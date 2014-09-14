@@ -464,14 +464,29 @@ class Angel_ShowController extends Angel_Controller_Action {
         $q = trim($this->getParam('q'));
         if ($q) {
             $specialModel = $this->getModel('special');
-            $param = array('name' => new MongoRegex("/" . q . "/i"));
+            $param = array('name' => new MongoRegex("/" . $q . "/i"));
             $result = $specialModel->getLikeQuery($param);
             if (count($result)) {
-                foreach ($result as $item) {
-                    echo $item->id;
+                $data = array();
+                foreach ($result as $special) {
+                    $id = $special->id;
+                    $name = $special->name;
+                    $sharing_photo_path = $this->view->serverUrl() . $this->bootstrap_options['image_broken_ico']['small'];
+                    if (count($special->photo)) {
+                        $photo = $special->photo[0];
+                        $sharing_photo_path = $this->view->serverUrl() . $this->view->photoImage($photo->name . $photo->type, 'small');
+                    }
+                    $data[] = array('id' => $id, 'name' => $name, 'sharing_photo' => $sharing_photo_path);
                 }
-                exit;
+                // 搜索到数据并返回
+                $this->_helper->json(array('data' => $data, 'code' => 200));
+            } else {
+                // 没有搜索到数据
+                $this->_helper->json(array('code' => 404));
             }
+        } else {
+            // 错误
+            $this->_helper->json(array('code' => 500));
         }
     }
 

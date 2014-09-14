@@ -10,7 +10,6 @@ if ($this->me) {
     if ($user->attribute && $user->attribute['player_mode']) {
         $player_mode = $user->attribute['player_mode'];
     }
-    
 }
 $bean = $this->resource;
 $programs = $bean['programs'];
@@ -20,7 +19,7 @@ $programs = $bean['programs'];
 <div id="tv-main-container" class="layer">
     <div id='tv-sider'>
         <div class="pxt">
-            <button id='btn-refresh' onclick="location.href = '<?php echo $this->url(array(), 'show-play') ?>'" class='ico tv-side-btn'></button>
+            <button id='btn-refresh' onclick="location.href = PLAY_PAGE_URL" class='ico tv-side-btn'></button>
             <button id='btn-list' class='ico tv-side-btn'></button>
             <?php if ($player_mode == 'video'): ?>
                 <button id='btn-toggle-audio' rel="audio" class='ico tv-side-btn'></button>
@@ -234,9 +233,9 @@ $programs = $bean['programs'];
             if (current.length) {
                 var next = current.next();
                 if (next.length) {
-                    location.href = "<?php echo $this->url(array(), 'show-play') ?>?special=" + $('#tv-listbar').attr('sid') + "&&program=" + next.attr('id');
+                    location.href = generatePlayLink($('#tv-listbar').attr('sid'), next.attr('id'), 2);
                 } else {
-                    location.href = "<?php echo $this->url(array(), 'show-play') ?>";
+                    location.href = PLAY_PAGE_URL;
                 }
             }
         });
@@ -301,13 +300,12 @@ $programs = $bean['programs'];
     $('.alt-list .list-item').click(function() {
         var programId = $(this).closest('.list-item').attr('id');
         var specialId = $('#tv-listbar').attr('sid');
-        var url = "<?php echo $this->url(array(), 'show-play') ?>?special=" + specialId + "&&program=" + programId;
+        var url = generatePlayLink(specialId, programId, 2);
         location.href = url;
     });
 
-    var page_prefix = "<?php echo $this->serverUrl() ?>";
     $('.alt-list .list-item .sharing').click(function() {
-        return sharingIt($(this), page_prefix);
+        return sharingIt($(this));
     });
     $('.tv-tab-list-item').click(function() {
         // 翻页
@@ -362,13 +360,12 @@ $programs = $bean['programs'];
                                             return false;
                                         });
                                         html.find('.sharing').click(function() {
-                                            return sharingIt($(this), page_prefix);
+                                            return sharingIt($(this));
                                         });
                                         html.click(function() {
                                             var $this = $(this).closest('.list-item');
                                             var sid = $this.attr('sid');
-                                            var url = "<?php echo $this->url(array(), 'show-play') ?>?special=" + sid;
-                                            location.href = url;
+                                            location.href = generatePlayLink(sid, false, 2);
                                         });
                                         body.append(html);
                                     });
@@ -529,6 +526,30 @@ $programs = $bean['programs'];
             containerBoxSelector: '#tv'
         });
     }
+
+<?php if ($user && $user->author): ?>
+        $('#search-btn').click(function() {
+            var q = $.trim($('#search-txt').val());
+            if (!q)
+                $.alertbox({msg: "搜索文字为空，请输入你希望搜索的文字。"});
+            $.ajax({
+                url: '<?php echo $this->url(array(), 'api-search-home') ?>?q=' + q,
+                dataType: 'json',
+                type: 'get',
+                success: function(response) {
+                    if (response === 200) {
+                        // success
+                    } else if (response === 404) {
+                        // no result
+                    } else {
+                        // error
+                    }
+                }
+            });
+        });
+<?php endif; ?>
+
+
 
 <?php if ($player_mode == 'audio'): ?>
         // rotate the disk
