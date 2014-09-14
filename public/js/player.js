@@ -11,7 +11,7 @@ function sharingIt(obj) {
     if (sid) {
         // sharing special
 //        rlink = rlink + "/" + sid;
-        generatePlayLink(sid, false, 1, true);
+        rlink = generatePlayLink(sid, false, 1, true);
         img = $this.attr('sharing_photo');
     } else {
         // sharing program
@@ -19,7 +19,7 @@ function sharingIt(obj) {
 //        rlink = rlink + "/" + sid;
         var pid = $this.attr('id');
 //        rlink += "/" + pid;
-        generatePlayLink(sid, pid, 1, true);
+        rlink = generatePlayLink(sid, pid, 1, true);
     }
     var content = $('.sharing-popup').clone(true);
     content.find('.cts-1 p span').html("\"" + title + "\"");
