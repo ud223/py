@@ -464,7 +464,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $q = trim($this->getParam('q'));
         if ($q) {
             $specialModel = $this->getModel('special');
-            $param = array('name' => new MongoRegex("/" . q . "/i"));
+            $param = array('name' => new MongoRegex("/" . $q . "/i"));
             $result = $specialModel->getLikeQuery($param);
             if (count($result)) {
                 foreach ($result as $item) {
