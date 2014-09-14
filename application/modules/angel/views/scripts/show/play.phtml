@@ -4,10 +4,13 @@
 
 <?php
 $player_mode = "video";
+$user = false;
 if ($this->me) {
-    if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
-        $player_mode = $this->me->getUser()->attribute['player_mode'];
+    $user = $this->me->getUser();
+    if ($user->attribute && $user->attribute['player_mode']) {
+        $player_mode = $user->attribute['player_mode'];
     }
+    
 }
 $bean = $this->resource;
 $programs = $bean['programs'];
@@ -36,7 +39,7 @@ $programs = $bean['programs'];
                         <div class="t2">by <?php echo $bean['author'] ?></div>
                     </div>
                     <div class="alt-opera">
-                        <?php if ($this->me): ?>
+                        <?php if ($user): ?>
                             <button class="ico" id="add-to-favor"></button>
                         <?php endif; ?>
                     </div>
@@ -73,7 +76,7 @@ $programs = $bean['programs'];
                 </div>
 
 
-                <?php if ($this->me): ?>
+                <?php if ($user): ?>
                     <div class="alt alt-favor hidden">
 
                     </div>
@@ -88,7 +91,7 @@ $programs = $bean['programs'];
                 <li id="list" loaded="true" class="tv-tab-list-item selected">
                     <span>专辑播放列表</span>
                 </li>
-                <?php if ($this->me): ?>
+                <?php if ($user): ?>
                     <li id="favor" class="tv-tab-list-item">
                         <span>我的收藏夹</span>
                     </li>
@@ -97,9 +100,17 @@ $programs = $bean['programs'];
                     </li>
                 <?php endif; ?>
             </ul>
-            <?php if ($this->me): ?>
+            <?php if ($user): ?>
                 <div class="logout-btn-content">
+                    <p>Hey, <?php echo $user->name ? $user->name : $user->username ?></p>
                     <button class="btn btn-gray btn-sm" id="logout-btn">安全退出</button>
+                </div>
+
+            <?php endif; ?>
+            <?php if ($user && $user->author): ?>
+                <div class="search-btn-content clearfix">
+                    <input type="text" placeholder="搜索 专辑/作者" id="search-txt"/>
+                    <button class="btn btn-sm" id="search-btn"></button>
                 </div>
             <?php endif; ?>
         </div>
@@ -328,7 +339,7 @@ $programs = $bean['programs'];
                                 var header = $('.tv-tab-content-head .alt-favor');
                                 header.find('.t2 span').html('0');
                                 if (response.data && response.data.specials && response.data.specials.length) {
-                                    
+
                                     header.find('.t2 span').html(response.data.specials.length);
 
                                     $.each(response.data.specials, function() {
@@ -395,9 +406,9 @@ $programs = $bean['programs'];
                                                 });
                                                 categories = arr.join(';');
                                             }
-<?php if ($this->me): ?>
+<?php if ($user): ?>
                                                 var data = {
-                                                    uid: '<?php echo $this->me->getUser()->id ?>',
+                                                    uid: '<?php echo $user->id ?>',
                                                     category: categories
                                                 };
                                                 $.waiting(null, $('#tv'));
