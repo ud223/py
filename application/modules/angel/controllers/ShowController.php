@@ -280,7 +280,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             //获取当前需要推荐的用户ID
             $user = $this->me->getUser();
             $userId = $user->id;
-            
+
             $curSpecialId = $this->request->getParam('special');
 
             if ($curSpecialId == "none")
@@ -455,6 +455,23 @@ class Angel_ShowController extends Angel_Controller_Action {
             $this->_helper->json(array('data' => 'save success!', 'code' => 200));
         } catch (Exception $e) {
             $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
+        }
+    }
+
+    public function searchAction() {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $q = trim($this->getParam('q'));
+        if ($q) {
+            $specialModel = $this->getModel('special');
+            $param = array('name' => new MongoRegex("/" . q . "/i"));
+            $result = $specialModel->getLikeQuery($param);
+            if (count($result)) {
+                foreach ($result as $item) {
+                    echo $item->id;
+                }
+                exit;
+            }
         }
     }
 
