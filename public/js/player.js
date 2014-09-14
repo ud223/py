@@ -1,6 +1,3 @@
-$(document).ready(function() {
-
-});
 
 function sharingIt(obj) {
     var $this = $(obj).closest('.list-item');
@@ -128,18 +125,6 @@ function generatePlayLink(special, program, mode, isUrl) {
     if (isUrl) {
         result = SERVER_URL + PLAY_PAGE_URL;
     }
-
-//    if (special) {
-//        // sharing special
-//        result = result + "/" + special;
-//    } else {
-//        // sharing program
-//        sid = $('#tv-listbar').attr('sid');
-//        rlink = rlink + "/" + sid;
-//        var pid = $this.attr('id');
-//        rlink += "/" + pid;
-//    }
-
     if (mode === 1) {
         result = result + '?special=' + special;
         if (program)

@@ -8,11 +8,13 @@
         <link href="<?php echo $this->cssPath("bootstrap.css"); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo $this->cssPath("global.css"); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo $this->cssPath("global.show.css"); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->cssPath("global.3g.css"); ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="<?php echo $this->jsPath('jquery.1.10.2.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('bootstrap.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('validation.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('plugin.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('player.js'); ?>"></script>
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -20,16 +22,27 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-
     <body>
-
+        <div class="container" id="m3g-header">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-12">
+                    <img id="m3g-logo" src="/img/logo-sm.png" />
+                </div>
+            </div>
+        </div>
         <?php echo $this->layout()->content; ?>
-
+        <div class="clear-100"></div>
     </body>
 
     <footer>
         <!--<p>&copy; Cheesetv.tv</p>-->
     </footer>
+
+    <script>
+        var PLAY_PAGE_URL = "<?php echo $this->url(array(), 'show-play') ?>";
+        var SERVER_URL = "<?php echo $this->serverUrl() ?>";
+    </script>
 </html>
 
 

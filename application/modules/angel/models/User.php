@@ -38,10 +38,10 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $this->registerUser($email, $password, uniqid(), $usertype, $salt, $checkemail, NULL);
     }
 
-    public function addUser($email, $password, $username, $age, $gender, $salt, $checkemail = true) {
+    public function addUser($email, $password, $username, $age, $gender, $name, $salt, $checkemail = true) {
 
         $usertype = "user";
-        return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $age, $gender);
+        return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $age, $gender, $name);
     }
 
     public function addVip($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name, $author) {
@@ -152,7 +152,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender) {
+    protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name) {
         $result = false;
         if (empty($email)) {
             throw new Angel_Exception_User(Angel_Exception_User::EMAIL_EMPTY);
@@ -179,6 +179,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         $user->password = $password;
         $user->age = $age;
         $user->gender = $gender;
+        $user->name = $name;
         $user->active_bln = true;
         $user->email_validated_bln = !$checkemail;
         $user->validated_bln = false;

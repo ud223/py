@@ -1,0 +1,18 @@
+body .alert {
+    text-shadow:none;
+}
+
+#m3g-header {
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    margin-bottom:20px;
+    padding:10px;
+}
+#m3g-logo {
+}
+.rtbtn {
+    margin-top:9px;
+}
+.page-title {
+    font-size:20px;
+    margin-bottom:30px;
+}
