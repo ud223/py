@@ -29,7 +29,7 @@ $programs = $bean['programs'];
         </div>
     </div>
 
-    <?php if ($user->author): ?>
+    <?php if ($user && $user->author): ?>
         <div class="tv-search-content">
             <div class="tv-search-content-head">
                 <span class="kw">关键词</span> 找到 <span class="ct">0</span> 条记录
@@ -561,7 +561,7 @@ $programs = $bean['programs'];
                             var name = this.name;
                             var a = $('<a>').addClass('search-itm').attr('href', generatePlayLink(sid, null, 2));
                             a.html(name);
-                            console.log(a);
+                            console.log($('.tv-search-content-result').length);
                             $('.tv-search-content-result').append(a);
                         });
                         $('.tv-search-content').show();

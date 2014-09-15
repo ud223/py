@@ -464,7 +464,6 @@ h3 {
 #tv .tv-search-content {
     background:#FFF;
     box-shadow:0 0 10px rgba(0,0,0,0.5);
-    display:none;
     height:100%;
     position:absolute;
     width:50%;
