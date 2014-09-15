@@ -44,6 +44,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         if (!$specialId) {
             // 随机获取一个新的专辑并且redirect到获取到的专辑地址
             // 如/play?special=xxxxxx
+            echo $played_special_id; exit;
             $specialBean = $this->getRecommendSpecial($played_special_id);
 
             $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
@@ -60,7 +61,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
             //如果当前专辑不存在或已被删除
             if (!$specialBean) {
-                
+                $this->_redirect($this->view->url(array(), 'not-found'));
             } else {
                 $result = $this->getSpecialInfo($specialBean);
                 if (count($result["programs"])) {

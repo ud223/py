@@ -16,7 +16,9 @@ function sharingIt(obj) {
         rlink = generatePlayLink(sid, pid, 1, true);
     }
     var content = $('.sharing-popup').clone(true);
-    content.find('.cts-1 p span').html("快来芝士电视看吧，几分钟学到这么多～～ \"" + title + "\"");
+    title = "“" + title + "”";
+    content.find('.cts-1 p span').html(title);
+    title = "快来看芝士电视，几分钟了解这么多真相。 " + title;
     content.find('.weibo').click(function() {
 //        PLAYER.pause();
         shareTSina(title, rlink, '', img);
