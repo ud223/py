@@ -44,15 +44,12 @@ class Angel_ShowController extends Angel_Controller_Action {
         if (!$specialId) {
             // 随机获取一个新的专辑并且redirect到获取到的专辑地址
             // 如/play?special=xxxxxx
-            echo $played_special_id; exit;
             $specialBean = $this->getRecommendSpecial($played_special_id);
 
             $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
 
             $this->_redirect($playPath);
         } else {
-            $specialId = $this->request->getParam('special');
-            $programId = $this->request->getParam('program');
             $cur_program = false;
 
             $specialBean = $specialModel->getById($specialId);
@@ -202,13 +199,11 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         //没有热点，也没有没看过的视频，
         if (!$special) {
-            $played_special_id = $_COOKIE["sid"];
-//            $played_program_id = $_COOKIE["pid"];
             //没有获取到当前视频id的极端情况
-            if (!$played_special_id) {
+            if (!$curSpecialId) {
                 $special = $specialModel->getLastOne();
             } else {
-                $tmpSpecial = $specialModel->getById($played_special_id);
+                $tmpSpecial = $specialModel->getById($curSpecialId);
 
                 $special = $specialModel->getNext($tmpSpecial);
 
