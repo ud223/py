@@ -94,7 +94,8 @@ class Angel_Model_Favourite extends Angel_Model_AbstractModel {
     }
 
     public function isUserFavourite($user_id, $special_id) {
-
+        if(!$special_id)
+            return false;
         $favourite = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('user_id')->equals($user_id)
                 ->field('special.$id')->equals(new MongoId($special_id))

@@ -28,7 +28,20 @@ $programs = $bean['programs'];
             <?php endif; ?>
         </div>
     </div>
+
+    <?php if ($user->author): ?>
+        <div class="tv-search-content">
+            <div class="tv-search-content-head">
+                <span class="kw">关键词</span> 找到 <span class="ct">0</span> 条记录
+                <span class="close">&times;</span>
+            </div>
+            <div class="tv-search-content-result">
+            </div>
+        </div>
+    <?php endif; ?>
+
     <div id="tv-listbar" sid="<?php echo $bean['id'] ?>">
+
         <div class="tv-tab-content">
             <div class="tv-tab-content-head">
                 <div class="alt alt-list">
@@ -539,9 +552,20 @@ $programs = $bean['programs'];
                 dataType: 'json',
                 type: 'get',
                 success: function(response) {
-                    if (response === 200) {
+                    if (response.code === 200) {
                         // success
-                    } else if (response === 404) {
+                        var data = response.data;
+                        $('.tv-search-content').empty();
+                        $.each(data, function() {
+                            var sid = this.id;
+                            var name = this.name;
+                            var a = $('<a>').addClass('search-itm').attr('href', generatePlayLink(sid, null, 2));
+                            a.html(name);
+                            console.log(a);
+                            $('.tv-search-content-result').append(a);
+                        });
+                        $('.tv-search-content').show();
+                    } else if (response.code === 404) {
                         // no result
                     } else {
                         // error
