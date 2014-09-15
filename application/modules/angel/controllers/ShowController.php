@@ -81,8 +81,8 @@ class Angel_ShowController extends Angel_Controller_Action {
                         $recommendModel->addRecommend($specialBean->id, $userId);
                     }
 
-                    setcookie('sid', $specialBean->id);
-                    setcookie('pid', $cur_program->id);
+                    setcookie('sid', $specialBean->id, time() + 3600 * 24,  "/");
+                    setcookie('pid', $cur_program->id, time() + 3600 * 24,  "/");
                     $this->view->cur_program = $cur_program;
                     $this->view->resource = $result;
                 } else {
@@ -425,7 +425,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             //保存推荐记录
             $recommendModel->addRecommend($special->id, $userId);
         }
-        setcookie('specialId', $special->id);
+        setcookie('specialId', $special->id, time() + 3600 * 24,  "/");
         $this->_helper->json(array('data' => $result, 'code' => 200));
     }
 
