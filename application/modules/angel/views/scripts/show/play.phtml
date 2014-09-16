@@ -637,19 +637,5 @@ $programs = $bean['programs'];
         });
 <?php endif; ?>
 
-
-    function needLogin() {
-        msg = '<?php
-if ($this->message != "") {
-    echo $this->message;
-}
-?>';
-
-        if (msg != '') {
-            loginTipFunc();
-        }
-    }
-
-    needLogin();
 </script>
 

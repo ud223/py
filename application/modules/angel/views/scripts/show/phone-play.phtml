@@ -207,21 +207,7 @@ $programs = $bean['programs'];
             
             $(PLAYER).on('ended', function(){
                 loginTipFunc();
-            });
-            
-            function needLogin() {
-                msg = '<?php
-                    if ($this->message != "") {
-                        echo $this->message;
-                    }
-                ?>';
-
-                if (msg != '') {
-                    loginTipFunc();
-                }
-            }
-            needLogin();
-            
+            });         
 <?php endif; ?>
     })(jQuery);
 </script>
