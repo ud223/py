@@ -65,7 +65,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                     //如果没有查询到节目id就直接播放当前专辑第一个
                     $cur_program = $result["programs"][0];
                     //根据program_id 获取当前要播放的节目
-                    if ($programId) {
+                    if ($program_id) {
                         foreach ($result["programs"] as $p) {
                             if ($p['id'] == $program_id) {
                                 $cur_program = $p;
