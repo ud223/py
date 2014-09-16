@@ -34,7 +34,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         // 未请求专辑ID
         //未登录且有一次播放记录
         if (!$this->me && $played_special_id) {
-            $this->view->message = "请先登陆然后继续观看, 谢谢!";
+            $this->view->message = "请先登录然后继续观看, 谢谢!";
 
             return;
         }
