@@ -23,13 +23,13 @@ class Angel_ShowController extends Angel_Controller_Action {
         $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');
 
-        $specialId = $this->request->getParam('special');
-        $programId = $this->request->getParam('program');
+        $special_id = $this->request->getParam('special');
+        $program_id = $this->request->getParam('program');
 
         $specialBean = false;
 
         $played_special_id = $_COOKIE["sid"];
-        $played_program_id = $_COOKIE["pid"];
+//        $played_program_id = $_COOKIE["pid"];
 
         // 未请求专辑ID
         //未登录且有一次播放记录
@@ -40,7 +40,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
-        if (!$specialId) {
+        if (!$special_id) {
             // 随机获取一个新的专辑并且redirect到获取到的专辑地址
             // 如/play?special=xxxxxx
             $specialBean = $this->getRecommendSpecial($played_special_id);
@@ -51,7 +51,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         } else {
             $cur_program = false;
 
-            $specialBean = $specialModel->getById($specialId);
+            $specialBean = $specialModel->getById($special_id);
             // 由于专辑ID一定存在， 而节目ID可能存在
             // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
             // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
@@ -64,9 +64,9 @@ class Angel_ShowController extends Angel_Controller_Action {
                     //如果没有查询到节目id就直接播放当前专辑第一个
                     $cur_program = $result["programs"][0];
                     //根据program_id 获取当前要播放的节目
-                    if ($programId) {
+                    if ($program_id) {
                         foreach ($result["programs"] as $p) {
-                            if ($p['id'] == $programId) {
+                            if ($p['id'] == $program_id) {
                                 $cur_program = $p;
                                 break;
                             }
@@ -75,13 +75,13 @@ class Angel_ShowController extends Angel_Controller_Action {
 
                     if ($this->me) {
                         //获取当前需要推荐的用户ID
-                        $userId = $this->me->getUser()->id;
+                        $user_id = $this->me->getUser()->id;
                         //保存推荐记录  可能调整一下位置
-                        $recommendModel->addRecommend($specialBean->id, $userId);
+                        $recommendModel->addRecommend($specialBean->id, $user_id);
                     }
 
                     setcookie('sid', $specialBean->id, time() + 3600 * 24,  "/");
-                    setcookie('pid', $cur_program->id, time() + 3600 * 24,  "/");
+//                    setcookie('pid', $cur_program->id, time() + 3600 * 24,  "/");
                     $this->view->cur_program = $cur_program;
                     $this->view->resource = $result;
                 } else {
@@ -433,7 +433,6 @@ class Angel_ShowController extends Angel_Controller_Action {
             $userModel = $this->getModel('user');
 
             //获取当前需要推荐的用户ID
-            $user_id = $this->me->getUser()->id;
             $categorys_id = $this->request->getParam('category');
 
             $categorys = null;
@@ -447,7 +446,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
 
             try {
-                $userModel->saveUser($user_id, $categorys);
+                $userModel->saveUser($categorys);
 
                 $this->_helper->json(array('data' => 'save success!', 'code' => 200));
             } catch (Exception $e) {
