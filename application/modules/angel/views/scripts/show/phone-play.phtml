@@ -198,8 +198,14 @@ $programs = $bean['programs'];
                 location.href = PLAY_PAGE_URL;
             });
 <?php else: ?>
-
+            $('.list-item').click(function() {
+                loginTipFunc();
+            });
             $('#refresh-btn').click(function() {
+                loginTipFunc();
+            });
+            
+            $(PLAYER).on('ended', function(){
                 loginTipFunc();
             });
             
@@ -214,9 +220,8 @@ $programs = $bean['programs'];
                     loginTipFunc();
                 }
             }
-
-
             needLogin();
+            
 <?php endif; ?>
     })(jQuery);
 </script>

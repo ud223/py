@@ -116,9 +116,9 @@ $programs = $bean['programs'];
                 <div class="logout-btn-content">
                     <p>
                         Hey, <?php echo $user->name ? $user->name : $user->username ?>
-                        <?php if($user && $user->author): ?>
-                        <span class="vip-badge">达</span>
-                        <?php endif;?>
+                        <?php if ($user && $user->author): ?>
+                            <span class="vip-badge">达</span>
+                        <?php endif; ?>
                     </p>
                     <button class="btn btn-gray btn-sm" id="logout-btn">安全退出</button>
                 </div>
@@ -248,16 +248,22 @@ $programs = $bean['programs'];
         });
 
         $(PLAYER).on('ended', function() {
-            // next program
-            var current = $('.tv-tab-content-body .list-item.selected');
-            if (current.length) {
-                var next = current.next();
-                if (next.length) {
-                    location.href = generatePlayLink($('#tv-listbar').attr('sid'), next.attr('id'), 2);
-                } else {
-                    location.href = PLAY_PAGE_URL;
+<?php if ($user): ?>
+                // next program
+                var current = $('.tv-tab-content-body .list-item.selected');
+                if (current.length) {
+                    var next = current.next();
+                    if (next.length) {
+                        location.href = generatePlayLink($('#tv-listbar').attr('sid'), next.attr('id'), 2);
+                    } else {
+                        location.href = PLAY_PAGE_URL;
+                    }
                 }
-            }
+<?php else: ?>
+                // login alert
+                loginTipFunc();
+<?php endif; ?>
+
         });
 
         $.each($('.duration'), function() {
@@ -634,10 +640,10 @@ $programs = $bean['programs'];
 
     function needLogin() {
         msg = '<?php
-            if ($this->message != "") {
-                echo $this->message;
-            }
-        ?>';
+if ($this->message != "") {
+    echo $this->message;
+}
+?>';
 
         if (msg != '') {
             loginTipFunc();
