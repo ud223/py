@@ -208,6 +208,26 @@ and open the template in the editor.
          function TenXunTest() {
              shareToWb('夏季达沃斯聚焦创新 李克强将出席年会并致开幕辞',"http://china.haiwainet.cn/n/2014/0907/c345646-21054873.html", "http://china.haiwainet.cn", "http://www.cnr.cn/2012zt/58/22/201209/W020120912658056608064.jpg")
          }
+         
+         function Login() {
+             var url = '/login';    
+            
+            var data = {'email': 'wyingxi@cn.ibm.com', 'password': '123123', 'format': 'json' };
+            
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: data,
+                method: 'post',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.author));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+         }
         </script>
     </head>
     <body>
@@ -228,5 +248,6 @@ and open the template in the editor.
         
         <button type="button" onclick="specialProgramList()">测试分类列表</button>
         <button type="button" onclick="userCategroy()">测试保存分类</button>
+        <button type="button" onclick="Login()">测试登陆</button>
     </body>
 </html>

@@ -215,7 +215,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
             $username = $this->request->getParam('username');
             $password = $this->request->getParam('password');
             $age = 0;
-            $gender = '男';
+            $gender = 'male';
             
             if ($userType == 'user') {
                 $age = $this->request->getParam('age');
@@ -274,7 +274,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                 $user = $userModel->getUserByEmail($email);
                                 
                                 // 跳转至兴趣设置页面
-                                $this->_redirect($this->view->url(array(), 'hobby') . '?register=success');//"uid"=> $user->id
+                                $this->_redirect($this->view->url(array(), 'hobby') . '?register=success');
 
                             } else {
                                 $this->view->error = $errorMsg;
@@ -347,7 +347,9 @@ class Angel_Controller_Action extends Zend_Controller_Action {
             }
 
             if ($this->getParam('format') == 'json') {
-                $this->_helper->json(array('data' => $errorMsg, 'uid' => $uid, 'code' => $code));
+                $user = $userModel->getById($uid);
+                
+                $this->_helper->json(array('data' => $errorMsg, 'uid' => $uid,  'username'=> $user->username, 'name'=>$user->name, 'author'=>$user->author, 'code' => $code));
             } else {
                 if ($code == 200) {
                     $this->_redirect($url);
