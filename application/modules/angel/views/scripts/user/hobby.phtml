@@ -81,9 +81,6 @@
             $(this).closest('.mslb').toggleClass('selected');
             getSelectedCategory();
         });
-        $('#save-btn').click(function() {
-            $('#result-panel').empty().paper({type: 'success'}, '<b class="glyphicon glyphicon-ok-sign"></b> 保存成功 <a class="border-btn border-btn-xs" href="<?php echo $this->url(array(), 'show-play') ?>">看看节目有哪些变化</a>');
-        });
     });
 
     function getSelectedCategory() {
@@ -101,7 +98,7 @@
 
 
 
-    function saveUserCategory(callback) {
+    function saveUserCategory() {
 <?php
 $url = $this->url(array(), "api-user-category-save");
 ?>
@@ -120,25 +117,19 @@ $url = $this->url(array(), "api-user-category-save");
             type: 'post',
             data: data,
             success: function(result) {
-                if (result.code === 0) {
-                }
-                else {
+                if (result.code === 200) {
 <?php
-$go_url = $_SERVER["QUERY_STRING"];
-$go_url = str_replace("register=success&", "", $go_url);
-
-if ($go_url) {
-    $go_url = "?" . $go_url;
-} else {
-    $go_url = "";
+$go_url = $this->url(array(), 'show-play');
+if ($this->goto) {
+    $go_url = $this->goto;
 }
-
-$go_url = "/play" . $go_url;
 ?>
 
                     var url = '<?php echo $go_url ?>';
-
                     localhost.href = url;
+                }
+                else {
+                    $('.content').paper({type: 'danger'}, '抱歉，保存失败，请重试。');
                 }
             }
         });

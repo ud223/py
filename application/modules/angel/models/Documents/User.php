@@ -309,8 +309,8 @@ class User extends AbstractDocument{
         return $result;
     }
     
-    public function addCategory(\Documents\Category $p) { 
-        $this->category[] = $p;
+    public function addCategory(\Documents\Category $category) { 
+        $this->category[] = $category;
     }
     
     public function clearCategory() {
