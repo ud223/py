@@ -67,12 +67,14 @@ class Angel_Model_Category extends Angel_Model_AbstractModel {
         $query = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->in($categorys_id)->sort('created_at', -1);
         
-        $result = null;
-        $result = $query->getQuery();
+        $result = array();
+        $query = $query->getQuery();
+        if($query && count($query)) {
+            foreach($query as $q) {
+                $result[] = $q;
+            }
+        }
         
-        if (empty($result))
-            return false;
-
         return $result;
     }
 

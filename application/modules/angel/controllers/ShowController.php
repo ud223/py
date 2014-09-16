@@ -435,21 +435,21 @@ class Angel_ShowController extends Angel_Controller_Action {
 
             $user = $this->me->getUser();
             //获取当前需要推荐的用户ID
-            $categorys_id = $this->request->getParam('category');
+            $categories_id = $this->request->getParam('category');
 
-            $categorys = null;
+            $categories = array();
 
-            if ($categorys_id != 'none') {
-                $tmpCategorys_id = explode(";", $categorys_id);
+            if ($categories_id != 'none') {
+                $tmpCategorys_id = explode(";", $categories_id);
 
                 if (is_array($tmpCategorys_id)) {
-                    $categorys = $categoryModel->getByIds($tmpCategorys_id);
+                    $categories = $categoryModel->getByIds($tmpCategorys_id);
                 }
             }
 
             try {
-                $userModel->saveUser($user, $categorys);
-
+//                $userModel->saveUser($user, $categories);
+                $userModel->save($user->id, array('category'=>$categories));
                 $this->_helper->json(array('data' => 'save success!', 'code' => 200));
             } catch (Exception $e) {
                 $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
