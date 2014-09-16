@@ -31,16 +31,20 @@ class Angel_ShowController extends Angel_Controller_Action {
         $played_special_id = $_COOKIE["sid"];
         $played_program_id = $_COOKIE["pid"];
 
-        // 未请求专辑ID
-        //未登录且有一次播放记录
-        if (!$this->me && $played_special_id) {
-            $this->view->message = "请先登录然后继续观看, 谢谢!";
-
-            return;
-        }
-
         //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
         if (!$special_id) {
+             // 未请求专辑ID
+            //未登录且有一次播放记录
+            if (!$this->me && $played_special_id) {
+                $this->view->message = "请先登录然后继续观看, 谢谢!";
+
+                if ($this->isMobile()) {
+                    $this->_helper->layout->setLayout('mobile');
+                    $this->render('phone-play ');
+                }
+                
+                return;
+            }
             // 随机获取一个新的专辑并且redirect到获取到的专辑地址
             // 如/play?special=xxxxxx
             $specialBean = $this->getRecommendSpecial($played_special_id);

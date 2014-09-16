@@ -288,11 +288,11 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             $validated_bln = false;
             $author = 1;
 
-            $user->clearCategory();
-
-            foreach ($category as $c) {
-                $user->addCategory($c);
-            }
+//            $user->clearCategory();
+//
+//            foreach ($category as $c) {
+//                $user->addCategory($c);
+//            }
 
             $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age" => $age, "gender" => $gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category" => $user->category, "author" => $author);
 

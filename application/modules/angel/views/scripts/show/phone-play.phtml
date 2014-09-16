@@ -175,17 +175,6 @@ $programs = $bean['programs'];
 
 <script type="text/javascript">
     var PLAYER = document.getElementsByTagName('video')[0];
-    msg = '<?php
-            if ($this->message != "") {
-                echo $this->message;
-            }
-            ?>';
-
-    if (msg != '')
-        alert(msg);
-
-
-
 
     (function($) {
         $(document).ready(function() {
@@ -213,8 +202,21 @@ $programs = $bean['programs'];
             $('#refresh-btn').click(function() {
                 loginTipFunc();
             });
-
             
+            function needLogin() {
+                msg = '<?php
+                    if ($this->message != "") {
+                        echo $this->message;
+                    }
+                ?>';
+
+                if (msg != '') {
+                    loginTipFunc();
+                }
+            }
+
+
+            needLogin();
 <?php endif; ?>
     })(jQuery);
 </script>
