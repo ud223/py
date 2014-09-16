@@ -22,7 +22,6 @@ class Angel_ShowController extends Angel_Controller_Action {
         
         $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');
-        $programModel = $this->getModel('program');
 
         $specialId = $this->request->getParam('special');
         $programId = $this->request->getParam('program');
