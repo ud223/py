@@ -126,63 +126,57 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
     
     public function deviceAction() {
-        if ($this->request->isPost()) {
-            $deviceModel = $this->getModel('device');
-            $name = $this->request->getParam('name');
+        $deviceModel = $this->getModel('device');
+        $name = $this->request->getParam('name');
 
-            $result = $deviceModel->getByName($name);
+        $result = $deviceModel->getByName($name);
 
-            if ($result) {
-                $deviceModel->saveDevice($result->id, $result->name, $result->count);
-            }
-            else {
-                $deviceModel->addDevice($name);
-            }
-        
-            $this->_helper->json(array('data' => 'success', 'code' => 200));
+        if ($result) {
+            $deviceModel->saveDevice($result->id, $result->name, $result->count);
         }
+        else {
+            $deviceModel->addDevice($name);
+        }
+
+        $this->_helper->json(array('data' => 'success', 'code' => 200));
     }
  
     public function deviceCountAction() {
-        if ($this->request->isPost()) {
-            $deviceModel = $this->getModel('device');
+        $deviceModel = $this->getModel('device');
 
-            $sys = $this->request->getParam('name');
+        $sys = $this->request->getParam('name');
 
-            $result = $deviceModel->getByName($sys);  
+        $result = $deviceModel->getByName($sys);  
 
-            if ($result) {
-                $this->_helper->json(array('data' => $result->count, 'code' => 200));
-            }
-            else {
-                $this->_helper->json(array('data' => '0', 'code' => 200));
-            }
+        if ($result) {
+            $this->_helper->json(array('data' => $result->count, 'code' => 200));
+        }
+        else {
+            $this->_helper->json(array('data' => '0', 'code' => 200));
         }
     }
     
     public function versionGetAction() {
-        if ($this->request->isPost()) {
-            $versionModel = $this->getModel('version');
+        $versionModel = $this->getModel('version');
 
-            $sys = $this->request->getParam('sys');
+        $sys = $this->request->getParam('sys');
 
-            $result = $versionModel->getNewVersion($sys);
+        $result = $versionModel->getNewVersion($sys);
 
-            if ($result) {
-                $version = array();
+        if ($result) {
+            $version = array();
 
-                $version["id"] = $result->id;
-                $version["name"] = $result->name;
-                $version["sys"] = $result->sys;
-                $version["fix"] = $result->fix;
-                $version["update"] = $result->update;
-                $version["url"] = $result->url;
+            $version["id"] = $result->id;
+            $version["name"] = $result->name;
+            $version["sys"] = $result->sys;
+            $version["fix"] = $result->fix;
+            $version["update"] = $result->update;
+            $version["url"] = $result->url;
 
-                $this->_helper->json(array('data' => $version, 'code' => 200));
-            }
-            else {
-                $this->_helper->json(array('data' => '1.0', 'code' => 0));
-            }
+            $this->_helper->json(array('data' => $version, 'code' => 200));
+        }
+        else {
+            $this->_helper->json(array('data' => '1.0', 'code' => 0));
         }
     }
     

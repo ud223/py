@@ -492,33 +492,31 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
 
     public function userCategoryListAction() {
-        if ($this->request->isPost()) {
-            $userModel = $this->getModel('user');
-            $categoryModel = $this->getModel('category');
+        $userModel = $this->getModel('user');
+        $categoryModel = $this->getModel('category');
 
-            $user = $this->me->getUser();
-            $user_id = $user->id;
+        $user = $this->me->getUser();
+        $user_id = $user->id;
 
-            $result = $categoryModel->getAll(false);
+        $result = $categoryModel->getAll(false);
 
-            $category = array();
+        $category = array();
 
-            foreach ($result as $p) {
-                $like = 0;
+        foreach ($result as $p) {
+            $like = 0;
 
-                foreach ($user->category as $c) {
-                    if ($p->id == $c->id) {
-                        $like = 1;
+            foreach ($user->category as $c) {
+                if ($p->id == $c->id) {
+                    $like = 1;
 
-                        break;
-                    }
+                    break;
                 }
-
-                $category[] = array('id' => $p->id, 'name' => $p->name, 'like' => $like);
             }
 
-            $this->_helper->json(array('data' => $category, 'code' => 200));
+            $category[] = array('id' => $p->id, 'name' => $p->name, 'like' => $like);
         }
+
+        $this->_helper->json(array('data' => $category, 'code' => 200));
     }
 
     public function removeUserCategoryAction() {
@@ -708,29 +706,27 @@ class Angel_ShowController extends Angel_Controller_Action {
 
     //根据当前用户的id来获取收藏专辑
     public function favouriteListAction() {
-        if ($this->request->isPost()) {
-            $favouriteModel = $this->getModel('favourite');
-            if ($this->me) {
-                $user_id = $this->me->getUser()->id;
-                $favourite = $favouriteModel->getFavouriteByUserId($user_id);
+        $favouriteModel = $this->getModel('favourite');
+        if ($this->me) {
+            $user_id = $this->me->getUser()->id;
+            $favourite = $favouriteModel->getFavouriteByUserId($user_id);
 
-                if ($favourite) {
-                    foreach ($favourite->special as $p) {
-                        $sharing_photo_path = $this->view->serverUrl() . $this->bootstrap_options['image_broken_ico']['small'];
-                        if (count($p->photo)) {
-                            $photo = $p->photo[0];
-                            $sharing_photo_path = $this->view->serverUrl() . $this->view->photoImage($photo->name . $photo->type, 'small');
-                        }
-                        $result["specials"][] = array("id" => $p->id, "name" => $p->name, "sharing_photo" => $sharing_photo_path);
+            if ($favourite) {
+                foreach ($favourite->special as $p) {
+                    $sharing_photo_path = $this->view->serverUrl() . $this->bootstrap_options['image_broken_ico']['small'];
+                    if (count($p->photo)) {
+                        $photo = $p->photo[0];
+                        $sharing_photo_path = $this->view->serverUrl() . $this->view->photoImage($photo->name . $photo->type, 'small');
                     }
-
-                    $this->_helper->json(array('data' => $result, 'code' => 200));
-                } else {
-                    $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));
+                    $result["specials"][] = array("id" => $p->id, "name" => $p->name, "sharing_photo" => $sharing_photo_path);
                 }
+
+                $this->_helper->json(array('data' => $result, 'code' => 200));
             } else {
-                $this->_helper->json(array('data' => "didn't login", 'code' => 0));
+                $this->_helper->json(array('data' => "没有找到任何收藏！", 'code' => 0));
             }
+        } else {
+            $this->_helper->json(array('data' => "didn't login", 'code' => 0));
         }
     }
 
