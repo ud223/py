@@ -121,7 +121,7 @@ $url = $this->url(array(), "api-user-category-save");
 <?php
 $go_url = $this->url(array(), 'show-play');
 if ($this->goto) {
-    $go_url = $this->goto;
+    $go_url = $go_url . $this->goto;
 }
 ?>
 
