@@ -634,13 +634,16 @@ $programs = $bean['programs'];
 
     function needLogin() {
         msg = '<?php
-if ($this->message != "") {
-    echo $this->message;
-}
-?>';
+            if ($this->message != "") {
+                echo $this->message;
+            }
+        ?>';
 
-        if (msg != '')
+        if (msg != '') {
             alert(msg);
+            
+            location.href="/login?goto=" + location.href;
+        }
     }
 
     needLogin();

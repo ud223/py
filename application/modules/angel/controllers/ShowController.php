@@ -30,7 +30,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $specialBean = false;
 
         $played_special_id = $_COOKIE["sid"];
-//        $played_program_id = $_COOKIE["pid"];
+        $played_program_id = $_COOKIE["pid"];
 
         // 未请求专辑ID
         //未登录且有一次播放记录
@@ -66,9 +66,10 @@ class Angel_ShowController extends Angel_Controller_Action {
                     $cur_program = $result["programs"][0];
                     //根据program_id 获取当前要播放的节目
                     if ($program_id) {
-                        foreach ($result["programs"] as $p) {
+                        foreach ($result["programs"] as $p) {                          
                             if ($p['id'] == $program_id) {
                                 $cur_program = $p;
+                                
                                 break;
                             }
                         }
@@ -82,7 +83,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                     }
 
                     setcookie('sid', $specialBean->id, time() + 3600 * 24,  "/");
-//                    setcookie('pid', $cur_program->id, time() + 3600 * 24,  "/");
+                    setcookie('pid', $cur_program->id, time() + 3600 * 24,  "/");
                     $this->view->cur_program = $cur_program;
                     $this->view->resource = $result;
                 } else {

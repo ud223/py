@@ -2,7 +2,17 @@
     <div class="board">
         <div class="title">
             <?php echo $this->title; ?>
-            <a href="<?php echo $this->url(array(), 'register') ?>">10秒注册</a>
+            <?php 
+                $go_url = $_SERVER["QUERY_STRING"];
+                
+                if ($go_url) {
+                    $go_url = "?". $go_url;
+                }
+                else {
+                    $go_url = "";
+                }
+            ?>
+            <a href="<?php echo $this->url(array(), 'register') . $go_url?>">10秒注册</a>
         </div>
         <div class="content">
 

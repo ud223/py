@@ -273,9 +273,23 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                 
                                 $user = $userModel->getUserByEmail($email);
                                 
-                                // 跳转至兴趣设置页面
-                                $this->_redirect($this->view->url(array(), 'hobby') . '?register=success');
-
+                                $go_url = $_SERVER["QUERY_STRING"];
+                
+                                if ($go_url) {
+                                    $go_url = $go_url;
+                                }
+                                else {
+                                    $go_url = '';
+                                }
+                                
+                                //如果是手机直接跳转到播放页面
+                                if ($this->isMobile()) {
+                                    $this->_redirect($this->view->url(array(), 'play'). "?". $go_url );
+                                }
+                                else {
+                                    // 跳转至兴趣设置页面
+                                    $this->_redirect($this->view->url(array(), 'hobby') . '?register=success&' . $go_url);
+                                }
                             } else {
                                 $this->view->error = $errorMsg;
                             }
