@@ -109,11 +109,11 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    public function saveVip($uesrId, $email, $username, $password, $salt, $checkmail, $age, $gender, $name, $author) {
+    public function saveVip($user_id, $email, $username, $password, $salt, $checkmail, $age, $gender, $name, $author) {
         $result = false;
 
         try {
-            $user = $this->getUserById($uesrId);
+            $user = $this->getUserById($user_id);
 
             if (!$password) {
                 $password = $user->password_src;
@@ -205,9 +205,9 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    public function saveUser($uesrId, $category) {
+    public function saveUser($category) {
         try {
-            $user = $this->getUserById($uesrId);
+            $user = $this->me->getUser();
 
             $email = $user->email;
             $username = $user->username;

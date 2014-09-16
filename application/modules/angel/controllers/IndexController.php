@@ -44,9 +44,10 @@ class Angel_IndexController extends Angel_Controller_Action {
         else {
             //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
             if ($this->isMobile()) {
-                $loginPath = $this->view->url(array(), 'phone-login') ;
-
-                $this->_redirect($loginPath);
+//                $loginPath = $this->view->url(array(), 'phone-login') ;
+//
+//                $this->_redirect($loginPath);
+                $this->_helper->layout->setLayout('mobile');
             }
         }
     }
@@ -61,9 +62,10 @@ class Angel_IndexController extends Angel_Controller_Action {
         else {
             //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
             if ($this->isMobile()) {
-                $registerPath = $this->view->url(array(), 'phone-register') ;
-
-                $this->_redirect($registerPath);
+//                $registerPath = $this->view->url(array(), 'phone-register') ;
+//
+//                $this->_redirect($registerPath);
+                $this->_helper->layout->setLayout('mobile');
             }
         }
     }
