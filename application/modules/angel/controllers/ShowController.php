@@ -433,6 +433,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             $categoryModel = $this->getModel('category');
             $userModel = $this->getModel('user');
 
+            $user = $this->me->getUser();
             //获取当前需要推荐的用户ID
             $categorys_id = $this->request->getParam('category');
 
@@ -447,7 +448,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
 
             try {
-                $userModel->saveUser($categorys);
+                $userModel->saveUser($user, $categorys);
 
                 $this->_helper->json(array('data' => 'save success!', 'code' => 200));
             } catch (Exception $e) {

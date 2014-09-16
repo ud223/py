@@ -205,10 +205,8 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    public function saveUser($category) {
+    public function saveUser($user, $category) {
         try {
-            $user = $this->me->getUser();
-
             $email = $user->email;
             $username = $user->username;
             $salt = $user->salt;
@@ -238,7 +236,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
 
     public function removeUserCategory($user_id, $category_id) {
         try {
-            $user = $this->getUserById($uesrId);
+            $user = $this->getUserById($user_id);
 
             $email = $user->email;
             $username = $user->username;
