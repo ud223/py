@@ -228,6 +228,26 @@ and open the template in the editor.
                 }
             });
          }
+         
+         function playtest() {
+             var url = '/api/recommend/get';    
+            
+            var data = {'special': '' };
+            
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: data,
+                method: 'post',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+         }
         </script>
     </head>
     <body>
@@ -249,5 +269,6 @@ and open the template in the editor.
         <button type="button" onclick="specialProgramList()">测试分类列表</button>
         <button type="button" onclick="userCategroy()">测试保存分类</button>
         <button type="button" onclick="Login()">测试登陆</button>
+        <button type="button" onclick="playtest()">测试播放</button>
     </body>
 </html>
