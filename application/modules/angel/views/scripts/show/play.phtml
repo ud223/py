@@ -29,7 +29,7 @@ $programs = $bean['programs'];
         </div>
     </div>
 
-    <?php if ($user->author): ?>
+    <?php if ($user && $user->author): ?>
         <div class="tv-search-content">
             <div class="tv-search-content-head">
                 <span class="kw">关键词</span> 找到 <span class="ct">0</span> 条记录
@@ -114,7 +114,12 @@ $programs = $bean['programs'];
             </ul>
             <?php if ($user): ?>
                 <div class="logout-btn-content">
-                    <p>Hey, <?php echo $user->name ? $user->name : $user->username ?></p>
+                    <p>
+                        Hey, <?php echo $user->name ? $user->name : $user->username ?>
+                        <?php if($user && $user->author): ?>
+                        <span class="vip-badge">达</span>
+                        <?php endif;?>
+                    </p>
                     <button class="btn btn-gray btn-sm" id="logout-btn">安全退出</button>
                 </div>
 
@@ -543,10 +548,18 @@ $programs = $bean['programs'];
     }
 
 <?php if ($user && $user->author): ?>
+        $('.tv-search-content-head .close').click(function() {
+            var $this = $(this);
+            var container = $this.closest('.tv-search-content');
+            container.slideUp(300);
+        });
         $('#search-btn').click(function() {
             var q = $.trim($('#search-txt').val());
-            if (!q)
+            if (!q) {
                 $.alertbox({msg: "搜索文字为空，请输入你希望搜索的文字。"});
+                return;
+            }
+            $.waiting();
             $.ajax({
                 url: '<?php echo $this->url(array(), 'api-search-home') ?>?q=' + q,
                 dataType: 'json',
@@ -555,21 +568,31 @@ $programs = $bean['programs'];
                     if (response.code === 200) {
                         // success
                         var data = response.data;
-                        $('.tv-search-content').empty();
+                        $('.tv-search-content-result').empty();
                         $.each(data, function() {
                             var sid = this.id;
                             var name = this.name;
                             var a = $('<a>').addClass('search-itm').attr('href', generatePlayLink(sid, null, 2));
                             a.html(name);
-                            console.log(a);
                             $('.tv-search-content-result').append(a);
                         });
-                        $('.tv-search-content').show();
+                        $('.tv-search-content-head .kw').html(q);
+                        $('.tv-search-content-head .ct').html(data.length);
                     } else if (response.code === 404) {
                         // no result
+                        $('.tv-search-content-result').html('<p class="pad-20 text-center">未搜索到相关记录</p>');
+                        $('.tv-search-content-head .kw').html(q);
+                        $('.tv-search-content-head .ct').html(0);
                     } else {
                         // error
+                        $('.tv-search-content-result').html('<p class="pad-20 text-center">网络错误，请重试</p>');
+                        $('.tv-search-content-head .kw').html(q);
+                        $('.tv-search-content-head .ct').html(0);
                     }
+                },
+                complete: function() {
+                    $.endWaiting();
+                    $('.tv-search-content').slideDown(300);
                 }
             });
         });
