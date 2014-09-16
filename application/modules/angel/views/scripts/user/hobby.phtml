@@ -102,9 +102,9 @@
 
 
     function saveUserCategory(callback) {
-        <?php
-            $url = $this->url(array(), "api-user-category-save");
-        ?>
+<?php
+$url = $this->url(array(), "api-user-category-save");
+?>
 
         var curl = "<?php echo $url ?>";
 
@@ -120,25 +120,21 @@
             type: 'post',
             data: data,
             success: function(result) {
-                if (result.code === 0) {
+                if (result.code == 0) {
                 }
                 else {
-                    <?php 
-                        $go_url = $_SERVER["QUERY_STRING"];
-                        $go_url = str_replace("register=success&", "", $go_url);
-                        
-                        if ($go_url) {
-                            $go_url = "?". $go_url;
-                        }
-                        else {
-                            $go_url = "";
-                        }
-                        
-                        $go_url =  "/play" . $go_url;
-                    ?>
-                                        
-                    var url = '<?php echo $go_url ?>';
+                <?php
+                    $go_url = $_SERVER["QUERY_STRING"];
                     
+                    if (!$go_url) {
+                        $go_url = "";
+                    }
+
+                    $go_url = "/play?" . $go_url;
+                ?>
+
+                    var url = '<?php echo $go_url ?>';
+
                     localhost.href = url;
                 }
             }

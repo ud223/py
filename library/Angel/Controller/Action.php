@@ -275,10 +275,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                 
                                 $go_url = $_SERVER["QUERY_STRING"];
                 
-                                if ($go_url) {
-                                    $go_url = $go_url;
-                                }
-                                else {
+                                if (!$go_url) {
                                     $go_url = '';
                                 }
                                 
@@ -287,8 +284,10 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                     $this->_redirect($this->view->url(array(), 'play'). "?". $go_url );
                                 }
                                 else {
+                                    
+                                    
                                     // 跳转至兴趣设置页面
-                                    $this->_redirect($this->view->url(array(), 'hobby') . '?register=success&' . $go_url);
+                                    $this->_redirect($this->view->url(array(), 'hobby') . '?' . $go_url);
                                 }
                             } else {
                                 $this->view->error = $errorMsg;
