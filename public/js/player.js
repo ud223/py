@@ -80,7 +80,14 @@ function switchFullscreen() {
 }
 
 function clickSeek(obj) {
+    $.waiting('连接中，请稍候...');
+    PLAYER.pause();
     seek(xClick(obj));
+
+    setTimeout(function() {
+        $.endWaiting();
+        PLAYER.play();
+    }, 2000);
 }
 
 function xClick(obj) {
