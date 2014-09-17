@@ -341,7 +341,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             //获取专辑名模糊查询结果集
             $result_1 = $specialModel->getLikeQuery($param);
             //获取作者名模糊查询结果集
-//            $result_2 = $specialModel->getSpecialByAuthorIds($users_id);
+//            $result_2 = $specialModel->getSpecialByAuthor($users_id[0]);
 //            echo count($result_2); exit;
             $specials = array();
             
