@@ -19,6 +19,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
     public function playAction() {
         $this->view->login_goto_url = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
+        $this->view->register_goto_url = $this->view->url(array(), 'register') . '?goto=' . $this->request->getRequestUri();
         
         $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');

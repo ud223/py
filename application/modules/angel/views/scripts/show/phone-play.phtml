@@ -124,7 +124,7 @@ $programs = $bean['programs'];
                 $src = $this->cur_program["oss_video"];
             }
             ?>
-            <video style="width:100%" src="<?php echo $src; ?>" controls="controls" autoplay>
+            <video style="width:100%" controls="false" src="<?php echo $src; ?>" controls="controls" autoplay>
                 您的浏览器不支持 video 标签。
             </video>
             <div class="clear"></div>
@@ -173,7 +173,7 @@ $programs = $bean['programs'];
         </div>
     </div>
 
-    <?php echo $this->partial('show/partials/_login_tip.phtml', array('url' => $this->login_goto_url)); ?>
+    <?php echo $this->partial('show/partials/_login_tip.phtml', array('login_url' => $this->login_goto_url, 'register_url' => $this->register_goto_url)); ?>
 </div>
 
 <script type="text/javascript">
@@ -206,12 +206,9 @@ $programs = $bean['programs'];
 
                 if (current.length) {
                     var next = current.next();
-                     alert(next.length);
                     if (next.length) {
-                        alert(1);
                         location.href = generatePlayLink(SPECIAL_ID, next.attr('id'), 2);
                     } else {
-                        alert(2);
                         location.href = PLAY_PAGE_URL;
                     }
                 }

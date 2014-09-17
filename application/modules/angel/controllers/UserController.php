@@ -2,6 +2,8 @@
 
 class Angel_UserController extends Angel_Controller_Action {
 
+    protected $login_not_required = array('player-mode');
+
     public function init() {
         $this->_helper->layout->setLayout('normal');
         parent::init();
@@ -27,7 +29,7 @@ class Angel_UserController extends Angel_Controller_Action {
         $this->view->userId = $uid;
         $this->view->categories = $categoryModel->getAll(false);
         $this->view->title = "我的兴趣";
-        
+
         $this->view->goto = $this->request->getParam('goto');
     }
 
@@ -35,16 +37,19 @@ class Angel_UserController extends Angel_Controller_Action {
      * 更改保存用户收看/收听习惯
      */
     public function playerModeAction() {
-        if ($this->request->isPost()) {
-            $key = "player_mode";
-            $value = $this->request->getParam('value');
-            $result = false;
-            if (in_array($value, array('audio', 'video'))) {
-                $result = $userMode = $this->getModel('user')->setAttribute($this->me->getUser(), $key, $value);
-            }
 
-            // JSON FORMAT RESPONSE
+        if ($this->request->isPost()) {
             $code = 200;
+            if ($this->me) {
+                $key = "player_mode";
+                $value = $this->request->getParam('value');
+                $result = false;
+                if (in_array($value, array('audio', 'video'))) {
+                    $result = $this->getModel('user')->setAttribute($this->me->getUser(), $key, $value);
+                }
+            }
+            // JSON FORMAT RESPONSE
+
             if (!result) {
                 $code = 500;
             }
@@ -124,7 +129,6 @@ class Angel_UserController extends Angel_Controller_Action {
 
         $this->_helper->json(array("large" => $imageurl_large, "small" => $imageurl_small));
     }
-
 
     public function profileAction() {
         
