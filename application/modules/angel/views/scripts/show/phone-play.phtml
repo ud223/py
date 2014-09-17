@@ -173,7 +173,7 @@ $programs = $bean['programs'];
         </div>
     </div>
 
-    <?php echo $this->partial('show/partials/_login_tip.phtml', array('url' => $this->login_goto_url)); ?>
+    <?php echo $this->partial('show/partials/_login_tip.phtml', array('login_url' => $this->login_goto_url, 'register_url' => $this->register_goto_url)); ?>
 </div>
 
 <script type="text/javascript">

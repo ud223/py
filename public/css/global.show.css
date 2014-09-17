@@ -162,6 +162,9 @@ h3 {
     font-size:12px;
     padding:3px 10px;
 }
+.btn-warning {
+    background-color:#f0ad4e;
+}
 .logout-btn-content {
     padding-top:35px;
     padding-left:25px;
@@ -258,13 +261,13 @@ h3 {
 #tv #btn-refresh:hover {
     background-position:-100px -400px;
 }
-#tv #btn-toggle-audio {
+#tv #btn-toggle-audio, #tv #btn-toggle-audio-disabled {
     background-position: -300px -300px;
 }
 #tv #btn-toggle-video {
     background-position: -300px -400px;
 }
-#tv #btn-toggle-audio:hover {
+#tv #btn-toggle-audio:hover, #tv #btn-toggle-audio-disabled:hover {
     background-position:-400px -300px;
 }
 #tv #btn-toggle-video:hover {

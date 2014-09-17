@@ -27,6 +27,8 @@ $programs = $bean['programs'];
                 <?php else: ?>
                     <button id='btn-toggle-video' rel="video" class='ico tv-side-btn'></button>
                 <?php endif; ?>
+            <?php else: ?>
+                <button id='btn-toggle-audio-disabled' rel="audio" class='ico tv-side-btn'></button>
             <?php endif; ?>
         </div>
     </div>
@@ -110,6 +112,13 @@ $programs = $bean['programs'];
                         <span>我的收藏夹</span>
                     </li>
                     <li id="hobby" class="tv-tab-list-item">
+                        <span>兴趣设置</span>
+                    </li>
+                <?php else: ?>
+                    <li class="tv-tab-list-item-disabled">
+                        <span>我的收藏夹</span>
+                    </li>
+                    <li class="tv-tab-list-item-disabled">
                         <span>兴趣设置</span>
                     </li>
                 <?php endif; ?>
@@ -201,7 +210,7 @@ $programs = $bean['programs'];
         </div>
     </div>
 
-    <?php echo $this->partial('show/partials/_login_tip.phtml', array('url' => $this->login_goto_url)); ?>
+    <?php echo $this->partial('show/partials/_login_tip.phtml', array('login_url' => $this->login_goto_url, 'register_url' => $this->register_goto_url)); ?>
 
 </div>
 
@@ -339,134 +348,141 @@ $programs = $bean['programs'];
     $('.alt-list .list-item .sharing').click(function() {
         return sharingIt($(this));
     });
-    $('.tv-tab-list-item').click(function() {
-        // 翻页
-        var $this = $(this).closest('.tv-tab-list-item');
-        if ($this.hasClass('.selected')) {
-            return;
-        }
-        $('.tv-tab-list-item').removeClass('selected');
-        $this.addClass('selected');
-        var id = $this.attr('id');
-        $('.alt').addClass('hidden');
-        $('.alt-' + id).removeClass('hidden');
-
-        if ($this.attr('loaded') !== 'true') {
-            $.waiting("读取中 ...");
-            switch (id) {
-                case 'list':
-                    break;
-                case 'favor':
-                    var url = '<?php echo $this->url(array(), 'api-favourite-list') ?>';
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        type: 'get',
-                        success: function(response) {
-                            if (response.code === 200) {
-                                var body = $('.tv-tab-content-body .alt-favor');
-                                body.empty();
-                                var header = $('.tv-tab-content-head .alt-favor');
-                                header.find('.t2 span').html('0');
-                                if (response.data && response.data.specials && response.data.specials.length) {
-
-                                    header.find('.t2 span').html(response.data.specials.length);
-
-                                    $.each(response.data.specials, function() {
-                                        var html = $('.P_tmp .favor-item').clone(true);
-                                        html.attr('sid', this.id).find('.list-item-cell.lt').html(this.name);
-                                        html.attr('sharing_photo', this.sharing_photo);
-                                        html.find('.remove-favor').click(function() {
-                                            var $this = $(this);
-                                            var sid = $this.closest('.list-item').attr('sid');
-                                            removeFavor(sid, function() {
-                                                $('.list-item[sid="' + sid + '"]').remove();
-                                                if (sid === $('#tv-listbar').attr('sid')) {
-                                                    $('#add-to-favor').removeClass('selected');
-                                                }
-                                                var ci = parseInt(header.find('.t2 span').html());
-                                                if (ci) {
-                                                    header.find('.t2 span').html(ci - 1);
-                                                }
-                                            });
-                                            return false;
-                                        });
-                                        html.find('.sharing').click(function() {
-                                            return sharingIt($(this));
-                                        });
-                                        html.click(function() {
-                                            var $this = $(this).closest('.list-item');
-                                            var sid = $this.attr('sid');
-                                            location.href = generatePlayLink(sid, false, 2);
-                                        });
-                                        body.append(html);
-                                    });
-
-                                    $this.attr('loaded', 'true');
-                                }
-                            }
-                            $.endWaiting();
-                        }
-                    });
-                    break;
-                case 'hobby':
-                    var url = '<?php echo $this->url(array(), 'api-user-category-list') ?>';
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        type: 'post',
-                        success: function(response) {
-                            if (response.code === 200) {
-                                var body = $('.tv-tab-content-body .alt-hobby');
-                                body.empty();
-                                if (response.data && response.data && response.data.length) {
-                                    body.append($('<div>').addClass('unit-items'));
-                                    $.each(response.data, function() {
-                                        var html = $('.P_tmp .hobby-item').clone(true);
-                                        html.attr('cid', this.id).find('p').html(this.name);
-                                        html.click(function() {
-                                            $(this).closest('.unit-item').toggleClass('selected');
-                                            var arr = new Array();
-                                            var categories = 'none';
-                                            if ($('.unit-item.selected').length) {
-                                                $.each($('.unit-item.selected'), function() {
-                                                    var $this = $(this).closest('.unit-item');
-                                                    arr.push($this.attr('cid'));
-                                                });
-                                                categories = arr.join(';');
-                                            }
 <?php if ($user): ?>
-                                                var data = {
-                                                    uid: '<?php echo $user->id ?>',
-                                                    category: categories
-                                                };
-                                                $.waiting(null, $('#tv'));
-                                                $.ajax({
-                                                    url: '<?php echo $this->url(array(), 'api-user-category-save') ?>',
-                                                    dataType: 'json',
-                                                    type: 'post',
-                                                    data: data,
-                                                    complete: function() {
-                                                        $.endWaiting();
+        $('.tv-tab-list-item').click(function() {
+            // 翻页
+            var $this = $(this).closest('.tv-tab-list-item');
+            if ($this.hasClass('.selected')) {
+                return;
+            }
+            $('.tv-tab-list-item').removeClass('selected');
+            $this.addClass('selected');
+            var id = $this.attr('id');
+            $('.alt').addClass('hidden');
+            $('.alt-' + id).removeClass('hidden');
+
+            if ($this.attr('loaded') !== 'true') {
+                $.waiting("读取中 ...");
+                switch (id) {
+                    case 'list':
+                        break;
+                    case 'favor':
+                        var url = '<?php echo $this->url(array(), 'api-favourite-list') ?>';
+                        $.ajax({
+                            url: url,
+                            dataType: 'json',
+                            type: 'get',
+                            success: function(response) {
+                                if (response.code === 200) {
+                                    var body = $('.tv-tab-content-body .alt-favor');
+                                    body.empty();
+                                    var header = $('.tv-tab-content-head .alt-favor');
+                                    header.find('.t2 span').html('0');
+                                    if (response.data && response.data.specials && response.data.specials.length) {
+
+                                        header.find('.t2 span').html(response.data.specials.length);
+
+                                        $.each(response.data.specials, function() {
+                                            var html = $('.P_tmp .favor-item').clone(true);
+                                            html.attr('sid', this.id).find('.list-item-cell.lt').html(this.name);
+                                            html.attr('sharing_photo', this.sharing_photo);
+                                            html.find('.remove-favor').click(function() {
+                                                var $this = $(this);
+                                                var sid = $this.closest('.list-item').attr('sid');
+                                                removeFavor(sid, function() {
+                                                    $('.list-item[sid="' + sid + '"]').remove();
+                                                    if (sid === $('#tv-listbar').attr('sid')) {
+                                                        $('#add-to-favor').removeClass('selected');
+                                                    }
+                                                    var ci = parseInt(header.find('.t2 span').html());
+                                                    if (ci) {
+                                                        header.find('.t2 span').html(ci - 1);
                                                     }
                                                 });
-<?php endif ?>
+                                                return false;
+                                            });
+                                            html.find('.sharing').click(function() {
+                                                return sharingIt($(this));
+                                            });
+                                            html.click(function() {
+                                                var $this = $(this).closest('.list-item');
+                                                var sid = $this.attr('sid');
+                                                location.href = generatePlayLink(sid, false, 2);
+                                            });
+                                            body.append(html);
                                         });
-                                        if (this.like) {
-                                            html.addClass('selected');
-                                        }
-                                        body.find('.unit-items').append(html);
-                                    });
-                                    $this.attr('loaded', 'true');
+
+                                        $this.attr('loaded', 'true');
+                                    }
                                 }
+                                $.endWaiting();
                             }
-                            $.endWaiting();
-                        }
-                    });
-                    break;
+                        });
+                        break;
+                    case 'hobby':
+                        var url = '<?php echo $this->url(array(), 'api-user-category-list') ?>';
+                        $.ajax({
+                            url: url,
+                            dataType: 'json',
+                            type: 'post',
+                            success: function(response) {
+                                if (response.code === 200) {
+                                    var body = $('.tv-tab-content-body .alt-hobby');
+                                    body.empty();
+                                    if (response.data && response.data && response.data.length) {
+                                        body.append($('<div>').addClass('unit-items'));
+                                        $.each(response.data, function() {
+                                            var html = $('.P_tmp .hobby-item').clone(true);
+                                            html.attr('cid', this.id).find('p').html(this.name);
+                                            html.click(function() {
+                                                $(this).closest('.unit-item').toggleClass('selected');
+                                                var arr = new Array();
+                                                var categories = 'none';
+                                                if ($('.unit-item.selected').length) {
+                                                    $.each($('.unit-item.selected'), function() {
+                                                        var $this = $(this).closest('.unit-item');
+                                                        arr.push($this.attr('cid'));
+                                                    });
+                                                    categories = arr.join(';');
+                                                }
+    <?php if ($user): ?>
+                                                    var data = {
+                                                        uid: '<?php echo $user->id ?>',
+                                                        category: categories
+                                                    };
+                                                    $.waiting(null, $('#tv'));
+                                                    $.ajax({
+                                                        url: '<?php echo $this->url(array(), 'api-user-category-save') ?>',
+                                                        dataType: 'json',
+                                                        type: 'post',
+                                                        data: data,
+                                                        complete: function() {
+                                                            $.endWaiting();
+                                                        }
+                                                    });
+    <?php endif ?>
+                                            });
+                                            if (this.like) {
+                                                html.addClass('selected');
+                                            }
+                                            body.find('.unit-items').append(html);
+                                        });
+                                        $this.attr('loaded', 'true');
+                                    }
+                                }
+                                $.endWaiting();
+                            }
+                        });
+                        break;
+                }
             }
-        }
-    });
+        });
+<?php else: ?>
+        $('.tv-tab-list-item-disabled').click(function() {
+            loginTipFunc();
+        });
+<?php endif; ?>
+
 
     $('#add-to-favor').click(function() {
         var $this = $(this);
@@ -493,13 +509,18 @@ $programs = $bean['programs'];
             });
         }
     });
-
-    $('#btn-toggle-audio, #btn-toggle-video').click(function() {
-        var mode = $(this).attr('rel');
-        switchMode(mode);
-        var bean = $('#tv-listbar').attr('sid') + ';' + $('.tv-tab-content-body .list-item.selected').attr('id') + ';' + PLAYER.currentTime;
-        localStorage.setItem('switch-mode', bean);
-    });
+<?php if ($user): ?>
+        $('#btn-toggle-audio, #btn-toggle-video').click(function() {
+            var mode = $(this).attr('rel');
+            switchMode(mode);
+            var bean = $('#tv-listbar').attr('sid') + ';' + $('.tv-tab-content-body .list-item.selected').attr('id') + ';' + PLAYER.currentTime;
+            localStorage.setItem('switch-mode', bean);
+        });
+<?php else: ?>
+        $('#btn-toggle-audio-disabled').click(function() {
+            loginTipFunc();
+        });
+<?php endif; ?>
     $(document).ready(function() {
         var ls = localStorage.getItem('switch-mode');
         if (ls) {
