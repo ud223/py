@@ -89,7 +89,7 @@ $programs = $bean['programs'];
         padding-bottom:20px;
         padding-top:20px;
     }
-    
+
     #refresh-btn {
         background:#04CC54;
         border-radius:4px;
@@ -152,25 +152,28 @@ $programs = $bean['programs'];
     </div>
 </div>
 <div class="container" id="download-mobile">
-    <div class="row">
-        <div class="col-md-12">
-            <a href="#" class="btn btn-success">Download Apple App</a>
-            <a href="#" class="btn btn-success">Download Android App</a>
-        </div>
-    </div>
+    <!--    <div class="row">
+            <div class="col-md-12">
+                <a href="#" class="btn btn-success">Download Apple App</a>
+                <a href="#" class="btn btn-success">Download Android App</a>
+            </div>
+        </div>-->
 </div>
 
 <div class="P_tmp">
-    <a class="btn btn-success btn-sm logout-link rtbtn pull-right" href="<?php echo $this->url(array(), 'logout') ?>">安全退出</a>
-
+    <?php if ($user): ?>
+        <a class="btn btn-success btn-sm log-link logout-link rtbtn pull-right" href="<?php echo $this->url(array(), 'logout') ?>">安全退出</a>
+    <?php else: ?>
+        <a class="btn btn-success btn-sm log-link login-link rtbtn pull-right" href="<?php echo $this->url(array(), 'login') ?>?goto=<?php echo $this->login_goto_url ?>">立即登录</a>
+    <?php endif; ?>
     <div class="login-tip">
         <div class="txt">请先登录，更多精彩节目等着您</div>
         <div>
             <a class="btn" href=>立即登录</a>
         </div>
     </div>
-    
-    <?php echo $this->partial('show/partials/_login_tip.phtml', array('url'=>$this->login_goto_url)); ?>
+
+    <?php echo $this->partial('show/partials/_login_tip.phtml', array('url' => $this->login_goto_url)); ?>
 </div>
 
 <script type="text/javascript">
@@ -178,7 +181,7 @@ $programs = $bean['programs'];
 
     (function($) {
         $(document).ready(function() {
-            var n = $('.logout-link').clone(true);
+            var n = $('.log-link').clone(true);
             $('#m3g-header .col-md-12').append(n);
         });
         $('.logout-link').click(function() {
@@ -197,6 +200,20 @@ $programs = $bean['programs'];
             $('#refresh-btn').click(function() {
                 location.href = PLAY_PAGE_URL;
             });
+
+            $(PLAYER).on('ended', function() {
+                var current = $('.list-item.selected');
+
+                if (current.length) {
+                    var next = current.next();
+                    if (next.length) {
+                        location.href = generatePlayLink(SPECIAL_ID, next.attr('id'), 2);
+                    } else {
+                        location.href = PLAY_PAGE_URL;
+                    }
+                }
+            });
+
 <?php else: ?>
             $('.list-item').click(function() {
                 loginTipFunc();
@@ -204,10 +221,10 @@ $programs = $bean['programs'];
             $('#refresh-btn').click(function() {
                 loginTipFunc();
             });
-            
-            $(PLAYER).on('ended', function(){
+
+            $(PLAYER).on('ended', function() {
                 loginTipFunc();
-            });         
+            });
 <?php endif; ?>
     })(jQuery);
 </script>
