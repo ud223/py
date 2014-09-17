@@ -2,7 +2,7 @@
 
 class Angel_UserController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('play-mode');
+    protected $login_not_required = array('player-mode');
     
     public function init() {
         $this->_helper->layout->setLayout('normal');
