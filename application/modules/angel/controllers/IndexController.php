@@ -58,12 +58,13 @@ class Angel_IndexController extends Angel_Controller_Action {
             $this->userRegister('login', "注册芝士电视", "user");
         }
         else {
-            //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
-            if ($this->isMobile()) {
+
+        }
+         //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
+        if ($this->isMobile()) {
                 $this->render('phone-register ');
                 $this->_helper->layout->setLayout('mobile');
             }
-        }
     }
 
 //    public function isEmailExistAction() {
