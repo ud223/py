@@ -210,6 +210,18 @@ class Angel_Model_Special extends Angel_Model_AbstractModel {
             return false;
     }
     
+    public function getSpecialByAuthorId($author_id) {
+        $result = false;
+        
+        if ($author_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('authorId')->equals($author_id)->sort('created_at', -1);
+            
+            $result = $query->getQuery();
+        }
+        
+        return $result;
+    }
+    
     public function getSpecialByAuthorIds($author_id) {
         $result = false;
         

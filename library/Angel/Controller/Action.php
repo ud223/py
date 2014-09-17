@@ -275,18 +275,17 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                 $user = $userModel->getUserByEmail($email);
                                 
                                 $go_url = $_SERVER["QUERY_STRING"];
-                
+                                
                                 if (!$go_url) {
                                     $go_url = '';
                                 }
-                                
+
                                 //如果是手机直接跳转到播放页面
                                 if ($this->isMobile()) {
-                                    $this->_redirect($this->view->url(array(), 'play'). "?". $go_url );
+                                    $go_url = str_replace("goto=", "", $go_url);
+                                    $this->_redirect($go_url);
                                 }
                                 else {
-                                    
-                                    
                                     // 跳转至兴趣设置页面
                                     $this->_redirect($this->view->url(array(), 'hobby') . '?' . $go_url);
                                 }

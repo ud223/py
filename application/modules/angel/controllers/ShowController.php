@@ -330,42 +330,36 @@ class Angel_ShowController extends Angel_Controller_Action {
         if ($q) {
             $specialModel = $this->getModel('special');
             $authorModel = $this->getModel('author');
+            $userModel = $this->getModel('user');
             
             $param = array('name' => new MongoRegex("/" . $q . "/i"));
             
-//            $users = $authorModel->getLikeQuery($param);
-//            
-//            $users_id = array();
-//            
-//            foreach ($users as $u) {
-//                $users_id[] = $u->id;
-//            }
+            $users = $userModel->getLikeQuery($param);
             
+            $users_id = array();
+            
+            foreach ($users as $u) {
+                $users_id[] = $u->id;
+            }
+            
+            $author = $authorModel->getById($users_id[0]);
+            
+            $author_id = $author->id;
             //获取专辑名模糊查询结果集
             $result_1 = $specialModel->getLikeQuery($param);
             //获取作者名模糊查询结果集
-//            $result_2 = $specialModel->getSpecialByAuthorIds($users_id);
-//            echo count($result_2); exit;
+            $result_2 = $specialModel->getSpecialByAuthorIds($users_id);
+
             $specials = array();
             
             foreach ($result_1 as $p) {
                 $specials[] = $p;
             }
-            
-//             foreach ($result_2 as $p) {
-//                 $ishas = false;
-//                 
-//                 foreach ($result_1 as $c) {
-//                    if ($p->id == $c->id) {
-//                        $ishas = true;
-//                        
-//                        break;
-//                    }
-//                 }
-//                 
-//                 if (!$ishas)
-//                    $specials[] = $p;
-//            }
+            //判断第二次循环中是否已经存在了第一次循环中的专辑，如果已经存在则跳过
+             foreach ($result_2 as $p) {
+                 if (!in_array($p, $specials))
+                    $specials[] = $p;
+            }
             
             if (count($specials)) {
                 $data = array();
