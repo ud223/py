@@ -2,7 +2,7 @@
 
 class Angel_IndexController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('index', 'upgrade', 'subscribe', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password', 'version-get', 'device', 'device-count', 'phone-login', 'phone-register');
+    protected $login_not_required = array('index', 'upgrade', 'subscribe', 'login', 'logout', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password', 'version-get', 'device', 'device-count', 'phone-login', 'phone-register');
 
     public function init() {
         $this->_helper->layout->setLayout('normal');

@@ -234,10 +234,12 @@ $programs = $bean['programs'];
         $('#tv-ctrl-fullscreen').click(function() {
             switchFullscreen();
         });
-
-        $('#tv-ctrl-c').click(function() {
-            clickSeek($('#tv-ctrl-c'));
-        });
+        // 防止进入页面连点导致的问题
+        setTimeout(function() {
+            $('#tv-ctrl-c').click(function() {
+                clickSeek($('#tv-ctrl-c'));
+            });
+        }, 1500);
 
         $('#btn-list').click(function() {
             $('#tv-listbar').toggle();
@@ -633,7 +635,10 @@ $programs = $bean['programs'];
 
 <?php if ($user): ?>
         $('#btn-refresh').click(function() {
-            location.href = PLAY_PAGE_URL;
+            $.waiting('正在为您推送新专辑...');
+            setTimeout(function() {
+                location.href = PLAY_PAGE_URL;
+            }, 3000);
         });
 <?php else: ?>
         $('#btn-refresh').click(function() {
