@@ -44,6 +44,10 @@ class Angel_ShowController extends Angel_Controller_Action {
                     $this->render('phone-play ');
                 }
                 
+                $loginPath = $this->view->url(array(), 'login') ;
+
+                $this->_redirect($loginPath);
+                
                 return;
             }
             // 随机获取一个新的专辑并且redirect到获取到的专辑地址
@@ -326,39 +330,39 @@ class Angel_ShowController extends Angel_Controller_Action {
             
             $param = array('name' => new MongoRegex("/" . $q . "/i"));
             
-            $users = $authorModel->getLikeQuery($param);
-            
-            $users_id = array();
-            
-            foreach ($users as $u) {
-                $users_id[] = $u->id;
-            }
+//            $users = $authorModel->getLikeQuery($param);
+//            
+//            $users_id = array();
+//            
+//            foreach ($users as $u) {
+//                $users_id[] = $u->id;
+//            }
             
             //获取专辑名模糊查询结果集
             $result_1 = $specialModel->getLikeQuery($param);
             //获取作者名模糊查询结果集
-            $result_2 = $specialModel->getSpecialByAuthorIds($users_id);
-            echo count($result_2); exit;
+//            $result_2 = $specialModel->getSpecialByAuthorIds($users_id);
+//            echo count($result_2); exit;
             $specials = array();
             
             foreach ($result_1 as $p) {
                 $specials[] = $p;
             }
             
-             foreach ($result_2 as $p) {
-                 $ishas = false;
-                 
-                 foreach ($result_1 as $c) {
-                    if ($p->id == $c->id) {
-                        $ishas = true;
-                        
-                        break;
-                    }
-                 }
-                 
-                 if (!$ishas)
-                    $specials[] = $p;
-            }
+//             foreach ($result_2 as $p) {
+//                 $ishas = false;
+//                 
+//                 foreach ($result_1 as $c) {
+//                    if ($p->id == $c->id) {
+//                        $ishas = true;
+//                        
+//                        break;
+//                    }
+//                 }
+//                 
+//                 if (!$ishas)
+//                    $specials[] = $p;
+//            }
             
             if (count($specials)) {
                 $data = array();
