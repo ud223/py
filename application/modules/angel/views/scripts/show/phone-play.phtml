@@ -206,12 +206,9 @@ $programs = $bean['programs'];
 
                 if (current.length) {
                     var next = current.next();
-                     alert(next.length);
                     if (next.length) {
-                        alert(1);
                         location.href = generatePlayLink(SPECIAL_ID, next.attr('id'), 2);
                     } else {
-                        alert(2);
                         location.href = PLAY_PAGE_URL;
                     }
                 }
