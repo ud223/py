@@ -269,6 +269,9 @@ class Angel_ShowController extends Angel_Controller_Action {
             $played_special_id = $this->request->getParam('special');
             
             $specialBean = false;
+            
+            if ($played_special_id == 'none')
+                $played_special_id = false;
 
             $specialBean = $this->getRecommendSpecial($played_special_id);
 
