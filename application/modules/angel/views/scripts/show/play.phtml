@@ -21,10 +21,12 @@ $programs = $bean['programs'];
         <div class="pxt">
             <button id='btn-refresh' class='ico tv-side-btn'></button>
             <button id='btn-list' class='ico tv-side-btn'></button>
-            <?php if ($player_mode == 'video'): ?>
-                <button id='btn-toggle-audio' rel="audio" class='ico tv-side-btn'></button>
-            <?php else: ?>
-                <button id='btn-toggle-video' rel="video" class='ico tv-side-btn'></button>
+            <?php if ($user): ?>
+                <?php if ($player_mode == 'video'): ?>
+                    <button id='btn-toggle-audio' rel="audio" class='ico tv-side-btn'></button>
+                <?php else: ?>
+                    <button id='btn-toggle-video' rel="video" class='ico tv-side-btn'></button>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
