@@ -633,7 +633,9 @@ $programs = $bean['programs'];
 
 <?php if ($user): ?>
         $('#btn-refresh').click(function() {
-            location.href = PLAY_PAGE_URL;
+            setTimeout(function() {
+                location.href = PLAY_PAGE_URL;
+            }, 3000);
         });
 <?php else: ?>
         $('#btn-refresh').click(function() {
