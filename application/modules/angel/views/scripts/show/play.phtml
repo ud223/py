@@ -324,10 +324,14 @@ $programs = $bean['programs'];
     });
 
     $('.alt-list .list-item').click(function() {
-        var programId = $(this).closest('.list-item').attr('id');
-        var specialId = $('#tv-listbar').attr('sid');
-        var url = generatePlayLink(specialId, programId, 2);
-        location.href = url;
+<?php if ($user): ?>
+            var programId = $(this).closest('.list-item').attr('id');
+            var specialId = $('#tv-listbar').attr('sid');
+            var url = generatePlayLink(specialId, programId, 2);
+            location.href = url;
+<?php else: ?>
+            loginTipFunc();
+<?php endif; ?>
     });
 
     $('.alt-list .list-item .sharing').click(function() {
