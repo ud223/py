@@ -37,12 +37,16 @@ class Angel_ShowController extends Angel_Controller_Action {
              // 未请求专辑ID
             //未登录且有一次播放记录
             if (!$this->me && $played_special_id) {
-                $this->view->message = "请先登录然后继续观看, 谢谢!";
+                $this->view->isLogin = 0;
 
                 if ($this->isMobile()) {
                     $this->_helper->layout->setLayout('mobile');
                     $this->render('phone-play ');
                 }
+                
+                $loginPath = $this->view->url(array(), 'login') ;
+
+                $this->_redirect($loginPath);
                 
                 return;
             }
@@ -90,6 +94,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                     setcookie('pid', $cur_program->id, time() + 3600 * 24,  "/");
                     $this->view->cur_program = $cur_program;
                     $this->view->resource = $result;
+                    $this->view->isLogin = 1;
                 } else {
                     //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
                 }
@@ -286,172 +291,6 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
     }
 
-//    public function specialRecommendAction() {
-//        if ($this->request->isPost()) {
-//            $recommendModel = $this->getModel('recommend');
-//            $specialModel = $this->getModel('special');
-//            $hotModel = $this->getModel("hot");
-//            $userModel = $this->getModel('user');
-//            $favouriteModel = $this->getModel('favourite');
-//
-//            $like = 0;
-//
-//            if ($this->me) {
-//                //获取当前需要推荐的用户ID
-//                $user = $this->me->getUser();
-//                $userId = $user->id;
-//
-//                $curSpecialId = $this->request->getParam('special');
-//
-//                if ($curSpecialId == "none")
-//                    $curSpecialId = false;
-//
-//                $special = false;
-//
-//                //获取该用户已经推荐过的专辑ID集合
-//                $recommends = $recommendModel->getRecommend($userId);
-//
-//                $recommend_special_id = array();
-//
-//                if ($recommends) {
-//                    foreach ($recommends as $r) {
-//                        $recommend_special_id[] = $r->specialId;
-//                    }
-//                }
-//
-//                $like_category_id = array();
-//
-//                foreach ($user->category as $c) {
-//                    $like_category_id[] = $c->id;
-//                }
-//
-//                //获取喜好热点专辑
-//                $hot = $hotModel->getLikeNotRecommendHot($like_category_id);
-//
-//                if ($hot) {
-//                    foreach ($hot as $h) {
-//                        foreach ($h->special as $p) {
-//                            $isRecommend = false;
-//
-//                            foreach ($recommend_special_id as $r) {
-//                                if ($p->id == $r) {
-//                                    $isRecommend = true;
-//                                }
-//                            }
-//
-//                            if (!$isRecommend) {
-//                                $special = $p;
-//
-//                                break;
-//                            }
-//                        }
-//
-//                        if ($special)
-//                            break;
-//                    }
-//                }
-//
-//                //获取非喜好热点专辑
-//                if (!$special) {
-//                    //获取喜好热点专辑
-//                    $hot = $hotModel->getNotRecommendHot($like_category_id);
-//
-//                    if ($hot) {
-//                        foreach ($hot as $h) {
-//                            foreach ($h->special as $p) {
-//                                $isRecommend = false;
-//
-//                                foreach ($recommend_special_id as $r) {
-//                                    if ($p->id == $r) {
-//
-//                                        $isRecommend = true;
-//
-//                                        break;
-//                                    }
-//                                }
-//
-//                                if (!$isRecommend) {
-//                                    $special = $p;
-//
-//                                    break;
-//                                }
-//                            }
-//
-//                            if ($special) {
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//                //获取喜好分类专辑
-//                if (!$special) {
-//                    $special = $specialModel->getSpecialByCategoryId($recommend_special_id, $like_category_id);
-//                }
-//
-//                //获取非喜好分类专辑
-//                if (!$special) {
-//                    $special = $specialModel->getSpecialByNotCategoryId($recommend_special_id, $like_category_id);
-//                }
-//            }
-//
-//            //没有热点，也没有没看过的视频，
-//            if (!$special) {
-//                //没有获取到当前视频id的极端情况
-//                if (!$curSpecialId) {
-//                    $special = $specialModel->getLastOne();
-//                } else {
-//                    $tmpSpecial = $specialModel->getById($curSpecialId);
-//
-//                    $special = $specialModel->getNext($tmpSpecial);
-//
-//                    if (!$special)
-//                        $special = $specialModel->getLastOne();
-//                }
-//            }
-//    //-------------------------------------------------------------------------------
-//            //获取该专辑上传达人
-//            $author = $userModel->getById($special->authorId); //$authorModel->getAuthorById($special->authorId);
-//            //首先判断当前用户是否登录，如果登录再判断当前专辑是否当前已收藏的专辑
-//            if ($this->me) {
-//                $favourites = $favouriteModel->getFavouriteByUserId($userId);
-//
-//                foreach ($favourites->special as $p) {
-//                    if ($p->id == $special->id) {
-//                        $like = 1;
-//
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            $result["id"] = $special->id;
-//            $result["name"] = $special->name;
-//
-//            if ($author)
-//                $result["author"] = $author->name;
-//
-//            $result["photo"] = $this->bootstrap_options['image_broken_ico']['small'];
-//            $result["photo_main"] = $this->bootstrap_options['image_broken_ico']['big'];
-//
-//            if (count($special->photo)) {
-//                $photo = $special->photo[0];
-//                $result["photo"] = $this->view->photoImage($photo->name . $photo->type, 'small');
-//                $result["photo_main"] = $this->view->photoImage($photo->name . $photo->type, 'main');
-//            }
-//
-//            foreach ($special->program as $program) {
-//                $result["programs"][] = array("id" => $program->id, "name" => $program->name, "time" => $program->time, "like" => $like, "oss_video" => $this->bootstrap_options['oss_prefix'] . $program->oss_video->key, "oss_audio" => $this->bootstrap_options['oss_prefix'] . $program->oss_audio->key);
-//            }
-//
-//            if ($this->me) {
-//                //保存推荐记录
-//                $recommendModel->addRecommend($special->id, $userId);
-//            }
-//            setcookie('specialId', $special->id, time() + 3600 * 24,  "/");
-//            $this->_helper->json(array('data' => $result, 'code' => 200));
-//        }
-//    }
-
     public function saveUserCategoryAction() {
          if ($this->request->isPost()) {
             $categoryModel = $this->getModel('category');
@@ -487,13 +326,47 @@ class Angel_ShowController extends Angel_Controller_Action {
         $q = trim($this->getParam('q'));
         if ($q) {
             $specialModel = $this->getModel('special');
+            $authorModel = $this->getModel('author');
+            
             $param = array('name' => new MongoRegex("/" . $q . "/i"));
             
-            $result = $specialModel->getLikeQuery($param);
+//            $users = $authorModel->getLikeQuery($param);
+//            
+//            $users_id = array();
+//            
+//            foreach ($users as $u) {
+//                $users_id[] = $u->id;
+//            }
             
-            if (count($result)) {
+            //获取专辑名模糊查询结果集
+            $result_1 = $specialModel->getLikeQuery($param);
+            //获取作者名模糊查询结果集
+//            $result_2 = $specialModel->getSpecialByAuthorIds($users_id);
+//            echo count($result_2); exit;
+            $specials = array();
+            
+            foreach ($result_1 as $p) {
+                $specials[] = $p;
+            }
+            
+//             foreach ($result_2 as $p) {
+//                 $ishas = false;
+//                 
+//                 foreach ($result_1 as $c) {
+//                    if ($p->id == $c->id) {
+//                        $ishas = true;
+//                        
+//                        break;
+//                    }
+//                 }
+//                 
+//                 if (!$ishas)
+//                    $specials[] = $p;
+//            }
+            
+            if (count($specials)) {
                 $data = array();
-                foreach ($result as $special) {
+                foreach ($specials as $special) {
                     $id = $special->id;
                     $name = $special->name;
                     $sharing_photo_path = $this->view->serverUrl() . $this->bootstrap_options['image_broken_ico']['small'];
