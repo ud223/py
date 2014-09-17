@@ -10,7 +10,7 @@ if ($this->me) {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>芝士电视</title>
+        <title><?php echo $this->title; ?></title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link href="<?php echo $this->cssPath("bootstrap.css"); ?>" rel="stylesheet" type="text/css" />
@@ -29,7 +29,7 @@ if ($this->me) {
             <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
             <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-
+        
         <script type="text/javascript">
             var PLAY_PAGE_URL = "<?php echo $this->url(array(), 'show-play') ?>";
             var SERVER_URL = "<?php echo $this->serverUrl() ?>";

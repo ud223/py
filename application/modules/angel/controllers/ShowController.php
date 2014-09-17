@@ -69,6 +69,9 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $this->_redirect($this->view->url(array(), 'not-found'));
             } else {
                 $result = $this->getSpecialInfo($specialBean);
+                $this->view->title = $result['name'];
+                $this->view->weixin = "<div id='wx_pic' style='display:none;'><img src='" . $result['photo'] . "' /></div>";
+                
                 if (count($result["programs"])) {
                     //如果没有查询到节目id就直接播放当前专辑第一个
                     $cur_program = $result["programs"][0];
@@ -77,7 +80,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                         foreach ($result["programs"] as $p) {                          
                             if ($p['id'] == $program_id) {
                                 $cur_program = $p;
-                                
+                                $this->view->title = $cur_program['name'];
                                 break;
                             }
                         }
