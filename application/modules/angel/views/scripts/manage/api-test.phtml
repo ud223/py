@@ -248,6 +248,23 @@ and open the template in the editor.
                 }
             });
          }
+         
+         function search_Test() {
+             var url = '/api/search/周';    
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                method: 'get',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+         }
         </script>
     </head>
     <body>
@@ -270,5 +287,6 @@ and open the template in the editor.
         <button type="button" onclick="userCategroy()">测试保存分类</button>
         <button type="button" onclick="Login()">测试登陆</button>
         <button type="button" onclick="playtest()">测试播放</button>
+        <button type="button" onclick="search_Test()">测试搜索</button>
     </body>
 </html>
