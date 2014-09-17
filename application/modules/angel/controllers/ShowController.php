@@ -20,7 +20,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     public function playAction() {
         $this->view->login_goto_url = $this->view->url(array(), 'login') . '?goto=' . $this->request->getRequestUri();
         $this->view->register_goto_url = $this->view->url(array(), 'register') . '?goto=' . $this->request->getRequestUri();
-        
+
         $recommendModel = $this->getModel('recommend');
         $specialModel = $this->getModel('special');
 
@@ -34,7 +34,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         //如果没有专辑id或当前url 专辑id等于上一次的播放专辑id，重新获取推荐
         if (!$special_id) {
-             // 未请求专辑ID
+            // 未请求专辑ID
             //未登录且有一次播放记录
             if (!$this->me && $played_special_id) {
                 $this->view->isLogin = 0;
@@ -43,11 +43,11 @@ class Angel_ShowController extends Angel_Controller_Action {
                     $this->_helper->layout->setLayout('mobile');
                     $this->render('phone-play ');
                 }
-                
-                $loginPath = $this->view->url(array(), 'login') ;
+
+                $loginPath = $this->view->url(array(), 'login');
 
                 $this->_redirect($loginPath);
-                
+
                 return;
             }
             // 随机获取一个新的专辑并且redirect到获取到的专辑地址
@@ -69,18 +69,18 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $this->_redirect($this->view->url(array(), 'not-found'));
             } else {
                 $result = $this->getSpecialInfo($specialBean);
-                $this->view->title = $result['name'];
+                $this->view->title = $this->bootstrap_options['site']['name'] . ' ' . $result['name'];
                 $this->view->weixin = "<div id='wx_pic' style='display:none;'><img src='" . $this->view->serverUrl() . $result['photo'] . "' /></div>";
-                
+
                 if (count($result["programs"])) {
                     //如果没有查询到节目id就直接播放当前专辑第一个
                     $cur_program = $result["programs"][0];
                     //根据program_id 获取当前要播放的节目
                     if ($program_id) {
-                        foreach ($result["programs"] as $p) {                          
+                        foreach ($result["programs"] as $p) {
                             if ($p['id'] == $program_id) {
                                 $cur_program = $p;
-                                $this->view->title = $cur_program['name'];
+                                $this->view->title = $this->bootstrap_options['site']['name'] . ' ' . $cur_program['name'];
                                 break;
                             }
                         }
@@ -93,8 +93,8 @@ class Angel_ShowController extends Angel_Controller_Action {
                         $recommendModel->addRecommend($specialBean->id, $user_id);
                     }
 
-                    setcookie('sid', $specialBean->id, time() + 3600 * 24,  "/");
-                    setcookie('pid', $cur_program->id, time() + 3600 * 24,  "/");
+                    setcookie('sid', $specialBean->id, time() + 3600 * 24, "/");
+                    setcookie('pid', $cur_program->id, time() + 3600 * 24, "/");
                     $this->view->cur_program = $cur_program;
                     $this->view->resource = $result;
                     $this->view->isLogin = 1;
@@ -232,7 +232,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
         $favouriteModel = $this->getModel('favourite');
         //获取该专辑上传达人
-        $author = $userModel->getById($special->authorId); 
+        $author = $userModel->getById($special->authorId);
 
         $like = 0;
 
@@ -270,15 +270,15 @@ class Angel_ShowController extends Angel_Controller_Action {
 
         return $result;
     }
-    
+
     public function specialRecommendAction() {
         if ($this->request->isPost()) {
             $recommendModel = $this->getModel('recommend');
-            
+
             $played_special_id = $this->request->getParam('special');
-            
+
             $specialBean = false;
-            
+
             if ($played_special_id == 'none')
                 $played_special_id = false;
 
@@ -295,7 +295,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
 
     public function saveUserCategoryAction() {
-         if ($this->request->isPost()) {
+        if ($this->request->isPost()) {
             $categoryModel = $this->getModel('category');
             $userModel = $this->getModel('user');
 
@@ -315,12 +315,12 @@ class Angel_ShowController extends Angel_Controller_Action {
 
             try {
 //                $userModel->saveUser($user, $categories);
-                $userModel->save($user->id, array('category'=>$categories));
+                $userModel->save($user->id, array('category' => $categories));
                 $this->_helper->json(array('data' => 'save success!', 'code' => 200));
             } catch (Exception $e) {
                 $this->_helper->json(array('data' => $e->getMessage(), 'code' => 0));
             }
-         }
+        }
     }
 
     public function searchAction() {
@@ -331,19 +331,19 @@ class Angel_ShowController extends Angel_Controller_Action {
             $specialModel = $this->getModel('special');
             $authorModel = $this->getModel('author');
             $userModel = $this->getModel('user');
-            
+
             $param = array('name' => new MongoRegex("/" . $q . "/i"));
-            
+
             $users = $userModel->getLikeQuery($param);
-            
+
             $users_id = array();
-            
+
             foreach ($users as $u) {
                 $users_id[] = $u->id;
             }
-            
+
             $author = $authorModel->getById($users_id[0]);
-            
+
             $author_id = $author->id;
             //获取专辑名模糊查询结果集
             $result_1 = $specialModel->getLikeQuery($param);
@@ -351,16 +351,16 @@ class Angel_ShowController extends Angel_Controller_Action {
             $result_2 = $specialModel->getSpecialByAuthorIds($users_id);
 
             $specials = array();
-            
+
             foreach ($result_1 as $p) {
                 $specials[] = $p;
             }
             //判断第二次循环中是否已经存在了第一次循环中的专辑，如果已经存在则跳过
-             foreach ($result_2 as $p) {
-                 if (!in_array($p, $specials))
+            foreach ($result_2 as $p) {
+                if (!in_array($p, $specials))
                     $specials[] = $p;
             }
-            
+
             if (count($specials)) {
                 $data = array();
                 foreach ($specials as $special) {
@@ -444,7 +444,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
 
     public function keywordVoteAction() {
-         if ($this->request->isPost()) {
+        if ($this->request->isPost()) {
             $voteModel = $this->getModel('vote');
             $programModel = $this->getModel('program');
 
@@ -484,8 +484,8 @@ class Angel_ShowController extends Angel_Controller_Action {
                 }
 
                 $this->_helper->json(array('data' => 'success', 'code' => 200));
-             }
-         }
+            }
+        }
     }
 
     public function downloadAndroidAction() {
@@ -631,7 +631,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $favouriteModel = $this->getModel('favourite');
                 $user_id = $this->me->getUser()->id;
                 $special_id = $this->request->getParam('sid');
-                
+
                 $result = $favouriteModel->isUserFavourite($user_id, $special_id);
                 if ($result) {
                     $this->_helper->json(array('code' => 200));
@@ -660,7 +660,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
 
     public function specialProgramListAction() {
-         if ($this->request->isPost()) {
+        if ($this->request->isPost()) {
             $specialModel = $this->getModel('special');
             $userModel = $this->getModel('user');
             $favouriteModel = $this->getModel('favourite');
@@ -677,7 +677,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                     //首先判断当前用户是否登录，如果登录再判断当前专辑是否当前已收藏的专辑
                     if ($this->me) {
                         $user_id = $this->me->getUser()->id;
-                        
+
                         $favourites = $favouriteModel->getFavouriteByUserId($user_id);
 
                         foreach ($favourites->special as $p) {
@@ -711,7 +711,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
 
             $this->_helper->json(array('data' => $result, 'code' => 200));
-         }
+        }
     }
 
     public function getLinkAction() {
@@ -730,4 +730,5 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
         }
     }
+
 }
