@@ -514,7 +514,7 @@ $programs = $bean['programs'];
         container.find('.cts-2').animate({
             left: '100%'
         }, 200, 'linear');
-    })
+    });
 
     function switchMode(mode) {
         var data = {'value': mode};
@@ -527,6 +527,7 @@ $programs = $bean['programs'];
             method: 'post',
             success: function(response) {
                 if (response.code === 200) {
+                    alert(url);
                     location.reload();
                 } else {
                 }
