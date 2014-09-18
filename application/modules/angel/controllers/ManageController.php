@@ -351,7 +351,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
-            $tmp = $this->getParam('tmp');
+            $tmp = trim($this->getParam('tmp'));
             $title = $this->getParam('title');
             $description = $this->getParam('description');
             $phototypeId = $this->getParam('phototype');
@@ -1226,7 +1226,6 @@ class Angel_ManageController extends Angel_Controller_Action {
             $page = 1;
         }
 
-        $root = $specialModel->getRoot();
         $paginator = $specialModel->getAll();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
@@ -1234,7 +1233,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         $resource = array();
         setcookie("userId", "");
         
-        foreach ($root as $r) {
+        foreach ($paginator as $r) {
             $resource[] = array(
                 'id' => $r->id,
                 'name' => $r->name//,
