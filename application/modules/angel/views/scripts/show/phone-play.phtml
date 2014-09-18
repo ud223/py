@@ -124,7 +124,7 @@ $programs = $bean['programs'];
                 $src = $this->cur_program["oss_video"];
             }
             ?>
-            <video style="width:100%" controls="false" src="<?php echo $src; ?>" controls="controls" autoplay>
+            <video style="width:100%" src="<?php echo $src; ?>" controls="controls" preload="auto" autoplay>
                 您的浏览器不支持 video 标签。
             </video>
             <div class="clear"></div>
