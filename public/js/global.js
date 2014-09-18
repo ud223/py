@@ -245,3 +245,12 @@ function inArray(val, arr) {
     };
 })(jQuery);
 
+
+
+
+
+
+String.prototype.isEmail = function() {
+    var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+    return reg.test(this);
+};
