@@ -286,9 +286,9 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                     $this->_redirect($go_url);
                                 }
                                 else {
-                                    $go_url = str_replace("goto=/play?", "", $go_url);
+                                    $go_url = str_replace("goto=/play?", "?", $go_url);
                                     // 跳转至兴趣设置页面
-                                    $this->_redirect($this->view->url(array(), 'hobby') . '?' . $go_url);
+                                    $this->_redirect($this->view->url(array(), 'hobby') . $go_url);
                                 }
                             } else {
                                 $this->view->error = $errorMsg;
