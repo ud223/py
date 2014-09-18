@@ -135,6 +135,7 @@ $programs = $bean['programs'];
                 <span>播放列表</span>
                 <p><?php echo $bean['name'] ?></p>
             </div>
+            <div>
             <?php foreach ($programs as $program): ?>
                 <?php
                 $cls = "";
@@ -146,7 +147,7 @@ $programs = $bean['programs'];
                     <div class="list-item-cell lt"><?php echo $program['name'] ?></div>
                 </div>
             <?php endforeach; ?>
-
+            </div>
             <div id="refresh-btn">换一波看看</div>
         </div>
     </div>
@@ -206,6 +207,7 @@ $programs = $bean['programs'];
 
                 if (current.length) {
                     var next = current.next();
+
                     if (next.length) {
                         location.href = generatePlayLink(SPECIAL_ID, next.attr('id'), 2);
                     } else {

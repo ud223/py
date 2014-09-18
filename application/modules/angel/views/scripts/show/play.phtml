@@ -277,6 +277,7 @@ $programs = $bean['programs'];
                 var current = $('.tv-tab-content-body .list-item.selected');
                 if (current.length) {
                     var next = current.next();
+  
                     if (next.length) {
                         location.href = generatePlayLink($('#tv-listbar').attr('sid'), next.attr('id'), 2);
                     } else {
