@@ -7,13 +7,13 @@ function sharingIt(obj) {
     var rlink;
     if (sid) {
         // sharing special
-        rlink = generatePlayLink(sid, false, 1, true);
+        rlink = generatePlayLink(sid, false, 2, true);
         img = $this.attr('sharing_photo');
     } else {
         // sharing program
         sid = $('#tv-listbar').attr('sid');
         var pid = $this.attr('id');
-        rlink = generatePlayLink(sid, pid, 1, true);
+        rlink = generatePlayLink(sid, pid, 2, true);
     }
     var content = $('.sharing-popup').clone(true);
     title = "“" + title + "”";
