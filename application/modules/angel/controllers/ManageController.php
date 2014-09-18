@@ -351,7 +351,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         if ($this->request->isPost()) {
             $result = 0;
             // POST METHOD
-            $tmp = $this->getParam('tmp');
+            $tmp = trim($this->getParam('tmp'));
             $title = $this->getParam('title');
             $description = $this->getParam('description');
             $phototypeId = $this->getParam('phototype');
