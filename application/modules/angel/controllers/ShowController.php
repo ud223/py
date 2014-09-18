@@ -60,48 +60,49 @@ class Angel_ShowController extends Angel_Controller_Action {
         } else {
             $cur_program = false;
 
-            $specialBean = $specialModel->getById($special_id);
-            // 由于专辑ID一定存在， 而节目ID可能存在
-            // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
-            // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
-            //如果当前专辑不存在或已被删除
-            if (!$specialBean) {
-                $this->_redirect($this->view->url(array(), 'not-found'));
-            } else {
-                $result = $this->getSpecialInfo($specialBean);
-                $this->view->title = $this->bootstrap_options['site']['name'] . ' | ' . $result['name'];
-
-                if (count($result["programs"])) {
-                    //如果没有查询到节目id就直接播放当前专辑第一个
-                    $cur_program = $result["programs"][0];
-                    //根据program_id 获取当前要播放的节目
-                    if ($program_id) {
-                        foreach ($result["programs"] as $p) {
-                            if ($p['id'] == $program_id) {
-                                $cur_program = $p;
-                                $this->view->title = $this->view->title . ' | ' . $cur_program['name'];
-                                break;
-                            }
-                        }
-                    }
-
-                    if ($this->me) {
-                        //获取当前需要推荐的用户ID
-                        $user_id = $this->me->getUser()->id;
-                        //保存推荐记录  可能调整一下位置
-                        $recommendModel->addRecommend($specialBean->id, $user_id);
-                    }
-
-                    setcookie('sid', $specialBean->id, time() + 3600 * 24, "/");
-                    setcookie('pid', $cur_program->id, time() + 3600 * 24, "/");
-                    $this->view->cur_program = $cur_program;
-                    $this->view->resource = $result;
-                    $this->view->isLogin = 1;
-                } else {
-                    //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
-                }
-            }
+//            $specialBean = $specialModel->getById($special_id);
+//            // 由于专辑ID一定存在， 而节目ID可能存在
+//            // 首先根据专辑ID获取专辑，以及所有专辑包含的节目
+//            // 如果获取到了节目ID，指示页面播放指定节目，否则播放第一首节目
+//            //如果当前专辑不存在或已被删除
+//            if (!$specialBean) {
+//                $this->_redirect($this->view->url(array(), 'not-found'));
+//            } else {
+//                $result = $this->getSpecialInfo($specialBean);
+//                $this->view->title = $this->bootstrap_options['site']['name'] . ' | ' . $result['name'];
+//
+//                if (count($result["programs"])) {
+//                    //如果没有查询到节目id就直接播放当前专辑第一个
+//                    $cur_program = $result["programs"][0];
+//                    //根据program_id 获取当前要播放的节目
+//                    if ($program_id) {
+//                        foreach ($result["programs"] as $p) {
+//                            if ($p['id'] == $program_id) {
+//                                $cur_program = $p;
+//                                $this->view->title = $this->view->title . ' | ' . $cur_program['name'];
+//                                break;
+//                            }
+//                        }
+//                    }
+//
+//                    if ($this->me) {
+//                        //获取当前需要推荐的用户ID
+//                        $user_id = $this->me->getUser()->id;
+//                        //保存推荐记录  可能调整一下位置
+//                        $recommendModel->addRecommend($specialBean->id, $user_id);
+//                    }
+//
+//                    setcookie('sid', $specialBean->id, time() + 3600 * 24, "/");
+//                    setcookie('pid', $cur_program->id, time() + 3600 * 24, "/");
+//                    $this->view->cur_program = $cur_program;
+//                    $this->view->resource = $result;
+//                    $this->view->isLogin = 1;
+//                } else {
+//                    //如果为假，就是没有根据专辑id找到对应的专辑，跳到404页面
+//                }
+//            }
         }
+        
         // 判断用户来自于PC端还是手机端，render不同的模板和Layout
         if ($this->isMobile()) {
             $this->_helper->layout->setLayout('mobile');
