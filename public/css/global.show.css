@@ -925,6 +925,23 @@ h3 {
 .login-tip .txt {
     margin-bottom:15px;
 }
+
+#m-title {
+    color:#FFF;
+    font-size:25px;
+    left:30px;
+    position: fixed;
+    text-shadow:0 0 30px rgba(0,0,0,.8);
+    top:30px;
+    z-index:30;
+}
+#m-title .a {
+    
+}
+#m-title .b {
+    
+}
+
 /*
  *	untitle id & class
  * */
