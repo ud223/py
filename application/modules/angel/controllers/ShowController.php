@@ -71,7 +71,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $result = $this->getSpecialInfo($specialBean);
                 $this->view->title = $this->bootstrap_options['site']['name'] . ' ' . $result['name'];
                 $this->view->weixin = "<div id='wx_pic' style='display:none;'><img src='" . $this->view->serverUrl() . $result['photo'] . "' /></div>";
-
+                $this->view->weixin_thumb = $this->view->serverUrl() . $result['photo'];
                 if (count($result["programs"])) {
                     //如果没有查询到节目id就直接播放当前专辑第一个
                     $cur_program = $result["programs"][0];

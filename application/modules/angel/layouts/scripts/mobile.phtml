@@ -23,6 +23,7 @@
         <![endif]-->
         
         <?php echo $this->weixin; ?>
+        
     </head>
     <body>
         <div class="container" id="m3g-header">
@@ -44,6 +45,8 @@
     <script>
         var PLAY_PAGE_URL = "<?php echo $this->url(array(), 'show-play') ?>";
         var SERVER_URL = "<?php echo $this->serverUrl() ?>";
+        var msg_title = "我勒个去";
+        var msg_cdn_url = "<?php echo $this->weixin_thumb ?>";
     </script>
 </html>
 
