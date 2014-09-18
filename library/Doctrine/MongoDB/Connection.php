@@ -278,8 +278,7 @@ class Connection
 
     protected function retry(\Closure $retry)
     {
-        $numRetries = 10;
-        if (!$numRetries) {
+        if (!$numRetries = $this->config->getRetryConnect()) {
             return $retry();
         }
 
