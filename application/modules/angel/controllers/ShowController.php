@@ -69,7 +69,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 $this->_redirect($this->view->url(array(), 'not-found'));
             } else {
                 $result = $this->getSpecialInfo($specialBean);
-                $this->view->title = $this->bootstrap_options['site']['name'] . ' ' . $result['name'];
+                $this->view->title = $this->bootstrap_options['site']['name'] . ' | ' . $result['name'];
 
                 if (count($result["programs"])) {
                     //如果没有查询到节目id就直接播放当前专辑第一个
@@ -79,7 +79,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                         foreach ($result["programs"] as $p) {
                             if ($p['id'] == $program_id) {
                                 $cur_program = $p;
-                                $this->view->title = $this->bootstrap_options['site']['name'] . ' ' . $cur_program['name'];
+                                $this->view->title = $this->view->title . ' | ' . $cur_program['name'];
                                 break;
                             }
                         }

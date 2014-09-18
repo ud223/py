@@ -15,10 +15,7 @@ $bean = $this->resource;
 $programs = $bean['programs'];
 ?>
 
-<div id="m-title">
-    <p class="a"><?php echo $this->cur_program['name'] ?></p>
-    <p class="b"></p>
-</div>
+
 <div id="tv-main-container" class="layer">
     <div id='tv-sider'>
         <div class="pxt">
@@ -35,6 +32,11 @@ $programs = $bean['programs'];
             <?php endif; ?>
         </div>
     </div>
+    
+    <div id="m-title">
+    <p class="a"><?php echo $this->cur_program['name'] ?></p>
+    <p class="b"></p>
+</div>
 
     <?php if ($user && $user->author): ?>
         <div class="tv-search-content">
@@ -527,6 +529,10 @@ $programs = $bean['programs'];
         });
 <?php endif; ?>
     $(document).ready(function() {
+        setTimeout(function(){
+            $('#m-title').css('opacity', '0.15');
+        }, 3000);
+        
         var ls = localStorage.getItem('switch-mode');
         if (ls) {
             var lss = ls.split(';');
