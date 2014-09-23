@@ -1239,7 +1239,7 @@
     jQuery.extend(jQuery.validator.messages, {
         required: "必填字段，请正确填写",
         remote: "请修正该字段",
-        email: "请输入正确格式的电子邮件",
+        email: "请输入正确格式的电子邮箱",
         url: "请输入合法的网址",
         date: "请输入合法的日期",
         dateISO: "请输入合法的日期 (ISO).",
