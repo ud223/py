@@ -242,7 +242,7 @@ $programs = $bean['programs'];
             $('#tv-ctrl-prog').css('width', (PLAYER.currentTime / PLAYER.duration) * 100 + '%');
             if (!isNaN(PLAYER.duration) && !isNaN(PLAYER.currentTime)) {
                 $('#tv-ctrl-st').html(PLAYER.duration.timeFormat());
-                $('#tv-ctrl-ct ').html(PLAYER.currentTime.timeFormat());
+                $('#tv-ctrl-ct').html(PLAYER.currentTime.timeFormat());
             }
         }, 100);
 
@@ -253,6 +253,8 @@ $programs = $bean['programs'];
         setTimeout(function() {
             $('#tv-ctrl-c').click(function() {
                 clickSeek($('#tv-ctrl-c'));
+                $('#tv-ctrl-play').hide();
+                $('#tv-ctrl-pause').show();
             });
         }, 1500);
 
@@ -549,7 +551,7 @@ $programs = $bean['programs'];
             var lss = ls.split(';');
             if (lss[0] === $('#tv-listbar').attr('sid') && lss[1] === $('.tv-tab-content-body .list-item.selected').attr('id')) {
                 seek(null, parseFloat(lss[2]));
-                localStorage.getItem('switch-mode', null);
+                localStorage.setItem('switch-mode', null);
             }
         }
     });
