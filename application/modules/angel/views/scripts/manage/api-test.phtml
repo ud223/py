@@ -265,6 +265,46 @@ and open the template in the editor.
                 }
             });
          }
+         
+         function vote_carry_test() {
+            var url = '/api/keyword/vote';    
+             
+            var data = {'pid': '54097157c3df377b6e8b456c', 'time': '20' };
+            
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                method: 'get',
+                success: function(response) {
+                    
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+         }
+         
+         function load_carry_test() {
+             var url = '/api/recommend/get';    
+
+            var data = {'special': '54097157c3df377b6e8b456c' };
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                method: 'get',
+                success: function(response) {
+                    vote_carry_test();
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+         }
+         
+         function loop_carry_test() {
+            setInterval(load_carry_test, 10);
+         }
         </script>
     </head>
     <body>
@@ -288,5 +328,7 @@ and open the template in the editor.
         <button type="button" onclick="Login()">测试登陆</button>
         <button type="button" onclick="playtest()">测试播放</button>
         <button type="button" onclick="search_Test()">测试搜索</button>
+        
+        <button type="button" onclick="loop_carry_test()">测试负载</button>
     </body>
 </html>
