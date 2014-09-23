@@ -25,7 +25,12 @@ $model = $this->model;
     <?php foreach ($this->resource as $p): ?>
         <div class="col-md-2 itm">
             <div class="paddingbox20px relative">
-                <p><?php echo $p['email'] ; ?></p>
+                <p>邮箱:<?php echo $p['email'];  ?></p>
+                <p>用户名:<?php echo $p['username'];  ?></p>
+                <p>密码:<?php echo $p['password_src'];  ?></p>
+                <p>性别:<?php echo $p['gender'];  ?></p>
+                <p>出生年份:<?php echo $p['age'];  ?></p>
+                <p>注册时间:<?php echo $p['ceated_date'];  ?></p>
                 <div class="btn-group">
                     <a type="button" href="<?php echo $this->url(array(id => $p["id"]), 'manage-vip-save') ?>" class="btn btn-info btn-sm">编辑</a>
                     <?php if ($p['author'] == 1): ?>
@@ -39,7 +44,7 @@ $model = $this->model;
         </div>
         <?php $c ++; ?>
         <?php if ($c % 6 == 0): ?>
-            <div class="clearfix"></div>
+            <div class="clearfix"></div><div class="clear"></div>
         <?php endif; ?>
     <?php endforeach; ?>
 </div>
