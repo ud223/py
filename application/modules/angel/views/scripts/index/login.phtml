@@ -41,7 +41,8 @@
             $('.content').paper({type: 'success', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-ok-sign"></b> 注册成功，请登录芝士电视');
 <?php endif; ?>
 <?php if ($this->error): ?>
-            $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?> <a href="<?php echo $this->url(array(), 'forgot-password') ?>" class="border-btn border-btn-xs">找回密码</a>');
+            //$('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?> <a href="<?php echo $this->url(array(), 'forgot-password') ?>" class="border-btn border-btn-xs">找回密码</a>');
+            $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>');
 <?php endif; ?>
     });
 
