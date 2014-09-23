@@ -4,13 +4,9 @@
             <?php echo $this->title; ?>
             <?php 
                 $go_url = $_SERVER["QUERY_STRING"];
-                $go_url = str_replace("/play", "", $go_url);
                 
                 if ($go_url) {
-                    $go_url = "?". $go_url;
-                }
-                else {
-                    $go_url = "";
+                    $go_url = '?'. $go_url;
                 }
             ?>
             <a href="<?php echo $this->url(array(), 'register') . $go_url?>">10秒注册</a>
