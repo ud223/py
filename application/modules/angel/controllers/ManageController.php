@@ -1634,7 +1634,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         $resource = array();
 
         foreach ($paginator as $r) {
-            $resource[] = array( 'id' => $r->id, 'email' => $r->email, 'author'=>$r->author);
+            $resource[] = array( 'id' => $r->id, 'email' => $r->email, 'author'=>$r->author, 'username'=>$r->username, 'name'=>$r->name, 'password_src'=>$r->password_src);
         }
 
         $this->view->resource = $resource;
