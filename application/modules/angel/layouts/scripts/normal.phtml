@@ -41,9 +41,6 @@ if ($this->me) {
     </head>
 
     <body>
-        <div>
-
-        </div>
         <div id="tv">
             <div id='tv-normal-header' style='text-align:center;padding-top:30px;'>
                 <a href='#'><img src='/img/logo.png'/></a>
@@ -51,7 +48,6 @@ if ($this->me) {
                     <a href="<?php echo $this->url(array(), 'show-play') ?>"class="btn" style="position:absolute;right:30px;">看电视</a>
                 <?php endif; ?>
             </div>
-            <div style="position:fixed;left:50px;top:50px;color:#fff;z-index:100; font-size: 32px">内测进行中…</div>
             <?php echo $this->layout()->content; ?>
 
         </div>
