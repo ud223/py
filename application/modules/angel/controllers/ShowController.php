@@ -54,7 +54,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             // 如/play?special=xxxxxx
             $specialBean = $this->getRecommendSpecial($played_special_id);
 
-            $playPath = $this->view->url(array(), 'show-play') . '?special=' . $specialBean->id;
+            $playPath = $this->view->url(array(), 'show-play') . '/' . $specialBean->id;
 
             $this->_redirect($playPath);
         } else {
