@@ -15,7 +15,7 @@ class Sharing extends AbstractDocument{
     /** @ODM\String */
     protected $channel;
     
-    /** @ODM\ReferenceMany(targetDocument="\Documents\User") */
+    /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
     protected $owner;
     
 }
