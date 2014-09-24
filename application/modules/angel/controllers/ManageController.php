@@ -1213,7 +1213,10 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->title = "创建专辑";
             $this->view->authors = $userModel->getVipList(false);
             $this->view->not_own_programs = $not_own_programs;
-            $this->view->categorys = $categoryModel->getUseCategory();
+            
+            $use_category_condition = array( 'isuse' => 1,  );
+            
+            $this->view->categorys = $categoryModel->getby(false, $use_category_condition);
         }
     }
 
@@ -1365,7 +1368,9 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $own_programs = $programModel->getProgramOwn($programIds);
                 $not_own_programs = $programModel->getProgramNotOwn($programIds);
                 
-                $categorys = $categoryModel->getUseCategory();
+                $use_category_condition = array( 'isuse' => 1,  );
+            
+                $categorys = $categoryModel->getby(false, $use_category_condition);
   
                 $this->view->categorys = $categorys;
                 $this->view->authors = $userModel->getVipList(false);

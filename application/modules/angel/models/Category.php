@@ -50,17 +50,6 @@ class Angel_Model_Category extends Angel_Model_AbstractModel {
 
         return $result;
     }
-
-    public function getUseCategory() {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)
-                ->sort('created_at', -1);
-        $result = null;
-        $result = $query->field('isuse')
-                ->equals(1)
-                ->getQuery();
-
-        return $result;
-    }
     
     public function getByParent($parent_id) {
         $result = null;
