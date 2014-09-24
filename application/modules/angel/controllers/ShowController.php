@@ -249,7 +249,11 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
 
         $result["id"] = $special->id;
-        $result["name"] = $special->name;
+        $result["name"] = "";
+        
+        if ($special->name)
+            $result["name"] = $special->name;
+        
         $result["like"] = $like;
 
         if ($author)
