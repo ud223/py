@@ -396,7 +396,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         $user = $this->me->getUser();
         $user_id = $user->id;
 
-        $result = $categoryModel->getAll(false);
+        $result = $categoryModel->getUseCategory();
 
         $category = array();
 

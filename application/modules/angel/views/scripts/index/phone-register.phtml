@@ -92,7 +92,14 @@
     </div>
 </form>
 <div class="P_tmp">
-    <a class="btn btn-success btn-sm register-link rtbtn pull-right" href="<?php echo $this->url(array(), 'login') ?>">登录</a>
+    <?php 
+            $go_url = $_SERVER["QUERY_STRING"];
+
+            if ($go_url) {
+                $go_url = '?'. $go_url;
+            }
+        ?>
+    <a class="btn btn-success btn-sm register-link rtbtn pull-right" href="<?php echo $this->url(array(), 'login'). $go_url ?>">登录</a>
 </div>
 <script type="text/javascript">
     (function($) {

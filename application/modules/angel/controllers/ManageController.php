@@ -815,8 +815,9 @@ class Angel_ManageController extends Angel_Controller_Action {
             $name = $this->request->getParam('name');
             $description = $this->request->getParam('description');
             $parentId = $this->request->getParam('parent');
+            $isuse = $this->request->getParam('isuse');
             try {
-                $result = $categoryModel->addCategory($name, $description, $parentId, $level);
+                $result = $categoryModel->addCategory($name, $description, $parentId, $isuse);
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
@@ -828,7 +829,6 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             // GET METHOD
             $this->view->title = "创建分类";
-            $this->view->categories = $categoryModel->getAll(false);
         }
     }
 
@@ -843,7 +843,6 @@ class Angel_ManageController extends Angel_Controller_Action {
             $page = 1;
         }
 
-//        $root = $keyWordModel->getRoot();
         $paginator = $categoryModel->getAll();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
@@ -883,9 +882,10 @@ class Angel_ManageController extends Angel_Controller_Action {
             $name = $this->request->getParam('name');
             $description = $this->request->getParam('description');
             $parentId = $this->request->getParam('parent');
+            $isuse = $this->request->getParam('isuse');
             
             try {
-                $result = $categoryModel->saveCategory($id, $name, $description, $parentId);
+                $result = $categoryModel->saveCategory($id, $name, $description, $parentId, $isuse);
             } catch (Angel_Exception_Category $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
@@ -899,7 +899,6 @@ class Angel_ManageController extends Angel_Controller_Action {
         } else {
             // GET METHOD
             $this->view->title = "编辑分类";
-            $this->view->categories = $categoryModel->getAll(false);
 
             $id = $this->request->getParam("id");
             if ($id) {
@@ -1214,7 +1213,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->title = "创建专辑";
             $this->view->authors = $userModel->getVipList(false);
             $this->view->not_own_programs = $not_own_programs;
-            $this->view->categorys = $categoryModel->getAll(false);
+            $this->view->categorys = $categoryModel->getUseCategory();
         }
     }
 
@@ -1366,7 +1365,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $own_programs = $programModel->getProgramOwn($programIds);
                 $not_own_programs = $programModel->getProgramNotOwn($programIds);
                 
-                $categorys = $categoryModel->getAll(false);
+                $categorys = $categoryModel->getUseCategory();
   
                 $this->view->categorys = $categorys;
                 $this->view->authors = $userModel->getVipList(false);

@@ -2,7 +2,14 @@
     <div class="board">
         <div class="title">
             <?php echo $this->title; ?>
-            <a href="<?php echo $this->url(array(), 'login') ?>">我是会员，直接登录</a>
+            <?php 
+                $go_url = $_SERVER["QUERY_STRING"];
+                
+                if ($go_url) {
+                    $go_url = '?'. $go_url;
+                }
+            ?>
+            <a href="<?php echo $this->url(array(), 'login') . $go_url ?>">我是会员，直接登录</a>
         </div>
         <div class="content">
             <form method="post" id="validate-form">
