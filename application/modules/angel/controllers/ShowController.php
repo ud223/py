@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play', 'special-program-list', 'special-recommend');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play', 'special-program-list', 'special-recommend', 'program-add-count');
 
     public function init() {
         parent::init();
@@ -91,9 +91,13 @@ class Angel_ShowController extends Angel_Controller_Action {
                         //保存推荐记录  可能调整一下位置
                         $recommendModel->addRecommend($specialBean->id, $user_id);
                     }
-
+                    
+                    $pid = $cur_program['id'];
+                    
+                    $this->programAddCount($pid);
+                    
                     setcookie('sid', $specialBean->id, time() + 3600 * 24, "/");
-                    setcookie('pid', $cur_program->id, time() + 3600 * 24, "/");
+                    setcookie('pid', $cur_program['id'], time() + 3600 * 24, "/");
                     $this->view->cur_program = $cur_program;
                     $this->view->resource = $result;
                     $this->view->isLogin = 1;
@@ -736,5 +740,37 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
         }
     }
+    
+    private function programAddCount($pid) {
+        $programModel = $this->getModel('program');
 
+        $result = $programModel->programAddCount($pid);
+
+        if ($result) {
+            return true;
+        }
+        else {
+            return false;
+        }            
+    }
+
+    public function  programAddCountAction() {
+        if ($this->request->isPost()) {
+            $pid = $this->request->getParam('program');
+
+            if ($pid) {
+                $return = $this->programAddCount($pid);
+                
+                if ($return) {
+                    $this->_helper->json(array('data' => 'success', 'code' => 200));
+                }
+                else {
+                    $this->_helper->json(array('data' => 'is failed', 'code' => 500));
+                }
+            }
+            else {
+                $this->_helper->json(array('data' => 'need program id', 'code' => 500));
+            }
+        }
+    }
 }

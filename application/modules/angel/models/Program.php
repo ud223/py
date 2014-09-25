@@ -47,6 +47,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->owner = $owner;
         $program->time = $time;
         $program->captions = $captions;
+        $program->count = 0;
          
         try {
             $this->_dm->persist($program);
@@ -165,6 +166,26 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $result = $query
                 ->getQuery();
         
+        return $result;
+    }
+    
+    public function programAddCount($program_id) {
+        $result = false;
+
+        $program = $this->getById($program_id);
+        
+        $program->count = $program->count + 1;
+        
+        try {
+            $this->_dm->persist($program);
+            $this->_dm->flush();
+
+            $result = $program->id;
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_Program(Angel_Exception_Program::SAVE_PROGRAM_FAIL);
+        }
+
         return $result;
     }
     
