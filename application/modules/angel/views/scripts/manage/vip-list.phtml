@@ -19,6 +19,9 @@ $model = $this->model;
     <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-vip-create') ?>">添加达人</a>
 </div>
 <div class="row">
+    <div class="col-md-12 marginbottom20px">
+        共有注册用户： <?php echo count($this->resource) ?> 人
+    </div>
     <?php
         $c = 0;
     ?>
