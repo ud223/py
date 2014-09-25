@@ -305,6 +305,26 @@ and open the template in the editor.
          function loop_carry_test() {
             setInterval(load_carry_test, 10);
          }
+         
+         function adc() {
+            var url = '/api/program/add/count';    
+
+            var data = {'program': '53e2ea95b3580eca0a8b456c' };
+//            
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: data,
+                method: 'post',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+         }
         </script>
     </head>
     <body>
@@ -330,5 +350,6 @@ and open the template in the editor.
         <button type="button" onclick="search_Test()">测试搜索</button>
         
         <button type="button" onclick="loop_carry_test()">测试负载</button>
+        <button type="button" onclick="adc()">测试节目</button>
     </body>
 </html>
