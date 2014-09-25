@@ -45,7 +45,14 @@
     </div>
 </form>
 <div class="P_tmp">
-    <a class="btn btn-success btn-sm login-link rtbtn pull-right" href="<?php echo $this->url(array(), 'register') ?>">注册新会员</a>
+    <?php 
+            $go_url = $_SERVER["QUERY_STRING"];
+
+            if ($go_url) {
+                $go_url = '?'. $go_url;
+            }
+        ?>
+    <a class="btn btn-success btn-sm login-link rtbtn pull-right" href="<?php echo $this->url(array(), 'register'). $go_url ?>">注册新会员</a>
 </div>
 <script type="text/javascript">
     (function($) {
