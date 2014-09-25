@@ -97,7 +97,7 @@ $programs = $bean['programs'];
         padding:10px;
         text-align:center;
     }
-    
+
     .download-btn {
         background:url(/img/mobile-download-icons.png) left top no-repeat;
         background-color:#04CC54;
@@ -124,8 +124,6 @@ $programs = $bean['programs'];
                     <span class="sub-title">by <?php echo $bean['author'] ?></span>
                 </li>
             </ul>
-
-
         </div>
     </div>
 </div>
@@ -150,29 +148,29 @@ $programs = $bean['programs'];
                 <p><?php echo $bean['name'] ?></p>
             </div>
             <div>
-            <?php foreach ($programs as $program): ?>
-                <?php
-                $cls = "";
-                if ($this->cur_program['id'] == $program['id']) {
-                    $cls = " selected";
-                }
-                ?>
-                <div class="list-item clearfix<?php echo $cls ?>" id="<?php echo $program['id'] ?>">
-                    <div class="list-item-cell lt"><?php echo $program['name'] ?></div>
-                </div>
-            <?php endforeach; ?>
+                <?php foreach ($programs as $program): ?>
+                    <?php
+                    $cls = "";
+                    if ($this->cur_program['id'] == $program['id']) {
+                        $cls = " selected";
+                    }
+                    ?>
+                    <div class="list-item clearfix<?php echo $cls ?>" id="<?php echo $program['id'] ?>">
+                        <div class="list-item-cell lt"><?php echo $program['name'] ?></div>
+                    </div>
+                <?php endforeach; ?>
             </div>
             <div id="refresh-btn">换一波看看</div>
         </div>
     </div>
 </div>
 <div class="container" id="download-mobile">
-    <div class="row">
-            <div class="col-md-12">
-                <!--<a href="#" class="btn btn-success">Download Apple App</a>-->
-                <a href="/download/android/cheesetv2.0.apk" class="download-btn">下载芝士电视安卓APP</a>
-            </div>
+<!--    <div class="row">
+        <div class="col-md-12">
+            <a href="#" class="btn btn-success">Download Apple App</a>
+            <a href="/download/android/cheesetv2.0.apk" class="download-btn">下载芝士电视安卓APP</a>
         </div>
+    </div>-->
 </div>
 
 <div class="P_tmp">
