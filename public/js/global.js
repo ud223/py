@@ -193,11 +193,8 @@ function inArray(val, arr) {
             // record mouse moving
             var prevMouse = $('body').data('prevmouse');
             var mX, mY;
-            
-                mX = evt.clientX;
-                mY = evt.clientY;
-            
-
+            mX = evt.clientX;
+            mY = evt.clientY;
             var currentMouse = {
                 x: mX,
                 y: mY
