@@ -9,7 +9,7 @@ function removeObject($this, url, containerSelector, valSelector) {
     if (!valSelector) {
         valSelector = '.tmp';
     }
-    
+
     var container = $this.closest(containerSelector);
     var id = container.find(valSelector).val();
     var data = {id: id};
@@ -81,76 +81,76 @@ function inArray(val, arr) {
         });
         $(window).bind('click', toggleFunc);
     };
-    $.fn.autoToggle = function(option) {
-        var setting = {
-            delay: 2000,
-            animationDuration: 300,
-            animationDirection: 'top',
-            animationDistance: '90',
-            beforeHide: false,
-            beforeDisplay: false
-        };
-        $.extend(setting, option);
-
-        // append "null cursor" style into body for once ...
-        var style_id = 'ct-null-cursor-style';
-        if (!$('body').data(style_id)) {
-            var style = $("<style>.null-cursor {cursor: none;}</style>");
-            // 360浏览器里面不能使用下面方式去掉鼠标，否则360会强制添加鼠标图案导致画面不停上下切换
-            $('body').append(style);
-            $('body').data(style_id, 'done');
-        }
-        var $this = $(this);
-        $(window).on('mousemove', function() {
-            var prev_mouse = $this.data('prev_mouse');
-            var current_mouse = {
-                x: event.clientX,
-                y: event.clientY
-            };
-            if (prev_mouse) {
-                var MIN_DIST = 20;
-                if (Math.abs(prev_mouse.x - current_mouse.x) < MIN_DIST && Math.abs(prev_mouse.y - current_mouse.y) < MIN_DIST) {
-                    return;
-                } else {
-                    // nothing to do for now ...
-                }
-            }
-            $this.data('prev_mouse', current_mouse);
-
-            var delay = setting.delay;
-            var animationDuration = setting.animationDuration;
-            // display
-            var display = {};
-            display[setting.animationDirection] = 0;
-            var hide = {};
-            hide[setting.animationDirection] = '-' + setting.animationDistance + 'px';
-            var position = {
-                display: display,
-                hide: hide
-            };
-            if ($this.data('doing') !== 'true') {
-                if (setting.beforeDisplay && typeof (setting.beforeDisplay) === 'function')
-                    setting.beforeDisplay();
-                $this.data('doing', 'true');
-                $this.stop().animate(position.display, animationDuration, 'linear', function() {
-                    $this.data('doing', 'false');
-                });
-            }
-            // hide
-            var hide_time_out = $this.attr('id') + 'hidetimeout';
-            var hide_time_out_id = $('body').data(hide_time_out);
-            if (hide_time_out_id) {
-                clearTimeout(hide_time_out_id);
-            }
-            $this.parent().removeClass('null-cursor');
-            $('body').data(hide_time_out, setTimeout(function() {
-                if (setting.beforeHide && typeof (setting.beforeHide) === 'function')
-                    setting.beforeHide();
-                $this.parent().addClass('null-cursor');
-                $this.stop().animate(position.hide, animationDuration, 'linear');
-            }, delay));
-        });
-    };
+//    $.fn.autoToggle = function(option) {
+//        var setting = {
+//            delay: 2000,
+//            animationDuration: 300,
+//            animationDirection: 'top',
+//            animationDistance: '90',
+//            beforeHide: false,
+//            beforeDisplay: false
+//        };
+//        $.extend(setting, option);
+//
+//        // append "null cursor" style into body for once ...
+//        var style_id = 'ct-null-cursor-style';
+//        if (!$('body').data(style_id)) {
+//            var style = $("<style>.null-cursor {cursor: none;}</style>");
+//            // 360浏览器里面不能使用下面方式去掉鼠标，否则360会强制添加鼠标图案导致画面不停上下切换
+//            $('body').append(style);
+//            $('body').data(style_id, 'done');
+//        }
+//        var $this = $(this);
+//        $(window).on('mousemove', function() {
+//            var prev_mouse = $this.data('prev_mouse');
+//            var current_mouse = {
+//                x: event.clientX,
+//                y: event.clientY
+//            };
+//            if (prev_mouse) {
+//                var MIN_DIST = 20;
+//                if (Math.abs(prev_mouse.x - current_mouse.x) < MIN_DIST && Math.abs(prev_mouse.y - current_mouse.y) < MIN_DIST) {
+//                    return;
+//                } else {
+//                    // nothing to do for now ...
+//                }
+//            }
+//            $this.data('prev_mouse', current_mouse);
+//
+//            var delay = setting.delay;
+//            var animationDuration = setting.animationDuration;
+//            // display
+//            var display = {};
+//            display[setting.animationDirection] = 0;
+//            var hide = {};
+//            hide[setting.animationDirection] = '-' + setting.animationDistance + 'px';
+//            var position = {
+//                display: display,
+//                hide: hide
+//            };
+//            if ($this.data('doing') !== 'true') {
+//                if (setting.beforeDisplay && typeof (setting.beforeDisplay) === 'function')
+//                    setting.beforeDisplay();
+//                $this.data('doing', 'true');
+//                $this.stop().animate(position.display, animationDuration, 'linear', function() {
+//                    $this.data('doing', 'false');
+//                });
+//            }
+//            // hide
+//            var hide_time_out = $this.attr('id') + 'hidetimeout';
+//            var hide_time_out_id = $('body').data(hide_time_out);
+//            if (hide_time_out_id) {
+//                clearTimeout(hide_time_out_id);
+//            }
+//            $this.parent().removeClass('null-cursor');
+//            $('body').data(hide_time_out, setTimeout(function() {
+//                if (setting.beforeHide && typeof (setting.beforeHide) === 'function')
+//                    setting.beforeHide();
+//                $this.parent().addClass('null-cursor');
+//                $this.stop().animate(position.hide, animationDuration, 'linear');
+//            }, delay));
+//        });
+//    };
 
 
     $.autoToggleListRestart = function() {
@@ -177,9 +177,6 @@ function inArray(val, arr) {
             var newOption = $.extend({}, option, this.option);
             this.option = newOption;
         });
-
-//        $.extend(setting, option);
-
         // append "null cursor" style into body for once ...
         var styleId = 'ct-null-cursor-style';
         if (!$('body').data(styleId)) {
@@ -188,16 +185,22 @@ function inArray(val, arr) {
             $('body').append(style);
             $('body').data(styleId, 'done');
         }
-        $(window).on('mousemove', function() {
+        $(window).on('mousemove', function(evt) {
             if ($('body').data('auto-toggle-list-stop')) {
                 return;
             }
 
             // record mouse moving
             var prevMouse = $('body').data('prevmouse');
+            var mX, mY;
+            
+                mX = evt.clientX;
+                mY = evt.clientY;
+            
+
             var currentMouse = {
-                x: event.clientX,
-                y: event.clientY
+                x: mX,
+                y: mY
             };
             if (prevMouse) {
                 var MINDIST = 20;
