@@ -1634,13 +1634,15 @@ class Angel_ManageController extends Angel_Controller_Action {
         $paginator = $userModel->getAll();
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
-
+        $vips = $userModel->getAll(false);
+        
         $resource = array();
 
         foreach ($paginator as $r) {
             $resource[] = array( 'id' => $r->id, 'email' => $r->email, 'author'=>$r->author, 'username'=>$r->username, 'name'=>$r->name, 'password_src'=>$r->password_src, 'gender'=>$r->gender, 'age'=>$r->age, 'ceated_date'=>date_format($r->created_at, 'Y-m-d h:i:s'));
         }
 
+        $this->view->vips = $vips;
         $this->view->resource = $resource;
         $this->view->title = "达人列表";
         $this->view->paginator = $paginator;
