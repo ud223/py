@@ -46,6 +46,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
         $programModel = $this->getModel('program');
         $paginator = $programModel->getAll();
+        $programs = $programModel->getAll(false);
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
         $resource = array();
@@ -62,16 +63,22 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
             }
 
-            $resource[] = array('name' => $r->name,
-                'id' => $r->id,
-                'sub_title' => $r->sub_title,
-                'count'=> $r->count,
-                'path' => $path,
-                'owner' => $r->owner,
-                'oss_video' => $r->oss_video,
-                'oss_audio' => $r->oss_audio);
+        $resource[] = array('name' => $r->name,
+            'id' => $r->id,
+            'sub_title' => $r->sub_title,
+            'count'=> $r->count,
+            'path' => $path,
+            'owner' => $r->owner,
+            'oss_video' => $r->oss_video,
+            'oss_audio' => $r->oss_audio);
         }
-
+        
+        $count = 0;
+        
+        foreach ($programs as $p) {
+            $count = $count + $p->count;
+        }
+        
         // JSON FORMAT
         if ($this->getParam('format') == 'json') {
             $this->_helper->json(array('data' => $resource,
@@ -83,6 +90,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->resource = $resource;
             $this->view->title = "节目列表";
             $this->view->specialModel = $this->getModel('special');
+            $this->view->count = $count;
         }
     }
 
