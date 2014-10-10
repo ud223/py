@@ -49,7 +49,10 @@
 
 <h1 class="page-title"><?php echo $this->title ?></h1>
 <h1 class="page-title">
-    <p>总浏览次数: <?php  echo $this->count ?></p>
+    <p>总节目数: <?php  echo $this->count ?></p>
+</h1>
+<h1 class="page-title">
+    <p>总浏览次数: <?php  echo $this->viewcount ?></p>
 </h1>
 <div class="btb">
     <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-program-create') ?>">新建节目</a>
