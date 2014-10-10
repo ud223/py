@@ -65,6 +65,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $resource[] = array('name' => $r->name,
                 'id' => $r->id,
                 'sub_title' => $r->sub_title,
+                'count'=> $r->count,
                 'path' => $path,
                 'owner' => $r->owner,
                 'oss_video' => $r->oss_video,
