@@ -1223,6 +1223,7 @@ class Angel_ManageController extends Angel_Controller_Action {
 
     public function specialListAction() {
         $specialModel = $this->getModel('special');
+        $favouriteModel = $this->getModel('favourite');
         $page = $this->request->getParam('page');
 
         if (!$page) {
@@ -1237,10 +1238,20 @@ class Angel_ManageController extends Angel_Controller_Action {
         setcookie("userId", "");
         
         foreach ($paginator as $r) {
+            $favourite_special_condition = array( 'special.id' => $r->id,  );
+            
+            $favourites = $favouriteModel->getBy(false, $favourite_special_condition);
+            
+            $count = 0;
+            
+            if ($favourites) {
+                $count = count($favourites);
+            }
+            
             $resource[] = array(
                 'id' => $r->id,
-                'name' => $r->name//,
-                    // 'photo' => $r->cover_path
+                'name' => $r->name,
+                'count'=> $count
             );
         }
 
