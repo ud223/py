@@ -73,10 +73,12 @@ class Angel_ManageController extends Angel_Controller_Action {
             'oss_audio' => $r->oss_audio);
         }
         
+        $viewcount = 0;
         $count = 0;
         
         foreach ($programs as $p) {
-            $count = $count + $p->count;
+            $count++;
+            $viewcount = $viewcount + $p->count;
         }
         
         // JSON FORMAT
@@ -90,6 +92,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->resource = $resource;
             $this->view->title = "节目列表";
             $this->view->specialModel = $this->getModel('special');
+            $this->view->viewcount = $viewcount;
             $this->view->count = $count;
         }
     }
