@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play', 'special-program-list', 'special-recommend', 'program-add-count');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play', 'special-program-list', 'special-recommend', 'program-add-count', 'captions-get');
 
     public function init() {
         parent::init();
@@ -771,6 +771,69 @@ class Angel_ShowController extends Angel_Controller_Action {
             else {
                 $this->_helper->json(array('data' => 'need program id', 'code' => 500));
             }
+        }
+    }
+    
+    public function captionsAddAction() {
+        if ($this->request->isPost()) {
+            $captionsTextModel = $this->getModel('CaptionsText');
+            
+            $program_id = $this->request->getParam('pid');
+            $time_at = $this->request->getParam('time_at');
+            $text = $this->request->getParam('text');
+            $type = $this->request->getParam('type');
+    
+            $user = $this->me->getUser();
+            
+            $code = 200;
+            $message = 'success';
+            
+            try {
+                $captionsTextModel->addCaptionsText($text, $program_id, $time_at, $user, $type);
+            }
+            catch (Exception $e) {
+                $code = 500;
+                $message = $e->getMessage();
+            }
+            
+            $this->_helper->json(array('data' => $message, 'code' => $code));
+        }
+    }
+    
+    public function captionsGetAction() {
+        $captionsTextModel = $this->getModel('CaptionsText');
+
+        $program_id = $this->request->getParam('pid');
+
+        $code = 200;
+        $message = "success";
+        
+        if (!$program_id) {
+            $code = 500;
+            $message = "节目id不能为空!";       
+        }
+        else {
+            try {
+                $program_captionsText_condition = array( 'program_id' => $program_id );
+            
+                $result = $captionsTextModel->getby(false, $program_captionsText_condition);
+                
+                if ($result) {
+                    foreach ($result as $c) {
+                        $captionsText["captionsText"][] = array("id" => $c->id, "text" => $c->text, "time_at" => $c->time_at, "pid" => $c->program_id, "up" => $c->up, "hot"=> $c->hot, "uid"=>$c->user->id, "username"=>$c->user->username);
+                    }
+                }
+            } catch (Exception $e) {
+                $code = 500;
+                $message = $e->getMessage();   
+            }
+        }
+        
+        if ($code != 200) {
+            $this->_helper->json(array('data' => $captionsText, 'code' => $code));
+        }
+        else {
+            $this->_helper->json(array('data' => $message, 'code' => $code));
         }
     }
 }
