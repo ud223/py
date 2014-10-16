@@ -222,6 +222,12 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                 $age = $this->request->getParam('age');
                 $gender = $this->request->getParam('gender');
                 $name = $this->request->getParam('name');
+                
+                if (substr($gender, 0, 1) == 1 || substr($gender, 0, 1) == 2) {
+                    $tmp = $gender;
+                    $gender = $age;
+                    $age = $tmp;
+                }
             }
             
             $result = false;
