@@ -345,6 +345,26 @@ and open the template in the editor.
                 }
             });
          }
+         
+         function register() {
+            var url = '/register';    
+
+            var data = { 'email': 'test11@qq.com', 'username': 'test11', 'password': '123123', 'age': 'male', 'gender': '1990', 'format': 'json'};
+//            
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: data,
+                method: 'post',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+         }
         </script>
     </head>
     <body>
@@ -372,5 +392,6 @@ and open the template in the editor.
         <button type="button" onclick="loop_carry_test()">测试负载</button>
         <button type="button" onclick="adc()">测试节目</button>
         <button type="button" onclick="captionsText()">评论</button>
+        <button type="button" onclick="register()">注册测试</button>
     </body>
 </html>
