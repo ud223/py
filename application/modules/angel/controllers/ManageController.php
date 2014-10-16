@@ -1671,6 +1671,58 @@ class Angel_ManageController extends Angel_Controller_Action {
         $this->view->paginator = $paginator;
         $this->view->specialModel = $specialModel;
     }
+    //-------------------------------------------------------------------------
+    public function vipbugsListAction() {
+        $userModel = $this->getModel('user');
+
+        if (!$page) {
+            $page = 1;
+        }
+        
+        $vips = $userModel->getAll(false);
+        
+        $resource = array();
+
+        foreach ($vips as $r) {        
+            if (substr($r->gender, 0, 1) == '1' || substr($r->gender, 0, 1) == '2') {
+                $resource[] = array( 'id' => $r->id, 'email' => $r->email, 'author'=>$r->author, 'username'=>$r->username, 'name'=>$r->name, 'password_src'=>$r->password_src, 'gender'=>$r->gender, 'age'=>$r->age, 'ceated_date'=>date_format($r->created_at, 'Y-m-d h:i:s'));
+            }
+        }
+
+        $this->view->resource = $resource;
+        $this->view->title = "达人问题列表";
+        $this->view->paginator = $resource;
+    }
+    
+    public function vipFixAction() {
+        $user_id = $this->request->getParam("id");
+        $error = "参数不齐全！";
+        
+        if (!$user_id) {
+            $this->_helper->json(array('data' => $error, 'code' => 0)); return;
+        }
+        
+        $userModel = $this->getModel('user');
+        
+        $user = $userModel->getById($user_id);
+        $result = false;
+        
+        try {
+            $result = $userModel->saveVip($user->id, $user->email, $user->username, $user->password_src, Zend_Session::getId(), false, $user->gender, 'male', $user->name, 1);
+        }
+        catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+        
+        if ($result) {
+            $this->_helper->json(array('data' => 'success', 'code' => 200)); 
+        }
+        else {
+            $this->_helper->json(array('data' => $error, 'code' => 0)); 
+        }
+    }
+    
+    //--------------------------------------------------------------------
     
     public function vipSaveAction() {
         $notFoundMsg = '未找到目标达人';
