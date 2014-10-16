@@ -48,6 +48,12 @@
 </style>
 
 <h1 class="page-title"><?php echo $this->title ?></h1>
+<h1 class="page-title">
+    <p>总节目数: <?php  echo $this->count ?></p>
+</h1>
+<h1 class="page-title">
+    <p>总浏览次数: <?php  echo $this->viewcount ?></p>
+</h1>
 <div class="btb">
     <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-program-create') ?>">新建节目</a>
 </div>
@@ -67,8 +73,9 @@
                     <?php endif; ?>
                 </p>
                 <div class='pwp'>
-                    <p><?php echo $p['name'] ?></p>
+                    <p><?php echo $p['name'] ?> </p>
                     <p><i><?php echo $p['sub_title'] ?></i></p>
+                    <p>浏览次数: <?php echo $p['count'] ?></p>
                 </div>
                 <div class="btn-group">
                     <a href="<?php echo $this->url(array(), 'manage-program-save') . '?id=' . $p['id'] ?>" class="btn btn-info btn-sm">编辑</a>

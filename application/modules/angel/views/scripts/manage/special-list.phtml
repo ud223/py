@@ -66,6 +66,7 @@ $model = $this->model;
                 </p>
                 <div class='pwp'>
                     <p><?php echo $p['name'] ?></p>
+                    <p>收藏次数:<?php echo $p['count'] ?></p>
                 </div>
                 <div class="btn-group">
                     <a href="<?php echo $this->url(array(id => $p["id"]), 'manage-special-save') ?>" class="btn btn-info btn-sm">编辑</a>

@@ -46,6 +46,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
         $programModel = $this->getModel('program');
         $paginator = $programModel->getAll();
+        $programs = $programModel->getAll(false);
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
         $resource = array();
@@ -62,15 +63,24 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
             }
 
-            $resource[] = array('name' => $r->name,
-                'id' => $r->id,
-                'sub_title' => $r->sub_title,
-                'path' => $path,
-                'owner' => $r->owner,
-                'oss_video' => $r->oss_video,
-                'oss_audio' => $r->oss_audio);
+        $resource[] = array('name' => $r->name,
+            'id' => $r->id,
+            'sub_title' => $r->sub_title,
+            'count'=> $r->count,
+            'path' => $path,
+            'owner' => $r->owner,
+            'oss_video' => $r->oss_video,
+            'oss_audio' => $r->oss_audio);
         }
-
+        
+        $viewcount = 0;
+        $count = 0;
+        
+        foreach ($programs as $p) {
+            $count++;
+            $viewcount = $viewcount + $p->count;
+        }
+        
         // JSON FORMAT
         if ($this->getParam('format') == 'json') {
             $this->_helper->json(array('data' => $resource,
@@ -82,6 +92,8 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->view->resource = $resource;
             $this->view->title = "节目列表";
             $this->view->specialModel = $this->getModel('special');
+            $this->view->viewcount = $viewcount;
+            $this->view->count = $count;
         }
     }
 
@@ -1222,6 +1234,7 @@ class Angel_ManageController extends Angel_Controller_Action {
 
     public function specialListAction() {
         $specialModel = $this->getModel('special');
+        $favouriteModel = $this->getModel('favourite');
         $page = $this->request->getParam('page');
 
         if (!$page) {
@@ -1236,10 +1249,20 @@ class Angel_ManageController extends Angel_Controller_Action {
         setcookie("userId", "");
         
         foreach ($paginator as $r) {
+            $favourite_special_condition = array( 'special.id' => $r->id,  );
+            
+            $favourites = $favouriteModel->getBy(false, $favourite_special_condition);
+            
+            $count = 0;
+            
+            if ($favourites) {
+                $count = count($favourites);
+            }
+            
             $resource[] = array(
                 'id' => $r->id,
-                'name' => $r->name//,
-                    // 'photo' => $r->cover_path
+                'name' => $r->name,
+                'count'=> $count
             );
         }
 
