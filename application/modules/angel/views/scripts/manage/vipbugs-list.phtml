@@ -16,12 +16,8 @@ $model = $this->model;
 ?>
 <h1 class="page-title"><?php echo $this->title ?></h1>
 <div class="btb">
-    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-vip-create') ?>">添加达人</a>
 </div>
 <div class="row">
-    <div class="col-md-12 marginbottom20px">
-        共有注册用户： <?php echo count($this->vips) ?> 人
-    </div>
     <?php
         $c = 0;
     ?>
@@ -34,8 +30,7 @@ $model = $this->model;
                 <p>出生年份:<?php echo $p['age'];  ?></p>
                 <p>注册时间:<?php echo $p['ceated_date'];  ?></p>
                 <div class="btn-group">
-                    <a type="button" href="<?php echo $this->url(array(id => $p["id"]), 'manage-vip-save') ?>" class="btn btn-info btn-sm">编辑</a>
-                    <button type="button" class="btn btn-danger btn-sm " onclick="setVip('<?php echo $p["id"]; ?>')">设为达人</button>
+                    <button type="button" class="btn btn-danger btn-sm " onclick="vipfix('<?php echo $p["id"]; ?>')">修复数据</button>
                 </div>
                 <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
             </div>
@@ -46,36 +41,9 @@ $model = $this->model;
         <?php endif; ?>
     <?php endforeach; ?>
 </div>
-<div class="row">
-    <div class="col-md-12 text-center">
-        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-vip-list')); ?>
-    </div>
-</div>
 <script type="text/javascript">
-    function setVip(id) {
-        var url = '/manage/vip/set';
-        var data = {id: id};
-
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            data: data,
-            type: 'POST',
-            success: function(response) {
-                if (response) {
-                    if (response.code == '200')
-                        location.reload();
-                    else
-                        alert(response.data);
-                } else {
-                    alert('设置失败');
-                }
-            }
-        });
-    }
-
-    function unsetVip(id) {
-        var url = '/manage/vip/unset';
+    function vipfix(id) {
+        var url = '/manage/vip/fix';
         var data = {id: id};
 
         $.ajax({
