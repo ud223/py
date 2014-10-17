@@ -42,6 +42,8 @@ class Angel_Controller_Action extends Zend_Controller_Action {
         $this->view->currency = $this->bootstrap_options['currency'];
         $this->view->currency_symbol = $this->bootstrap_options['currency_symbol'];
         $this->view->title = $this->bootstrap_options['site']['name'];
+        $this->view->mobile_download_link_ios = $this->bootstrap_options['mobile_download_link']['ios'];
+        $this->view->mobile_download_link_android = $this->bootstrap_options['mobile_download_link']['android'];
     }
 
     /**

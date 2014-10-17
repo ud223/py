@@ -22,16 +22,17 @@ body .alert {
     padding-bottom:20px;
     padding-top:20px;
 }
-#download-btn {
-    background:url(/img/mobile-download-icons.png) left top no-repeat;
+#download-btn-android, #download-btn-apple {
+    background:url(/img/mobile-download-icons.png) left -5px no-repeat;
     background-color:#2fb0ff;
     border-radius:4px;
     display:inline-block;
-    font-weight:bold;
-    height:50px;
-    line-height:50px;
+    height:40px;
+    line-height:40px;
     padding-left:50px;
     padding-right:20px;
-    text-shadow:none;
     width:auto;
+}
+#download-btn-apple {
+    background-position:left -55px;
 }
