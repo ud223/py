@@ -15,11 +15,11 @@ $bean = $this->resource;
 $programs = $bean['programs'];
 ?>
 
-<?php if(!$user): ?>
-<div style="position:fixed;z-index:5;right:120px;bottom:130px;">
-<a href="<?php echo $this->login_goto_url ?>" class="btn">立即登录</a>
-<a href="<?php echo $this->register_goto_url ?>" class="btn btn-warning">注册吧</a>
-</div>
+<?php if (!$user): ?>
+    <div style="position:fixed;z-index:5;right:120px;bottom:130px;">
+        <a href="<?php echo $this->login_goto_url ?>" class="btn">立即登录</a>
+        <a href="<?php echo $this->register_goto_url ?>" class="btn btn-warning">注册吧</a>
+    </div>
 <?php endif; ?>
 
 <div id="tv-main-container" class="layer">
@@ -38,11 +38,11 @@ $programs = $bean['programs'];
             <?php endif; ?>
         </div>
     </div>
-    
+
     <div id="m-title">
-    <p class="a"><?php echo $this->cur_program['name'] ?></p>
-    <p class="b"></p>
-</div>
+        <p class="a"><?php echo $this->cur_program['name'] ?></p>
+        <p class="b"></p>
+    </div>
 
     <?php if ($user && $user->author): ?>
         <div class="tv-search-content">
@@ -146,6 +146,9 @@ $programs = $bean['programs'];
                 </div>
 
             <?php endif; ?>
+            <div class="app-down-content">
+                <button class="app-down-button" type="button">下载移动端APP</button>
+            </div>
             <?php if ($user && $user->author): ?>
                 <div class="search-btn-content clearfix">
                     <input type="text" placeholder="搜索 专辑/作者" id="search-txt"/>
@@ -196,6 +199,22 @@ $programs = $bean['programs'];
         <div class="list-item-cell rt remove-favor ico"></div>
     </div>
 
+    <div class="download-board">
+        <ul class="download-board-ul">
+            <li>
+                <p>IOS App</p>
+                <div class="download-board-qr-ios">
+                    
+                </div>
+            </li>
+            <li>
+                <p>安卓 App</p>
+                <div class="download-board-qr-android">
+                    
+                </div>
+            </li>
+        </ul>
+    </div>
 
     <div class="unit-item hobby-item">
         <p></p>
@@ -233,7 +252,7 @@ $programs = $bean['programs'];
 //    setInterval(function(){
 //        location.reload();
 //    }, 2000);
-    
+
     var init_player_mode = '<?php echo $player_mode; ?>';
     var PLAYER = document.getElementsByTagName(init_player_mode)[0];
     $('document').ready(function() {
@@ -283,7 +302,7 @@ $programs = $bean['programs'];
                 var current = $('.tv-tab-content-body .list-item.selected');
                 if (current.length) {
                     var next = current.next();
-  
+
                     if (next.length) {
                         location.href = generatePlayLink($('#tv-listbar').attr('sid'), next.attr('id'), 2);
                     } else {
@@ -542,10 +561,10 @@ $programs = $bean['programs'];
         });
 <?php endif; ?>
     $(document).ready(function() {
-        setTimeout(function(){
+        setTimeout(function() {
             $('#m-title').css('opacity', '0.15');
         }, 3000);
-        
+
         var ls = localStorage.getItem('switch-mode');
         if (ls) {
             var lss = ls.split(';');
@@ -554,6 +573,8 @@ $programs = $bean['programs'];
                 localStorage.setItem('switch-mode', null);
             }
         }
+        
+        initDownloadQr(QRCode, '<?php echo $this->mobile_download_link_ios ?>', '<?php echo $this->mobile_download_link_android ?>');
     });
 
     $('.hide-qrcode').click(function() {

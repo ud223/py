@@ -1,3 +1,43 @@
+function initDownloadQr(Qrc, iosLink, androidLink) {
+
+    var iosContainer = $('.download-board-qr-ios'), androidContainer = $('.download-board-qr-android');
+    if (iosContainer.length === 0 || androidContainer.length === 0) {
+        return;
+    }
+
+    // set url
+    if (!iosLink)
+        iosLink = 'linkfor ios';
+    if (!androidLink)
+        androidLink = 'linkfor android';
+
+    // init qr code
+    new Qrc(iosContainer.empty().get(0), {
+        text: iosLink,
+        width: 270,
+        height: 270,
+        colorDark: "#333333",
+        colorLight: "#ffffff",
+        correctLevel: Qrc.CorrectLevel.H
+    });
+    new Qrc(androidContainer.empty().get(0), {
+        text: androidLink,
+        width: 270,
+        height: 270,
+        colorDark: "#333333",
+        colorLight: "#ffffff",
+        correctLevel: Qrc.CorrectLevel.H
+    });
+
+    $('.app-down-button').click(function() {
+        $.popup({
+            content: $('.download-board').clone(true),
+            width: 700,
+            height: 400
+        });
+    });
+
+}
 
 function removeObject($this, url, containerSelector, valSelector) {
     if (!confirm('确认删除该对象？')) {
