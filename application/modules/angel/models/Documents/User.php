@@ -107,7 +107,7 @@ class User extends AbstractDocument{
     protected $like = 1; //1为喜好0为随机
 
     /** @ODM\Hash */
-    protected $attribute = array();    // 用户属性，各种设置存放的地方
+    protected $attribute;    // 用户属性，各种设置存放的地方
     
     /**
      * 验证身份是否正确 
