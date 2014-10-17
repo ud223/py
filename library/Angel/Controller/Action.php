@@ -42,6 +42,8 @@ class Angel_Controller_Action extends Zend_Controller_Action {
         $this->view->currency = $this->bootstrap_options['currency'];
         $this->view->currency_symbol = $this->bootstrap_options['currency_symbol'];
         $this->view->title = $this->bootstrap_options['site']['name'];
+        $this->view->mobile_download_link_ios = $this->bootstrap_options['mobile_download_link']['ios'];
+        $this->view->mobile_download_link_android = $this->bootstrap_options['mobile_download_link']['android'];
     }
 
     /**
@@ -215,21 +217,29 @@ class Angel_Controller_Action extends Zend_Controller_Action {
 
             $username = $this->request->getParam('username');
             $password = $this->request->getParam('password');
+
+            //
+            $from = $this->request->getParam('from');
+            if ($from) {
+                $attribute = array('from' => $from);
+            }
+            //
+
             $age = 0;
             $gender = 'male';
-            
+
             if ($userType == 'user') {
                 $age = $this->request->getParam('age');
                 $gender = $this->request->getParam('gender');
                 $name = $this->request->getParam('name');
-                
+
                 if (substr($gender, 0, 1) == 1 || substr($gender, 0, 1) == 2) {
                     $tmp = $gender;
                     $gender = $age;
                     $age = $tmp;
                 }
             }
-            
+
             $result = false;
 
             try {
@@ -242,9 +252,9 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                     $result = null;
 
                     if ($userType == 'user') {
-                        $result = $userModel->addUser($email, $password, $username,  $age, $gender, $name, Zend_Session::getId(), false);
+                        $result = $userModel->addUser($email, $password, $username, $age, $gender, $name, Zend_Session::getId(), false, $attribute);
                     } else if ($userType == 'admin') {
-                        $result = $userModel->addManageUser($email, $password,  Zend_Session::getId(), false);
+                        $result = $userModel->addManageUser($email, $password, Zend_Session::getId(), false);
                     } else {
                         $error = "invalid request";
                     }
@@ -277,11 +287,11 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                 if ($remember == 'on') {
                                     setcookie($this->bootstrap_options['cookie']['remember_me'], $userModel->getRememberMeValue($auth['msg'], $ip), time() + $this->bootstrap_options['token']['expiry']['remember_me'] * 60, '/', $this->bootstrap_options['site']['domain']);
                                 }
-                                
+
                                 $user = $userModel->getUserByEmail($email);
-                                
+
                                 $go_url = $_SERVER["QUERY_STRING"];
-                                
+
                                 if (!$go_url) {
                                     $go_url = '';
                                 }
@@ -290,10 +300,9 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                 if ($this->isMobile()) {
                                     $go_url = str_replace("goto=", "", $go_url);
                                     $this->_redirect($go_url);
-                                }
-                                else {
+                                } else {
                                     if ($go_url)
-                                        $go_url = '?'. $go_url;
+                                        $go_url = '?' . $go_url;
                                     // 跳转至兴趣设置页面
                                     $this->_redirect($this->view->url(array(), 'hobby') . $go_url);
                                 }
@@ -369,8 +378,8 @@ class Angel_Controller_Action extends Zend_Controller_Action {
 
             if ($this->getParam('format') == 'json') {
                 $user = $userModel->getById($uid);
-                
-                $this->_helper->json(array('data' => $errorMsg, 'uid' => $uid,  'username'=> $user->username, 'name'=>$user->name, 'author'=>$user->author, 'code' => $code));
+
+                $this->_helper->json(array('data' => $errorMsg, 'uid' => $uid, 'username' => $user->username, 'name' => $user->name, 'author' => $user->author, 'code' => $code));
             } else {
                 if ($code == 200) {
                     $this->_redirect($url);
@@ -390,21 +399,22 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     protected function isMobile() {
         $mobile = array();
         //
-        static $mobilebrowser_list ='Mobile|iPhone|Android|WAP|NetFront|JAVA|OperasMini|UCWEB|WindowssCE|Symbian|Series|webOS|SonyEricsson|Sony|BlackBerry|Cellphone|dopod|Nokia|samsung|PalmSource|Xphone|Xda|Smartphone|PIEPlus|MEIZU|MIDP|CLDC';
+        static $mobilebrowser_list = 'Mobile|iPhone|Android|WAP|NetFront|JAVA|OperasMini|UCWEB|WindowssCE|Symbian|Series|webOS|SonyEricsson|Sony|BlackBerry|Cellphone|dopod|Nokia|samsung|PalmSource|Xphone|Xda|Smartphone|PIEPlus|MEIZU|MIDP|CLDC';
 //        echo $_SERVER['HTTP_USER_AGENT']; exit;
         //note 获取手机浏览器
-        if(preg_match("/$mobilebrowser_list/i", $_SERVER['HTTP_USER_AGENT'], $mobile)) {
+        if (preg_match("/$mobilebrowser_list/i", $_SERVER['HTTP_USER_AGENT'], $mobile)) {
             return true;
-        }else{
-            if(preg_match('/(mozilla|chrome|safari|opera|m3gate|winwap|openwave)/i', $_SERVER['HTTP_USER_AGENT'])) {
+        } else {
+            if (preg_match('/(mozilla|chrome|safari|opera|m3gate|winwap|openwave)/i', $_SERVER['HTTP_USER_AGENT'])) {
                 return false;
-            }else{
-                if($_GET['mobile'] === 'yes') {
+            } else {
+                if ($_GET['mobile'] === 'yes') {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
         }
     }
+
 }

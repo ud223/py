@@ -165,10 +165,49 @@ h3 {
 .btn-warning {
     background-color:#f0ad4e;
 }
-.logout-btn-content {
+.logout-btn-content, .app-down-content {
     padding-top:35px;
     padding-left:25px;
     text-align:left;
+}
+.app-down-button {
+    background:url(../img/mobile-download-icons.png) 0 -110px no-repeat rgba(255,255,255,0.05);
+    border:none;
+    border-radius:100px;
+    color:#FFF;
+    display:block;
+    font-size:12px;
+    height:30px;
+    line-height:30px;
+    padding-left:25px;
+    text-align:center;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    width:170px;
+}
+.app-down-button:hover {
+    background-color:rgba(255,255,255,.1);
+    color:#FFF;
+    text-shadow:0 1px 2px rgba(0,0,0,0.2);
+}
+.download-board-ul {
+    margin:0;
+    padding:0;
+}
+.download-board-ul li {
+    display:inline-block;
+    list-style: none;
+    margin:0 15px;
+    padding:0;
+}
+.download-board-ul li .download-board-qr-ios, .download-board-ul li .download-board-qr-android {
+    background:#FFF;
+    border-radius:4px;
+    padding:10px;
+}
+.download-board-ul li p {
+    font-size:20px;
+    margin-bottom:12px;
+    text-align:center;
 }
 .logout-btn-content button {
     margin-left:-1px;
