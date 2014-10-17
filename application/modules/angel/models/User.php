@@ -38,10 +38,10 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $this->registerUser($email, $password, uniqid(), $usertype, $salt, $checkemail, NULL);
     }
 
-    public function addUser($email, $password, $username, $age, $gender, $name, $salt, $checkemail = true) {
+    public function addUser($email, $password, $username, $age, $gender, $name, $salt, $checkemail = true, $attribute) {
 
         $usertype = "user";
-        return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $age, $gender, $name);
+        return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $age, $gender, $name, $attribute);
     }
 
     public function addVip($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name, $author) {
@@ -152,7 +152,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name) {
+    protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name, $attribute) {
         $result = false;
         if (empty($email)) {
             throw new Angel_Exception_User(Angel_Exception_User::EMAIL_EMPTY);
@@ -183,7 +183,9 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         $user->active_bln = true;
         $user->email_validated_bln = !$checkemail;
         $user->validated_bln = false;
-
+        if($attribute) {
+            $user->attribute = $attribute;
+        }
         try {
             $this->_dm->persist($user);
             $this->_dm->flush();
