@@ -5,7 +5,7 @@ namespace Documents;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** @ODM\Document */
-class CaptionsText  extends AbstractDocument{
+class Comments  extends AbstractDocument{
     /** @ODM\String */
     protected $text;
     

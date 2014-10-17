@@ -79,7 +79,7 @@
                 </div>
                 <div class="btn-group">
                     <a href="<?php echo $this->url(array(), 'manage-program-save') . '?id=' . $p['id'] ?>" class="btn btn-info btn-sm">编辑</a>
-                    <!--<a href="<?php// echo $this->url(array(), 'manage-program-save') . '?copy=true&&id=' . $p['id'] ?>" class="btn btn-default btn-sm">复制</a>-->
+                    <a href="<?php echo $this->url(array('pid'=>$p['id']), 'manage-comments-list') ?>" class="btn btn-info btn-sm">查看评论</a>
                 </div>
             </div>
         </div>

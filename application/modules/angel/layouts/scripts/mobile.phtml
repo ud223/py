@@ -40,8 +40,28 @@
     <div class="container" id="download-mobile">
         <div class="row">
             <div class="col-md-12">
-                <a href="https://itunes.apple.com/app/id911308119" class="btn btn-success">IOS App Store</a>
-                <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.cheesetv" id="download-btn">安卓App</a>
+                <?php 
+                    function get_device_type() {
+                        $agent = strtolower($_SERVER["HTTP_USER_AGENT"]);
+                        $type = 'other';
+                        
+                        if (strpos($agent, 'iphone') || strpos($agent, 'ipad')) {
+                            $type =  'ios';
+                        }
+                        
+                        if (strpos($agent, 'android')) {
+                            $type = 'android';
+                        }
+                        
+                        return $type;
+                    }
+                ?>
+                
+                <?php if (get_device_type() == 'ios') :?>
+                    <a href="https://itunes.apple.com/app/id911308119" class="btn btn-success">IOS App Store</a>
+                <?php else :?>
+                    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.cheesetv" id="download-btn">安卓App</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

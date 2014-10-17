@@ -1829,4 +1829,32 @@ class Angel_ManageController extends Angel_Controller_Action {
             $this->_helper->json(array('data' => $error, 'code' => 0)); 
         }
     }
+    
+    public function commentsListAction() {
+        $userModel = $this->getModel('user');
+        $commentsModel = $this->getModel('comments');
+        $page = $this->request->getParam('page');
+        $program_id = $this->request->getParam('pid');
+        
+        if (!$page) {
+            $page = 1;
+        }
+        
+        $program_captionsText_condition = array( 'program_id' => $program_id );
+        
+        $result = $captionsTextModel->getBy(true, $program_captionsText_condition);
+        
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+        
+        $resource = array();
+
+        foreach ($paginator as $r) {
+            $resource[] = array( 'id' => $r->id, 'text' => $r->text, 'time_at'=>$r->time_at, 'up'=>$r->up, 'user_id'=>$r->user->id, 'email'=>$r->user->email, 'type'=>$r->type, 'hot'=>$r->hot, 'ceated_at'=>date_format($r->created_at, 'Y-m-d h:i:s'));
+        }
+
+        $this->view->resource = $resource;
+        $this->view->title = "评论列表";
+        $this->view->paginator = $paginator;
+    }
 }
