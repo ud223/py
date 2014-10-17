@@ -58,9 +58,9 @@
                 ?>
                 
                 <?php if (get_device_type() == 'ios') :?>
-                    <a href="https://itunes.apple.com/app/id911308119" class="btn btn-success">IOS App Store</a>
+                    <a href="<?php echo $this->mobile_download_link_ios ?>" id="download-btn-apple">App Store</a>
                 <?php else :?>
-                    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.cheesetv" id="download-btn">安卓App</a>
+                    <a href="<?php echo $this->mobile_download_link_android ?>" id="download-btn-android">安卓App</a>
                 <?php endif; ?>
             </div>
         </div>
