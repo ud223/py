@@ -774,7 +774,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
     }
     
-    public function captionsAddAction() {
+    public function commentsAddAction() {
         if ($this->request->isPost()) {
             $captionsTextModel = $this->getModel('CaptionsText');
             
@@ -800,7 +800,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
     }
     
-    public function captionsGetAction() {
+    public function commentsGetAction() {
         $captionsTextModel = $this->getModel('CaptionsText');
 
         $program_id = $this->request->getParam('pid');
