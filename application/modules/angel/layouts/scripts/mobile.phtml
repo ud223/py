@@ -58,7 +58,7 @@
                 ?>
                 
                 <?php if (get_device_type() == 'ios') :?>
-                    <a href="<?php echo $this->mobile_download_link_ios ?>" id="download-btn-apple">App Store</a>
+                    <a href="http://mp.weixin.qq.com/mp/redirect?<?php echo $this->mobile_download_link_ios ?>" id="download-btn-apple">App Store</a>
                 <?php else :?>
                     <a href="<?php echo $this->mobile_download_link_android ?>" id="download-btn-android">安卓App</a>
                 <?php endif; ?>
