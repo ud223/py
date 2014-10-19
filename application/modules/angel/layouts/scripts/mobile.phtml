@@ -40,26 +40,93 @@
     <div class="container" id="download-mobile">
         <div class="row">
             <div class="col-md-12 text-center">
-                <?php 
-                    function get_device_type() {
-                        $agent = strtolower($_SERVER["HTTP_USER_AGENT"]);
-                        $type = 'other';
-                        
-                        if (strpos($agent, 'iphone') || strpos($agent, 'ipad')) {
-                            $type =  'ios';
-                        }
-                        
-                        if (strpos($agent, 'android')) {
-                            $type = 'android';
-                        }
-                        
-                        return $type;
+                <?php
+
+                function get_device_type() {
+                    $agent = strtolower($_SERVER["HTTP_USER_AGENT"]);
+                    $type = 'other';
+
+                    if (strpos($agent, 'iphone') || strpos($agent, 'ipad')) {
+                        $type = 'ios';
                     }
+
+                    if (strpos($agent, 'android')) {
+                        $type = 'android';
+                    }
+
+                    return $type;
+                }
                 ?>
-                
-                <?php if (get_device_type() == 'ios') :?>
-                    <a href="<?php echo $this->mobile_download_link_ios ?>" id="download-btn-apple">App Store</a>
-                <?php else :?>
+
+                <?php if (get_device_type() == 'ios') : ?>
+                    <a onclick="$('#app-store-fix').show()" href="<?php echo $this->mobile_download_link_ios ?>" id="download-btn-apple">App Store</a>
+                    <div id="app-store-fix">
+                        <div class="pad-20">
+                            <ul>
+                                <li id="app-store-icon">
+                                </li>
+                                <li id="app-store-txt">
+                                    <span onclick="$('#app-store-fix').hide()" class="close">&times;</span>
+                                    <p>
+                                        <strong>点击按钮没有反应？</strong>
+                                        <br/>
+                                        请前往App Store搜索关键字“芝士电视”并安装。
+                                    </p>
+                                </li>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <style>
+                        #app-store-fix {
+                            background:rgba(255,255,255,0.92);
+                            bottom:0px;
+                            color:#333;
+                            display:none;
+                            height:120px;
+                            left:0;
+                            line-height:22px;
+                            position:fixed;
+                            text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+                            text-align:left;
+                            width:100%;
+                        }
+                        #app-store-fix strong {
+                            color:#25478f;
+                            font-size:15px;
+                        }
+                        #app-store-fix ul {
+                            margin:0;
+                            padding:0;
+                        }
+                        #app-store-fix ul li {
+                            display:block;
+                            float:left;
+                            padding:0;
+                        }
+                        #app-store-icon {
+                            background:url(/img/app_store_ios7_ios_7.png);
+                            background-size: cover;
+                            background-position:center center;
+                            background-repeat:no-repeat;
+                            height:50px;
+                            margin-right:20px;
+                            width:50px;
+                        }
+                        #app-store-txt {
+                            width:190px;
+                        }
+                        #app-store-txt .close {
+                            height:30px;
+                            opacity:0.7;
+                            position:absolute;
+                            right:10px;
+                            text-align: center;
+                            top:10px;
+                            width:30px;
+                        }
+                    </style>
+                <?php else : ?>
                     <a href="<?php echo $this->mobile_download_link_android ?>" id="download-btn-android">安卓App</a>
                 <?php endif; ?>
             </div>
