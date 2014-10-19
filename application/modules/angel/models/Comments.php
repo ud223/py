@@ -98,7 +98,7 @@ class Angel_Model_Comments  extends Angel_Model_AbstractModel {
             
             $users[] = $user;
 
-            $data = array("text" => $comments->text, "program_id" => $comments->program_id, "time_at" => $comments->time_at, "up" => $comments->up + 1, "up_users"=> $users, "user" => $comments->user, "type" => $comments->type, "hot" => 0);
+            $data = array("text" => $comments->text, "program_id" => $comments->program_id, "time_at" => $comments->time_at, "up" => $comments->up + 1, "up_users"=> $users, "user" => $comments->user, "type" => $comments->type, "hot" => $comments->hot);
 
             $this->save($id, $data);
 

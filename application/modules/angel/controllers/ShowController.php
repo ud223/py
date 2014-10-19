@@ -818,7 +818,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 
                 if ($result) {
                     foreach ($result as $c) {
-                        $comments["comments"][] = array("id" => $c->id, "text" => $c->text, "time_at" => $c->time_at, "pid" => $c->program_id, "up" => $c->up, "hot"=> $c->hot, "uid"=>$c->user->id, "username"=>$c->user->email);
+                        $comments["data"][] = array("id" => $c->id, "text" => $c->text, "time_at" => $c->time_at, "pid" => $c->program_id, "up" => $c->up, "hot"=> $c->hot, "uid"=>$c->user->id, "email"=>$c->user->email);
                     }
                 }
             } catch (Exception $e) {
@@ -828,7 +828,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
         
         if ($code != 200) {
-            $this->_helper->json(array('data' => $comments, 'code' => $code));
+            $this->_helper->json(array('data' => $message, 'code' => $code));
         }
         else {
             $this->_helper->json(array('data' => $comments, 'code' => $code));
