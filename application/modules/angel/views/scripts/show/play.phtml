@@ -54,7 +54,12 @@ $programs = $bean['programs'];
             </div>
         </div>
     <?php endif; ?>
-
+    <div id="tv-danmubar">
+        <button class="ico" id="tv-danmu-all" type="button"></button>
+        <button class="tv-danmu-btn" id="tv-danmuopened" type="button"><span class="ico"></span>弹幕开</button>
+        <button class="tv-danmu-btn" id="tv-danmuclosed" type="button"><span class="ico"></span>弹幕关</button>
+        <button class="tv-danmu-btn" id="tv-senddanmu" type="button"><span class="ico"></span>打一发</button>
+    </div>
     <div id="tv-listbar" sid="<?php echo $bean['id'] ?>">
 
         <div class="tv-tab-content">
