@@ -16,7 +16,7 @@ $model = $this->model;
 ?>
 <h1 class="page-title"><?php echo $this->title ?></h1>
 <div class="btb">
-    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-program-list') ?>">返回节目列表</a>
+    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-program-list-home') ?>">返回节目列表</a>
 </div>
 <div class="row">
     <?php
@@ -31,9 +31,9 @@ $model = $this->model;
                 <p><?php echo $p['create_at'] ?></p>
                 <div class="btn-group">
                     <?php if ($p["hot"] == 0): ?>
-                        <button type="button" class="btn btn-danger btn-sm set-hot">设为热点</button>
+                        <button type="button" class="btn btn-primary btn-sm " onclick="setHot('<?php echo $p["id"]; ?>')">设为热点</button>
                     <?php else: ?>
-                        <button type="button" class="btn btn-danger btn-sm unset-hot">取消热点</button>
+                        <button type="button" class="btn btn-primary btn-sm " onclick="unsetHot('<?php echo $p["id"]; ?>')">取消热点</button>
                     <?php endif; ?>
                     <button type="button" class="btn btn-danger btn-sm remove-comment">删除</button>
                 </div>
@@ -48,7 +48,7 @@ $model = $this->model;
 </div>
 <div class="row">
     <div class="col-md-12 text-center">
-        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-keyword-list')); ?>
+        <?php //echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-keyword-list')); ?>
     </div>
 </div>
 <script type="text/javascript">
@@ -56,13 +56,49 @@ $model = $this->model;
         $('.remove-comment').click(function() {
             removeObject($(this), '<?php echo $this->url(array(), 'manage-comments-remove') ?>');
         });
-        
-        $('.set-hot').click(function() {
-            removeObject($(this), '<?php echo $this->url(array(), 'manage-comments-set-hot') ?>');
-        });
-        
-        $('.unset-hot').click(function() {
-            removeObject($(this), '<?php echo $this->url(array(), 'manage-comments-unset-hot') ?>');
-        });
     })(jQuery);
+    
+    function setHot(id) {
+        var url = '/manage/comments/hot/set';
+        var data = {id: id};
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            data: data,
+            type: 'POST',
+            success: function(response) {
+                if (response) {
+                    if (response.code == '200')
+                        location.reload();
+                    else
+                        alert(response.data);
+                } else {
+                    alert('设置失败');
+                }
+            }
+        });
+    }
+
+    function unsetHot(id) {
+        var url = '/manage/comments/hot/unset';
+        var data = {id: id};
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            data: data,
+            type: 'POST',
+            success: function(response) {
+                if (response) {
+                    if (response.code == '200')
+                        location.reload();
+                    else
+                        alert(response.data);
+                } else {
+                    alert('设置失败');
+                }
+            }
+        });
+    }
 </script>

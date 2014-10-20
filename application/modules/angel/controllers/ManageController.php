@@ -1640,6 +1640,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             } else {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
+//            $this->userRegister('manage-vip-list-home', "创建达人", "user");
         } else {
             $this->view->title = "创建达人";
         }
@@ -1831,7 +1832,6 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
     
     public function commentsListAction() {
-        $userModel = $this->getModel('user');
         $commentsModel = $this->getModel('comments');
         $page = $this->request->getParam('page');
         $program_id = $this->request->getParam('pid');
@@ -1840,21 +1840,86 @@ class Angel_ManageController extends Angel_Controller_Action {
             $page = 1;
         }
         
-        $program_captionsText_condition = array( 'program_id' => $program_id );
+        $program_comments_condition = array( 'program_id' => $program_id );
         
-        $result = $captionsTextModel->getBy(true, $program_captionsText_condition);
-        
+        $paginator = $commentsModel->getby(true, $program_comments_condition);
+
         $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
         $paginator->setCurrentPageNumber($page);
         
         $resource = array();
 
-        foreach ($paginator as $r) {
-            $resource[] = array( 'id' => $r->id, 'text' => $r->text, 'time_at'=>$r->time_at, 'up'=>$r->up, 'user_id'=>$r->user->id, 'email'=>$r->user->email, 'type'=>$r->type, 'hot'=>$r->hot, 'ceated_at'=>date_format($r->created_at, 'Y-m-d h:i:s'));
+        if ($paginator) {
+            foreach ($paginator as $r) {
+                $resource[] = array( 'id' => $r->id, 'text' => $r->text, 'time_at'=>$r->time_at, 'up'=>$r->up, 'user_id'=>$r->user->id, 'email'=>$r->user->email, 'type'=>$r->type, 'hot'=>$r->hot, 'ceated_at'=>date_format($r->created_at, 'Y-m-d h:i:s'));
+            }
         }
 
         $this->view->resource = $resource;
         $this->view->title = "评论列表";
         $this->view->paginator = $paginator;
+    }
+    
+    public function commentsRemoveAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $commentsModel = $this->getModel('comments');
+                $result = $commentsModel->remove($id);
+            }
+            
+            echo $result;
+            exit;
+        }
+    }
+    
+    public function commentsSetAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $commentsModel = $this->getModel('comments');
+                try {
+                    $result = $commentsModel->setHot($id);
+                }
+                catch (Exception $e) {
+                    $error = $e->getMessage();
+                }
+            }
+            
+            if ($result) {
+                $this->_helper->json(array('data' => 'success', 'code' => 200)); 
+            }
+            else {
+                $this->_helper->json(array('data' => $error, 'code' => 500)); 
+            }
+        }
+    }
+    
+    public function commentsUnsetAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $commentsModel = $this->getModel('comments');
+                try {
+                    $result = $commentsModel->unsetHot($id);
+                 }
+                catch (Exception $e) {
+                    $error = $e->getMessage();
+                }
+            }
+            
+            if ($result) {
+                $this->_helper->json(array('data' => 'success', 'code' => 200)); 
+            }
+            else {
+                $this->_helper->json(array('data' => $error, 'code' => 500)); 
+            }
+        }
     }
 }

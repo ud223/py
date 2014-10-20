@@ -776,7 +776,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     
     public function commentsAddAction() {
         if ($this->request->isPost()) {
-            $captionsTextModel = $this->getModel('CaptionsText');
+            $commentsModel = $this->getModel('Comments');
             
             $program_id = $this->request->getParam('pid');
             $time_at = $this->request->getParam('time_at');
@@ -789,7 +789,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             $message = 'success';
             
             try {
-                $captionsTextModel->addCaptionsText($text, $program_id, $time_at, $user, $type);
+                $commentsModel->addComments($text, $program_id, $time_at, $user, $type);
             }
             catch (Exception $e) {
                 $code = 500;
@@ -801,7 +801,7 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
     
     public function commentsGetAction() {
-        $captionsTextModel = $this->getModel('CaptionsText');
+        $commentsModel = $this->getModel('Comments');
 
         $program_id = $this->request->getParam('pid');
 
@@ -814,13 +814,11 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
         else {
             try {
-                $program_captionsText_condition = array( 'program_id' => $program_id );
-            
-                $result = $captionsTextModel->getby(false, $program_captionsText_condition);
+                $result = $commentsModel->getHotCommentsByProgramId($program_id);
                 
                 if ($result) {
                     foreach ($result as $c) {
-                        $captionsText["captionsText"][] = array("id" => $c->id, "text" => $c->text, "time_at" => $c->time_at, "pid" => $c->program_id, "up" => $c->up, "hot"=> $c->hot, "uid"=>$c->user->id, "username"=>$c->user->username);
+                        $comments["data"][] = array("id" => $c->id, "text" => $c->text, "time_at" => $c->time_at, "pid" => $c->program_id, "up" => $c->up, "hot"=> $c->hot, "type"=> $c->type, "uid"=>$c->user->id, "username"=>$c->user->username);
                     }
                 }
             } catch (Exception $e) {
@@ -830,9 +828,46 @@ class Angel_ShowController extends Angel_Controller_Action {
         }
         
         if ($code != 200) {
-            $this->_helper->json(array('data' => $captionsText, 'code' => $code));
+            $this->_helper->json(array('data' => $message, 'code' => $code));
         }
         else {
+            $this->_helper->json(array('data' => $comments, 'code' => $code));
+        }
+    }
+    
+    public function commentsUpAction() {
+        if ($this->request->isPost()) {
+            $commentsModel = $this->getModel('Comments');
+            $id = $this->request->getParam('id');
+
+            $code = 200;
+            $message = "success";
+            $user = $this->me->getUser();
+                     
+            if ($id) {
+                try {
+                    $user_up_condition = array('id' => $id, 'up_users.id' => $user->id);
+        
+                    $comments = $commentsModel->getby(false, $user_up_condition);
+
+                    if (count($comments) == 0) {
+                        $return = $commentsModel->up($id, $user);
+                    }
+                    else {
+                        $code = 500;
+                        $message = "is upped";
+                    }
+                }
+                catch (Exception $e) {
+                    $code = 500;
+                    $message = $e->getMessage();
+                }
+            }
+            else {
+               $code = 500;
+               $message = "need id";
+            }
+            
             $this->_helper->json(array('data' => $message, 'code' => $code));
         }
     }
