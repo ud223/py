@@ -19,9 +19,27 @@ $model = $this->model;
     <div class="col-md-12 marginbottom20px">
         共有安卓注册用户： <?php echo $this->count?> 人
     </div>
+    <div class="row">
     <?php
-        $c = 0;
+    $c = 0;
     ?>
+    <?php if ($this->resource): ?>
+        <?php foreach ($this->resource as $p): ?>
+            <div class="col-md-2">
+                <div class="itm">
+                    <div class="paddingbox10px relative">
+                        <p><?php echo $p->items['created_at'] ?></p>
+                        <p>注册人数:<?php echo $p->count ?></p>
+                    </div>
+                </div>
+            </div>
+            <?php $c ++; ?>
+            <?php if ($c % 6 == 0): ?>
+                <div class="clearfix"></div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
 <script type="text/javascript">
    
 </script>
