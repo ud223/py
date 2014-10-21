@@ -313,6 +313,9 @@ h3 {
     background-position:-400px -400px;
 }
 #tv #tv-danmubar {
+    
+    display:none;
+    
     background:none;
     bottom:80px;
     position:absolute;
