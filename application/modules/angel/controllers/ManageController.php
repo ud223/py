@@ -1944,7 +1944,12 @@ class Angel_ManageController extends Angel_Controller_Action {
                     $resource[$cur_date]++; 
                 }
                 else {
-                    array_push($resource, array('date'=>$cur_date, 'count' => 1));
+                    $item = array();
+                    
+                    $item['date'] = $cur_date;
+                    $item['count'] = 1;
+                    
+                    $resource[] = $item;
                 }
                 
                 $count++;
