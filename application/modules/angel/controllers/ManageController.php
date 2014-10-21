@@ -1942,6 +1942,8 @@ class Angel_ManageController extends Angel_Controller_Action {
                         
                         $r['count'] = $tmp_count + 1;
                         $is_set = true;
+                        
+                        break;
                     }
                 }
                 
