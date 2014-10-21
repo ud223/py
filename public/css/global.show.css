@@ -313,6 +313,9 @@ h3 {
     background-position:-400px -400px;
 }
 #tv #tv-danmubar {
+    
+    display:none;
+    
     background:none;
     bottom:80px;
     position:absolute;
@@ -436,7 +439,8 @@ h3 {
     z-index:1;
 }
 #tv #tv-danmubar-history {
-    display:none;
+    background:#F0F0F0;
+    box-shadow:0 0 5px rgba(0,0,0,0.2);
     z-index:3;
 }
 #tv-danmubar-auto-box {
@@ -446,6 +450,37 @@ h3 {
     position:absolute;
     top:0;
     width:100%;
+}
+#tv #tv-danmubar-history .tv-danmubar-single-itm {
+    border-radius:0;
+    margin:0;
+}
+#tv #tv-danmubar-history .tv-danmubar-single-itm * {
+    border-radius:0;
+}
+.tv-danmubar-history-head {
+    background:url(../img/title-bg-sm.png);
+    box-sizing: border-box;
+    color:#FFF;
+    height:40px;
+    left:0;
+    line-height:40px;
+    padding:0 10px;
+    position:absolute;
+    right:0;
+    top:0;
+}
+.tv-danmubar-history-head .close {
+    background:url(../img/danmu-ico.png) left -120px no-repeat;
+    height:30px;
+    opacity:.8;
+    position:absolute;
+    right:10px;
+    top:5px;
+    width:30px;
+}
+.tv-danmubar-history-head .close:hover {
+    opacity:1;
 }
 .tv-danmubar-single-itm {
     background:#FFF;
@@ -460,6 +495,18 @@ h3 {
     position:absolute;
     text-shadow:none;
 }
+.tv-danmubar-history-body {
+    bottom:0;
+    left:0;
+    overflow: auto;
+    position:absolute;
+    right:0;
+    top:40px;
+}
+.tv-danmubar-history-body .tv-danmubar-single-itm {
+    display:block;
+    position:relative;
+}
 .tv-danmubar-single-itm .li {
     display:block;
     margin:0;
@@ -473,7 +520,7 @@ h3 {
     display:inline-block;
     float:left;
     height:20px;
-    margin-right:0;
+    margin-right:4px;
     width:20px;
 }
 .tv-danmubar-single-itm .simple .creator {
