@@ -1940,8 +1940,10 @@ class Angel_ManageController extends Angel_Controller_Action {
                     if ($r['date'] == $cur_date) {
                         $tmp_count = $r['count'];
                         echo $tmp_count;
-                        $r['count'] = $tmp_count + 1;
-                        var_dump($resource);
+                        $tmp_count++;
+                        echo $tmp_count;
+                        $r['count'] = $tmp_count;
+                        var_dump($resource); exit;
                         $is_set = true;
                         
                         break;
