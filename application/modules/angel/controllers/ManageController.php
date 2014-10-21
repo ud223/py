@@ -1938,9 +1938,9 @@ class Angel_ManageController extends Angel_Controller_Action {
         
         foreach ($users as $u) {
             if ($u->attribute["from"] == "1") {
-                $cur_date = date('Y-m-d', $u->created_at);
+                $cur_date = new MongoDate($u->created_at);
                 
-                echo $u->created_at; exit;
+                echo $cur_date; exit;
                 
                 if (array_key_exists($cur_date, $resource)) {
                     $resource[$cur_date]++; 
