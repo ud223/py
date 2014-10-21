@@ -1940,7 +1940,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             if ($u->attribute["from"] == "1") {
                 $cur_date = date('Y-m-d', $u->created_at);
                 
-                echo $cur_date; exit;
+                echo $u->created_at; exit;
                 
                 if (array_key_exists($cur_date, $resource)) {
                     $resource[$cur_date]++; 
