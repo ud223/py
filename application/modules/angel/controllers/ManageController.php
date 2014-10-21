@@ -1961,7 +1961,10 @@ class Angel_ManageController extends Angel_Controller_Action {
                 if ($u->attribute["from"] == "1") {
                     $item['android'] = 1;
                 }
-
+                else {
+                    $item['android'] = 0;
+                }
+                
                 $resource[] = $item;
             }
 
