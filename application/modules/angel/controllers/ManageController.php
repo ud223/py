@@ -1936,11 +1936,11 @@ class Angel_ManageController extends Angel_Controller_Action {
         $count = 0;
         $resource = array();
         
+        
+        
         foreach ($users as $u) {
             if ($u->attribute["from"] == "1") {
-                $cur_date = $u->created_at['date'];
-                
-                echo $cur_date; exit;
+                $cur_date = $u->created_at->format('Y-m-d');
                 
                 if (array_key_exists($cur_date, $resource)) {
                     $resource[$cur_date]++; 
