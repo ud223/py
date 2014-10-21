@@ -1926,26 +1926,24 @@ class Angel_ManageController extends Angel_Controller_Action {
     public function mobileCountAction() {
         $userModel = $this->getModel('user');
         
-//        $mobile_users_condition = array( 'attribute["from"]' => 1 );
-//        
-//        $users_count = $userModel->getby(false, $mobile_users_condition);  
-//
-//        $users = $userModel->getMoibleRegCount($mobile_users_condition);
-        
         $users = $userModel->getAll(false);
         $count = 0;
         $resource = array();
-        
-        
-        
+             
         foreach ($users as $u) {
             if ($u->attribute["from"] == "1") {
                 $cur_date = $u->created_at->format('Y-m-d');
                 
-                if (array_key_exists($cur_date, $resource)) {
-                    $resource[$cur_date]++; 
+                $is_set = false;
+                
+                foreach ($resource as $r) {
+                    if ($r['date'] == $cur_date) {
+                        $r['count']++;
+                        $is_set = true;
+                    }
                 }
-                else {
+                
+                if (!$is_set) {
                     $item = array();
                     
                     $item['date'] = $cur_date;
