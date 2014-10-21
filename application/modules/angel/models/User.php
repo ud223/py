@@ -931,4 +931,17 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
             return false;
     }
 
+    public function getMoibleRegCount($conditions) {
+        $result = false;
+
+        if ($conditions) {
+            $keys = array("created_at"=>1);
+            $reduce = 'function (obj, prev) { prev.items.push(obj.created_at); prev.count++; }';
+            $initial = array("items"=>array(), 'count'=>0);
+            
+            $result = $this->_dm->createQueryBuilder($this->_document_class)->group($keys, $initial, $conditions);
+        }
+        
+        return $result;
+    }
 }
