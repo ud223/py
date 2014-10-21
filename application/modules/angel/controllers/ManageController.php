@@ -1926,14 +1926,24 @@ class Angel_ManageController extends Angel_Controller_Action {
     public function mobileCountAction() {
         $userModel = $this->getModel('user');
         
-        $mobile_users_condition = array( 'attribute["from"]' => 1 );
+//        $mobile_users_condition = array( 'attribute["from"]' => 1 );
+//        
+//        $users_count = $userModel->getby(false, $mobile_users_condition);  
+//
+//        $users = $userModel->getMoibleRegCount($mobile_users_condition);
         
-        $users_count = $userModel->getby(false, $mobile_users_condition);  
-
-        $users = $userModel->getMoibleRegCount($mobile_users_condition);
+        $users = $userModel->getAll(false);
+        $count = 0;
+        $resource = array();
         
-        $this->view->resource = $users;
-        $this->view->count = count($users_count);
+        foreach ($users as $u) {
+            if ($u->attribute["from"] == "1") {
+                $count++;
+            }
+        }
+        
+        $this->view->resource = $resource;
+        $this->view->count = $count;
         $this->view->title = "移动注册列表";
     }
 }
