@@ -1922,4 +1922,15 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         }
     }
+    
+    public function mobileCountAction() {
+        $userModel = $this->getModel('user');
+        
+        $mobile_users_condition = array( 'attribute.from' => 1 );
+        
+        $users = $userModel->getby(false, $mobile_users_condition);      
+
+        $this->view->count = count($user);
+        $this->view->title = "移动注册列表";
+    }
 }
