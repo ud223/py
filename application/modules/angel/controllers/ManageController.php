@@ -1934,18 +1934,15 @@ class Angel_ManageController extends Angel_Controller_Action {
             if ($u->attribute["from"] == "1") {
                 $cur_date = $u->created_at->format('Y-m-d');                
                 $is_set = false;
-                $index = 0;
+                $index = -1;
                 
                 foreach ($resource as $r) {
+                    $index ++;
+                    
                     if ($r['date'] == $cur_date) {
-//                        $tmp_count = $r['count'];
-//
-//                        $tmp_count++;
-
-                        $resource[$index]['count']++;// = $tmp_count;
+                        $resource[$index]['count']++;
 
                         $is_set = true;                
-                        $index ++;
                         
                         break;
                     }
@@ -1956,7 +1953,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                     
                     $item['date'] = $cur_date;
                     $item['count'] = 1;
-                    
+
                     $resource[] = $item;
                 }
                 
