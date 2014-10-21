@@ -1931,34 +1931,41 @@ class Angel_ManageController extends Angel_Controller_Action {
         $resource = array();
              
         foreach ($users as $u) {
-            if ($u->attribute["from"] == "1") {
-                $cur_date = $u->created_at->format('Y-m-d');                
-                $is_set = false;
-                $index = -1;
-                
-                foreach ($resource as $r) {
-                    $index ++;
-                    
-                    if ($r['date'] == $cur_date) {
-                        $resource[$index]['count']++;
+            
+            $cur_date = $u->created_at->format('Y-m-d');                
+            $is_set = false;
+            $index = -1;
 
-                        $is_set = true;                
-                        
-                        break;
+            foreach ($resource as $r) {
+                $index ++;
+
+                if ($r['date'] == $cur_date) {
+                    $resource[$index]['count']++;
+                    
+                    if ($u->attribute["from"] == "1") {
+                       $resource[$index]['android']++;
                     }
-                }
-                
-                if (!$is_set) {
-                    $item = array();
                     
-                    $item['date'] = $cur_date;
-                    $item['count'] = 1;
+                    $is_set = true;                
 
-                    $resource[] = $item;
+                    break;
                 }
-                
-                $count++;
             }
+
+            if (!$is_set) {
+                $item = array();
+
+                $item['date'] = $cur_date;
+                $item['count'] = 1;
+                
+                if ($u->attribute["from"] == "1") {
+                    $item['android'] = 1;
+                }
+
+                $resource[] = $item;
+            }
+
+            $count++;
         }
         
         $this->view->resource = $resource;
