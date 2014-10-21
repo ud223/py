@@ -1932,19 +1932,20 @@ class Angel_ManageController extends Angel_Controller_Action {
              
         foreach ($users as $u) {
             if ($u->attribute["from"] == "1") {
-                $cur_date = $u->created_at->format('Y-m-d');
-                
+                $cur_date = $u->created_at->format('Y-m-d');                
                 $is_set = false;
+                $index = 0;
                 
                 foreach ($resource as $r) {
                     if ($r['date'] == $cur_date) {
-                        $tmp_count = $r['count'];
-                        echo $tmp_count;
-                        $tmp_count++;
-                        echo $tmp_count;
-                        $r['count'] = $tmp_count;
-                        var_dump($resource); exit;
-                        $is_set = true;
+//                        $tmp_count = $r['count'];
+//
+//                        $tmp_count++;
+
+                        $resource[$index]['count']++;// = $tmp_count;
+
+                        $is_set = true;                
+                        $index ++;
                         
                         break;
                     }
