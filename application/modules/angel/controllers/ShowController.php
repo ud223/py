@@ -756,7 +756,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
     public function  programAddCountAction() {
         if ($this->request->isPost()) {
-            $pid = $this->request->getParam('program');
+            $pid = $this->request->getParam('pid');
 
             if ($pid) {
                 $return = $this->programAddCount($pid);
