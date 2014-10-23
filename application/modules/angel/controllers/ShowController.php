@@ -831,6 +831,10 @@ class Angel_ShowController extends Angel_Controller_Action {
             $this->_helper->json(array('data' => $message, 'code' => $code));
         }
         else {
+            if (!$comments) {
+                $comments = array();
+            }
+                
             $this->_helper->json(array('data' => $comments, 'code' => $code));
         }
     }
