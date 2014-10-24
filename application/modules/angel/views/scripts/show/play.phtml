@@ -22,6 +22,11 @@ $programs = $bean['programs'];
     </div>
 <?php endif; ?>
 
+<?php if ($user): ?>
+<script>
+    var ts_user_id = '<?php echo $user->id?>';
+</script>
+<?php endif; ?>
 <div id="tv-main-container" class="layer">
     <div id='tv-sider'>
         <div class="pxt">

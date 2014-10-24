@@ -18,6 +18,19 @@ TsComment.prototype = {
         var context = this;
         context._video_key();
         
+        var _config = context._config('danmu');
+        //console.log(ts_user_id+'--');
+        var ts_user_id = window.ts_user_id||'';
+        if(_config){
+            if(_config.split('_')[0] === ts_user_id && _config.split('_')[1] === 'no'){
+                $('#tv-danmuopened').hide();
+                $('#tv-senddanmu').hide();
+                $('#tv-danmu-all').hide();
+                $('#tv-danmuclosed').show();
+            }
+            
+        }
+        
         this._request('api/comments/hot/get/'+context._pid(),null,function(data){
             context._parse(data);
         });
@@ -27,10 +40,14 @@ TsComment.prototype = {
             $('body').append($dom);
         }
         
+        $('#tv-senddanmu').click(function(e){
+            if(!ts_user_id){loginTipFunc();e.preventDefault();return false;}
+        });
         
         $('#tv-danmubar-auto-box,#tv-danmubar-history').on('click','.opera:not(.selected)',function(){
+            if(!ts_user_id){loginTipFunc();}
             if($(this).hasClass('is_me'))return;
-            console.log('ccc'+$(this).closest('.tv-danmubar-single-itm').attr('action_id'));
+            //console.log('ccc'+$(this).closest('.tv-danmubar-single-itm').attr('action_id'));
             var val = parseInt($(this).text());
             val+=1;
             $(this).text(val);
@@ -44,6 +61,10 @@ TsComment.prototype = {
             $('#tv-danmu-all').hide();
             $('#tv-danmuclosed').show();
             context.stop();
+            if(ts_user_id){
+                context._config('danmu',ts_user_id+'_'+'no');
+            }
+            context._config('danmu')
         });
         
         $('#tv-danmuclosed').click(function(){
@@ -52,6 +73,9 @@ TsComment.prototype = {
             $('#tv-danmu-all').show();
             
             $('#tv-senddanmu').show();
+            if(ts_user_id){
+                context._config('danmu','');
+            }
             context.start();
         });
         
@@ -67,6 +91,7 @@ TsComment.prototype = {
         
         $('.submit_comment').click(function(){
             var text = $(this).closest('div').find('input').val();
+            if(text === '')return;
             var time = context._time();
             var data = {
                 type:'text',
@@ -85,6 +110,7 @@ TsComment.prototype = {
         $('.value_comment').on('keyup',function(e){
             if(e.which === 13){
                 var text = $(this).val();
+                if(text === '')return;
                 var time = context._time();
                 var data = {
                     type:'text',
@@ -93,7 +119,7 @@ TsComment.prototype = {
                     pid:context._pid()
                 };
                 context._time_arr.push(time+1);
-                console.log(time);
+                //console.log(time);
                 context._data.push({"id":"5448a3f4b7c58e100f8b4568","text":text,"time_at":time+1,"pid":"53","up":0,"hot":0,"type":"text","username":"我",is_me:true});
                 context._request('api/comments/add',data);
                 $('.P_closebtn').click();
@@ -150,7 +176,10 @@ TsComment.prototype = {
         $(document).on('keyup',function(e){
             var video = $('#tv-video-player')[0];
             
-            if($(':focus').is('input'))return true;
+            if($(':focus').is('input')){
+               
+                return true;
+            }
             switch(e.which){
                 case 32:
                     if(video.paused === true){
@@ -160,7 +189,7 @@ TsComment.prototype = {
                     }
                     break;
             }
-            console.log(e.which);
+           // console.log(e.which);
         });
     },
     _parse:function(data){
@@ -282,6 +311,18 @@ TsComment.prototype = {
     },
     _time:function(){
       return Math.round($('#tv-video-player')[0].currentTime);  
+    },
+    _config:function(key,value){
+        if(window.localStorage){
+            if(value === ''){
+                window.localStorage.removeItem(key);
+            }
+            if(value){
+                window.localStorage.setItem(key,value);
+            }else{
+                return window.localStorage.getItem(key);
+            }
+        }
     },
     start:function(){
         var context = this;
