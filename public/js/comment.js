@@ -52,6 +52,8 @@ TsComment.prototype = {
             val+=1;
             $(this).text(val);
             $(this).addClass('selected');
+            context._up_arr[$(this).closest('.tv-danmubar-single-itm').attr('action_id')] = val;
+            //context._up_arr.push($(this).closest('.tv-danmubar-single-itm').attr('action_id'));
             context._request('api/comments/up',{id:$(this).closest('.tv-danmubar-single-itm').attr('action_id')})
         });
         
@@ -126,6 +128,8 @@ TsComment.prototype = {
             }
         });
     },
+    _up_arr:{}
+    ,
     _tmp:['<div class="tv-danmubar-single-itm" style="display:none;">',
                     '<div class="li simple">',
                         '<span class="danmu-type"></span>',
@@ -213,6 +217,8 @@ TsComment.prototype = {
         }
     },
     _history:function(item){
+        var context = this;
+        
         $('.tv-danmubar-history-body').html('');
         for(var i = 0;i<item.length;i++){
             var $tmp = $('#ts_comment_tmp').clone(true).removeAttr('id').show();
@@ -226,12 +232,19 @@ TsComment.prototype = {
             }
             $tmp.css('top',top);
             
+            if(item[i].id in context._up_arr){
+                $tmp.find('.opera').addClass('selected');
+                $tmp.find('.opera').text(context._up_arr[item[i].id]);
+            }
+            
             $('.tv-danmubar-history-body').append($tmp);
         }
         
         
     },
     _item_in:function(item){
+        var context = this;
+        
         if($('#tv-video-player')[0].seeking || $('#tv-video-player')[0].paused)return;
         //if(ccc){return};
         //console.log(item);
@@ -250,6 +263,11 @@ TsComment.prototype = {
                 $tmp.find('.opera').addClass('is_me').css('cursor','default');
             }
             $tmp.css('top',top);
+            
+            if(item[i].id in context._up_arr){
+                $tmp.find('.opera').addClass('selected');
+                $tmp.find('.opera').text(context._up_arr[item[i].id]);
+            }
             
             top += $tmp.height();
             $dom.append($tmp);
