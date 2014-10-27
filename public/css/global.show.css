@@ -371,6 +371,12 @@ h3 {
     top:1px;
     width:30px;
 }
+#tv .tv-danmu-btn span.close_ico{
+    background-position: left top;
+}
+#tv #tv-main-container .tv-danmu-btn span.open_ico{
+    background-position: left -30px;
+}
 #tv #tv-danmu-all {
     background-position:left -91px;
     opacity:0.2;

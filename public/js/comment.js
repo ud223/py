@@ -41,11 +41,23 @@ TsComment.prototype = {
         }
         
         $('#tv-danmuopened').hover(function(){
+            $('#tv-danmuclosed').find('.text').text('开弹幕');
             $(this).find('.text').text('关弹幕');
-            $(this).find('.ico').css('backgroundPosition',' 0px 0px;')
+            $(this).find('.ico').addClass('close_ico');
+            $('#tv-danmuclosed').find('.ico').addClass('open_ico');
         },function(){
             $(this).find('.text').text('弹幕开');
-            $(this).find('.ico').css('backgroundPosition','-30px 0px;')
+            $(this).find('.ico').removeClass('close_ico');
+        });
+        
+        $('#tv-danmuclosed').hover(function(){
+            $('#tv-danmuopened').find('.text').text('关弹幕');
+            $(this).find('.text').text('开弹幕');
+            $(this).find('.ico').addClass('open_ico');
+            $('#tv-danmuopened').find('.ico').addClass('close_ico');
+        },function(){
+            $(this).find('.text').text('弹幕关');
+            $(this).find('.ico').removeClass('open_ico');
         });
         
         $('#tv-senddanmu').click(function(e){
