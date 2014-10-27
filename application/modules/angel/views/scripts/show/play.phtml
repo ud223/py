@@ -61,8 +61,8 @@ $programs = $bean['programs'];
     <?php endif; ?>
     <div id="tv-danmubar">
         <div id="tv-danmubar-switch">
-            <button class="tv-danmu-btn" id="tv-danmuopened" type="button"><span class="ico"></span>弹幕开</button>
-            <button class="tv-danmu-btn" id="tv-danmuclosed" type="button"><span class="ico"></span>弹幕关</button>
+            <button class="tv-danmu-btn" id="tv-danmuopened" type="button"><span class="ico"></span><span class="text">弹幕开</span></button>
+            <button class="tv-danmu-btn" id="tv-danmuclosed" type="button"><span class="ico"></span><span class="text">弹幕关</span></button>
         </div>
         <div id="tv-danmubar-auto">
             <div id="tv-danmubar-auto-box">
@@ -117,7 +117,7 @@ $programs = $bean['programs'];
         </div>
         <div id="tv-danmubar-history" style="display: none;">
             <div class="tv-danmubar-history-head">
-                所有弹幕
+                <span>所有弹幕</span>
                 <button type="button" class="close"></button>
             </div>
             <div class="tv-danmubar-history-body">
@@ -379,8 +379,9 @@ $programs = $bean['programs'];
 
     <?php if ($player_mode == 'video'): ?>
         <div id="tv-screen" class="layer text-center">
-            <video id="tv-video-player" src="<?php echo $this->cur_program['oss_video'] ?>" preload autoplay="autoplay" oncontextmenu="return false;">
+            <video id="tv-video-player" class="player" src="<?php echo $this->cur_program['oss_video'] ?>" preload autoplay="autoplay" oncontextmenu="return false;">
             </video>
+            <div id="danmakuwrap" class="danmakuwrap"></div>
         </div>
     <?php else: ?>
         <div id="tv-disk">
