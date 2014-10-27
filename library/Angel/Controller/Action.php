@@ -370,10 +370,11 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                     $url = $goto;
                 }
 
-                $errorMsg = "success";
+                $errorMsg = "登录成功！";
                 $uid = $auth["msg"];
             } else {
                 $code = 500;
+                $errorMsg = "登录失败！";
             }
 
             if ($this->getParam('format') == 'json') {
