@@ -367,6 +367,30 @@ h3 {
 #tv #tv-danmubar:hover #tv-danmu-all {
     opacity:1;
 }
+#tv #tv-fullscreendanmu, #tv #tv-verticaldanmu {
+    background:rgba(0,0,0,.5);
+    border-radius: 4px 0 0 4px;
+    left:120px;
+    padding-left:0;
+    padding-right:0;
+    width:40px;
+}
+#tv #tv-verticaldanmu {
+    border-radius: 0 4px 4px 0;
+    left:160px;
+}
+#tv #tv-fullscreendanmu:hover, #tv #tv-verticaldanmu:hover {
+    background:rgba(0,0,0,.8);
+}
+#tv #tv-fullscreendanmu.selected, #tv #tv-verticaldanmu.selected {
+    background:#04CC54 !important;
+}
+#tv #tv-fullscreendanmu .ico {
+    background-position: left -239px;
+}
+#tv #tv-verticaldanmu .ico {
+    background-position: left -269px;
+}
 .send-danmu-board .txt {
     background:none;
     border:none;
@@ -389,7 +413,7 @@ h3 {
 }
 #tv #tv-senddanmu {
     box-shadow:none;
-    left:120px;
+    left:220px;
 }
 #tv #tv-senddanmu {
     background: #539cda; /* Old browsers */
