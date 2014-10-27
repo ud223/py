@@ -2,7 +2,7 @@
 
 class Angel_ShowController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play', 'special-program-list', 'special-recommend', 'program-add-count', 'captions-get');
+    protected $login_not_required = array('detail', 'save-user-category', 'download-android', 'download-ios', 'upload-file', 'play', 'fi-add', 'fi-list', 'user-category-list', 'remove-user-category', 'phone-play', 'special-program-list', 'special-recommend', 'program-add-count', 'captions-get', 'comments-get');
 
     public function init() {
         parent::init();
@@ -756,7 +756,7 @@ class Angel_ShowController extends Angel_Controller_Action {
 
     public function  programAddCountAction() {
         if ($this->request->isPost()) {
-            $pid = $this->request->getParam('program');
+            $pid = $this->request->getParam('pid');
 
             if ($pid) {
                 $return = $this->programAddCount($pid);
@@ -818,7 +818,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 
                 if ($result) {
                     foreach ($result as $c) {
-                        $comments["data"][] = array("id" => $c->id, "text" => $c->text, "time_at" => $c->time_at, "pid" => $c->program_id, "up" => $c->up, "hot"=> $c->hot, "type"=> $c->type, "uid"=>$c->user->id, "username"=>$c->user->username);
+                        $comments[] = array("id" => $c->id, "text" => $c->text, "time_at" => $c->time_at, "pid" => $c->program_id, "up" => $c->up, "hot"=> $c->hot, "type"=> $c->type, "uid"=>$c->user->id, "username"=>$c->user->username);
                     }
                 }
             } catch (Exception $e) {
@@ -831,6 +831,10 @@ class Angel_ShowController extends Angel_Controller_Action {
             $this->_helper->json(array('data' => $message, 'code' => $code));
         }
         else {
+            if (!$comments) {
+                $comments = array();
+            }
+                
             $this->_helper->json(array('data' => $comments, 'code' => $code));
         }
     }

@@ -1,6 +1,6 @@
 <script type="text/javascript" src="<?php echo $this->jsPath('player.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $this->jsPath('qrcode.js'); ?>"></script>
-
+<script type="text/javascript" src="<?php echo $this->jsPath('comment.js'); ?>"></script>
 
 <?php
 $player_mode = "video";
@@ -22,6 +22,11 @@ $programs = $bean['programs'];
     </div>
 <?php endif; ?>
 
+<?php if ($user): ?>
+<script>
+    var ts_user_id = '<?php echo $user->id?>';
+</script>
+<?php endif; ?>
 <div id="tv-main-container" class="layer">
     <div id='tv-sider'>
         <div class="pxt">
@@ -61,7 +66,7 @@ $programs = $bean['programs'];
         </div>
         <div id="tv-danmubar-auto">
             <div id="tv-danmubar-auto-box">
-                <div class="tv-danmubar-single-itm" style="top:80px">
+                <!--<div class="tv-danmubar-single-itm" style="top:80px">
                     <div class="li simple">
                         <span class="danmu-type"></span>
                         <span class="creator">night knight</span>
@@ -104,13 +109,13 @@ $programs = $bean['programs'];
                         1
                     </div>
                     <div class="clear"></div>
-                </div>
+            </div>-->
             </div>
-            <button class="ico" id="tv-danmu-all" type="button"></button>
+            <button class="ico" id="tv-danmu-all" type="button" style="display: none;"></button>
             <button class="tv-danmu-btn" id="tv-senddanmu" onclick="$.popup({containerBoxSelector:'#tv', content: $('.send-danmu-board').clone(true), width: 400});
                     $('.send-danmu-board .txt').focus()" type="button"><span class="ico"></span>打一发</button>
         </div>
-        <div id="tv-danmubar-history">
+        <div id="tv-danmubar-history" style="display: none;">
             <div class="tv-danmubar-history-head">
                 所有弹幕
                 <button type="button" class="close"></button>
@@ -408,9 +413,9 @@ $programs = $bean['programs'];
     <div class="send-danmu-board">
         <div>
             <p>写弹幕：</p>
-            <input class="txt" type="text"/>
+            <input class="txt value_comment" type="text" maxlength="140" />
             <br/>
-            <button class="btn" type="button">发送</button>
+            <button class="btn submit_comment" type="button">发送</button>
         </div>
     </div>
 

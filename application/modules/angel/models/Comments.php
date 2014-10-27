@@ -23,7 +23,7 @@ class Angel_Model_Comments  extends Angel_Model_AbstractModel {
     }
     
     public function getHotCommentsByProgramId($program_id) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('program_id')->equals($program_id)->field('hot')->equals(1)->sort('time_at', 1);
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('program_id')->equals($program_id)->field('hot')->equals(0)->sort('time_at', 1);
 
         $result = $query
                 ->getQuery()
