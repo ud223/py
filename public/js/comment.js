@@ -309,7 +309,7 @@ TsComment.prototype = {
         
             function out(){
                 if($('#tv-video-player')[0].seeking || $('#tv-video-player')[0].paused){
-                    setTimeout(out,3000);
+                    setTimeout(out,5000);
                     return;
                 }
                 $dom.animate({
@@ -322,7 +322,7 @@ TsComment.prototype = {
         $dom.animate({
             top:'150px'
         },500,function(){
-            setTimeout(out,3000);
+            setTimeout(out,5000);
         });
         
         
