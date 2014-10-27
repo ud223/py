@@ -23,9 +23,9 @@ $programs = $bean['programs'];
 <?php endif; ?>
 
 <?php if ($user): ?>
-<script>
-    var ts_user_id = '<?php echo $user->id?>';
-</script>
+    <script>
+        var ts_user_id = '<?php echo $user->id ?>';
+    </script>
 <?php endif; ?>
 <div id="tv-main-container" class="layer">
     <div id='tv-sider'>
@@ -112,8 +112,11 @@ $programs = $bean['programs'];
             </div>-->
             </div>
             <button class="ico" id="tv-danmu-all" type="button" style="display: none;"></button>
-            <button class="tv-danmu-btn" id="tv-senddanmu" onclick="$.popup({containerBoxSelector:'#tv', content: $('.send-danmu-board').clone(true), width: 400});
+            <button class="tv-danmu-btn" id="tv-senddanmu" onclick="$.popup({containerBoxSelector: '#tv', content: $('.send-danmu-board').clone(true), width: 400});
                     $('.send-danmu-board .txt').focus()" type="button"><span class="ico"></span>打一发</button>
+
+            <button class="tv-danmu-btn selected" title="弹幕满天飞" id="tv-fullscreendanmu" type="button"><span class="ico"></span></button>
+            <button class="tv-danmu-btn" title="精华弹幕" id="tv-verticaldanmu" type="button"><span class="ico"></span></button>
         </div>
         <div id="tv-danmubar-history" style="display: none;">
             <div class="tv-danmubar-history-head">
