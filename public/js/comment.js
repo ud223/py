@@ -311,7 +311,7 @@ TsComment.prototype = {
         
         for(var i = 0;i<item.length;i++){
             if(item[i].type === 'image'){
-               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;"><img/></div>');
+               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;"><img/><div class="content" style="background:#000000;color:#ffffff"></div></div>');
                
                $img_box.find('img').on('load',function(){
                    var w_height = $(window).height();
@@ -319,14 +319,23 @@ TsComment.prototype = {
                    
                    $img_box.css('top',(w_height-b_height)/2+'px');
                    $img_box.appendTo('body');
-                   setTimeout(function(){
-                       $img_box.fadeOut(1000,function(){
+                   
+                   function fade(){
+                       if($('#tv-video-player')[0].seeking || $('#tv-video-player')[0].paused){
+                            setTimeout(fade,5000);
+                            return;
+                        }
+                       
+                        $img_box.fadeOut(1000,function(){
                            $(this).remove();
                        });
-                   },5000);
+                   }
+                   
+                   
+                   
                });
                $img_box.find('img').attr('src',item[i].image);
-               
+                $img_box.find('.content').text(item[i].text);
                 
             }else{
                 
@@ -470,7 +479,7 @@ TsComment.prototype = {
             if(c_index > -1){
                 var item = [];
                 for(var i=0;i<data.length;i++){
-                    if(data[i].time_at === c_time){
+                    if(data[i].time_at === c_time && data[i].type === 'text'){
                         //item.push(context._data[i]);
                         gendanmaku(data[i].text);
                     }
