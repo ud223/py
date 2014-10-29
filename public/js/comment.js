@@ -143,6 +143,7 @@ TsComment.prototype = {
                 $('#P_popup .img_upload_form .danmu_time').val(context._time());
                 $('#P_popup .img_upload_form .danmu_pid').val(context._pid());
                 $('#P_popup .img_upload_form').submit();
+                $('.P_closebtn').click();
                 return;
             }
             
@@ -331,7 +332,7 @@ TsComment.prototype = {
                        });
                    }
                    
-                   
+                   setTimeout(fade,5000);
                    
                });
                $img_box.find('img').attr('src',item[i].image);
