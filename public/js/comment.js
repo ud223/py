@@ -311,7 +311,7 @@ TsComment.prototype = {
         
         for(var i = 0;i<item.length;i++){
             if(item[i].type === 'image'){
-               var $img_box = $('<div style="position:absolute;"><img/></div>');
+               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;"><img/></div>');
                
                $img_box.find('img').on('load',function(){
                    var w_height = $(window).height();
