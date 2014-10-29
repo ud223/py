@@ -14,11 +14,55 @@
 class Angel_Model_Comments  extends Angel_Model_AbstractModel {
     protected $_document_class = '\Documents\Comments';
     
-    public function addComments($text, $program_id, $time_at, $user, $type) {
-        $data = array("text" => $text, "program_id" => $program_id, "time_at" => $time_at,  "up"=> 0, "user"=>$user, "type"=>$type, "hot"=>0);
+    public function getPhotoPath($photoname) {
+        return APPLICATION_PATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public' . $this->_bootstrap_options['image']['photo_path'] . DIRECTORY_SEPARATOR . $photoname;
+    }
+    
+    public function photoHandle($image) {
+        $result = false;
+        
+        $imageService = $this->_container->get('image');
+                    
+        if ($imageService->isAcceptedImage($image)) {
+            $extension = $imageService->getImageTypeExtension($image);
+            $utilService = $this->_container->get('util');
+            $filename = $utilService->generateFilename($extension);
+            $destination = $this->getPhotoPath($filename);
+            $sizes = getimagesize($image);                  
+
+            if (copy($image, $destination)) {
+                $generated = true;
+                $scale = 1.0;
+
+                if ($sizes[0] > 600) {
+                    $width = $sizes[0];
+                    $scale = floatval(600) / floatval($width);
+                }
+
+                if ($sizes[1] > 600) {
+                    $tmp_scale = 600 / floatval($sizes[1]);
+
+                    if ($scale > $tmp_scale)
+                        $scale = $tmp_scale;
+                }
+
+                $generated = $imageService->resizeImage($destination, $sizes[0] * $scale, $sizes[1] * $scale);
+
+                $result = $this->_bootstrap_options['image']['photo_path'] . '/'. $filename;
+            }
+        }
+        else {
+             throw new Angel_Exception_Common(Angel_Exception_Common::IMAGE_NOT_ACCEPTED);
+        }
+        
+        return $result;
+    }
+    
+    public function addComments($image, $text, $program_id, $time_at, $user, $type) {
+        $data = array("image" => $image, "text" => $text, "program_id" => $program_id, "time_at" => $time_at,  "up"=> 0, "user"=>$user, "type"=>$type, "hot"=>0);
         
         $result = $this->add($data);
-        
+
         return $result;
     }
     
@@ -38,7 +82,7 @@ class Angel_Model_Comments  extends Angel_Model_AbstractModel {
         try {
             $comments = $this->getById($id);
 
-            $data = array("text" => $comments->text, "program_id" => $comments->program_id, "time_at" => $comments->time_at, "up" => $comments->up, "user" => $comments->user, "type" => $comments->type, "hot" => 1);
+            $data = array("image" => $comments->image, "text" => $comments->text, "program_id" => $comments->program_id, "time_at" => $comments->time_at, "up" => $comments->up, "user" => $comments->user, "type" => $comments->type, "hot" => 1);
 
             $this->save($id, $data);
 
