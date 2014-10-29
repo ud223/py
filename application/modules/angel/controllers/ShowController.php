@@ -840,7 +840,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
             
             if (!$result) {
-                $return = array('data' => $message, 'code' => $result);
+                $return = array('data' => $message, 'code' => 500);
                 echo json_encode($return);
                 exit;
             }
@@ -858,11 +858,11 @@ class Angel_ShowController extends Angel_Controller_Action {
                     $result = 200;
                 }
                 else {
-                    $result = 0;
+                    $result = 500;
                 }
             }
             catch (Exception $e) {
-                $result = 0;
+                $result = 500;
                 $message = $e->getMessage();
             }
             
