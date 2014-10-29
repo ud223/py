@@ -287,23 +287,29 @@ TsComment.prototype = {
         $('.tv-danmubar-history-head span').text('所有弹幕 ('+item.length+')');
         $('.tv-danmubar-history-body').html('');
         for(var i = 0;i<item.length;i++){
-            var $tmp = $('#ts_comment_tmp').clone(true).removeAttr('id').show();
-            $tmp.find('.creator').text(item[i].username);
-            $tmp.find('.txt-content').text(item[i].text);
-            $tmp.attr('action_id',item[i].id);
-            $tmp.find('.opera').text(item[i].up);
-            console.log(item[i]);
-             if(item[i].is_me){
-                $tmp.find('.opera').addClass('is_me').css('cursor','default');
-            }
-            $tmp.css('top',top);
             
-            if(item[i].id in context._up_arr){
-                $tmp.find('.opera').addClass('selected');
-                $tmp.find('.opera').text(context._up_arr[item[i].id]);
+            if(item[i].type === 'image'){
+                
+            }else{
+                var $tmp = $('#ts_comment_tmp').clone(true).removeAttr('id').show();
+                $tmp.find('.creator').text(item[i].username);
+                $tmp.find('.txt-content').text(item[i].text);
+                $tmp.attr('action_id',item[i].id);
+                $tmp.find('.opera').text(item[i].up);
+                console.log(item[i]);
+                 if(item[i].is_me){
+                    $tmp.find('.opera').addClass('is_me').css('cursor','default');
+                }
+                $tmp.css('top',top);
+
+                if(item[i].id in context._up_arr){
+                    $tmp.find('.opera').addClass('selected');
+                    $tmp.find('.opera').text(context._up_arr[item[i].id]);
+                }
+
+                $('.tv-danmubar-history-body').append($tmp);
             }
             
-            $('.tv-danmubar-history-body').append($tmp);
         }
         
         
