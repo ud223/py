@@ -14,45 +14,44 @@
 class Angel_Model_Comments  extends Angel_Model_AbstractModel {
     protected $_document_class = '\Documents\Comments';
     
-    public function getPhotoPath($photoname) {
-        return APPLICATION_PATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public' . $this->_bootstrap_options['image']['photo_path'] . DIRECTORY_SEPARATOR . $photoname;
+    public function getCommentsPath($photoname) {
+        return APPLICATION_PATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public' . $this->_bootstrap_options['image']['comments_path'] . DIRECTORY_SEPARATOR . $photoname;
+    }
+    
+    public function getSaveImagePath() {
+        return APPLICATION_PATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public' . $this->_bootstrap_options['image']['photo_path'] . '/';
     }
     
     public function photoHandle($image) {
         $result = false;
         
         $imageService = $this->_container->get('image');
-                    
-        if ($imageService->isAcceptedImage($image)) {
-            $extension = $imageService->getImageTypeExtension($image);
-            $utilService = $this->_container->get('util');
-            $filename = $utilService->generateFilename($extension);
-            $destination = $this->getPhotoPath($filename);
-            $sizes = getimagesize($image);                  
+                
+        $extension = $imageService->getImageTypeExtension($image);
+        $utilService = $this->_container->get('util');
+        $filename = $utilService->generateFilename($extension);
+        $destination = $this->getCommentsPath($filename);
+        $sizes = getimagesize($image);                  
 
-            if (copy($image, $destination)) {
-                $generated = true;
-                $scale = 1.0;
+        if (copy($image, $destination)) {
+            $generated = true;
+            $scale = 1.0;
 
-                if ($sizes[0] > 600) {
-                    $width = $sizes[0];
-                    $scale = floatval(600) / floatval($width);
-                }
-
-                if ($sizes[1] > 600) {
-                    $tmp_scale = 600 / floatval($sizes[1]);
-
-                    if ($scale > $tmp_scale)
-                        $scale = $tmp_scale;
-                }
-
-                $generated = $imageService->resizeImage($destination, $sizes[0] * $scale, $sizes[1] * $scale);
-
-                $result = $this->_bootstrap_options['image']['photo_path'] . '/'. $filename;
+            if ($sizes[0] > 600) {
+                $width = $sizes[0];
+                $scale = floatval(600) / floatval($width);
             }
-        }
-        else {
-             throw new Angel_Exception_Common(Angel_Exception_Common::IMAGE_NOT_ACCEPTED);
+
+            if ($sizes[1] > 600) {
+                $tmp_scale = 600 / floatval($sizes[1]);
+
+                if ($scale > $tmp_scale)
+                    $scale = $tmp_scale;
+            }
+
+            $generated = $imageService->resizeImage($destination, $sizes[0] * $scale, $sizes[1] * $scale);
+
+            $result = $this->_bootstrap_options['image']['comments_path'] . '/'. $filename;
         }
         
         return $result;

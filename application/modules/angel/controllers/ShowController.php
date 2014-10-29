@@ -10,8 +10,10 @@ class Angel_ShowController extends Angel_Controller_Action {
     }
 
      protected function getTmpFile($uid) {
-        $utilService = $this->_container->get('util');
-        $result = $utilService->getTmpDirectory() . '/' . $uid;
+         $commentsModel = $this->getModel('Comments');
+         
+        $result = $commentsModel->getSaveImagePath() . $uid;
+        
         return $result;
     }
     
@@ -816,7 +818,7 @@ class Angel_ShowController extends Angel_Controller_Action {
         if ($this->request->isPost()) {
             // POST METHOD
             $result = 0;
-            $message = 'success';
+            $message = 'upload is fail';
             
             $commentsModel = $this->getModel('Comments');
             $upload = new Zend_File_Transfer();
@@ -856,6 +858,7 @@ class Angel_ShowController extends Angel_Controller_Action {
                 
                 if ($result) {
                     $result = 200;
+                    $message = 'success';
                 }
                 else {
                     $result = 500;
