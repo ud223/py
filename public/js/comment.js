@@ -137,7 +137,17 @@ TsComment.prototype = {
         
         
         $('.submit_comment').click(function(){
-            var text = $(this).closest('div').find('input').val();
+            alert('1');
+            if($('#P_popup .img_upload_form .danmu_img').length >0){
+                
+                $('#P_popup .img_upload_form .danmu_time').val(context._time());
+                $('#P_popup .img_upload_form .danmu_pid').val(context._pid());
+                $('#P_popup .img_upload_form').submit();
+                return;
+            }
+            
+            alert(2)
+            var text = $(this).closest('div').find('.value_comment').val();
             if(text === '')return;
             var time = context._time();
             var data = {
@@ -469,7 +479,81 @@ TsComment.prototype = {
 
 
 
-
+function PreviewImage(fileObj,imgPreviewId,divPreviewId){  
+    //alert('c');
+    var allowExtention=".jpg,.bmp,.gif,.png";//允许上传文件的后缀名document.getElementById("hfAllowPicSuffix").value;  
+    var extention=fileObj.value.substring(fileObj.value.lastIndexOf(".")+1).toLowerCase();              
+    var browserVersion= window.navigator.userAgent.toUpperCase();  
+    if(allowExtention.indexOf(extention)>-1){   
+        if(fileObj.files){//HTML5实现预览，兼容chrome、火狐7+等  
+            if(window.FileReader){  
+                var reader = new FileReader();   
+                reader.onload = function(e){  
+                    //alert($('.'+imgPreviewId).length);
+                    //document.getElementById(imgPreviewId).setAttribute("src",e.target.result);  
+                    
+                    var content = $('.send-danmu-board.P_bg')[0];
+                    
+                    var mt = "-" + $(content).height() / 2 + "px";
+                    $(content).css('margin-top', mt);
+                    
+                    
+                    $('.'+imgPreviewId).on('load',function(){
+                        var content = $('.send-danmu-board.P_bg')[0];
+                    
+                        var mt = "-" + $(content).height() / 2 + "px";
+                        $(content).css('margin-top', mt);
+                    });
+                    
+                    $('.'+imgPreviewId)[1].setAttribute("src",e.target.result);  
+                    
+                    
+                }    
+                reader.readAsDataURL(fileObj.files[0]);  
+            }else if(browserVersion.indexOf("SAFARI")>-1){  
+                alert("不支持Safari6.0以下浏览器的图片预览!");  
+            }  
+        }else if (browserVersion.indexOf("MSIE")>-1){  
+            if(browserVersion.indexOf("MSIE 6")>-1){//ie6  
+                document.getElementById(imgPreviewId).setAttribute("src",fileObj.value);  
+                $('.'+imgPreviewId).setAttribute("src",fileObj.value);  
+            }else{//ie[7-9]  
+                fileObj.select();  
+                if(browserVersion.indexOf("MSIE 9")>-1)  
+                    fileObj.blur();//不加上document.selection.createRange().text在ie9会拒绝访问  
+                var newPreview =document.getElementById(divPreviewId+"New");  
+                if(newPreview==null){  
+                    newPreview =document.createElement("div");  
+                    newPreview.setAttribute("id",divPreviewId+"New");  
+                    newPreview.style.width = document.getElementById(imgPreviewId).width+"px";  
+                    newPreview.style.height = document.getElementById(imgPreviewId).height+"px";  
+                    newPreview.style.border="solid 1px #d2e2e2";  
+                }  
+                newPreview.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='" + document.selection.createRange().text + "')";                              
+                var tempDivPreview=document.getElementById(divPreviewId);  
+                tempDivPreview.parentNode.insertBefore(newPreview,tempDivPreview);  
+                tempDivPreview.style.display="none";                      
+            }  
+        }else if(browserVersion.indexOf("FIREFOX")>-1){//firefox  
+            var firefoxVersion= parseFloat(browserVersion.toLowerCase().match(/firefox\/([\d.]+)/)[1]);  
+            if(firefoxVersion<7){//firefox7以下版本  
+                document.getElementById(imgPreviewId).setAttribute("src",fileObj.files[0].getAsDataURL());  
+            }else{//firefox7.0+                      
+                document.getElementById(imgPreviewId).setAttribute("src",window.URL.createObjectURL(fileObj.files[0]));  
+            }  
+        }else{  
+            document.getElementById(imgPreviewId).setAttribute("src",fileObj.value);  
+        }           
+    }else{  
+        alert("仅支持"+allowExtention+"为后缀名的文件!");  
+        fileObj.value="";//清空选中文件  
+        if(browserVersion.indexOf("MSIE")>-1){                          
+            fileObj.select();  
+            document.selection.clear();  
+        }                  
+        fileObj.outerHTML=fileObj.outerHTML;  
+    }  
+}
 
 
 
@@ -857,16 +941,50 @@ var videoelement = $("video")[0];
 
 
 
+$("video").on('canplay',function(){
+    videocanplay = true;
+});
 
 
+$("video").on('play',function(){
+    if (videocanplay == true) {
+    console.log('onplay');
+    danmakucheck = setInterval(function(){ts_comment.mycheck(ts_comment._time_arr,ts_comment._data)}, 1000);
 
-$("video")[0].oncanplay = function() {
-  
-  videocanplay = true;
-}
+    
+    setTimeout(function() {
+      //$(".playindicator span")[0].style.display = 'none';
+    }, 450);
+    videoelement.style.WebkitFilter = 'blur(0px)';
+    $($(".danmakuwrap")[0]).find("div").each(function() {
+      this.style['-webkit-animation-play-state'] = 'running';
+      this.style['-moz-animation-play-state'] = 'running';
+      $(this).css('-moz-animation-play-state','running');
+      $(this).css('-animation-play-state','running');
+      if (this.style.display == 'none') {
+        this.style.display = '';
+      }
+    });
+  }
+});
+
+$("video").on('pause',function(){
+    clearInterval(danmakucheck);
+
+    //$(".playindicator span")[0].style.display = '';
+    //$(".playindicator span")[0].className = 'glyphicon glyphicon-pause';
+    //videoelement.style.WebkitFilter = 'blur(2px)';
+    $($(".danmakuwrap")[0]).find("div").each(function() {
+        console.log('444444444444444');
+      this.style['-webkit-animation-play-state'] = 'paused';
+      this.style['-moz-animation-play-state'] = 'paused';
+      $(this).css('-moz-animation-play-state','paused');
+      $(this).css('-animation-play-state','paused');
+    });
+});
 
 
-
+/*
 $("video")[0].onplay = function() {
   if (videocanplay == true) {
     console.log('onplay');
@@ -905,7 +1023,7 @@ $("video")[0].onpause = function() {
     });
   }
 };
-
+*/
 
 
 videowidth = $("video")[0].clientWidth;

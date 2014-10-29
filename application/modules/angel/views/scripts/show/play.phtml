@@ -113,7 +113,7 @@ $programs = $bean['programs'];
             </div>
             <button class="ico" id="tv-danmu-all" type="button" style="display: none;"></button>
             <button class="tv-danmu-btn" id="tv-senddanmu" onclick="$.popup({containerBoxSelector: '#tv', content: $('.send-danmu-board').clone(true), width: 400});
-                    $('.send-danmu-board .txt').focus()" type="button"><span class="ico"></span>打一发</button>
+                    $('.send-danmu-board .txt').focus();" type="button"><span class="ico"></span>打一发</button>
 
             <button class="tv-danmu-btn selected" title="弹幕满天飞" id="tv-fullscreendanmu" type="button"><span class="ico"></span></button>
             <button class="tv-danmu-btn" title="精华弹幕" id="tv-verticaldanmu" type="button"><span class="ico"></span></button>
@@ -416,10 +416,21 @@ $programs = $bean['programs'];
 <div class="P_tmp">
     <div class="send-danmu-board">
         <div>
-            <p>写弹幕：</p>
-            <input class="txt value_comment" type="text" maxlength="140" />
+            <iframe style="display:none" id="ts_uploadpic_iframe" name="ts_uploadpic_iframe"></iframe>
+            
+            <form class="img_upload_form" style="position:relative;"  name="danmu" encType="multipart/form-data"   method="post" target="ts_uploadpic_iframe" action="/api/comments/image">
+                <input type="hidden" name="time_at" class="danmu_time"/>
+                <input type="hidden" name="pid" class="danmu_pid"/>
+                <input type="hidden" name="type" class="danmu_type" value="image"/>
+                <p>写弹幕：</p>
+            <input class="txt value_comment" type="text" name="text" maxlength="140" />
             <br/>
+            <div id="divPreview">  
+                    <img id="imgHeadPhoto" class="imgHeadPhoto" src=""   alt="" width="340px;"/>  
+              </div>  
+              <input type="file" class="danmu_img" name="image" onchange="PreviewImage(this,'imgHeadPhoto','divPreview')" size="20"/>
             <button class="btn submit_comment" type="button">发送</button>
+            </form>
         </div>
     </div>
 
