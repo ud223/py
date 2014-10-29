@@ -311,10 +311,19 @@ TsComment.prototype = {
         
         for(var i = 0;i<item.length;i++){
             if(item[i].type === 'image'){
-               var $img_box = $('<div><img/></div>');
+               var $img_box = $('<div style="position:absolute;"><img/></div>');
                
                $img_box.find('img').on('load',function(){
+                   var w_height = $(window).height();
+                   var b_height = $img_box.height();
+                   
+                   $img_box.css('top',(w_height-b_height)/2+'px');
                    $img_box.appendTo('body');
+                   setTimeout(function(){
+                       $img_box.fadeOut(1000,function(){
+                           $(this).remove();
+                       });
+                   },5000);
                });
                $img_box.find('img').attr('src',item[i].image);
                
