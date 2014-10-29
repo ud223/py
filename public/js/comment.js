@@ -137,8 +137,13 @@ TsComment.prototype = {
         
         
         $('.submit_comment').click(function(){
+            var text = $(this).closest('div').find('.value_comment').val();
             //alert('1');
             if($('#P_popup .img_upload_form .danmu_img').length >0 && $('#P_popup .img_upload_form .danmu_img').val != ""){
+                
+                
+                //$(this).closest('div').find('.value_comment').val();
+                context._data.push({"id":"5448a3f4b7c58e100f8b4568","image":$('#P_popup .imgHeadPhoto').attr('src'),"text":text,"time_at":time+2,"pid":"53","up":0,"hot":0,"type":"image","username":"我",is_me:true});
                 
                 $('#P_popup .img_upload_form .danmu_time').val(context._time());
                 $('#P_popup .img_upload_form .danmu_pid').val(context._pid());
@@ -148,7 +153,7 @@ TsComment.prototype = {
             }
             
             //alert(2)
-            var text = $(this).closest('div').find('.value_comment').val();
+            //var text = $(this).closest('div').find('.value_comment').val();
             if(text === '')return;
             var time = context._time();
             var data = {
