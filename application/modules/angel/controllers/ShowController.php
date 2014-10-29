@@ -893,7 +893,10 @@ class Angel_ShowController extends Angel_Controller_Action {
                 
                 if ($result) {
                     foreach ($result as $c) {
-                        $comments[] = array("id" => $c->id, "text" => $c->text, "time_at" => $c->time_at, "pid" => $c->program_id, "up" => $c->up, "hot"=> $c->hot, "type"=> $c->type, "uid"=>$c->user->id, "username"=>$c->user->username);
+                        if (!$c->image)
+                            $c->image = "";
+                        
+                        $comments[] = array("id" => $c->id, "image"=>$c->image ,"text" => $c->text, "time_at" => $c->time_at, "pid" => $c->program_id, "up" => $c->up, "hot"=> $c->hot, "type"=> $c->type, "uid"=>$c->user->id, "username"=>$c->user->username);
                     }
                 }
             } catch (Exception $e) {
