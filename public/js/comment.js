@@ -137,7 +137,7 @@ TsComment.prototype = {
         
         
         $('.submit_comment').click(function(){
-            alert('1');
+            //alert('1');
             if($('#P_popup .img_upload_form .danmu_img').length >0){
                 
                 $('#P_popup .img_upload_form .danmu_time').val(context._time());
@@ -146,7 +146,7 @@ TsComment.prototype = {
                 return;
             }
             
-            alert(2)
+            //alert(2)
             var text = $(this).closest('div').find('.value_comment').val();
             if(text === '')return;
             var time = context._time();
@@ -310,24 +310,38 @@ TsComment.prototype = {
         var $dom = $(dom);
         
         for(var i = 0;i<item.length;i++){
-            var $tmp = $('#ts_comment_tmp').clone(true).removeAttr('id').show();
-            $tmp.find('.creator').text(item[i].username);
-            $tmp.find('.txt-content').text(item[i].text);
-            $tmp.attr('action_id',item[i].id);
-            $tmp.find('.opera').text(item[i].up);
-            if(item[i].is_me){
-                $tmp.find('.opera').addClass('is_me').css('cursor','default');
+            if(item[i].type === 'image'){
+               var $img_box = $('<div><img/></div>');
+               
+               $img_box.find('img').on('load',function(){
+                   $img_box.appendTo('body');
+               });
+               $img_box.find('img').attr('src',item[i].image);
+               
+                
+            }else{
+                
+                var $tmp = $('#ts_comment_tmp').clone(true).removeAttr('id').show();
+                $tmp.find('.creator').text(item[i].username);
+                $tmp.find('.txt-content').text(item[i].text);
+                $tmp.attr('action_id',item[i].id);
+                $tmp.find('.opera').text(item[i].up);
+                if(item[i].is_me){
+                    $tmp.find('.opera').addClass('is_me').css('cursor','default');
+                }
+                $tmp.css('top',top);
+
+                if(item[i].id in context._up_arr){
+                    $tmp.find('.opera').addClass('selected');
+                    $tmp.find('.opera').text(context._up_arr[item[i].id]);
+                }
+
+                top += $tmp.height();
+                $dom.append($tmp);
+                s+=this._tmp;
             }
-            $tmp.css('top',top);
             
-            if(item[i].id in context._up_arr){
-                $tmp.find('.opera').addClass('selected');
-                $tmp.find('.opera').text(context._up_arr[item[i].id]);
-            }
             
-            top += $tmp.height();
-            $dom.append($tmp);
-            s+=this._tmp;
         }
         
         var _height = $('.comment_box').height();
