@@ -137,15 +137,17 @@ TsComment.prototype = {
         
         
         $('.submit_comment').click(function(){
+            alert('1');
             if($('#P_popup .img_upload_form .danmu_img').length >0){
                 
                 $('#P_popup .img_upload_form .danmu_time').val(context._time());
+                $('#P_popup .img_upload_form .danmu_pid').val(context._pid());
                 $('#P_popup .img_upload_form').submit();
                 return;
             }
             
-            
-            var text = $(this).closest('div').find('input').val();
+            alert(2)
+            var text = $(this).closest('div').find('.value_comment').val();
             if(text === '')return;
             var time = context._time();
             var data = {
