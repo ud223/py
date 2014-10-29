@@ -50,6 +50,10 @@ class Angel_Model_Comments  extends Angel_Model_AbstractModel {
             }
 
             $generated = $imageService->resizeImage($destination, $sizes[0] * $scale, $sizes[1] * $scale);
+            
+            if (file_exists($generated)) {
+                unlink($generated);
+            }
 
             $result = $this->_bootstrap_options['image']['comments_path'] . '/'. $filename;
         }
