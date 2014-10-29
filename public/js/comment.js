@@ -137,19 +137,27 @@ TsComment.prototype = {
         
         
         $('.submit_comment').click(function(){
-            alert('1');
-            if($('#P_popup .img_upload_form .danmu_img').length >0){
+            var text = $(this).closest('div').find('.value_comment').val();
+            var time = context._time();
+            //alert('1');
+            if($('#P_popup .img_upload_form .danmu_img').length >0 && $('#P_popup .img_upload_form .danmu_img').val() != ""){
+                
+                
+                //$(this).closest('div').find('.value_comment').val();
+                context._time_arr.push(time+2);
+                context._data.push({"id":"5448a3f4b7c58e100f8b4568","image":$('#P_popup .imgHeadPhoto').attr('src'),"text":text,"time_at":time+2,"pid":"53","up":0,"hot":0,"type":"image","username":"我",is_me:true});
                 
                 $('#P_popup .img_upload_form .danmu_time').val(context._time());
                 $('#P_popup .img_upload_form .danmu_pid').val(context._pid());
                 $('#P_popup .img_upload_form').submit();
+                $('.P_closebtn').click();
                 return;
             }
             
-            alert(2)
-            var text = $(this).closest('div').find('.value_comment').val();
+            //alert(2)
+            //var text = $(this).closest('div').find('.value_comment').val();
             if(text === '')return;
-            var time = context._time();
+            
             var data = {
                 type:'text',
                 time_at:time,
@@ -165,6 +173,8 @@ TsComment.prototype = {
         });
         
         $('.value_comment').on('keyup',function(e){
+            
+            if($('#P_popup .img_upload_form .danmu_img').length >0)return;
             if(e.which === 13){
                 var text = $(this).val();
                 if(text === '')return;
@@ -277,23 +287,29 @@ TsComment.prototype = {
         $('.tv-danmubar-history-head span').text('所有弹幕 ('+item.length+')');
         $('.tv-danmubar-history-body').html('');
         for(var i = 0;i<item.length;i++){
-            var $tmp = $('#ts_comment_tmp').clone(true).removeAttr('id').show();
-            $tmp.find('.creator').text(item[i].username);
-            $tmp.find('.txt-content').text(item[i].text);
-            $tmp.attr('action_id',item[i].id);
-            $tmp.find('.opera').text(item[i].up);
-            console.log(item[i]);
-             if(item[i].is_me){
-                $tmp.find('.opera').addClass('is_me').css('cursor','default');
-            }
-            $tmp.css('top',top);
             
-            if(item[i].id in context._up_arr){
-                $tmp.find('.opera').addClass('selected');
-                $tmp.find('.opera').text(context._up_arr[item[i].id]);
+            if(item[i].type === 'image'){
+                
+            }else{
+                var $tmp = $('#ts_comment_tmp').clone(true).removeAttr('id').show();
+                $tmp.find('.creator').text(item[i].username);
+                $tmp.find('.txt-content').text(item[i].text);
+                $tmp.attr('action_id',item[i].id);
+                $tmp.find('.opera').text(item[i].up);
+                console.log(item[i]);
+                 if(item[i].is_me){
+                    $tmp.find('.opera').addClass('is_me').css('cursor','default');
+                }
+                $tmp.css('top',top);
+
+                if(item[i].id in context._up_arr){
+                    $tmp.find('.opera').addClass('selected');
+                    $tmp.find('.opera').text(context._up_arr[item[i].id]);
+                }
+
+                $('.tv-danmubar-history-body').append($tmp);
             }
             
-            $('.tv-danmubar-history-body').append($tmp);
         }
         
         
@@ -310,24 +326,56 @@ TsComment.prototype = {
         var $dom = $(dom);
         
         for(var i = 0;i<item.length;i++){
-            var $tmp = $('#ts_comment_tmp').clone(true).removeAttr('id').show();
-            $tmp.find('.creator').text(item[i].username);
-            $tmp.find('.txt-content').text(item[i].text);
-            $tmp.attr('action_id',item[i].id);
-            $tmp.find('.opera').text(item[i].up);
-            if(item[i].is_me){
-                $tmp.find('.opera').addClass('is_me').css('cursor','default');
+            if(item[i].type === 'image'){
+               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;top:50px;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff;font-size:18px;padding:10px;max-width:300px;"></div></div>');
+               
+               $img_box.find('img').on('load',function(){
+                   var w_height = $(window).height();
+                   var b_height = $img_box.height();
+                   
+                   //$img_box.css('top',(w_height-b_height)/2+'px');
+                   $img_box.appendTo('body');
+                   
+                   function fade(){
+                       if($('#tv-video-player')[0].seeking || $('#tv-video-player')[0].paused){
+                            setTimeout(fade,5000);
+                            return;
+                        }
+                       
+                        $img_box.fadeOut(300,function(){
+                           $(this).remove();
+                       });
+                   }
+                   
+                   setTimeout(fade,5000);
+                   
+               });
+               $img_box.find('img').attr('src',item[i].image);
+                $img_box.find('.content').text(item[i].text);
+                
+            }else{
+                
+                var $tmp = $('#ts_comment_tmp').clone(true).removeAttr('id').show();
+                $tmp.find('.creator').text(item[i].username);
+                $tmp.find('.txt-content').text(item[i].text);
+                $tmp.attr('action_id',item[i].id);
+                $tmp.find('.opera').text(item[i].up);
+                if(item[i].is_me){
+                    $tmp.find('.opera').addClass('is_me').css('cursor','default');
+                }
+                $tmp.css('top',top);
+
+                if(item[i].id in context._up_arr){
+                    $tmp.find('.opera').addClass('selected');
+                    $tmp.find('.opera').text(context._up_arr[item[i].id]);
+                }
+
+                top += $tmp.height();
+                $dom.append($tmp);
+                s+=this._tmp;
             }
-            $tmp.css('top',top);
             
-            if(item[i].id in context._up_arr){
-                $tmp.find('.opera').addClass('selected');
-                $tmp.find('.opera').text(context._up_arr[item[i].id]);
-            }
             
-            top += $tmp.height();
-            $dom.append($tmp);
-            s+=this._tmp;
         }
         
         var _height = $('.comment_box').height();
@@ -447,7 +495,7 @@ TsComment.prototype = {
             if(c_index > -1){
                 var item = [];
                 for(var i=0;i<data.length;i++){
-                    if(data[i].time_at === c_time){
+                    if(data[i].time_at === c_time && data[i].type === 'text'){
                         //item.push(context._data[i]);
                         gendanmaku(data[i].text);
                     }
@@ -1026,8 +1074,8 @@ $("video")[0].onpause = function() {
 */
 
 
-videowidth = $("video")[0].clientWidth;
- videoheight = $("video")[0].clientHeight;
+videowidth = $("video").width();//$("video")[0].clientWidth;
+ videoheight = $("video").height();//$("video")[0].clientHeight;
 
 
 var init = function() {
