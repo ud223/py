@@ -319,13 +319,13 @@ TsComment.prototype = {
         
         for(var i = 0;i<item.length;i++){
             if(item[i].type === 'image'){
-               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff"></div></div>');
+               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;top:50px;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff"></div></div>');
                
                $img_box.find('img').on('load',function(){
                    var w_height = $(window).height();
                    var b_height = $img_box.height();
                    
-                   $img_box.css('top',(w_height-b_height)/2+'px');
+                   //$img_box.css('top',(w_height-b_height)/2+'px');
                    $img_box.appendTo('body');
                    
                    function fade(){
