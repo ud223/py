@@ -425,10 +425,12 @@ $programs = $bean['programs'];
                 <p>写弹幕：</p>
             <input class="txt value_comment" type="text" name="text" maxlength="140" />
             <br/>
+            <?php if ($user && $user->author): ?>
             <div id="divPreview" style="line-height:1px;">  
                     <img id="imgHeadPhoto" class="imgHeadPhoto" src=""   alt=""  style="max-width: 340px;max-height: 340px;"/>  
               </div>  
             <span style="display:block;padding: 10px 0;">弹幕配图(可选)</span><input type="file" style="margin-bottom:10px;" class="danmu_img" name="image" onchange="PreviewImage(this,'imgHeadPhoto','divPreview')" size="20"/>
+            <?php endif;?>
             <button class="btn submit_comment" type="button">发送</button>
             </form>
         </div>

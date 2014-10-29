@@ -173,6 +173,8 @@ TsComment.prototype = {
         });
         
         $('.value_comment').on('keyup',function(e){
+            
+            if($('#P_popup .img_upload_form .danmu_img').length >0)return;
             if(e.which === 13){
                 var text = $(this).val();
                 if(text === '')return;
@@ -319,7 +321,7 @@ TsComment.prototype = {
         
         for(var i = 0;i<item.length;i++){
             if(item[i].type === 'image'){
-               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;top:50px;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff"></div></div>');
+               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;top:50px;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff;font-size:18px;padding:10px;max-width:300px;"></div></div>');
                
                $img_box.find('img').on('load',function(){
                    var w_height = $(window).height();
@@ -334,7 +336,7 @@ TsComment.prototype = {
                             return;
                         }
                        
-                        $img_box.fadeOut(1000,function(){
+                        $img_box.fadeOut(300,function(){
                            $(this).remove();
                        });
                    }
@@ -1066,8 +1068,8 @@ $("video")[0].onpause = function() {
 */
 
 
-videowidth = $("video")[0].clientWidth;
- videoheight = $("video")[0].clientHeight;
+videowidth = $("video").width();//$("video")[0].clientWidth;
+ videoheight = $("video").height();//$("video")[0].clientHeight;
 
 
 var init = function() {
