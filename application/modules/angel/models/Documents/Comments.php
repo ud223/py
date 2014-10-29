@@ -21,6 +21,9 @@ class Comments extends AbstractDocument {
     protected $text;
     
     /** @ODM\String */
+    protected $image;
+    
+    /** @ODM\String */
     protected $program_id;
     
     /** @ODM\Float */

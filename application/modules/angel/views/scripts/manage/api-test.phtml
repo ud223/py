@@ -382,6 +382,28 @@ and open the template in the editor.
                 }
             });
          }
+         
+         function imageupload() {
+             alert(1);
+             $('#upload_test').submit(function() {
+//                 var formData;
+//                 
+//                 formData = new formData();
+//                 formData.append('file', $('input[name=file]', this).get(0).files[0]);
+////                 formData.append('text', $('input[name=text]', this).val());
+//                 
+                 var url = '/api/comments/image/add';
+//                 
+                 $.ajax({
+                     url: url,
+                     contentType: 'multipart/form-data',
+                     type: 'POST',
+                     async: false
+                 });
+                 
+                 return false;
+             });
+         }
         </script>
     </head>
     <body>
@@ -423,4 +445,12 @@ and open the template in the editor.
 
          <button type="button" onclick="commentsGet()">获取评论</button>
          <button type="button" onclick="commentsUp()">赞一个</button>
-
+         <br>
+         <form id="upload_test" name="upload_test" action="/api/comments/image/add" enctype="multipart/form-data" method="post">
+             <input name="file" type="file" /><br>
+             <input name="text" type="text" /><br>
+             <button type="submit">test</button><br>
+             <button type="button" onclick="imageupload()">上传</button>
+         </form>
+    </body>
+</html>

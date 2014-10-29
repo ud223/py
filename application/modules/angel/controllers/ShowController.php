@@ -9,6 +9,12 @@ class Angel_ShowController extends Angel_Controller_Action {
         $this->_helper->layout->setLayout('main');
     }
 
+     protected function getTmpFile($uid) {
+        $utilService = $this->_container->get('util');
+        $result = $utilService->getTmpDirectory() . '/' . $uid;
+        return $result;
+    }
+    
 //    模糊查询使用范例
 //    $parameters = array();
 //    $options = array();
@@ -789,7 +795,7 @@ class Angel_ShowController extends Angel_Controller_Action {
             $message = 'success';
             
             try {
-                $commentsModel->addComments($text, $program_id, $time_at, $user, $type);
+                $commentsModel->addComments('', $text, $program_id, $time_at, $user, $type);
             }
             catch (Exception $e) {
                 $code = 500;
@@ -797,6 +803,72 @@ class Angel_ShowController extends Angel_Controller_Action {
             }
             
             $this->_helper->json(array('data' => $message, 'code' => $code));
+        }
+    }
+    
+    public function uploadTestAction() {
+        if ($this->request->isPost()) {
+            $photo = $_FILES['file'];
+        }
+    }
+    
+    public function commentsImageAction() {
+        if ($this->request->isPost()) {
+            // POST METHOD
+            $result = 0;
+            $message = 'success';
+            
+            $commentsModel = $this->getModel('Comments');
+            $upload = new Zend_File_Transfer();
+
+            $upload->addValidator('Size', false, 5120000); //5M
+
+            $uid = uniqid();
+            $tmp_file = $this->getTmpFile($uid);
+
+            $upload->addFilter('Rename', $tmp_file);
+
+            if ($upload->isValid()) {
+                if ($upload->receive()) {
+                    try {
+                        $result = $commentsModel->photoHandle($tmp_file);
+                    }
+                    catch (Exception $e) {
+                        $message = $e->getMessage();
+                    }
+                }
+            }
+            
+            if (!$result) {
+                $return = array('data' => $message, 'code' => 500);
+                echo json_encode($return);
+                exit;
+            }
+            
+            $user = $this->me->getUser();
+            $program_id = $this->request->getParam('pid');
+            $time_at = $this->request->getParam('time_at');
+            $text = $this->request->getParam('text');
+            $type = $this->request->getParam('type');
+            
+            try {
+                $result = $commentsModel->addComments($result, $text, $program_id, $time_at, $user, $type);
+                
+                if ($result) {
+                    $result = 200;
+                }
+                else {
+                    $result = 500;
+                }
+            }
+            catch (Exception $e) {
+                $result = 500;
+                $message = $e->getMessage();
+            }
+            
+            $return = array('data' => $message, 'code' => $result);
+            echo json_encode($return);
+            exit;
         }
     }
     
