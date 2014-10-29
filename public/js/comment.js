@@ -138,7 +138,7 @@ TsComment.prototype = {
         
         $('.submit_comment').click(function(){
             //alert('1');
-            if($('#P_popup .img_upload_form .danmu_img').length >0){
+            if($('#P_popup .img_upload_form .danmu_img').length >0 && $('#P_popup .img_upload_form .danmu_img').val != ""){
                 
                 $('#P_popup .img_upload_form .danmu_time').val(context._time());
                 $('#P_popup .img_upload_form .danmu_pid').val(context._pid());
