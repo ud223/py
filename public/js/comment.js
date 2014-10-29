@@ -140,7 +140,7 @@ TsComment.prototype = {
             var text = $(this).closest('div').find('.value_comment').val();
             var time = context._time();
             //alert('1');
-            if($('#P_popup .img_upload_form .danmu_img').length >0 && $('#P_popup .img_upload_form .danmu_img').val != ""){
+            if($('#P_popup .img_upload_form .danmu_img').length >0 && $('#P_popup .img_upload_form .danmu_img').val() != ""){
                 
                 
                 //$(this).closest('div').find('.value_comment').val();
