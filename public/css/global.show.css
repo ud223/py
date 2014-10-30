@@ -331,7 +331,7 @@ h3 {
     bottom:80px;
     position:absolute;
     top:0;
-    width:400px;
+    width:200px;
     z-index:5;
 }
 #tv .tv-danmu-btn {
@@ -433,6 +433,7 @@ h3 {
     left:210px;
 }
 #tv #tv-senddanmu {
+    width: 40px;
     background: #539cda; /* Old browsers */
     background: -moz-linear-gradient(top,  #539cda 0%, #4679d6 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#539cda), color-stop(100%,#4679d6)); /* Chrome,Safari4+ */

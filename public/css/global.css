@@ -110,7 +110,7 @@ Common css
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 20;
+    z-index: 200;
 }
 .P_bg {
     background:url(../img/title-bg-flat.png);

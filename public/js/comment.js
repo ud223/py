@@ -29,6 +29,7 @@ TsComment.prototype = {
                 $('#tv-danmuclosed').show();
                 $('#tv-fullscreendanmu,#tv-verticaldanmu').hide();
                 $('#danmakuwrap').show();
+                $('#img_danmu_box').hide();
             }
             
         }
@@ -97,6 +98,7 @@ TsComment.prototype = {
             $(this).hide();
             $('#tv-senddanmu').hide();
             $('#tv-danmu-all').hide();
+            $('#img_danmu_box').hide();
             $('#tv-danmuclosed').show();
             context.stop();
             if(ts_user_id){
@@ -113,7 +115,7 @@ TsComment.prototype = {
             $(this).hide();
             $('#tv-danmuopened').show();
             $('#tv-danmu-all').show();
-            
+            $('#img_danmu_box').show();
             $('#tv-senddanmu').show();
             if(ts_user_id){
                 context._config('danmu','');
@@ -146,6 +148,38 @@ TsComment.prototype = {
                 //$(this).closest('div').find('.value_comment').val();
                 context._time_arr.push(time+2);
                 context._data.push({"id":"5448a3f4b7c58e100f8b4568","image":$('#P_popup .imgHeadPhoto').attr('src'),"text":text,"time_at":time+2,"pid":"53","up":0,"hot":0,"type":"image","username":"我",is_me:true});
+                
+                /*
+                
+                var $img_box = $('<div style="position:absolute;left:400px;z-index:100;top:50px;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff;font-size:18px;padding:10px;max-width:300px;"></div></div>');
+               
+               $img_box.find('img').on('load',function(){
+                   var w_height = $(window).height();
+                   var b_height = $img_box.height();
+                   
+                   //$img_box.css('top',(w_height-b_height)/2+'px');
+                   $img_box.appendTo('#img_danmu_box');
+                   
+                   function fade(){
+                       if($('#tv-video-player')[0].seeking || $('#tv-video-player')[0].paused){
+                            //setTimeout(fade,30000);
+                            //return;
+                        }
+                       
+                        $img_box.fadeOut(300,function(){
+                           $(this).remove();
+                       });
+                   }
+                   
+                   setTimeout(fade,30000);
+                   
+               });
+               $img_box.find('img').attr('src',$('#P_popup .imgHeadPhoto').attr('src'));
+                $img_box.find('.content').text(text);
+                */
+                
+                
+                
                 
                 $('#P_popup .img_upload_form .danmu_time').val(context._time());
                 $('#P_popup .img_upload_form .danmu_pid').val(context._pid());
@@ -193,7 +227,18 @@ TsComment.prototype = {
             }
         });
     },
-    _up_arr:{}
+    _up_arr:{},
+    _text_count:function(){
+        var count = 0;
+        
+        for(var i = 0;i<this._data.length;i++){
+            if(this._data[i].type == 'text'){
+                count ++;
+            }
+        }
+        
+        return count;
+    }
     ,
     _tmp:['<div class="tv-danmubar-single-itm" style="display:none;">',
                     '<div class="li simple">',
@@ -213,6 +258,7 @@ TsComment.prototype = {
     _loop_id:null,
     _time_arr:[],
     _pid:function(){
+        return $('.list-item.selected').attr('id');
         var path = window.location.pathname;
         var start = path.lastIndexOf('/')+1;
         var end = path.length;
@@ -284,7 +330,7 @@ TsComment.prototype = {
     _history:function(item){
         var context = this;
         
-        $('.tv-danmubar-history-head span').text('所有弹幕 ('+item.length+')');
+        $('.tv-danmubar-history-head span').text('所有弹幕 ('+context._text_count()+')');
         $('.tv-danmubar-history-body').html('');
         for(var i = 0;i<item.length;i++){
             
@@ -327,18 +373,18 @@ TsComment.prototype = {
         
         for(var i = 0;i<item.length;i++){
             if(item[i].type === 'image'){
-               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;top:50px;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff;font-size:18px;padding:10px;max-width:300px;"></div></div>');
+               var $img_box = $('<div style="position:absolute;left:200px;z-index:100;top:50px;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff;font-size:18px;padding:10px;max-width:300px;"></div></div>');
                
                $img_box.find('img').on('load',function(){
                    var w_height = $(window).height();
                    var b_height = $img_box.height();
                    
                    //$img_box.css('top',(w_height-b_height)/2+'px');
-                   $img_box.appendTo('body');
+                   $img_box.appendTo('#img_danmu_box');
                    
                    function fade(){
                        if($('#tv-video-player')[0].seeking || $('#tv-video-player')[0].paused){
-                            setTimeout(fade,5000);
+                            setTimeout(fade,30000);
                             return;
                         }
                        
@@ -347,7 +393,7 @@ TsComment.prototype = {
                        });
                    }
                    
-                   setTimeout(fade,5000);
+                   setTimeout(fade,30000);
                    
                });
                $img_box.find('img').attr('src',item[i].image);
