@@ -575,7 +575,7 @@ TsComment.prototype = {
 
 function PreviewImage(fileObj,imgPreviewId,divPreviewId){  
     //alert('c');
-    var allowExtention=".jpg,.bmp,.gif,.png";//允许上传文件的后缀名document.getElementById("hfAllowPicSuffix").value;  
+    var allowExtention=".jpg,.gif,.png";//允许上传文件的后缀名document.getElementById("hfAllowPicSuffix").value;  
     var extention=fileObj.value.substring(fileObj.value.lastIndexOf(".")+1).toLowerCase();              
     var browserVersion= window.navigator.userAgent.toUpperCase();  
     if(allowExtention.indexOf(extention)>-1){   
