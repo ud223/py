@@ -44,6 +44,8 @@ TsComment.prototype = {
             
             if($(this).attr('id') == 'tv-fullscreendanmu'){
                 $('#tv-danmubar-auto-box').hide();
+                context._clear();
+                
                 $('#danmakuwrap').show();
             }else{
                 $('#tv-danmubar-auto-box').show();
@@ -124,6 +126,7 @@ TsComment.prototype = {
             $('#tv-fullscreendanmu,#tv-verticaldanmu').show();
             
             if($('#tv-fullscreendanmu').hasClass('selected')){
+                context._clear();
                 $('#danmakuwrap').show();
             }
         });
@@ -228,6 +231,19 @@ TsComment.prototype = {
         });
     },
     _up_arr:{},
+    _clear:function(){
+                //$('#danmakuwrap .danmaku').remove();
+                //danmakucache.scroll[0].line = 0;
+                //danmakucache.scroll[0].count = 0;
+                //danmakucache.fixed[0].count = 0;
+                //danmakucache.fixed[0].count = 0;
+                
+                $('#danmakuwrap .danmaku').each(function(){
+                    danmakucache.scroll[$(this)[0].getAttribute('line') - 1].count--;
+                    $(this).remove();
+                });
+                
+    },
     _text_count:function(){
         var count = 0;
         
@@ -1069,7 +1085,7 @@ $("video").on('pause',function(){
     //$(".playindicator span")[0].className = 'glyphicon glyphicon-pause';
     //videoelement.style.WebkitFilter = 'blur(2px)';
     $($(".danmakuwrap")[0]).find("div").each(function() {
-        console.log('444444444444444');
+        //console.log('444444444444444');
       this.style['-webkit-animation-play-state'] = 'paused';
       this.style['-moz-animation-play-state'] = 'paused';
       $(this).css('-moz-animation-play-state','paused');
