@@ -232,7 +232,7 @@ TsComment.prototype = {
         var count = 0;
         
         for(var i = 0;i<this._data.length;i++){
-            if(data[i].type == 'text'){
+            if(this._data[i].type == 'text'){
                 count ++;
             }
         }
