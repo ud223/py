@@ -29,6 +29,7 @@ TsComment.prototype = {
                 $('#tv-danmuclosed').show();
                 $('#tv-fullscreendanmu,#tv-verticaldanmu').hide();
                 $('#danmakuwrap').show();
+                $('#img_danmu_box').hide();
             }
             
         }
@@ -97,6 +98,7 @@ TsComment.prototype = {
             $(this).hide();
             $('#tv-senddanmu').hide();
             $('#tv-danmu-all').hide();
+            $('#img_danmu_box').hide();
             $('#tv-danmuclosed').show();
             context.stop();
             if(ts_user_id){
@@ -113,7 +115,7 @@ TsComment.prototype = {
             $(this).hide();
             $('#tv-danmuopened').show();
             $('#tv-danmu-all').show();
-            
+            $('#img_danmu_box').show();
             $('#tv-senddanmu').show();
             if(ts_user_id){
                 context._config('danmu','');
@@ -334,11 +336,11 @@ TsComment.prototype = {
                    var b_height = $img_box.height();
                    
                    //$img_box.css('top',(w_height-b_height)/2+'px');
-                   $img_box.appendTo('body');
+                   $img_box.appendTo('#img_danmu_box');
                    
                    function fade(){
                        if($('#tv-video-player')[0].seeking || $('#tv-video-player')[0].paused){
-                            setTimeout(fade,5000);
+                            setTimeout(fade,30000);
                             return;
                         }
                        
@@ -347,7 +349,7 @@ TsComment.prototype = {
                        });
                    }
                    
-                   setTimeout(fade,5000);
+                   setTimeout(fade,30000);
                    
                });
                $img_box.find('img').attr('src',item[i].image);
