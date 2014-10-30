@@ -373,7 +373,7 @@ TsComment.prototype = {
         
         for(var i = 0;i<item.length;i++){
             if(item[i].type === 'image'){
-               var $img_box = $('<div style="position:absolute;left:400px;z-index:100;top:50px;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff;font-size:18px;padding:10px;max-width:300px;"></div></div>');
+               var $img_box = $('<div style="position:absolute;left:300px;z-index:100;top:50px;"><img style="max-width:300px;"/><div class="content" style="background:#000000;color:#ffffff;font-size:18px;padding:10px;max-width:300px;"></div></div>');
                
                $img_box.find('img').on('load',function(){
                    var w_height = $(window).height();
