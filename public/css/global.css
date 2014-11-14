@@ -271,3 +271,6 @@ Plugin Css
     text-shadow:0 0 5px rgba(0,0,0,0.7);
     width:400px;
 }
+
+#tv-danmubar{display: none;}
+#danmakuwrap{display: none;}
