@@ -25,8 +25,13 @@ class Program extends AbstractDocument {
     /** @ODM\Int */
     protected $duration;
 
-    /** @ODM\ReferenceOne(targetDocument="\Documents\Category") */
-    protected $category;
+    //** @ODM\ReferenceOne(targetDocument="\Documents\Category") */
+   // protected $category;
+    /** @ODM\String */
+    protected $time;
+    
+    /** @ODM\ReferenceMany(targetDocument="\Documents\Keyword") */
+    protected $keyword = array();
 
     /** @ODM\String */
     protected $description;
@@ -39,6 +44,12 @@ class Program extends AbstractDocument {
 
     /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
     protected $owner;
+    
+    /** @ODM\String */
+    protected $captions; 
+    
+    /** @ODM\Int */
+    protected $count = 0;
 
     /**
      * 添加图片
@@ -53,5 +64,12 @@ class Program extends AbstractDocument {
     public function clearPhoto() {
         $this->photo = array();
     }
-
+    
+    public function addKeyword(\Documents\Keyword $p) {
+        $this->keyword[] = $p;
+    }
+    
+    public function clearKeyword() {
+        $this->keyword = array();
+    }
 }

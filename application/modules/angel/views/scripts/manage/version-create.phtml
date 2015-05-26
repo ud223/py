@@ -1,0 +1,39 @@
+<style>
+</style>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="row">
+    <div class="col-md-8">
+        <form role="form" method="post">
+             <div class="form-group">
+                <label>版本：</label>
+                <input type="text" class="form-control" id="name" name="name" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>系统：</label>
+                <select  class="form-control" id="sys" name="sys" data-toggle="popover" >
+                    <option value ="ios">ios</option>
+                    <option value ="android">android</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>更新：</label>
+                <input type="text" class="form-control" id="fix" name="fix" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>修复：</label>
+                <input type="text" class="form-control" id="update" name="update" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>链接：</label>
+                <input type="text" class="form-control" id="url" name="url" data-toggle="popover" value="">
+            </div>
+            <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('#save-btn').click(function() {
+        });
+    })(jQuery);
+</script>

@@ -1,0 +1,526 @@
+<?php
+$player_mode = "video";
+if ($this->me->getUser()->attribute && $this->me->getUser()->attribute['player_mode']) {
+    $player_mode = $this->me->getUser()->attribute['player_mode'];
+}
+?>
+<div id="tv-footer" style="display:none">
+
+    <!--    <div id="tv-footer-ltbar">
+            <div class="wp">
+                <button class="ico" id="prev" class="pull-left"></button>
+                <button class="ico" id="play" class="pull-left"></button>
+                <button class="ico" id="pause" class="pull-left"></button>
+                <button class="ico" id="next" class="pull-left"></button>
+            </div>
+        </div>-->
+    <div id="tv-footer-rtbar">
+        <div class="wp">
+            <!--            <div id="volume-ctrl" class="pull-left">
+                            <button id="volume-speaker" class="ico pull-left"></button>
+                            <div id="volume-holder" class="pull-left">
+                                <div id="volume-in"></div>
+                            </div>
+                        </div>-->
+            <!--<button id="tv-listbtn" class="ico"></button>-->
+        </div>
+    </div>
+
+
+    <div id="tv-footer-mdbar">
+
+        <div id="tv-prog">
+            <!--            <div id="tv-prog-timer">
+                            <span id="t1">--:--</span><span id="t2">/</span><span id="t3">--:--</span>
+                        </div>-->
+            <!--            <div id="tv-prog-title">
+                        </div>-->
+            <!--            <div id="tv-prog-seekbar" class="rr"></div>
+                        <div id="tv-prog-loaded" class="rr"></div>-->
+        </div>
+    </div>
+</div>
+
+<div id='tv-sider'>
+    <div id='tv-toggle'>
+        <a href="javascript:void(0)" rel="video" title="看电视" id="tv-toggle-video-btn" class='tv-toggle-unit bt-go'><i></i></a>
+        <a href="javascript:void(0)" rel="audio" title="听声音" id="tv-toggle-audio-btn" class='tv-toggle-unit bt-go'><i></i></a>
+    </div>
+    <button id='btn-refresh'>换一波</button>
+    <div class="clear"></div>
+</div>
+
+<div id="tv-main-container" class="layer">
+
+    <div id="tv-listbar">
+        <div id="tv-listbar-title">
+            <a href="javascript:void(0)" id="tv-author-img"></a>
+            <div class="wp">
+                <div id="tvidx02">
+                    <p id="tv-special-name">
+                    </p>
+                    <span id="tvidx01">By </span><a id="tv-author-name" href="javascript:void(0)"></a>
+                </div>
+                <button class="empty-btn close-btn" id="tv-listbar-close"></button>
+            </div>
+        </div>
+        <div id="tv-listbar-content">
+        </div>
+    </div>
+
+    <div id="tv-screen" class="layer text-center">
+
+        <div id="tv-louds" style="width:700px;height:320px;position:absolute;left:50%;top:50%;margin-left:-350px;margin-top:-210px;z-index:999;display:none">
+<!--            <img id="tv-louds-l" src="/img/speaker-big.png" style="width:320px;height:320px;left:0;top:0;position:absolute;"/>
+            <img id="tv-louds-r" src="/img/speaker-big.png" style="width:320px;height:320px;right:0;top:0;position:absolute;"/>-->
+            <img id="tv-louds-c" src="/img/speaker-big.png" style="width:320px;height:320px;left:50%;margin-left:-160px;top:0;position:absolute;"/>
+        </div>
+        <video id="tv-video-player" preload oncontextmenu="return false;">
+            <source>
+        </video>
+    </div>
+    <div id="tv-prog-title">
+        <span class="tt"></span>
+        <div id="tv-prog-timer">
+            <span id="t1">--:--</span><span id="t2">/</span><span id="t3">--:--</span>
+        </div>
+    </div>
+    <div id="tv-ctrl-block">
+        <div style="padding:10px;">
+            <button class="ico pull-left" id="tv-listbtn"></button>
+            <button class="ico pull-left" id="prev"></button>
+            <button class="ico pull-left" id="play"></button>
+            <button class="ico pull-left" id="pause"></button>
+            <button class="ico pull-left" id="next"></button>
+            <span class="ico pull-left" id="tv-spk">
+                <div id="tv-spk-bar">
+                    <div id="tv-spk-bar-prog">
+                        <div id="tv-spk-bar-prog-loaded">
+
+                        </div>
+                    </div>
+                </div>
+            </span>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+</div>
+
+<div class="P_tmp">
+    <ul class="list-item itm">
+        <li class="col col1">
+            <i class="ico null"></i>
+        </li>
+        <li class="col col2 tv-current-title">
+
+        </li>
+        <li class="col col3">
+            time here
+        </li>
+    </ul>
+</div>
+
+
+
+<!--<button id="seeking-testing-btn" style="position:fixed;z-index:100;bottom:100px;left:100px;padding:10px;">SEEKING BTN</button>-->
+
+<input type="hidden" id="uid" value="<?php echo $this->uid ?>"/>
+
+<script type="text/javascript">
+    var init_player_mode = '<?php echo $player_mode; ?>';
+
+    $('document').ready(function() {
+
+        setInterval(function() {
+//            var l = $("#tv-louds-l");
+//            var r = $("#tv-louds-r");
+            var c = $('#tv-louds-c');
+
+            if ($('#tv-video-player').get(0).ended || c.attr('status') === 'stop') {
+                return;
+            }
+
+
+            var ts = new Date().getTime();
+            var t = ts % 7;
+            if (t > 2) {
+                c.addClass('big-c');
+                setTimeout(function() {
+                    c.removeClass('big-c');
+                }, 50);
+            }
+
+//            if (t === 0) {
+//                l.addClass('big-l');
+//                setTimeout(function() {
+//                    l.removeClass('big-l');
+//                }, 50);
+//            } else if (t === 1) {
+//                r.addClass('big-r');
+//                setTimeout(function() {
+//                    r.removeClass('big-r');
+//                }, 50);
+//            } else if (t === 2) {
+//                r.addClass('big-r');
+//                l.addClass('big-l');
+//                setTimeout(function() {
+//                    r.removeClass('big-r');
+//                    l.removeClass('big-l');
+//                }, 50);
+//            } else {
+//
+//            }
+        }, 101);
+
+        $('.tv-toggle-unit[rel="' + init_player_mode + '"]').addClass('selected');
+        if (init_player_mode === 'audio') {
+            $('#tv-louds').show();
+            $('#tv-video-player').addClass('move-away');
+            $('body').data('auto-toggle-list-switch', 'off');
+        }
+
+        // 网速失速
+        $('#player').on('stalled', function() {
+            console.log('stalled');
+            var new_one = $('#player').clone(true);
+            $('#player').after(new_one).remove();
+        });
+        // 网速错误
+        $('#player').on('error', function() {
+            console.log('error');
+            var new_one = $('#player').clone(true);
+            $('#player').after(new_one).remove();
+        });
+
+        $('#tv-listbtn').click(function() {
+            $('#tv-listbar').clickToggle();
+        });
+
+        var list = [
+            {htmlObject: $('#tv-header')},
+            {htmlObject: $('#tv-sider')},
+            {htmlObject: $('#tv-ctrl-block')},
+            {htmlObject: $('#tv-prog-title')}
+        ];
+        $('#tv-header, #tv-sider, #tv-ctrl-block, #tv-listbar').mouseenter(function() {
+            $.autoToggleListStop();
+        });
+        $('#tv-header, #tv-sider, #tv-ctrl-block, #tv-listbar').mouseleave(function() {
+            $.autoToggleListRestart();
+        });
+        $.autoToggleList(list);
+
+        $('#tv-screen').video({
+            onPause: function() {
+//                $('#tv-fs-play-btn').show();
+//                $('#tv-fs-pause-btn').hide();
+                $('#play').show();
+                $('#pause').hide();
+                $('#tv-louds-c').attr('status', 'stop');
+            },
+            onEnded: function() {
+                nextFunc();
+            },
+            onPlay: function() {
+//                $('#tv-fs-play-btn').hide();
+//                $('#tv-fs-pause-btn').show();
+                $('#play').hide();
+                $('#pause').show();
+                $('#tv-louds-c').attr('status', 'play');
+            }
+        });
+
+        $('#play').click(function() {
+            $('#tv-screen').video("play", function() {
+                $('#tv-cover').hide();
+            });
+        });
+        $('#pause').click(function() {
+            $('#tv-screen').video("pause", function() {
+//                $('#tv-cover').show();
+            });
+        });
+        $('#next').click(function() {
+            nextFunc();
+        });
+        $('#prev').click(function() {
+            prevFunc();
+        });
+
+        // 显示“换一批”按钮
+        $('#tv-header .unvisiable').removeClass('unvisiable');
+
+        $('#btn-refresh').click(function() {
+
+            $.waiting('一大波精彩节目正在向您走来 ...', $('#tv'));
+            var callback = function(response) {
+                var msg = '<p>推送新专辑</p>';
+                msg += '<p style="color:#FFD800">' + response.data.name + '</p>';
+                msg += '<p style="opacity:0.5">作者：' + response.data.author + '</p>';
+                setTimeout(function() {
+                    $.endWaiting();
+                    var options = {
+                        msg: msg,
+                        confirmText: '立即收看',
+                        width: 500,
+                        height: 'auto',
+                        cancelText: '换一波',
+                        containerBoxSelector: '#tv',
+                        cancelCallback: function() {
+                            $('#btn-refresh').click();
+                        },
+                        confirmCallback: function() {
+                            installList(response);
+                            nextFunc();
+                        }
+                    };
+                    $.confirm(options);
+                    console.log(response);
+//                    nextFunc
+                }, 2500);
+            }
+            // "endWaiting" in "callback"
+            getApiData(callback, true);
+        });
+
+        $('.tv-toggle-unit').click(function() {
+            // change classr
+            var obj = $(this);
+            if (!obj.hasClass('selected')) {
+                $.waiting('正在为您切换 ...');
+                setTimeout(function() {
+                    // change player ui
+                    $('#tv-louds').toggle();
+                    $('#tv-video-player').toggleClass('move-away');
+                    if (obj.attr('rel') === 'audio') {
+                        $('#tv-louds-c').attr('status', 'play');
+                        $('body').data('auto-toggle-list-switch', 'off');
+                    } else {
+                        $('#tv-louds-c').attr('status', 'stop');
+                        $('body').data('auto-toggle-list-switch', 'on');
+                    }
+                    // save mode status
+                    obj.addClass('selected').siblings('.tv-toggle-unit').removeClass('selected');
+                    var mode = obj.attr('rel');
+                    var data = {'value': mode};
+                    var url = "<?php echo $this->url(array(), 'user-player-mode') ?>";
+
+                    $.ajax({
+                        url: url,
+                        data: data,
+                        dataType: 'json',
+                        method: 'post',
+                        success: function(response) {
+                            if (response.code === 200) {
+                            } else {
+                            }
+                        },
+                        error: function() {
+                        }
+                    });
+                    // change url path
+                    continuePlayFunc();
+                    $.endWaiting();
+                }, 3000);
+
+            }
+        });
+
+        getApiData(nextFunc);
+
+//        $('#seeking-testing-btn').click(function() {
+//            var t = $('#tv-screen').video('duration') - 5;
+//            $('#tv-screen').video('seek', false, t);
+//        });
+
+
+    });
+    function playFunc(target, delayPlay) {
+        var playing = $('.list-item.selected');
+
+        if (playing.length) {
+            // send keyword preference here
+            var duration = $('#tv-screen').video("duration");
+            var currentTime = $('#tv-screen').video("currentTime");
+            var pid = playing.attr('id');
+
+            var tmpPer = currentTime / duration * 100;
+            var per = Math.floor(tmpPer);
+
+            <?php
+                $url = $this->url(array(), "api-keyword-vote");
+            ?>
+
+            var url = '<?php echo $url ?>';
+            var data = {'time': per, 'pid': pid};
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: data,
+                method: 'post',
+                success: function(response) {
+//                    alert(response.code);
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+        }
+
+        target.addClass('selected').find('.ico').removeClass('null').addClass('play');
+        target.siblings('.list-item').removeClass('selected').find('.ico').addClass('null');
+        var video_url = target.attr('video');
+        var audio_url = target.attr('audio');
+        var url = video_url;
+        if ($('.tv-toggle-unit.selected').attr('rel') === 'audio')
+            url = audio_url;
+        var title = target.find('.tv-current-title').html();
+        $('#tv-screen').video("restart", function() {
+//            $('#tv-cover').hide();
+            $('#tv-prog-title .tt').html(title);
+        }, url, delayPlay);
+    }
+    function continuePlayFunc() {
+        var target = $('.list-item.itm.selected');
+        var video_url = target.attr('video');
+        var audio_url = target.attr('audio');
+        var url = video_url;
+        if ($('.tv-toggle-unit.selected').attr('rel') === 'audio')
+            url = audio_url;
+        var currentTime = $('#tv-screen').video("currentTime");
+        $('#tv-screen').video("restart", false, url);
+        $('#tv-screen').video("seek", false, currentTime);
+    }
+    function nextFunc() {
+        if (playListCount()) {
+            playFunc(_getSelectedItem('next'));
+        } else {
+            return false;
+        }
+    }
+    function prevFunc() {
+        if (playListCount()) {
+            playFunc(_getSelectedItem('prev'));
+        } else {
+            return false;
+        }
+    }
+    function _getSelectedItem(direction) {
+        var selected = null;
+        var current = $('#tv-listbar-content .list-item.selected');
+        var jumpOne;
+        if (direction === 'next') {
+            jumpOne = $($('#tv-listbar-content .list-item').get(0));
+        } else if (direction === 'prev') {
+            jumpOne = $($('#tv-listbar-content .list-item').get($('#tv-listbar-content .list-item').length - 1));
+        }
+        if (current.length) {
+            var one;
+            if (direction === 'next')
+                one = current.next('.list-item');
+            else if (direction === 'prev')
+                one = current.prev('.list-item');
+            if (one.length) {
+                selected = one;
+            } else {
+                selected = jumpOne;
+            }
+        } else {
+            selected = jumpOne;
+        }
+        return selected;
+    }
+
+    function switchFunc() {
+
+    }
+    function playListCount() {
+        var list_item = $('#tv-listbar-content .list-item');
+        if (list_item.length) {
+            return list_item.length;
+        } else {
+            return false;
+        }
+    }
+
+<?php
+$url = $this->url(array("uid" => $this->uid, "sid" => "none"), "api-special-recommend");
+$uid = $this->uid;
+?>
+    var userId = "<?php echo $uid ?>";
+    var tmpUrl = "<?php echo $url ?>";
+    var myUrl = tmpUrl;
+
+    function installList(response) {
+        $("#tv-special-name").html(response.data.name);
+        $("#tv-author-name").html(response.data.author);
+        $("#tv-author-img").css('background-image', 'url(' + response.data.photo + ')');
+        $("#tv-listbar-content").empty();
+        if (response.data.programs) {
+            $.each(response.data.programs, function() {
+                var item = $(".P_tmp .list-item").clone(true);
+                item.click(function() {
+                    playFunc($(this).closest('.list-item'));
+                });
+                item.attr('video', this.oss_video);
+                item.attr('audio', this.oss_audio);
+                item.attr('id', this.id);
+                item.find('.col2').html(this.name);
+                item.find('.col3').html(parseInt(this.time).timeFormat());
+                $("#tv-listbar-content").append(item);
+            });
+        }
+    }
+    function getApiData(callback, installListInCallback) {
+        $('#tv-screen').video('pause');
+        $.ajax({
+            url: myUrl,
+            dataType: 'json',
+            success: function(response) {
+                if (response.code === 200) {
+                    myUrl = tmpUrl;
+                    myUrl = myUrl.replace('none', response.data.id);
+                    if (!installListInCallback) {
+                        // execute installList now;
+                        installList(response);
+                    }
+                    // else execute installList in callback;
+                    if (typeof callback === 'function') {
+                        callback(response);
+                    }
+                }
+            },
+            error: function() {
+                $.endWaiting();
+            }
+        });
+    }
+</script>
+
+<style>
+    .move-away {
+        position:fixed;
+        left:100000px;
+    }
+    .big-l {
+        left:-3px !important;
+        top:-3px !important;
+        width:326px !important;
+        height:326px !important;
+    }
+    .big-r {
+        width:326px !important;
+        height:326px !important;
+        right:-3px !important;
+        top:-3px !important;
+
+    }
+    .big-c {
+        width:326px !important;
+        height:326px !important;
+        margin-left:-163px !important;
+        margin-top:-2px;
+    }
+</style>

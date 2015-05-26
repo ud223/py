@@ -11,7 +11,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
     const FILETYPE_IDENTITY_BACK = 'fib';
 
     /**
-     * 通过emai和password登陆
+     * 通过emai和password登录
      * @param String $email
      * @param String $password
      * @return boolean 
@@ -34,12 +34,17 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
     }
 
     public function addManageUser($email, $password, $salt, $checkemail = true) {
-
         $usertype = "admin";
-        return $this->registerUser($email, $password, $usertype, $salt, $checkemail);
+        return $this->registerUser($email, $password, uniqid(), $usertype, $salt, $checkemail, NULL);
     }
 
-    protected function registerUser($email, $password, $usertype, $salt, $checkmail) {
+    public function addUser($email, $password, $username, $age, $gender, $name, $salt, $checkemail = true, $attribute) {
+
+        $usertype = "user";
+        return $this->registerUser($email, $password, $username, $usertype, $salt, $checkemail, $age, $gender, $name, $attribute);
+    }
+
+    public function addVip($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name, $author) {
         $result = false;
         if (empty($email)) {
             throw new Angel_Exception_User(Angel_Exception_User::EMAIL_EMPTY);
@@ -51,19 +56,26 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
                 if ($this->isEmailExist($email)) {
                     throw new Angel_Exception_User(Angel_Exception_User::EMAIL_NOT_UNIQUE);
                 }
+                if ($this->isUsernameExist($username)) {
+                    throw new Angel_Exception_User(Angel_Exception_User::USERNAME_NOT_UNIQUE);
+                }
             }
         }
 
         $user = new $this->_document_class();
 
         $user->email = $email;
+        $user->username = $username;
         $user->salt = $salt;
         $user->user_type = $usertype;
         $user->password = $password;
-        $user->password_src = $password;
+        $user->age = $age;
+        $user->gender = $gender;
         $user->active_bln = true;
         $user->email_validated_bln = !$checkemail;
         $user->validated_bln = false;
+        $user->name = $name;
+        $user->author = $author;
 
         try {
             $this->_dm->persist($user);
@@ -86,21 +98,62 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
-    /**
-     * 用户注册
-     * 
-     * @param string $user_type
-     * @param string $email
-     * @param string $username
-     * @param string $password
-     * @param string $salt
-     * @param boolean $checkemail   -   是否要发送email验证邮件
-     * @return mix - when user registration success, return the user id, otherwise, boolean false
-     * @throws Angel_Exception_User 
-     */
-    public function addUser($user_type, $email, $username, $password, $salt, $checkemail = true) {
+    public function getVipList($return_as_paginator = true) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('author')->equals(1)->sort('created_at', -1);
+        $result = null;
+        if ($return_as_paginator) {
+            $result = $this->paginator($query);
+        } else {
+            $result = $query->getQuery()->execute();
+        }
+        return $result;
+    }
+
+    public function saveVip($user_id, $email, $username, $password, $salt, $checkmail, $age, $gender, $name, $author) {
         $result = false;
 
+        try {
+            $user = $this->getUserById($user_id);
+
+            if (!$password) {
+                $password = $user->password_src;
+            }
+
+            $active_bln = true;
+            $email_validated_bln = !$checkemail;
+            $validated_bln = false;
+            $user_type = $user->user_type;
+
+            $data = array("email" => $email, "name" => $name, "username" => $username, "salt" => $salt, "user_type" => $user_type, "password" => $password, "age" => $age, "gender" => $gender, "user_type" => $user_type, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category" => $user->category, "author" => $author);
+
+            $this->save($user_id, $data);
+
+            $result = true;
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
+        }
+
+        return $result;
+    }
+
+    public function setAttribute($user, $key, $value) {
+        $validated_key = array('player_mode');
+        if (!in_array($key, $validated_key)) {
+            return false;
+        }
+        $attribute = $user->attribute;
+        if (!$attribute) {
+            $attribute = array();
+        }
+
+        $attribute[$key] = $value;
+        $result = $this->updateUser($user, array('attribute' => $attribute));
+        return $result;
+    }
+
+    protected function registerUser($email, $password, $username, $usertype, $salt, $checkmail, $age, $gender, $name, $attribute) {
+        $result = false;
         if (empty($email)) {
             throw new Angel_Exception_User(Angel_Exception_User::EMAIL_EMPTY);
         } else {
@@ -111,24 +164,28 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
                 if ($this->isEmailExist($email)) {
                     throw new Angel_Exception_User(Angel_Exception_User::EMAIL_NOT_UNIQUE);
                 }
+                if ($this->isUsernameExist($username)) {
+                    throw new Angel_Exception_User(Angel_Exception_User::USERNAME_NOT_UNIQUE);
+                }
             }
         }
 
         $user = new $this->_document_class();
 
-        if (!$user->isUsertypeValid($user_type)) {
-            throw new Angel_Exception_User(Angel_Exception_User::USERTYPE_INVALID);
-        }
-
-        $user->user_type = $user_type;
         $user->email = $email;
         $user->username = $username;
         $user->salt = $salt;
+        $user->user_type = $usertype;
         $user->password = $password;
+        $user->age = $age;
+        $user->gender = $gender;
+        $user->name = $name;
         $user->active_bln = true;
         $user->email_validated_bln = !$checkemail;
         $user->validated_bln = false;
-
+        if($attribute) {
+            $user->attribute = $attribute;
+        }
         try {
             $this->_dm->persist($user);
             $this->_dm->flush();
@@ -142,6 +199,115 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         // send email to the new user to notice him to active his account
         if ($result && $checkemail) {
             $this->sendAccountValidationEmail($user);
+        }
+        // send email to the new user to welcome them
+        if ($result && !$checkemail) {
+            
+        }
+        return $result;
+    }
+
+    public function saveUser($user, $category) {
+        try {
+            $email = $user->email;
+            $username = $user->username;
+            $salt = $user->salt;
+            $usertype = $user->user_type;
+            $password = $user->password_src;
+            $age = $user->age;
+            $gender = $user->gender;
+            $active_bln = true;
+            $email_validated_bln = !$checkemail;
+            $validated_bln = false;
+            $author = $user->author;
+
+            $user->clearCategory();
+
+            foreach ($category as $c) {
+                $user->addCategory($c);
+            }
+
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age" => $age, "gender" => $gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category" => $user->category, "author" => $author);
+
+            $this->save($uesrId, $data);
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
+        }
+    }
+
+    public function removeUserCategory($user_id, $category_id) {
+        try {
+            $user = $this->getUserById($user_id);
+
+            $email = $user->email;
+            $username = $user->username;
+            $salt = $user->salt;
+            $usertype = $user->user_type;
+            $password = $user->password_src;
+            $age = $user->age;
+            $gender = $user->gender;
+            $active_bln = true;
+            $email_validated_bln = !$checkemail;
+            $validated_bln = false;
+            $author = $user->author;
+
+            $categorys = array();
+
+            foreach ($user->category as $c) {
+                if ($c->id != $category_id)
+                    $categorys[] = $c;
+            }
+
+            $user->clearCategory();
+
+            foreach ($categorys as $c) {
+                $user->addCategory($c);
+            }
+
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age" => $age, "gender" => $gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category" => $user->category, "author" => $author);
+
+            $this->save($uesrId, $data);
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
+        }
+    }
+
+    public function setAuthor($user_id) {
+        try {
+            $user = $this->getUserById($uesrId);
+
+            $email = $user->email;
+            $username = $user->username;
+            $salt = $user->salt;
+            $usertype = $user->user_type;
+            $password = $user->password_src;
+            $age = $user->age;
+            $gender = $user->gender;
+            $active_bln = true;
+            $email_validated_bln = !$checkemail;
+            $validated_bln = false;
+            $author = 1;
+
+            $data = array("email" => $email, "username" => $username, "salt" => $salt, "user_type" => $usertype, "password" => $password, "age" => $age, "gender" => $gender, "active_bln" => $active_bln, "email_validated_bln" => $email_validated_bln, "validated_bln" => $validated_bln, "category" => $user->category, "author" => $author);
+
+            $this->save($uesrId, $data);
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_User(Angel_Exception_User::ADD_USER_FAIL);
+        }
+    }
+
+    public function getUserByEmail($email) {
+        $result = false;
+        $user = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('email')->equals($email)
+                ->getQuery()
+                ->getSingleResult();
+
+        if (!empty($user)) {
+            $result = $user;
         }
 
         return $result;
@@ -171,6 +337,24 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
+    public function isUsernameExist($username, $return_user_model = false) {
+        $result = false;
+        $user = $this->_dm->createQueryBuilder($this->_document_class)
+                ->field('username')->equals($username)
+                ->getQuery()
+                ->getSingleResult();
+
+        if (!empty($user)) {
+            if ($return_user_model) {
+                $result = $user;
+            } else {
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
+
     /**
      * 根据id获取user document
      * 
@@ -179,10 +363,9 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
      */
     public function getUserById($id) {
         $result = false;
-        $user = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('id')->equals($id)
-                ->getQuery()
-                ->getSingleResult();
+        if (!$id)
+            return $result;
+        $user = $this->getById($id);
 
         if (!empty($user)) {
             $result = $user;
@@ -212,7 +395,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
     }
 
     /**
-     * 纪录用户最后一次登陆的信息
+     * 记录用户最后一次登录的信息
      * @param string $user_id
      * @param string $ip 
      */
@@ -416,16 +599,18 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         if (is_object($user)) {
             $password = substr(md5(uniqid(time(), true)), rand(0, 16), 8);
             $user->password = $password;
-
             $params = array("username" => $user->username, "password" => $password);
             $router = Zend_Controller_Front::getInstance()->getRouter();
             $params['url'] = $this->_bootstrap_options['site']['domainurl'] . $router->assemble(array(), 'login');
+            Angel_Model_Email::setCompanyName($this->_bootstrap_options['site']['name']);
             $result = Angel_Model_Email::sendEmail($this->_container->get('email'), Angel_Model_Email::EMAIL_FORGOT_PASSWORD, $user->email, $params);
 
             if ($result) {
                 $this->_dm->persist($user);
                 $this->_dm->flush();
             }
+        } else {
+            throw new Angel_Exception_User(Angel_Exception_User::USER_NOT_FOUND);
         }
 
         return $result;
@@ -729,4 +914,34 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
         return $result;
     }
 
+    public function getUserByCategoryId($category_id) {
+        $result = false;
+
+        if ($category_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)
+                    ->field('category.$id')->equals(new MongoId($category_id))
+                    ->sort('created_at', -1);
+
+            $result = $query->getQuery()->getSingleResult();
+        }
+
+        if ($result)
+            return true;
+        else
+            return false;
+    }
+
+    public function getMoibleRegCount($conditions) {
+        $result = false;
+
+        if ($conditions) {
+            $keys = array("created_at"=>1);
+            $reduce = 'function (obj, prev) { prev.items.push(obj.created_at); prev.count++; }';
+            $initial = array("items"=>array(), 'count'=>0);
+            
+            $result = $this->_dm->createQueryBuilder($this->_document_class)->group($keys, $initial, $conditions);
+        }
+        
+        return $result;
+    }
 }

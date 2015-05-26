@@ -110,7 +110,6 @@ abstract class AbstractDocument {
         $data['my_name'] = $className;
         return $data;
     }
-
 }
 
 ?>

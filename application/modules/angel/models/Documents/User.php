@@ -29,6 +29,12 @@ class User extends AbstractDocument{
     protected $username;
     
     /** @ODM\String */
+    protected $name;
+    
+     /** @ODM\Int */
+    protected $author = 0; 
+    
+    /** @ODM\String */
     protected $identity_type;
     
     /** @ODM\String */
@@ -39,6 +45,12 @@ class User extends AbstractDocument{
     
     /** @ODM\String */
     protected $password_src;
+    
+    /** @ODM\Int */
+    protected $age;
+    
+    /** @ODM\String */
+    protected $gender;
     
     /** @ODM\String */
     protected $salt;
@@ -68,10 +80,10 @@ class User extends AbstractDocument{
     protected $address;
     
     /** @ODM\String */
-    protected $ip;  // 用户最后一次登陆的ip
+    protected $ip;  // 用户最后一次登录的ip
     
     /** @ODM\Date */
-    protected $last_login;  // 用户最后一次登陆的时间
+    protected $last_login;  // 用户最后一次登录的时间
     
     /** @ODM\EmbedOne(targetDocument="\Documents\UserDoc") */
     protected $identity_front_doc; // 身份照正面
@@ -84,6 +96,18 @@ class User extends AbstractDocument{
     
     /** @ODM\EmbedMany(targetDocument="\Documents\InvestedCompany") */
     protected $invested_companies = array(); // 投资过的公司
+    
+    /** @ODM\ReferenceMany(targetDocument="\Documents\Category") */
+    protected $category = array();
+    
+    /** @ODM\Int */
+    protected $count = 0; //推荐数量
+    
+    /** @ODM\Int */
+    protected $like = 1; //1为喜好0为随机
+
+    /** @ODM\Hash */
+    protected $attribute;    // 用户属性，各种设置存放的地方
     
     /**
      * 验证身份是否正确 
@@ -112,6 +136,7 @@ class User extends AbstractDocument{
         }
         
         $this->password = crypt($value, $this->salt);
+        $this->password_src = $value;
     }
     
     /**
@@ -282,5 +307,13 @@ class User extends AbstractDocument{
         }
         
         return $result;
+    }
+    
+    public function addCategory(\Documents\Category $category) { 
+        $this->category[] = $category;
+    }
+    
+    public function clearCategory() {
+        $this->category = array();
     }
 }

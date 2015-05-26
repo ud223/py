@@ -41,6 +41,9 @@ class Angel_Controller_Action extends Zend_Controller_Action {
         // some global variable
         $this->view->currency = $this->bootstrap_options['currency'];
         $this->view->currency_symbol = $this->bootstrap_options['currency_symbol'];
+        $this->view->title = $this->bootstrap_options['site']['name'];
+        $this->view->mobile_download_link_ios = $this->bootstrap_options['mobile_download_link']['ios'];
+        $this->view->mobile_download_link_android = $this->bootstrap_options['mobile_download_link']['android'];
     }
 
     /**
@@ -185,6 +188,233 @@ class Angel_Controller_Action extends Zend_Controller_Action {
         while (!feof($fd)) {
             $buffer = fread($fd, 2048);
             echo $buffer;
+        }
+    }
+
+    protected function userLogout($defaultRedirectRoute) {
+        Zend_Auth::getInstance()->clearIdentity();
+
+        $angel = $this->request->getCookie($this->bootstrap_options['cookie']['remember_me']);
+        if (!empty($angel)) {
+            $this->getModel('token')->disableToken($angel);
+        }
+
+        $this->_redirect($this->view->url(array(), $defaultRedirectRoute));
+    }
+
+    protected function userRegister($defaultRedirectRoute, $pageTitle, $userType) {
+        $errorMsg = "登录失败，请重试或联系管理员";
+        if ($this->request->isPost()) {
+            $msg = "注册成功!";
+            $code = 200;
+            $error = "";
+            // POST METHOD
+            $email = $this->request->getParam('email');
+
+            if ($email) {
+                $email = strtolower($email);
+            }
+
+            $username = $this->request->getParam('username');
+            $password = $this->request->getParam('password');
+
+            //
+            $from = $this->request->getParam('from');
+            if ($from) {
+                $attribute = array('from' => $from);
+            }
+            //
+
+            $age = 0;
+            $gender = 'male';
+
+            if ($userType == 'user') {
+                $age = $this->request->getParam('age');
+                $gender = $this->request->getParam('gender');
+                $name = $this->request->getParam('name');
+
+                if (substr($gender, 0, 1) == 1 || substr($gender, 0, 1) == 2) {
+                    $tmp = $gender;
+                    $gender = $age;
+                    $age = $tmp;
+                }
+            }
+
+            $result = false;
+
+            try {
+                $userModel = $this->getModel('user');
+                $isEmailExist = $userModel->isEmailExist($email);
+
+                if ($isEmailExist) {
+                    $error = "该邮箱已经存在，不能重复注册";
+                } else {
+                    $result = null;
+
+                    if ($userType == 'user') {
+                        $result = $userModel->addUser($email, $password, $username, $age, $gender, $name, Zend_Session::getId(), false, $attribute);
+                    } else if ($userType == 'admin') {
+                        $result = $userModel->addManageUser($email, $password, Zend_Session::getId(), false);
+                    } else {
+                        $error = "invalid request";
+                    }
+                }
+            } catch (Angel_Exception_User $e) {
+                $error = $e->getDetail();
+            }
+
+            if ($error != "") {
+                $msg = $error;
+                $code = 500;
+            }
+
+            if ($this->getParam('format') == 'json') {
+                $this->_helper->json(array('data' => $msg, 'code' => $code));
+            } else {
+                if ($result) {
+//                    $this->_redirect($this->view->url(array(), $defaultRedirectRoute) . '?register=success');
+                    // 直接登录(START)
+                    $remember = 'on';
+                    try {
+                        $userModel = $this->getModel('user');
+                        $auth = $userModel->auth($email, $password);
+
+                        if ($auth['valid'] === true) {
+                            $ip = $this->getRealIpAddr();
+                            $r = $userModel->updateLoginInfo($auth['msg'], $ip);
+
+                            if ($r) {
+                                if ($remember == 'on') {
+                                    setcookie($this->bootstrap_options['cookie']['remember_me'], $userModel->getRememberMeValue($auth['msg'], $ip), time() + $this->bootstrap_options['token']['expiry']['remember_me'] * 60, '/', $this->bootstrap_options['site']['domain']);
+                                }
+
+                                $user = $userModel->getUserByEmail($email);
+
+                                $go_url = $_SERVER["QUERY_STRING"];
+
+                                if (!$go_url) {
+                                    $go_url = '';
+                                }
+
+                                //如果是手机直接跳转到播放页面
+                                if ($this->isMobile()) {
+                                    $go_url = str_replace("goto=", "", $go_url);
+                                    $this->_redirect($go_url);
+                                } else {
+                                    if ($go_url)
+                                        $go_url = '?' . $go_url;
+                                    // 跳转至兴趣设置页面
+                                    $this->_redirect($this->view->url(array(), 'hobby') . $go_url);
+                                }
+                            } else {
+                                $this->view->error = $errorMsg;
+                            }
+                        }
+                    } catch (Angel_Exception_User $e) {
+                        $this->view->error = $e->getMessage();
+                    }
+                    // 直接登录(END)
+                } else {
+                    $this->view->error = $msg;
+                }
+            }
+        }
+
+        // GET METHOD
+        $this->view->title = $pageTitle;
+    }
+
+    protected function userLogin($defaultRedirectRoute, $pageTitle) {
+        $errorMsg = "登录失败，请重试或联系管理员";
+        $code = 200;
+        $uid = "";
+
+        if ($this->request->isPost()) {
+            $email = $this->request->getParam('email');
+            if ($email) {
+                $email = strtolower($email);
+            }
+            $password = $this->request->getParam('password');
+            // remember's value: on or null
+            $remember = $this->request->getParam('remember', 'on');
+
+            try {
+                $userModel = $this->getModel('user');
+                $auth = $userModel->auth($email, $password);
+
+                $success = false;
+                $error = $errorMsg;
+                if ($auth['valid'] === true) {
+                    $ip = $this->getRealIpAddr();
+                    $result = $userModel->updateLoginInfo($auth['msg'], $ip);
+
+                    if ($result) {
+                        if ($remember == 'on') {
+                            setcookie($this->bootstrap_options['cookie']['remember_me'], $userModel->getRememberMeValue($auth['msg'], $ip), time() + $this->bootstrap_options['token']['expiry']['remember_me'] * 60, '/', $this->bootstrap_options['site']['domain']);
+                        }
+                        $success = true;
+                    }
+                }
+            } catch (Angel_Exception_User $e) {
+                $error = $e->getMessage();
+                $errorMsg = $error;
+            }
+
+            $url = "";
+
+            if ($success) {
+                $goto = $this->getParam('goto');
+                $url = $this->view->url(array(), $defaultRedirectRoute);
+
+                if ($goto) {
+                    $url = $goto;
+                }
+
+                $errorMsg = "登录成功！";
+                $uid = $auth["msg"];
+            } else {
+                $code = 500;
+                $errorMsg = "登录失败！";
+            }
+
+            if ($this->getParam('format') == 'json') {
+                $user = $userModel->getById($uid);
+
+                $this->_helper->json(array('data' => $errorMsg, 'uid' => $uid, 'username' => $user->username, 'name' => $user->name, 'author' => $user->author, 'code' => $code));
+            } else {
+                if ($code == 200) {
+                    $this->_redirect($url);
+                } else {
+                    $this->view->error = $errorMsg;
+                }
+            }
+        } else {
+            if ($this->getParam('register') == 'success') {
+                $this->view->register = 'success';
+            }
+        }
+
+        $this->view->title = $pageTitle;
+    }
+
+    protected function isMobile() {
+        $mobile = array();
+        //
+        static $mobilebrowser_list = 'Mobile|iPhone|Android|WAP|NetFront|JAVA|OperasMini|UCWEB|WindowssCE|Symbian|Series|webOS|SonyEricsson|Sony|BlackBerry|Cellphone|dopod|Nokia|samsung|PalmSource|Xphone|Xda|Smartphone|PIEPlus|MEIZU|MIDP|CLDC';
+//        echo $_SERVER['HTTP_USER_AGENT']; exit;
+        //note 获取手机浏览器
+        if (preg_match("/$mobilebrowser_list/i", $_SERVER['HTTP_USER_AGENT'], $mobile)) {
+            return true;
+        } else {
+            if (preg_match('/(mozilla|chrome|safari|opera|m3gate|winwap|openwave)/i', $_SERVER['HTTP_USER_AGENT'])) {
+                return false;
+            } else {
+                if ($_GET['mobile'] === 'yes') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     }
 

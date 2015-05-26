@@ -4,10 +4,11 @@ class Angel_Model_Oss extends Angel_Model_AbstractModel {
 
     protected $_document_class = '\Documents\Oss';
 
-    public function addOss($name, $description, $status, $fsize, $type, $ext, $owner) {
+    public function addOss($name, $description, $status, $key, $fsize, $type, $ext, $owner) {
         $data = array(name => $name,
             description => $description,
             status => $status,
+            key => $key,
             fsize => $fsize,
             type => $type,
             ext => $ext,
@@ -15,10 +16,11 @@ class Angel_Model_Oss extends Angel_Model_AbstractModel {
         return $this->add($data);
     }
 
-    public function saveOss($id, $name, $description, $status, $fsize, $type, $ext) {
+    public function saveOss($id, $name, $description, $status, $key, $fsize, $type, $ext) {
         $data = array(name => $name,
             description => $description,
             status => $status,
+            key => $key,
             fsize => $fsize,
             type => $type,
             ext => $ext);

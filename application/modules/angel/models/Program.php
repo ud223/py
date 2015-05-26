@@ -3,7 +3,7 @@
 class Angel_Model_Program extends Angel_Model_AbstractModel {
 
     protected $_document_class = '\Documents\Program';
-
+    protected $_keyword_class = '\Documents\Keyword';
     /**
      * 添加节目
      * 
@@ -21,15 +21,21 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category, $owner) {
+    public function addProgram($name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $owner, $keywords, $time, $captions) {
         $result = false;
 
         $program = new $this->_document_class();
+        
         if (is_array($photo)) {
             foreach ($photo as $p) {
                 $program->addPhoto($p);
             }
         }
+        
+        foreach ($keywords as $p) {
+            $program->addKeyword($p);
+        }
+    //    echo $program->keyword[0]->id; exit;
         $program->name = $name;
         $program->sub_title = $sub_title;
         $program->oss_video = $oss_video;
@@ -38,8 +44,11 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->duration = $duration;
         $program->description = $description;
         $program->status = $status;
-        $program->category = $category;
         $program->owner = $owner;
+        $program->time = $time;
+        $program->captions = $captions;
+        $program->count = 0;
+         
         try {
             $this->_dm->persist($program);
             $this->_dm->flush();
@@ -69,7 +78,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
      * @return mix - when user registration success, return the user id, otherwise, boolean false
      * @throws Angel_Exception_Program
      */
-    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $category) {
+    public function saveProgram($id, $name, $sub_title, $oss_video, $oss_audio, $author, $duration, $description, $photo, $status, $keywords, $time, $captions) {
         $result = false;
 
         $program = $this->getById($id);
@@ -84,6 +93,7 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
                 $program->addPhoto($p);
             }
         }
+        
         $program->name = $name;
         $program->sub_title = $sub_title;
         $program->oss_video = $oss_video;
@@ -92,7 +102,15 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         $program->duration = $duration;
         $program->description = $description;
         $program->status = $status;
-        $program->category = $category;
+        $program->time = $time;
+        $program->captions = $captions;
+
+        $program->clearKeyword();
+
+        foreach ($keywords as $p) {
+            $program->addKeyword($p);
+        }
+
         try {
             $this->_dm->persist($program);
             $this->_dm->flush();
@@ -118,18 +136,96 @@ class Angel_Model_Program extends Angel_Model_AbstractModel {
         }
         return $result;
     }
-
-    public function getProgramByCategory($category_id, $return_as_paginator = true) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)
-                ->field('category.$id')->equals(new MongoId($category_id))
-                ->sort('created_at', -1);
-        $result = null;
-        if ($return_as_paginator) {
-            $result = $this->paginator($query);
-        } else {
-            $result = $query->getQuery()->execute();
+    
+    public function getProgramNotOwn($programs_id) { 
+        $query = null;
+        
+        if (count($programs_id) < 1 || $programs_id[0] == "") {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->find()->sort('created_at', -1);
         }
+        else {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->notIn($programs_id)->sort('created_at', -1);
+        }
+
+        $result = $query
+                ->getQuery();
+        
         return $result;
     }
+    
+    public function getProgramOwn($programs_id) { 
+        $query = null;
+        
+        if (count($programs_id) < 1 || $programs_id[0] == "") {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->find()->sort('created_at', -1);
+        }
+        else {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->in($programs_id)->sort('created_at', -1);
+        }
 
+        $result = $query
+                ->getQuery();
+        
+        return $result;
+    }
+    
+    public function programAddCount($program_id) {
+        $result = false;
+
+        $program = $this->getById($program_id);
+        
+        $program->count = $program->count + 1;
+        
+        try {
+            $this->_dm->persist($program);
+            $this->_dm->flush();
+
+            $result = $program->id;
+        } catch (Exception $e) {
+            $this->_logger->info(__CLASS__, __FUNCTION__, $e->getMessage() . "\n" . $e->getTraceAsString());
+            throw new Angel_Exception_Program(Angel_Exception_Program::SAVE_PROGRAM_FAIL);
+        }
+
+        return $result;
+    }
+    
+//    public function getAll() { 
+//        $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1);
+//
+//        $result = $query
+//                ->getQuery()
+//                ->execute();
+//
+//        return $result;
+//    }
+    
+    public function getProgramBySpecialId($programs_id) {
+        if (count($programs_id) < 1 || $programs_id[0] == "") {
+            return null;
+        }
+        
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->in($programs_id)->sort('created_at', -1);
+
+        $result = $query
+                ->getQuery();
+
+        return $result;
+    }
+    
+    public function getProgramByKeyword($keyword_id) {
+        $result = false;
+        
+        if ($keyword_id) {
+            $query = $this->_dm->createQueryBuilder($this->_document_class)
+                    ->field('keyword.$id')->equals(new MongoId($keyword_id))
+                    ->sort('created_at', -1);
+            
+            $result = $query->getQuery()->getSingleResult();
+        }
+        
+        if ($result)
+            return true;
+        else
+            return false;
+    }
 }

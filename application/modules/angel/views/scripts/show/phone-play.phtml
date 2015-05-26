@@ -1,0 +1,217 @@
+<?php
+$player_mode = "video";
+$user = false;
+if ($this->me) {
+    $user = $this->me->getUser();
+    if ($user->attribute && $user->attribute['player_mode']) {
+        $player_mode = $user->attribute['player_mode'];
+    }
+}
+
+$bean = $this->resource;
+$programs = $bean['programs'];
+?>
+<script type="text/javascript">
+    var msg = "";
+    var SPECIAL_ID = "<?php echo $bean['id']; ?>";
+</script>
+<style>
+    .page-title {
+        font-size:16px;
+        margin-bottom:3px;
+    }
+    .sub-title {
+        color:#aaa;
+        font-size:12px;
+    }
+    .jos {
+        border-bottom:1px solid rgba(0,0,0,0.2);
+        box-shadow:0 1px 0 rgba(255,255,255,.08);
+        padding-bottom:18px;
+        margin-bottom:20px;
+    }
+
+    #soul {
+        margin:0;
+        padding:0;
+    }
+    #soul li {
+        display:inline-block;
+        float:left;
+        list-style: none;
+        margin:0;
+    }
+    .l1 {
+        width:30%;
+    }
+    .l2 {
+        width:70%;
+    }
+
+    .list-item {
+        background:#FFF;
+        border-bottom:1px solid #ddd;
+        color:#333;
+        padding:15px 0;
+        text-shadow:none;
+    }
+    .list-item .list-item-cell.lt {
+        border-left:8px solid transparent;
+        padding-left:15px;
+    }
+    .list-item.selected .list-item-cell.lt {
+        border-color:#04CC54;
+    }
+    .list-header {
+        background:#EEE;
+        color:#333;
+        margin-top:20px;
+        padding:10px 22px;
+        text-shadow:0 1px 0 rgba(255,255,255,0.5);
+    }
+    .list-header span {
+        font-size:smaller;
+        color:#aaa;
+    }
+    .list-header p {
+        margin:0;
+    }
+    video {
+        float:left;
+        margin:0;
+        padding:0;
+    }
+
+    #refresh-btn {
+        background:#04CC54;
+        border-radius:4px;
+        margin-top:15px;
+        padding:10px;
+        text-align:center;
+    }
+
+
+</style>
+<div class="container jos">
+    <div class="row">
+        <div class="col-md-12">
+            <ul id="soul">
+                <li class="l1">
+                    <img width="80%" src="<?php echo $bean['photo'] ?>"/>
+                </li>
+                <li class="l2">
+                    <h1 class="page-title"><?php echo $this->cur_program["name"] ?></h1>
+                    <span class="sub-title">by <?php echo $bean['author'] ?></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <?php
+            $src = '';
+            if ($this->message == "") {
+                $src = $this->cur_program["oss_video"];
+            }
+            ?>
+            <video style="width:100%" src="<?php echo $src; ?>" controls="controls" preload="auto">
+                您的浏览器不支持 video 标签。
+            </video>
+            <div class="clear"></div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="list-header">
+                <span>播放列表</span>
+                <p><?php echo $bean['name'] ?></p>
+            </div>
+            <div>
+                <?php foreach ($programs as $program): ?>
+                    <?php
+                    $cls = "";
+                    if ($this->cur_program['id'] == $program['id']) {
+                        $cls = " selected";
+                    }
+                    ?>
+                    <div class="list-item clearfix<?php echo $cls ?>" id="<?php echo $program['id'] ?>">
+                        <div class="list-item-cell lt"><?php echo $program['name'] ?></div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div id="refresh-btn">换一波看看</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="P_tmp">
+    <?php if ($user): ?>
+        <a class="btn btn-success btn-sm log-link logout-link rtbtn pull-right" href="<?php echo $this->url(array(), 'logout') ?>">安全退出</a>
+    <?php else: ?>
+        <a class="btn btn-success btn-sm log-link login-link rtbtn pull-right" href="<?php echo $this->login_goto_url ?>">立即登录</a>
+    <?php endif; ?>
+    <div class="login-tip">
+        <div class="txt">请先登录，更多精彩节目等着您</div>
+        <div>
+            <a class="btn" href=>立即登录</a>
+        </div>
+    </div>
+
+    <?php echo $this->partial('show/partials/_login_tip.phtml', array('login_url' => $this->login_goto_url, 'register_url' => $this->register_goto_url)); ?>
+</div>
+
+<script type="text/javascript">
+    var PLAYER = document.getElementsByTagName('video')[0];
+
+    (function($) {
+        $(document).ready(function() {
+            var n = $('.log-link').clone(true);
+            $('#m3g-header .col-md-12').append(n);
+        });
+        $('.logout-link').click(function() {
+            if (!confirm('确定要退出吗？')) {
+                return false;
+            }
+        });
+
+<?php if ($user): ?>
+            $('.list-item').click(function() {
+                var $this = $(this).closest('.list-item');
+                var pid = $this.attr('id');
+                var link = generatePlayLink(SPECIAL_ID, pid, 1);
+                location.href = link;
+            });
+            $('#refresh-btn').click(function() {
+                location.href = PLAY_PAGE_URL;
+            });
+
+            $(PLAYER).on('ended', function() {
+                var current = $('.list-item.selected');
+
+                if (current.length) {
+                    var next = current.next();
+
+                    if (next.length) {
+                        location.href = generatePlayLink(SPECIAL_ID, next.attr('id'), 2);
+                    } else {
+                        location.href = PLAY_PAGE_URL;
+                    }
+                }
+            });
+
+<?php else: ?>
+            $('.list-item').click(function() {
+                loginTipFunc();
+            });
+            $('#refresh-btn').click(function() {
+                loginTipFunc();
+            });
+
+            $(PLAYER).on('ended', function() {
+                loginTipFunc();
+            });
+<?php endif; ?>
+    })(jQuery);
+</script>

@@ -22,4 +22,6 @@ class Category extends AbstractDocument {
     /** @ODM\Int */
     protected $view = 0;
 
+    /** @ODM\Int */
+    protected $isuse = 0;
 }

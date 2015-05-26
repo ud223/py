@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title><?php echo $this->title ?></title>
+        <link href="<?php echo $this->cssPath("bootstrap.css"); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->cssPath("global.css"); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->cssPath("global.show.css"); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->cssPath("global.3g.css"); ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="<?php echo $this->jsPath('jquery.1.10.2.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('bootstrap.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('validation.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('plugin.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('player.js'); ?>"></script>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    <div id='wx_pic' style='display:none;'>
+        <img src='/img/pic300.jpg' />
+    </div>
+</head>
+<body>
+    <div class="container" id="m3g-header">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-12">
+                <img id="m3g-logo" src="/img/logo-sm.png" />
+            </div>
+        </div>
+    </div>
+    <?php echo $this->layout()->content; ?>
+
+    <div class="container" id="download-mobile">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <?php
+
+                function get_device_type() {
+                    $agent = strtolower($_SERVER["HTTP_USER_AGENT"]);
+                    $type = 'other';
+
+                    if (strpos($agent, 'iphone') || strpos($agent, 'ipad')) {
+                        $type = 'ios';
+                    }
+
+                    if (strpos($agent, 'android')) {
+                        $type = 'android';
+                    }
+
+                    return $type;
+                }
+                ?>
+
+                <?php if (get_device_type() == 'ios') : ?>
+                    <a onclick="$('#app-store-fix').show()" href="<?php echo $this->mobile_download_link_ios ?>" id="download-btn-apple">App Store</a>
+                    <div id="app-store-fix">
+                        <div class="pad-20">
+                            <ul>
+                                <li id="app-store-icon">
+                                </li>
+                                <li id="app-store-txt">
+                                    <span onclick="$('#app-store-fix').hide()" class="close">&times;</span>
+                                    <p>
+                                        <strong>点击按钮没有反应？</strong>
+                                        <br/>
+                                        请前往App Store搜索关键字“芝士电视”并安装。
+                                    </p>
+                                </li>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <style>
+                        #app-store-fix {
+                            background:rgba(255,255,255,0.92);
+                            bottom:0px;
+                            color:#333;
+                            display:none;
+                            height:120px;
+                            left:0;
+                            line-height:22px;
+                            position:fixed;
+                            text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+                            text-align:left;
+                            width:100%;
+                        }
+                        #app-store-fix strong {
+                            color:#25478f;
+                            font-size:15px;
+                        }
+                        #app-store-fix ul {
+                            margin:0;
+                            padding:0;
+                        }
+                        #app-store-fix ul li {
+                            display:block;
+                            float:left;
+                            padding:0;
+                        }
+                        #app-store-icon {
+                            background:url(/img/app_store_ios7_ios_7.png);
+                            background-size: cover;
+                            background-position:center center;
+                            background-repeat:no-repeat;
+                            height:50px;
+                            margin-right:20px;
+                            width:50px;
+                        }
+                        #app-store-txt {
+                            width:190px;
+                        }
+                        #app-store-txt .close {
+                            height:30px;
+                            opacity:0.7;
+                            position:absolute;
+                            right:10px;
+                            text-align: center;
+                            top:10px;
+                            width:30px;
+                        }
+                    </style>
+                <?php else : ?>
+                    <a href="<?php echo $this->mobile_download_link_android ?>" id="download-btn-android">安卓App</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear-100"></div>
+</body>
+
+<footer>
+    <!--<p>&copy; Cheesetv.tv</p>-->
+</footer>
+
+<script>
+    var PLAY_PAGE_URL = "<?php echo $this->url(array(), 'show-play') ?>";
+    var SERVER_URL = "<?php echo $this->serverUrl() ?>";
+</script>
+</html>
+
+
+
+

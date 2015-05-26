@@ -1,215 +1,204 @@
 <?php
 
-class Angel_IndexController extends Angel_Controller_Action
-{
-    protected $login_not_required = array('index', 'login', 'register', 'email-validation', 'is-email-exist', 'forgot-password');
-    
-    public function init()
-    {
+class Angel_IndexController extends Angel_Controller_Action {
+
+    protected $login_not_required = array('test', 'index', 'upgrade', 'subscribe', 'login', 'logout', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password', 'version-get', 'device', 'device-count', 'phone-login', 'phone-register');
+
+    public function init() {
+        $this->_helper->layout->setLayout('normal');
         parent::init();
     }
-
-    public function indexAction()
-    {
+    public function testAction() {
+        
+    }
+    public function indexAction() {
         $this->_forward('login');
     }
-    
-    /**
-     * 登陆 
-     */
-    public function loginAction(){
-        if($this->request->isXmlHttpRequest() && $this->request->isPost()){
-            $email = $this->request->getParam('email');
-            $password = $this->request->getParam('pwd');
-            $remember = $this->request->getParam('remember', 'no');
-            
-            try{
-                $userModel = $this->getModel('user');
-                $auth = $userModel->auth($email, $password);
-                
-                $success = false;
-                
-                if($auth['valid'] === true){
-                    $ip = $this->getRealIpAddr();
-                    $result = $userModel->updateLoginInfo($auth['msg'], $ip);
-                    
-                    if($result){
-                        if($remember == 'yes'){
-                            setcookie($this->bootstrap_options['cookie']['remember_me'], $userModel->getRememberMeValue($auth['msg'], $ip), time()+$this->bootstrap_options['token']['expiry']['remember_me']*60, '/', $this->bootstrap_options['site']['domain']);
-                        }
-                        $success = true;
-                    }
-                }
-                
-                $this->_helper->json(($success === true) ? 1 : 0);
-            }
-            catch(Angel_Exception_User $e){
-                $this->_helper->json(0);
-            }
-        }
+
+    public function upgradeAction() {
+        $this->_helper->layout->setLayout('upgrade');
     }
     
-    /**
-     * 注册 
-     */
-    public function registerAction(){
-        if($this->request->isXmlHttpRequest() && $this->request->isPost()){
-            
-            $user_type = $this->request->getParam('usertype');
-            $email = $this->request->getParam('email');
-            $username = $this->request->getParam('username');
-            $password = $this->request->getParam('pwd');
-            
-            $result = false;
-            try{
-                $userModel = $this->getModel('user');
-                $result = $userModel->addUser($user_type, $email, $username, $password, Zend_Session::getId());
+    public function subscribeAction() {
+        if ($this->request->isXmlHttpRequest() && $this->request->isPost()) {
+            try {
+                $email = $this->request->getParam("email");
+                $subscribeModel = $this->getModel('subscribe');
+                $subscribeModel->addSubscribe($email);
+                echo 1;
+                exit;
+            } catch (Angel_Exception_User $e) {
+                echo 0;
+                exit;
             }
-            catch(Angel_Exception_User $e){
-                $this->_helper->json($e->getDetail());
-            }
-            
-            $this->_helper->json(($result === false) ? 0 : 1);
         } else {
-            $guarantor_register = $this->request->getParam('guarantor_register');
-            if($guarantor_register == '1') {
-                // 获取token内容
-                $token = $this->request->getParam('token');
-                if(empty($token)) {
-                    $this->_redirect($this->view->url(array(), 'not-found'));
-                }
-                $tokenDocument = $this->getModel('token')->getTokenByToken($token);
-                if($tokenDocument && !$tokenDocument->isExpired()){
-                    $guarantor_email = $tokenDocument->params['email'];
-                    if(empty($guarantor_email)) {
-                        $this->_redirect($this->view->url(array(), 'not-found'));
-                    }
-                    $guarantee_company = $tokenDocument->params['company'];
-                    $company = $this->getModel('company')->getCompanyById($guarantee_company);
-                    if(!isset($company)) {
-                        $this->_redirect($this->view->url(array(), 'not-found'));
-                    }
-                    $guarantors = $company->guarantor_candidate;
-                    if(!isset($guarantors) || count($guarantors) == 0) {
-                        $this->_redirect($this->view->url(array(), 'not-found'));
-                    }
-                    $hasIt = false;
-                    $guarantor_name = "";
-                    foreach($guarantors as $guarantor) {
-                        if($guarantor->email == $guarantor_email) {
-                            $hasIt = true;
-                            $guarantor_name = $guarantor->name;
-                            break;
-                        }
-                    }
-                    if(!$hasIt) {
-                        $this->_redirect($this->view->url(array(), 'not-found'));
-                    }
-                    $this->view->guarantor_email = $guarantor_email;
-                    $this->view->guarantor_name = $guarantor_name;
-                } else {
-                    $this->_redirect($this->view->url(array(), 'not-found'));
-                }
-                $this->view->guarantor_register = 1;
-            }
-        }
-    }
-    
-    /**
-     * 验证email地址，激活帐号 
-     */
-    public function emailValidationAction(){
-        $result = false;
-        $token = $this->request->getParam('token', '');
-        
-        try{
-            $result = $this->getModel('user')->activateAccount($token);
-        }
-        catch(Angel_Exception_User $e){
-            if($e->getMessageCode() == Angel_Exception_User::EMAIL_VALIDATION_TOKEN_INVALID){
-                $this->_redirect($this->view->url(array(), 'not-found'));
-            }
-            else if($e->getMessageCode() == Angel_Exception_User::EMAIL_VALIDATION_VALIDATED_USER){
-                $this->_forward('login', 'index');
-            }
-            else if($e->getMessageCode() == Angel_Exception_User::EMAIL_VALIDATION_TOKEN_EXPIRED){
-                $this->view->isTokenExpired = true;
-            }
-        }
-        
-        if($result){
-            $this->view->isValidatedSuccess = true;
-            $this->view->user = $result;
             
-            // 当用户是在登录状态下激活帐号，帐号激活成功后，应该强迫它退出登录
-            Zend_Auth::getInstance()->clearIdentity();
-            $this->view->me = null;
         }
     }
-    
+
     /**
-     * 当用户email还没有验证通过(帐户帐号还未激活)时，当他访问其它页面时，应该强行跳转到这个页面 
+     * 登录
      */
-    public function waitToBeActivatedAction(){
-        $uid = $this->me->getId();
-        $userModel = $this->getModel('user');
-        
-        $user = $userModel->getUserById($uid);
-        
-        if($user->isEmailValidated()){
-            $this->_redirect($this->view->url(array(), 'dashboard'));
+    public function loginAction() {
+        if ($this->request->isPost()) {
+            $this->userLogin('show-play', "登录芝士电视");
         }
         
-        if($this->request->isXmlHttpRequest() && $this->request->isPost()){
-            $userModel->sendAccountValidationEmail($user);
-            $this->_helper->json(1);
-        }
-        else{
-            $this->view->user = $user;
+        //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
+        if ($this->isMobile()) {
+            $this->render('phone-login ');
+            $this->_helper->layout->setLayout('mobile');
         }
     }
-    
-    public function isEmailExistAction(){
-        if($this->request->isXmlHttpRequest() && $this->request->isPost()){
-            
+
+    /**
+     * 注册
+     */
+    public function registerAction() {
+        if ($this->request->isPost()) {
+            $this->userRegister('login', "注册芝士电视", "user");
+        }
+
+         //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
+        if ($this->isMobile()) {
+                $this->render('phone-register ');
+                $this->_helper->layout->setLayout('mobile');
+            }
+    }
+
+//    public function isEmailExistAction() {
+//        if ($this->request->isXmlHttpRequest() && $this->request->isPost()) {
+//
+//            $email = $this->request->getParam('email');
+//            $result = false;
+//            try {
+//                $userModel = $this->getModel('user');
+//                $result = $userModel->isEmailExist($email);
+//            } catch (Angel_Exception_User $e) {
+//                $this->_helper->json(0);
+//            }
+//            // email已经存在返回true，不存在返回false
+//            $this->_helper->json(($result === false) ? false : true);
+//        }
+//    }
+
+
+    public function isEmailCanBeUsedAction() {
+        if ($this->request->isXmlHttpRequest() && $this->request->isPost()) {
+
             $email = $this->request->getParam('email');
             $result = false;
-            try{
+            try {
                 $userModel = $this->getModel('user');
                 $result = $userModel->isEmailExist($email);
-            }
-            catch(Angel_Exception_User $e){
+            } catch (Angel_Exception_User $e) {
                 $this->_helper->json(0);
             }
-            // email已经存在返回1，不存在返回0
-            $this->_helper->json(($result === false) ? 0 : 1);
+            // email已经存在返回false，不存在返回true
+            $this->_helper->json($result ? false : true);
         }
     }
-    
-    public function forgotPasswordAction(){
-        if($this->request->isXmlHttpRequest() && $this->request->isPost()){
-            
+
+    public function forgotPasswordAction() {
+        if ($this->request->isPost()) {
+
             $email = $this->request->getParam('email');
             $result = false;
-            try{
+            try {
                 $userModel = $this->getModel('user');
                 $result = $userModel->forgotPassword($email);
+            } catch (Angel_Exception_User $e) {
+                $this->view->error = $e->getDetail();
+                $this->view->re_email = $email;
+                $result = false;
             }
-            catch(Angel_Exception_User $e){
-                $this->_helper->json(0);
+            if ($result) {
+                $this->view->send = "success";
             }
-            $this->_helper->json(($result === false) ? 0 : 1);
+        }
+        $this->view->title = "找回密码";
+    }
+
+    public function logoutAction() {
+        $this->userLogout('login');
+    }
+    
+    public function deviceAction() {
+        $deviceModel = $this->getModel('device');
+        $name = $this->request->getParam('name');
+
+        $result = $deviceModel->getByName($name);
+
+        if ($result) {
+            $deviceModel->saveDevice($result->id, $result->name, $result->count);
+        }
+        else {
+            $deviceModel->addDevice($name);
+        }
+
+        $this->_helper->json(array('data' => 'success', 'code' => 200));
+    }
+ 
+    public function deviceCountAction() {
+        $deviceModel = $this->getModel('device');
+
+        $sys = $this->request->getParam('name');
+
+        $result = $deviceModel->getByName($sys);  
+
+        if ($result) {
+            $this->_helper->json(array('data' => $result->count, 'code' => 200));
+        }
+        else {
+            $this->_helper->json(array('data' => '0', 'code' => 200));
         }
     }
     
-    public function logoutAction(){
-        Zend_Auth::getInstance()->clearIdentity();
-        
-        $angel = $this->request->getCookie($this->bootstrap_options['cookie']['remember_me']);
-        if(!empty($angel)){
-            $this->getModel('token')->disableToken($angel);
+    public function versionGetAction() {
+        $versionModel = $this->getModel('version');
+
+        $sys = $this->request->getParam('sys');
+
+        $result = $versionModel->getNewVersion($sys);
+
+        if ($result) {
+            $version = array();
+
+            $version["id"] = $result->id;
+            $version["name"] = $result->name;
+            $version["sys"] = $result->sys;
+            $version["fix"] = $result->fix;
+            $version["update"] = $result->update;
+            $version["url"] = $result->url;
+
+            $this->_helper->json(array('data' => $version, 'code' => 200));
+        }
+        else {
+            $this->_helper->json(array('data' => '1.0', 'code' => 0));
+        }
+    }
+    
+    public function phoneLoginAction() {
+        if ($this->request->isPost()) {
+            $this->userLogin('show-play', "登录芝士电视");
+        }
+        else {
+            //第一次请求先判断是否移动端浏览器,如果是移动端浏览器就跳转到移动端注册页面
+            if (!$this->isMobile()) {
+                $loginPath = $this->view->url(array(), 'login') ;
+
+                $this->_redirect($loginPath);
+            }
         }
         
-        $this->_redirect($this->view->url(array(), 'login'));
+        $this->_helper->layout->setLayout('mobile');
+    }
+    
+    public function phoneRegisterAction() {
+        if ($this->request->isPost()) {
+            $this->userRegister('login', "注册芝士电视", "user");
+        }
+        
+        $this->_helper->layout->setLayout('mobile');
     }
 }

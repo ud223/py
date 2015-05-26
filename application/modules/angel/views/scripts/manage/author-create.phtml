@@ -1,4 +1,7 @@
 <style>
+    .wp {
+        padding:20px;
+    }
 </style>
 <h1 class="page-title"><?php echo $this->title ?></h1>
 <div class="row">
@@ -13,6 +16,20 @@
                 <textarea class="form-control" id="description" name="description" data-toggle="popover"></textarea>
             </div>
             <div class="form-group">
+                <label>作者SNS信息：</label>
+                <div class="panel panel-info alert-info">
+                    <div class="panel-body">
+                        <?php foreach($this->snsOptions as $k=>$v ):?>
+                        <div class="form-group">
+                            <label><?php echo $v; ?>：</label>
+                            <input type="text" class="form-control" id="sns-<?php echo $k; ?>" name="sns-<?php echo $k; ?>" data-toggle="popover" value="">
+                        </div>
+                        
+                        <?php endforeach;?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label>作者Logo：</label>
                 <div class='panel panel-info'>
                     <div id="gy-logo" class='panel-body gy-logo'>
@@ -22,10 +39,12 @@
             </div>
 
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
-
+            
         </form>
     </div>
 </div>
+
+
 <script type="text/javascript">
     (function($) {
         $('.gy-logo').photoSelector({multi: false, thumbnailOnly: false});

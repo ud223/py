@@ -44,13 +44,18 @@ class Angel_Model_Email{
     // 通知担保人公司开始融资
     const EMAIL_GUARANTOR_COMPANY_START_FUNDING = 'guarantor-company-start-funding';
     
+    static $company_name;
+    
+    public static function setCompanyName($val) {
+        self::$company_name = $val;
+    }
     
     public static function getSubject($template){
         switch($template){
             case self::EMAIL_NEW_USER_EMAIL_VALIDATION:
-                return '天使圈帐号激活邮件';
+                return sprintf('%s帐号激活邮件', self::$company_name);
             case self::EMAIL_FORGOT_PASSWORD:
-                return '你的天使圈登录密码';
+                return sprintf('你的%s登录密码', self::$company_name);
             case self::EMAIL_NEW_USER_EMAIL_VALIDATION:
                 return '有用户提交了实名认证申请';
             case self::EMAIL_IDENTITY_INFO_REFUSED:

@@ -1,6 +1,6 @@
 <?php
 /**
- * 这个类是对 当前登陆用户Model的一个wrapper 
+ * 这个类是对 当前登录用户Model的一个wrapper 
  */
 class Angel_Me{
     

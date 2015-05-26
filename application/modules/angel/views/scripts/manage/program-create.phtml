@@ -1,3 +1,4 @@
+<link href="/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
 <style>
     ul {
         margin:0;
@@ -62,7 +63,7 @@
 <div class="row">
     <div class="col-md-8">
 
-        <form role="form" method="post">
+        <form role="form" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label>节目标题：</label>
                 <input type="text" class="form-control" id="name" name="name" data-toggle="popover" value="">
@@ -78,18 +79,50 @@
                     <option value="soldout">下线</option>
                 </select>
             </div>
-            <div class="form-group">
+<!--            <div class="form-group">
                 <label>节目图片：</label>
                 <div class='panel panel-info'>
                     <div id="gy-photo" class='panel-body gy-photo'>
                     </div>
                 </div>
                 <input type="hidden" name="photo" id="photo"/>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label>描述：</label>
                 <textarea row="10" class="form-control" id="description" name="description"></textarea>
             </div>
+            <div class="form-group">
+                <label>节目时长：</label>
+            </div>
+            <div class="form-group">
+                <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" id="time" name="min" data-toggle="popover" placeholder="分" style="width:80px; float: left; margin-right: 10px" value="">
+                <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" id="time" name="sec" data-toggle="popover" placeholder="秒" style="width:80px; margin-right: 10px" value="">
+            </div>
+            <div class="form-group">
+                <label>关键词：</label>
+            </div>
+            <div class="form-group">
+                <?php foreach ($this->keywords as $keyword): ?>
+                    <div  style="float:left" >
+                        <input id="<?php echo $keyword->id ?>" type="checkbox" name="keyword[]" value="<?php echo $keyword->id ?>" 
+                        <?php
+                            foreach ($this->model->keyword as $p) {
+                                if ($keyword->id == $p->id) {
+                                    echo "checked='checked'";
+
+                                    break;
+                                }
+                            }
+                            ?>/> <label class="marginright10px" for="<?php echo $keyword->id ?>"><?php echo $keyword->name ?></label>
+                        </div>
+                <?php endforeach; ?>
+                <?php
+                    if (count($this->keywords) == 0) {
+                        echo '<a href="' . $this->url(array(), "manage-keyword-list-home") . '" class="butn btn-default" target="_blank">暂时没有关键词可以关联， 现在添加</a>';
+                    }
+                ?>
+            </div>
+            <div class="clear-20"></div>
             <div class="form-group">
                 <label>音频文件：</label>
                 <select id="oss_audio" name="oss_audio" value="">
@@ -108,34 +141,10 @@
                     <?php endforeach; ?>
                 </select>
             </div>
+
             <div class="form-group">
-                <label>作者：</label>
-                <select id="author" name="author" value="">
-                    <option value="">无作者</option>
-                    <?php foreach ($this->author as $b): ?>
-                        <option value="<?php echo $b->id ?>"><?php echo $b->name ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>节目分类：</label>
-                <select id="category" name="category" value="">
-                    <option value="">无分类</option>
-                    <?php foreach ($this->category as $c): ?>
-                        <option value="<?php echo $c->id ?>">
-                            <?php
-                            $prefix = "--";
-                            if ($c->level) {
-                                for ($i = 0; $i < $c->level; $i++) {
-                                    $prefix = $prefix . " -- ";
-                                }
-                            }
-                            echo $prefix;
-                            ?>
-                            <?php echo $c->name ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <label>字幕：</label>
+                <input type="file" id="captions" name="captions">
             </div>
             <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
 
@@ -156,6 +165,55 @@
             } else {
                 $('#photo').val(save);
             }
+        });
+        
+        $("#file_upload").uploadify({
+            swf: '/uploadify/uploadify.swf',
+            uploader: '/manage/txt/upload',
+            fileTypeExts: '*.txt',
+            buttonText: '选择即将上传的文件',
+            auto: false,
+            height: 30,
+            width: 180,
+            'onUploadComplete': function(file) {
+            },
+            'onUploadSuccess': function(file, data, response) {
+                uploadifyUploadSuccess(file, data, response);
+            },
+            'onQueueComplete': function(queueData) {
+                uploadifyQueueComplete(queueData);
+            },
+            'onUploadStart': function(file) {
+
+            }
+        });
+
+        function uploadifyUploadSuccess(file, data, response) {
+            var files = $('#next-lnk').attr('files');
+            if (files) {
+                files += "|" + data;
+            } else {
+                files = data;
+            }
+            $('#next-lnk').attr('files', files);
+        }
+        function uploadifyQueueComplete(queueData) {
+            $('#no-success').html(queueData.uploadsSuccessful);
+            $('#next-step').show();
+        }
+
+        $('#upload-all').click(function() {
+            $('#file_upload').uploadify('upload', '*');
+        });
+
+        $('#cancel-all').click(function() {
+            $('#file_upload').uploadify('cancel', '*');
+            $('#next-step').hide();
+            $('#next-lnk').attr('files', '');
+        });
+        $('#next-lnk').click(function() {
+            var url = $(this).attr('href') + "?fs=" + $(this).attr('files');
+            $(this).attr('href', url);
         });
     })(jQuery);
 </script>

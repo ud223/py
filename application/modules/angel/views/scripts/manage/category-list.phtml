@@ -22,57 +22,49 @@
     <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-category-create') ?>">新建分类</a>
 </div>
 <div class="row">
+    <?php
+    $c = 0;
+    ?>
     <?php if ($this->resource): ?>
         <?php foreach ($this->resource as $p): ?>
             <?php
-            $root = $p['root'];
-            $children = $p['children'];
+//            $root = $p['root'];
+//            $children = $p['children'];
             ?>
             <div class="col-md-2">
                 <div class="itm">
                     <div class="paddingbox10px relative">
-                        <p><?php echo $root->name ?></p>
+                        <p><?php echo $p->name ?></p>
                         <div class="btn-group">
-                            <a type="button" href="<?php echo $this->url(array(id => $root->id), 'manage-category-save') ?>" class="btn btn-info btn-sm">编辑</a>
-
-                            <?php if (count($this->programModel->getProgramByCategory($root->id)) == 0 && count($this->categoryModel->getByParent($root->id)) == 0): ?>
-                                <button type="button" class="btn btn-danger btn-sm remove-root-category">删除</button>
+                            <a type="button" href="<?php echo $this->url(array(id => $p->id), 'manage-category-save') ?>" class="btn btn-info btn-sm">编辑</a>
+                            <?php if (!$this->specialMode->getSpecialByCategory($p->id) && !$this->userModel->getUserByCategoryId($p->id)): ?>
+                                <button type="button" class="btn btn-danger btn-sm remove-category">删除</button>
                             <?php else: ?>
-                                <label class="xs">不为空</label>
+                                <label class="xs">被引用</label>
                             <?php endif; ?>
 
                         </div>
 
-                        <input type="hidden" class="roothd" value="<?php echo $root->id ?>"/>
+                        <input type="hidden" class="tmp" value="<?php echo $p->id ?>"/>
                     </div>
-                    <?php foreach ($children as $c): ?>
-                        <div class="child-itm">
-                            <p><?php echo $c->name ?></p>
-                            <div class="btn-group">
-                                <a type="button" href="<?php echo $this->url(array(id => $c->id), 'manage-category-save') ?>" class="btn btn-info btn-xs">编辑</a>
-                            </div>
-
-                            <?php if (count($this->programModel->getProgramByCategory($c->id)) == 0): ?>
-                                <button type="button" class="btn btn-danger btn-xs remove-child-category">删除</button>
-                            <?php else: ?>
-                                <label class="xs">不为空</label>
-                            <?php endif; ?>
-
-                            <input type="hidden" class="childhd" value="<?php echo $c->id ?>"/>
-                        </div>
-                    <?php endforeach; ?>
                 </div>
             </div>
+            <?php $c ++; ?>
+            <?php if ($c % 6 == 0): ?>
+                <div class="clearfix"></div>
+            <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>
 </div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-category-list')); ?>
+    </div>
+</div>
 <script type="text/javascript">
     (function($) {
-        $('.remove-root-category').click(function() {
-            removeObject($(this), '<?php echo $this->url(array(), 'manage-category-remove') ?>', false, '.roothd');
-        });
-        $('.remove-child-category').click(function() {
-            removeObject($(this), '<?php echo $this->url(array(), 'manage-category-remove') ?>', '.child-itm', '.childhd');
+        $('.remove-category').click(function() {
+            removeObject($(this), '<?php echo $this->url(array(), 'manage-category-remove') ?>');
         });
     })(jQuery);
 </script>

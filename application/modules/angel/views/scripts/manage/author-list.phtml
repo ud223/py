@@ -19,22 +19,29 @@ $model = $this->model;
     <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-author-create') ?>">添加作者</a>
 </div>
 <div class="row">
+    <?php
+    $c = 0;
+    ?>
     <?php foreach ($this->resource as $p): ?>
         <div class="col-md-2 itm">
             <div class="paddingbox20px relative">
                 <p><?php echo $p['name'] ?></p>
                 <div class="btn-group">
                     <a type="button" href="<?php echo $this->url(array(id => $p["id"]), 'manage-author-save') ?>" class="btn btn-info btn-sm">编辑</a>
-
-                    <?php if (count($this->programModel->getProgramByOss($p["id"])) == 0): ?>
+                    <!--<button type="button" class="btn btn-danger btn-sm remove-author">删除</button>-->
+                    <?php if (!$this->specialModel->getSpecialByAuthor($p["id"])): ?>
                         <button type="button" class="btn btn-danger btn-sm remove-author">删除</button>
                     <?php else: ?>
-                        <label class="xs">不为空</label>
+                        <label class="xs">被引用</label>
                     <?php endif; ?>
                 </div>
                 <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
             </div>
         </div>
+        <?php $c ++; ?>
+        <?php if ($c % 6 == 0): ?>
+            <div class="clearfix"></div>
+        <?php endif; ?>
     <?php endforeach; ?>
 </div>
 <div class="row">

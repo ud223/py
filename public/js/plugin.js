@@ -1,3 +1,74 @@
+
+// jquery.rotate.js
+(function($) {
+    function initData($el) {
+        var _ARS_data = $el.data('_ARS_data');
+        if (!_ARS_data) {
+            _ARS_data = {rotateUnits: 'deg', scale: 1, rotate: 0};
+            $el.data('_ARS_data', _ARS_data);
+        }
+        return _ARS_data;
+    }
+
+    function setTransform($el, data) {
+        $el.css('transform', 'rotate(' + data.rotate + data.rotateUnits + ') scale(' + data.scale + ',' + data.scale + ')');
+    }
+
+    $.fn.rotate = function(val) {
+        var $self = $(this), m, data = initData($self);
+        if (typeof val === 'undefined') {
+            return data.rotate + data.rotateUnits;
+        }
+        m = val.toString().match(/^(-?\d+(\.\d+)?)(.+)?$/);
+        if (m) {
+            if (m[3]) {
+                data.rotateUnits = m[3];
+            }
+            data.rotate = m[1];
+            setTransform($self, data);
+        }
+        return this;
+    };
+    $.fn.scale = function(val) {
+        var $self = $(this), data = initData($self);
+        if (typeof val === 'undefined') {
+            return data.scale;
+        }
+        data.scale = val;
+        setTransform($self, data);
+        return this;
+    };
+    var curProxied = $.fx.prototype.cur;
+    $.fx.prototype.cur = function() {
+        if (this.prop === 'rotate') {
+            return parseFloat($(this.elem).rotate());
+        } else if (this.prop === 'scale') {
+            return parseFloat($(this.elem).scale());
+        }
+        return curProxied.apply(this, arguments);
+    };
+    $.fx.step.rotate = function(fx) {
+        var data = initData($(fx.elem));
+        $(fx.elem).rotate(fx.now + data.rotateUnits);
+    };
+    $.fx.step.scale = function(fx) {
+        $(fx.elem).scale(fx.now);
+    };
+    var animateProxied = $.fn.animate;
+    $.fn.animate = function(prop) {
+        if (typeof prop['rotate'] != 'undefined') {
+            var $self, data, m = prop['rotate'].toString().match(/^(([+-]=)?(-?\d+(\.\d+)?))(.+)?$/);
+            if (m && m[5]) {
+                $self = $(this);
+                data = initData($self);
+                data.rotateUnits = m[5];
+            }
+            prop['rotate'] = m[1];
+        }
+        return animateProxied.apply(this, arguments);
+    };
+})(jQuery);
+
 (function($) {
     var DURATION = 100;
     $.fn.setSelectValue = function(options) {
@@ -10,7 +81,7 @@
         };
         $.extend(settings, options);
         var $this = $(this);
-        if ($this.get(0).tagName.toLowerCase() === settings.tagName) {
+        if ($this.length && ($this.get(0).tagName.toLowerCase() === settings.tagName)) {
             var val = $this.attr('value');
             if (val) {
                 $.each($this.find('option'), function() {
@@ -470,7 +541,7 @@
         $this.bind('contextmenu', function(e) {
             return false;
         });
-    }
+    };
     $.fn.xCenter = function() {
         var $this = $(this);
         var parent = $this.parent();
@@ -479,227 +550,474 @@
             $this.css('position', 'absolute');
         }
         $this.css('left', (pw - $this.width()) / 2);
-    }
+    };
 
-
-    $.currency = {
-        option: {
-            cookie_name: 'currency',
-            currency_option: {expires: 365, path: '/'},
-            ddl_id: 'currency-ddl',
-            ddl_itm_cls: 'currency-ddl-itm',
-            selector: '.price-option'
-        },
-        init: function(selector) {
-            if (!selector)
-                selector = this.option.selector;
-            // write css
-            var style = "<style>";
-            style += ".price-option {display:none}";
-            style += ".price-option:first-child {display:inline;}";
-            style += "#" + this.option.ddl_id + " {background:#FFF;box-shadow:0 0 10px rgba(0,0,0,0.2);display:none;position:absolute;width:90px;z-index:1}";
-            style += "#" + this.option.ddl_id + " ." + this.option.ddl_itm_cls + " {cursor:pointer;display:block;padding:5px 20px;text-align:center;border-bottom:1px solid #F2F2F2;}";
-            style += "#" + this.option.ddl_id + " ." + this.option.ddl_itm_cls + ":hover {background:#F8F8F8;}";
-            style += "#" + this.option.ddl_id + " ." + this.option.ddl_itm_cls + ".selected {background:#F8F8F8 !important}"
+    /* LOADING (START) */
+    $.waiting = function(msg, container) {
+        if ($('.rotatedivwrapper').length > 0) {
+            return;
+        }
+        var rotate_style_id = 'rotate-style';
+        if ($('#' + rotate_style_id).length === 0) {
+            var style = "<style id='" + rotate_style_id + "'>";
+            style += ".rotatedivwrapper {background:rgba(0,0,0,0.6);height:100%;left:0;position:fixed;top:0;width:100%;z-index:30;}";
+            style += ".rotatedivwrapper .rotatediv {background:url(/img/loading.png);height:120px;left:50%;margin-left:-60px;margin-top:-60px;position:absolute;top:50%;width:120px;}";
             style += "</style>";
             $('body').append(style);
-            var cookie_name = this.option.cookie_name;
-            var price_option = $(selector);
-            var option = this.option.currency_option;
-            var ddl_id = this.option.ddl_id;
-            var cookie_value = $.cookie(cookie_name);
-            var html = $("<div>").attr('id', ddl_id).addClass('auto-hide');
-            var base_cls = this.option.ddl_itm_cls;
-            $.each(price_option, function() {
-                var item = $(this);
-                var ddl_item = $("<div>").addClass(base_cls).html(item.attr('currency-symbol') + " " + item.attr(cookie_name)).attr(cookie_name, item.attr(cookie_name));
-                ddl_item.click(function() {
-                    // select currency
-                    var $this = $(this).closest('.' + base_cls);
-                    var currency = $this.attr(cookie_name);
-                    $('.price').hide();
-                    $('.price[currency=' + currency + ']').show();
-                    var ddl = $('#' + ddl_id);
-                    if (!$this.hasClass('selected')) {
-                        $.cookie(cookie_name, currency, option);
-                        $this.siblings().removeClass('selected');
-                        $this.addClass('selected');
-                    }
-                    ddl.hide();
-                    price_option.hide();
-                    $(selector + "[currency=" + currency + "]").show();
-                });
-                html.append(ddl_item);
-                // item click
-                item.click(function() {
-                    // toggle ddl board
-                    var $this = $(this);
-                    var x = $this.offset().left;
-                    var y = $this.offset().top + 24;
-                    var ddl = $('#' + ddl_id);
-                    ddl.css('left', x).css('top', y);
-                    ddl.toggle();
-                });
-            });
-            $('body').append(html);
-            this.refresh();
-        },
-        refresh: function() {
-            var cookie_name = this.option.cookie_name;
-            var cookie_value = $.cookie(cookie_name);
-            var currency_ddl_itm = $('#' + this.option.ddl_id + ' .' + this.option.ddl_itm_cls);
-            if (!cookie_value) {
-                // 将第一个置为选中状态
-                currency_ddl_itm.first().click();
-            } else {
-                var target = $('.' + this.option.ddl_itm_cls + '[currency=' + cookie_value + ']');
-                target.addClass('selected');
-                target.click();
-            }
         }
+        var obja = $("<div>").addClass('rotatedivwrapper').append($('<div>').addClass('rotatediv'));
+        if (!container) {
+            container = $('body');
+        }
+        container.append(obja);
+        var wp = $('.rotatedivwrapper');
+        var wp_w = wp.width();
+        var wp_h = wp.height();
+
+        var x = (($(window).width()) / 2) - (wp_w / 2);
+        var y = ($(window).height() - wp_h) / 2;
+
+        wp.css('left', x);
+        wp.css('top', y);
+
+        $.rotateDiv();
+        var intervalId = window.setInterval("$.rotateDiv()", 500);
+
+        if (msg) {
+            var msgObj = $('<div>').addClass('msg').html(msg);
+            wp.append(msgObj);
+        }
+
+        wp.fadeIn('fast');
+        wp.attr('intid', intervalId);
     };
-    $.initCurrency = function(selector) {
-        if (!selector)
-            selector = '.price-option';
-// write css
-        var style = "<style>";
-        style += ".price-option {display:none}";
-        style += ".price-option:first-child {display:inline;}";
-        style += "#currency-ddl {background:#FFF;box-shadow:0 0 10px rgba(0,0,0,0.2);display:none;position:absolute;width:90px;z-index:1}";
-        style += "#currency-ddl .currency-ddl-itm {cursor:pointer;display:block;padding:5px 20px;text-align:center;border-bottom:1px solid #F2F2F2;}";
-        style += "#currency-ddl .currency-ddl-itm:hover {background:#F8F8F8;}";
-        style += "#currency-ddl .currency-ddl-itm.selected {background:#F8F8F8 !important}"
-        style += "</style>";
-        $('body').append(style);
-        var cookie_name = 'currency';
-        var price_option = $(selector);
-        var option = {expires: 365, path: '/'};
-        var ddl_id = 'currency-ddl';
-        var cookie_value = $.cookie(cookie_name);
-        var html = $("<div>").attr('id', ddl_id).addClass('auto-hide');
-        $.each(price_option, function() {
-            var item = $(this);
-            var ddl_item = $("<div>").addClass("currency-ddl-itm").html(item.attr('currency-symbol') + " " + item.attr(cookie_name)).attr(cookie_name, item.attr(cookie_name));
-            ddl_item.click(function() {
-                // select currency
-                var $this = $(this).closest('.currency-ddl-itm');
-                var currency = $this.attr(cookie_name);
-                $('.price').hide();
-                $('.price[currency=' + currency + ']').show();
-                var ddl = $('#' + ddl_id);
-                if (!$this.hasClass('selected')) {
-                    $.cookie(cookie_name, currency, option);
-                    $this.siblings().removeClass('selected');
-                    $this.addClass('selected');
-                }
-                ddl.hide();
-                price_option.hide();
-                $(selector + "[currency=" + currency + "]").show();
-            });
-            html.append(ddl_item);
-            // item click
-            item.click(function() {
-                // toggle ddl board
-                var $this = $(this);
-                var x = $this.offset().left;
-                var y = $this.offset().top + 24;
-                var ddl = $('#' + ddl_id);
-                ddl.css('left', x).css('top', y);
-                ddl.toggle();
-            });
+    $.rotateDiv = function(easing, selector, duration) {
+        if (!easing) {
+            easing = 'linear';
+        }
+        if (!selector) {
+            selector = '.rotatediv';
+        }
+        if (!duration) {
+            duration = 500;
+        }
+        $(selector).animate({
+            rotate: '+=360deg'
+        }, duration, easing);
+    };
+    $.endWaiting = function() {
+        var wp = $('.rotatedivwrapper');
+        window.clearInterval(wp.attr('intid'));
+        wp.attr('intid', null);
+        wp.fadeOut('fast', function() {
+            wp.remove();
         });
-        $('body').append(html);
-        var currency_ddl_itm = html.find('.currency-ddl-itm');
-        if (!cookie_value) {
-            // 将第一个置为选中状态
-            currency_ddl_itm.first().click();
-        } else {
-            var target = $('.currency-ddl-itm[currency=' + cookie_value + ']');
-            target.addClass('selected');
-            target.click();
+    };
+
+    /* LOADING (END) */
+
+
+    /* PAPER (START) */
+    $.fn.paper = function(options, content) {
+        var settings = {
+            type: 'default',
+            additionalClass: ''
+        };
+        $.extend(settings, options);
+        var accepted_type_class = {'default': 'paper-default', 'danger': 'paper-danger', 'success': 'paper-success', 'warning': 'paper-warning'};
+        if (!accepted_type_class[settings.type])
+            throw 'invalid type for paper';
+        var container = $('<div>')
+                .addClass('paper')
+                .addClass(accepted_type_class[settings.type]);
+        if (settings.additionalClass)
+            container.addClass(settings.additionalClass);
+        var $this = $(this);
+        $this.remove('.paper').prepend(container.html(content));
+    };
+    /* PAPER (END) */
+
+    /* VIDEO (START) */
+    var videoMethods = {
+        init: function(option) {
+            var setting = {
+                src: 'default path',
+                total: "#t3",
+                current: "#t1",
+                seekbar: "#tv-prog-seekbar",
+                loaded: "#tv-prog-loaded",
+                speakerButton: "#tv-spk",
+                volumeBar: "#tv-spk-bar-prog",
+                fullscreenButton: "#fullscreen",
+                container: "#tv",
+                onPlay: false,
+                onPause: false,
+                onEnded: false
+            };
+            var $this = $(this);
+            var self = $this.get(0);
+            $.extend(setting, option);
+//            $this.data('setting', setting);
+            // save setting
+            var hidden = $('.video-value-host');
+            hidden.data('setting', setting);
+
+            $this.find('source').attr('src', setting.src);
+            $this.video('update');
+            var xClick = function(obj) {
+                var x = event.clientX - $(obj).offset().left;
+                var w = $(obj).width();
+                var perc = Math.ceil(x / w * 100);
+                if (perc >= 99) {
+                    perc = 99;
+                }
+                return perc;
+            };
+            var yClick = function(obj) {
+                var y = event.clientY - $(obj).offset().top;
+                var h = $(obj).height();
+                var perc = Math.ceil(y / h * 100);
+                if (perc >= 99) {
+                    perc = 99;
+                }
+                perc = 100 - perc;
+                return perc;
+            };
+            $(setting.seekbar).on('click', function() {
+                $this.video('seek', xClick(this));
+            });
+            $(setting.speakerButton).on('click', function() {
+                $this.video('switchSpeaker');
+            });
+            $(setting.volumeBar).on('click', function() {
+                $this.video('adjustVolume', yClick(this));
+                $(event).stopPropagation();
+            });
+            $(setting.fullscreenButton).click(function() {
+                $this.video("fullscreen");
+                $(this).toggleClass('on');
+            });
+            if (setting.onPlay && typeof (setting.onPlay) === 'function') {
+                $this.on('play', setting.onPlay);
+            }
+            if (setting.onPause && typeof (setting.onPause) === 'function') {
+                $this.on('pause', setting.onPause);
+            }
+            if (setting.onEnded && typeof (setting.onEnded) === 'function') {
+                $this.on('ended', setting.onEnded);
+            }
+        },
+        setting: function(key, val) {
+            var hidden = $('.video-value-host');
+            var _setting = hidden.data('setting');
+            if (key && val) {
+                // save key value
+                _setting[key] = val;
+                hidden.data('setting', _setting);
+            } else if (key) {
+                // read key
+                return _setting[key];
+            } else {
+                // read setting
+                return _setting;
+            }
+        },
+        play: function(callback) {
+            var self = $(this).get(0);
+            self.play();
+            if (callback) {
+                callback();
+            }
+        },
+        pause: function(callback) {
+            var self = $(this).get(0);
+            self.pause();
+            if (callback) {
+                callback();
+            }
+        },
+        restart: function(callback, src, delayPlay) {
+            var self = $(this).get(0);
+            $(this).video('setting', 'src', src);
+            $(this).find('source').attr('src', src);
+            self.load();
+            if (!delayPlay) {
+                self.play();
+            }
+            if (callback) {
+                callback();
+            }
+        },
+        update: function() {
+            var self = $(this).get(0);
+            var update_id = setInterval(function() {
+                // update buffer
+                var setting = $(self).video('setting');
+                var currentTag = $(setting.current);
+                var totalTag = $(setting.total);
+                // update time
+                if (self.duration) {
+                    currentTag.html(self.currentTime.timeFormat());
+                    totalTag.html(self.duration.timeFormat());
+                    $(setting.loaded).css('width', (self.currentTime / self.duration) * 100 + '%');
+                }
+            }, 200);
+            $('body').data('update_id', update_id);
+        },
+        seek: function(perc, time) {
+            var self = $(this).get(0);
+            var seeking_id = setInterval(function() {
+                var seeking_in_id = $('body').data('seeking_id');
+                var readyState = self.readyState;
+                if (readyState === 4) {
+                    $('body').data('seeking_id', null);
+                    clearInterval(seeking_in_id);
+
+                    var val = 0;
+                    if (perc) {
+                        val = self.duration * (perc / 100);
+                    } else if (time) {
+                        val = time;
+                    }
+                    self.currentTime = val;
+                }
+            }, 500);
+            $('body').data('seeking_id', seeking_id);
+        },
+        switchSpeaker: function() {
+            var self = $(this).get(0), setting = $(this).video('setting');
+            self.muted = !self.muted;
+            $(setting.speakerButton).toggleClass('disable');
+            if (self.muted) {
+                $($(setting.volumeBar).children().get(0)).css('height', 0);
+            } else {
+                var w = self.volume * 100 + "%";
+                $($(setting.volumeBar).children().get(0)).css('height', w);
+            }
+        },
+        adjustVolume: function(perc) {
+            var self = $(this).get(0), setting = $(this).video('setting');
+            self.muted = false;
+            $(setting.speakerButton).removeClass('disable');
+            var v = Math.ceil(perc / 10);
+            if (v < 1) {
+                v = 1;
+            }
+            var w = v * 10 + "%";
+            v = v / 10;
+            self.volume = v;
+            $($(setting.volumeBar).children().get(0)).css('height', w);
+        },
+        currentTime: function() {
+            var self = $(this).get(0);
+            return self.currentTime;
+        },
+        duration: function() {
+            var self = $(this).get(0);
+            return self.duration;
+        },
+        fullscreen: function() {
+            if (!$(this).data('fullscreen'))
+                $(this).data('fullscreen', false);
+            var setting = $(this).video('setting');
+            var docElm = $(setting.container).get(0);
+
+            var isFullscreen = $(this).data('fullscreen');
+            if (isFullscreen) {
+                if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                } else if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                }
+            } else {
+                if (docElm.requestFullscreen) {
+                    docElm.requestFullscreen();
+                } else if (docElm.mozRequestFullScreen) {
+                    docElm.mozRequestFullScreen();
+                } else if (docElm.webkitRequestFullScreen) {
+                    docElm.webkitRequestFullScreen();
+                }
+            }
+            $(this).data('fullscreen', !isFullscreen);
         }
     };
-    $.cart = {
-        option: {
-            cart_name: 'cart',
-            cart_option: {
-                expires: 365,
-                path: '/'
+    /*
+     * 启动方法
+     * @param {type} method     传递字符串，将被识别为方法名; 传递对象，将作为init方法的参数（一般是option）, 并调用init方法
+     * @returns {unresolved}
+     */
+    $.fn.video = function(method) {
+        var target = this;
+        if (target.get(0).tagName != "VIDEO" && target.get(0).tagName != "AUDIO") {
+            target = $(target.find('video').get(0));
+        }
+
+        if (videoMethods[method]) {
+            return videoMethods[method].apply(target, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'object' || !method) {
+            if ($('.video-value-host').length === 0) {
+                var html = $("<input>").attr('type', 'hidden').attr('class', 'video-value-host');
+                $('body').append(html);
             }
+
+            return videoMethods.init.apply(target, arguments);
+        } else {
+            $.error('The method ' + method + ' does not exist in $.uploadify');
+        }
+    };
+    /* VIDEO (END) */
+
+    /* POPUP (START) */
+    $.extend({
+        POPUPSETTINGSTMP: {
+            id: "P_popup",
+            content: "hello",
+            modal: false,
+            closebtn: true,
+//            relocate: true,
+            msg: "hello",
+            height: 'auto',
+            width: 500,
+            padding: 25,
+            textAlign: 'left',
+            containerBoxSelector: 'body'
         },
-        parse: function() {
-            var c = $.cookie(this.option.cart_name);
-            if (!c)
-                c = "";
-            try {
-                c = JSON.parse(c);
-            } catch (e) {
-                c = {};
-            }
-            return c;
-        },
-        query: function(id) {
-            var c = this.parse();
-            var val = c[id];
-            if (!val) {
-                return false;
-            } else {
-                return val;
-            }
-        },
-        set: function(id, qty) {
-            if (typeof qty === 'number') {
-                var c = this.parse();
-                c[id] = qty;
-                this.write(JSON.stringify(c));
-            } else {
-                return false;
-            }
-        },
-        add: function(id, qty) {
-            if (typeof qty === 'number') {
-                var c = this.parse();
-                var hasIt = false;
-                if (c) {
-                    // update it
-                    $.each(c, function(k, v) {
-                        if (k === id) {
-                            v = v + qty;
-                            if (v > 0) {
-                                c[k] = v;
-                            } else {
-                                delete c[k];
-                            }
-                            hasIt = true;
-                        }
-                    });
-                }
-                if (!hasIt) {
-                    // new one
-                    c[id] = qty;
-                }
-                this.write(JSON.stringify(c));
-            } else {
-                return false;
-            }
-        },
-        write: function(val) {
-            $.cookie(this.option.cart_name, val, this.option.cart_option);
-        },
-        empty: function() {
-            this.write(null);
-        },
-        total: function() {
-            var c = this.parse();
-            var sum = 0;
-            if (c) {
-                $.each(c, function(k, v) {
-                    sum++;
+        popup: function(options) {
+            var $popupsettings = $.extend({}, $.POPUPSETTINGSTMP, options);
+            var id = $popupsettings.id;
+            var w = $(window);
+            $('#' + id).remove();
+            var popupFrame = $('<div>').attr('id', id);
+            var w = $popupsettings.width;
+            var h = $popupsettings.height;
+            var content = $popupsettings.content;
+            content = (typeof (content) === 'string') ? $(content) : content;
+            content.addClass('P_bg')
+                    .css('padding', $popupsettings.padding)
+                    .css('margin-left', "-" + w / 2 + "px")
+                    .css('width', w)
+                    .css('height', h)
+                    .css('text-align', $popupsettings.textAlign);
+
+            popupFrame.show();
+            var clsbtn = $('<span>').addClass('P_closebtn').html("&times;");
+            $($popupsettings.containerBoxSelector).append(popupFrame.append($(content).append(clsbtn)));
+            var mt = "-" + $(content).height() / 2 + "px";
+            $(content).css('margin-top', mt);
+
+            if (!$popupsettings.modal) {
+                popupFrame.children().click(function(e) {
+                    e.stopPropagation();
+                });
+                popupFrame.click(function(e) {
+                    clsbtn.click();
                 });
             }
-            return sum;
+
+            clsbtn.click(function() {
+                $(this).closest('#' + id).remove();
+            });
+
+            if ($popupsettings.closebtn) {
+                clsbtn.show();
+            }
+        },
+        alertbox: function(options) {
+            var _settings = {
+                width: 280,
+                height: 120,
+                textAlign: 'center'
+            };
+            $.extend(_settings, options);
+            _settings.modal = true;
+            var $popupsettings = $.extend({}, $.POPUPSETTINGSTMP, _settings);
+            var id = "P_alertbox";
+            var msg = "";
+            if ($popupsettings.msg) {
+                msg = $popupsettings.msg;
+            }
+            var wp;
+            if (typeof (msg) === 'object')
+                wp = $('<div>').addClass('P_wp').append(msg);
+            else
+                wp = $('<div>').addClass('P_wp').html(msg);
+            var alertContent = $('<div>').attr('id', id).addClass('P_popupbg').append(wp);
+
+            $popupsettings.content = alertContent;
+            $.popup($popupsettings);
+        },
+        confirm: function(options) {
+            var _settings = {
+                width: 280,
+                height: 120,
+                textAlign: 'center',
+                header: '',
+                msg: '所否确定该操作？',
+                confirmText: '是',
+                cancelText: '否',
+                confirmCallback: false,
+                cancelCallback: false
+            };
+            $.extend(_settings, options);
+            _settings.modal = true;
+            var $popupsettings = $.extend({}, $.POPUPSETTINGSTMP, _settings);
+//            $popupsettings.closebtn = false;
+            var id = "P_confirm";
+
+            var header = "";
+            if ($popupsettings.header) {
+                header = $popupsettings.header;
+            }
+            var msg = "";
+            if ($popupsettings.msg) {
+                msg = $popupsettings.msg;
+            }
+            var wp;
+
+            if (typeof (header) === 'object')
+                wp = $('<div>').addClass('P_wp_header').css('padding', 15).append(header);
+            else
+                wp = $('<div>').addClass('P_wp_header').css('padding', 15).html(header);
+            if (typeof (msg) === 'object')
+                wp = $('<div>').addClass('P_wp_msg').css('padding', 15).append(msg);
+            else
+                wp = $('<div>').addClass('P_wp_msg').css('padding', 15).html(msg);
+
+            var cancel = $('<button>').attr('class', 'P_confirm_btn').attr('action', 'cancel').attr('type', 'button').html($popupsettings.cancelText);
+            cancel.click(function() {
+                $.popupclose();
+                if ($popupsettings.cancelCallback) {
+                    $popupsettings.cancelCallback();
+                }
+            });
+            var confirm = $('<button>').attr('class', 'P_confirm_btn').attr('action', 'confirm').attr('type', 'button').html($popupsettings.confirmText);
+            confirm.click(function() {
+                $.popupclose();
+                if ($popupsettings.confirmCallback) {
+                    $popupsettings.confirmCallback();
+                }
+            });
+            var btns = $('<div>').attr('class', 'P_confirm_btns').append(confirm).append(cancel);
+            wp.append(btns);
+
+            var confirmContent = $('<div>').attr('id', id).addClass('P_popupbg').append(wp);
+            $popupsettings.padding = 0;
+            $popupsettings.content = confirmContent;
+            $.popup($popupsettings);
+        },
+        popupclose: function() {
+            var id = $.POPUPSETTINGSTMP.id;
+            $('#' + id).fadeOut(150, function() {
+                $(this).remove();
+            });
         }
-    };
+    });
+
+    /* POPUP (END) */
+
+
 })(jQuery);
 /*!
  * jQuery Cookie Plugin v1.3.1
@@ -709,8 +1027,7 @@
  * Released under the MIT license
  */
 (function(factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as anonymous module.
+    if (typeof define === 'function' && define.amd) {         // AMD. Register as anonymous module.
         define(['jquery'], factory);
     } else {
         // Browser globals.
