@@ -15,9 +15,6 @@ class Word extends AbstractDocument {
     /** @ODM\String */
     protected $text;
 
-    /** @ODM\String */
-    protected $date;
-
     /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
     protected $users;
 } 
