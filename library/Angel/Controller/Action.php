@@ -51,46 +51,46 @@ class Angel_Controller_Action extends Zend_Controller_Action {
      */
     public function preDispatch() {
         // 正常情况下的登录和注册地址
-        $registerRoute = "register";
-        $loginRoute = "login";
-        $requestManage = ($this->request->controller == 'manage');
-        if ($requestManage) {
-            // 后台管理系统的登录和注册地址
-            $registerRoute = "manage-register";
-            $loginRoute = "manage-login";
-        }
-        $registerPath = $this->view->url(array(), $registerRoute);
-        $loginPath = $this->view->url(array(), $loginRoute) . '?goto=' . $this->request->getRequestUri();
-
-        $auth = Zend_Auth::getInstance();
-        if ($auth->hasIdentity()) {
-            $user = $this->getModel('user')->getUserById($auth->getIdentity());
-            if (!$user) {
-                if (!in_array($this->request->getActionName(), $this->login_not_required)) {
-                    $auth->clearIdentity();
-                    $this->_redirect($loginPath);
-                }
-            } else {
-                $this->me = new Angel_Me($user);
-                $this->view->me = $this->me;
-                if ($requestManage && $user->user_type != 'admin') {
-                    $this->_redirect($this->view->url(array(), 'forbidden'));
-                }
-            }
-        } else {
-            if ($this->checkRememberMe() === true) {
-                $user = $this->getModel('user')->getUserById($auth->getIdentity());
-                $this->me = new Angel_Me($user);
-                $this->view->me = $this->me;
-                if ($requestManage && $user->user_type != 'admin') {
-                    $this->_redirect($this->view->url(array(), 'forbidden'));
-                }
-            } else {
-                if (!in_array($this->request->getActionName(), $this->login_not_required)) {
-                    $this->_redirect($loginPath);
-                }
-            }
-        }
+//        $registerRoute = "register";
+//        $loginRoute = "login";
+//        $requestManage = ($this->request->controller == 'manage');
+//        if ($requestManage) {
+//            // 后台管理系统的登录和注册地址
+//            $registerRoute = "manage-register";
+//            $loginRoute = "manage-login";
+//        }
+//        $registerPath = $this->view->url(array(), $registerRoute);
+//        $loginPath = $this->view->url(array(), $loginRoute) . '?goto=' . $this->request->getRequestUri();
+//
+//        $auth = Zend_Auth::getInstance();
+//        if ($auth->hasIdentity()) {
+//            $user = $this->getModel('user')->getUserById($auth->getIdentity());
+//            if (!$user) {
+//                if (!in_array($this->request->getActionName(), $this->login_not_required)) {
+//                    $auth->clearIdentity();
+//                    $this->_redirect($loginPath);
+//                }
+//            } else {
+//                $this->me = new Angel_Me($user);
+//                $this->view->me = $this->me;
+//                if ($requestManage && $user->user_type != 'admin') {
+//                    $this->_redirect($this->view->url(array(), 'forbidden'));
+//                }
+//            }
+//        } else {
+//            if ($this->checkRememberMe() === true) {
+//                $user = $this->getModel('user')->getUserById($auth->getIdentity());
+//                $this->me = new Angel_Me($user);
+//                $this->view->me = $this->me;
+//                if ($requestManage && $user->user_type != 'admin') {
+//                    $this->_redirect($this->view->url(array(), 'forbidden'));
+//                }
+//            } else {
+//                if (!in_array($this->request->getActionName(), $this->login_not_required)) {
+//                    $this->_redirect($loginPath);
+//                }
+//            }
+//        }
 
         // 如果用户还没被激活，跳转到激活页
 //        if ($this->me) {
@@ -192,6 +192,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     }
 
     protected function userLogout($defaultRedirectRoute) {
+        echo 'logout';
         Zend_Auth::getInstance()->clearIdentity();
 
         $angel = $this->request->getCookie($this->bootstrap_options['cookie']['remember_me']);
@@ -203,6 +204,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     }
 
     protected function userRegister($defaultRedirectRoute, $pageTitle, $userType) {
+        echo 'reg';
         $errorMsg = "登录失败，请重试或联系管理员";
         if ($this->request->isPost()) {
             $msg = "注册成功!";
@@ -325,6 +327,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     }
 
     protected function userLogin($defaultRedirectRoute, $pageTitle) {
+        echo 'login';
         $errorMsg = "登录失败，请重试或联系管理员";
         $code = 200;
         $uid = "";
