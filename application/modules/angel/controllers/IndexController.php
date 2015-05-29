@@ -64,4 +64,8 @@ class Angel_IndexController extends Angel_Controller_Action {
 //        $this->get_user_info($open_id);
 //        $this->view->
     }
+
+    public function addMeetAction() {
+        $this->_helper->layout->setLayout('detail');
+    }
 }
