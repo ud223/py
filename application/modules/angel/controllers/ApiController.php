@@ -9,7 +9,7 @@
 class Angel_ApiController  extends Angel_Controller_Action {
     //创建聚会
     public function createMeet() {
-
+        $meetModel = $this->getModel('meet');
     }
 
     //修改聚会
