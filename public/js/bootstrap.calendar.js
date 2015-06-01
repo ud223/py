@@ -35,6 +35,7 @@
 		msg_today : '今天',
 		msg_events_header : 'Events Today',
 		events : null,
+		past_date:null,
 		date : new Date()
 	}, template = '' + '<div class="calendar" id="calendar">' + '<div class="calendar-header"></div>' + '<div class="calendar-body"></div>' + '</div>' + '', daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], today = new Date();
 
@@ -68,6 +69,8 @@
 		this.msg_events_hdr = this.options.msg_events_header;
 		this.events = this.options.events;
 		// this.date = this.options.date;
+		this.past_date = this.options.past_date;
+
 		
 //		this.calendar = $(template.replace("%msg_today%", this.msg_today)).appendTo(this.element).on({
 //			click : $.proxy(this.click, this)
@@ -185,22 +188,33 @@
 					last = daysInMonth[mon.getMonth()];
 				}
 
+				// 修改：5月30日（start）
 				// Set class
 				if (cls.length == 0) {
-					if (today.getDate() == date.getDate() && dow == date.getDate() && today.getMonth() == date.getMonth() && today.getFullYear() == date.getFullYear()) {
-						cls = "today";
-					} else if (j % 7 == 0 || j % 7 == 6) {
+					
+					if (j % 7 == 0 || j % 7 == 6) {
 						cls = "day weekend";
 					} else {
 						cls = "day";
 					}
+					if (today.getDate() == date.getDate() && dow == date.getDate() && today.getMonth() == date.getMonth() && today.getFullYear() == date.getFullYear()) {
+						cls += " today";
+					}
 				}
+				// 修改：5月30日（end）
 
 				// Set ID
 				id = "day_" + dow;
 
 				month_ = date.getMonth() + 1;
 				year = date.getFullYear();
+				
+				if(dow){
+					if(new Date(date.getFullYear(),date.getMonth(),dow,0,0,0).valueOf() < this.past_date){
+						cls +=" past ";
+					}
+				}
+
 
 				// Render HTML
 				if (dow == 0) {
@@ -307,7 +321,7 @@
 								this.element.trigger({
 									type : 'onNext',
 								});
-								break
+								break;
 						}
 					}
 					break;

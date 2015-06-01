@@ -9,24 +9,42 @@
     <link rel="stylesheet" href="<?php echo $this->cssPath("bootcss.css"); ?>">
     <link rel="stylesheet" href="<?php echo $this->cssPath("global.css"); ?>">
     <link rel="stylesheet" href="<?php echo $this->cssPath("datepicker.css"); ?>">
+    <link rel="stylesheet" href="<?php echo $this->cssPath("shake-animate.css"); ?>">
 </head>
 <body ontouchstart="">
     <?php echo $this->layout()->content; ?>
-    <script src="<?php echo $this->jsPath("jquery-1.11.2.js"); ?>></script>
+    <div id="footerbar">
+        <div class="itm selected">
+            <i class="glyphicon glyphicon-home"></i>
+            <div class="botlin"></div>
+        </div>
+        <div class="itm md">
+            <i class="glyphicon glyphicon-user"></i>
+            <div class="botlin"></div>
+        </div>
+        <div class="itm">
+            <i class="glyphicon glyphicon-plus"></i>
+            <div class="botlin"></div>
+        </div>
+    </div>
+    <script src="<?php echo $this->jsPath("jquery-1.11.2.js"); ?>"></script>
     <script src="<?php echo $this->jsPath("bootstrap.js"); ?>"></script>
-    <script src="<?php echo $this->jsPath("bootstrap-datepicker.js"); ?>"></script>
+    <script src="<?php echo $this->jsPath("bootstrap.calendar.js"); ?>"></script>
     <script src="<?php echo $this->jsPath("global.js"); ?>"></script>
     <script>
         $(document).ready(function(){
-    //				$('#single-date').datepicker();
-            $('#datepicker').datepicker();
-            $("#datepicker").on("changeDate", function(event) {
-                $("#my_hidden_input").val(
-                    $("#datepicker").datepicker('getFormattedDate')
-                )
+            var now = new Date();
+            $('#calendar-check-time div').Calendar({
+                'weekStart' : 1,
+                'date' : now,
+                'past_date' : new Date().valueOf()
+            }).on('changeDay', function(event) {
+                $('#checked-time-solid span').addClass('animated swing');
+                $('#checked-time-solid span').html('活动将开始于：' + event.month.valueOf() + '月' + event.day.valueOf() + '日');
+                $('#checked-time-solid span').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                    $(this).removeClass('animated').removeClass('swing');
+                });
             });
-
-            $('#ddrg').datepicker();
         });
     </script>
 </body>

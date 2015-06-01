@@ -8,14 +8,13 @@
 
 class Angel_Model_Meet extends Angel_Model_AbstractModel {
     //新增聚会信息
-    public function addMeet($options_date, $selected_date, $time_range, $meet_text, $remake, $address, $status = '申请中', $proposer) {
+    public function addMeet($options_date, $time_range, $meet_text, $remark, $address, $proposer, $status = '申请中') {
         $data = array('options_date' => $options_date,
-            'selected_date' => $selected_date,
-            '$time_range' => $time_range,
-            '$meet_text' => $meet_text,
-            '$remake' => $remake,
-            '$address' => $address,
-            '$status' => $status,
+            'time_range' => $time_range,
+            'meet_text' => $meet_text,
+            'remark' => $remark,
+            'address' => $address,
+            'status' => $status,
             'proposer' => $proposer);
 
         $result = $this->add($data);
@@ -29,9 +28,9 @@ class Angel_Model_Meet extends Angel_Model_AbstractModel {
             'selected_date' => $selected_date,
             '$time_range' => $time_range,
             '$meet_text' => $meet_text,
-            '$remake' => $remake,
-            '$address' => $address,
-            '$status' => $status,
+            'remake' => $remake,
+            'address' => $address,
+            'status' => $status,
             'proposer' => $proposer,
             'log' => $log,
             'words' => $words,

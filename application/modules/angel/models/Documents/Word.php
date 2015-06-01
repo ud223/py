@@ -13,6 +13,9 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /** @ODM\Document */
 class Word extends AbstractDocument {
     /** @ODM\String */
+    protected $meet_id;
+
+    /** @ODM\String */
     protected $text;
 
     /** @ODM\ReferenceOne(targetDocument="\Documents\User") */

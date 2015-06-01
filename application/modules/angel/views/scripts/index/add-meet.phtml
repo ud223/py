@@ -1,90 +1,75 @@
-<div class="big-box">
+<!--
+        	作者：vincedotnet@hotmail.com
+        	时间：2015-05-28
+        	描述：view的内部代码
+        -->
+
+<div class="mg-ttblk fixed">
+    <span class="tt">创建新活动</span>
+    <span class="glyphicon glyphicon-chevron-left mg-ttblk-i left" id="pge-cover-back"></span>
+    <span class="glyphicon glyphicon-ok mg-ttblk-i right" id="pge-cover-save"></span>
+</div>
+<div class="big-box" style="margin-top:65px;">
     <div class="wp">
-        sdfdsfsd
-    </div>
-</div>
-
-<div id="footerbar">
-    <div class="itm selected">
-        <i class="glyphicon glyphicon-home"></i>
-        <div class="botlin"></div>
-    </div>
-    <div class="itm md">
-        <i class="glyphicon glyphicon-user"></i>
-        <div class="botlin"></div>
-    </div>
-    <div class="itm">
-        <i class="glyphicon glyphicon-plus"></i>
-        <div class="botlin"></div>
-    </div>
-</div>
-<!-- real code here (start) -->
-<div id="pge-cover">
-    <div id="pge-wps">
-        <div class="mg-ttblk">
-            <span class="tt">创建新活动</span>
-            <span class="glyphicon glyphicon-remove mg-ttblk-i left" id="pge-cover-back"></span>
-            <span class="glyphicon glyphicon-ok mg-ttblk-i right" id="pge-cover-save"></span>
+        <div class="glacker">
+            <p class="inp-tt">活动主题 <span class="red">*</span></p>
+            <input type="text" placeholder="活动的主题内容（限30个中文字）" maxlength="60" class="inp-txt full" />
         </div>
-        <div id="pge-cover-cont">
-            <div class="big-box">
-                <div class="wp">
-                    <div class="glacker">
-                        <p class="inp-tt">活动主题<span class="red">*</span></p>
-                        <input id="meet_text" type="text" placeholder="活动的主题内容（限30个中文字）" maxlength="60" class="inp-txt full" />
-                    </div>
-                    <div class="glacker">
-                        <p class="inp-tt">地点</p>
-                        <input id="address" type="text" placeholder="活动的主题内容（限30个中文字）" maxlength="60" class="inp-txt full" />
-                    </div>
-                    <div class="glacker">
-                        <!--<div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">准确日期</div>
-                            <div role="tabpanel" class="tab-pane" id="profile">时间段</div>
-                        </div>-->
-                        <p class="inp-tt">活动时间</p>
-                        <ul class="row-duotab clearfix" style="margin-top:8px;">
-                            <li class="selected">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                                确定的日子
-                            </li>
-                            <li>
-                                <i class="glyphicon glyphicon-bullhorn"></i>
-                                大家的意见
-                            </li>
-                        </ul>
-                        <div style="padding:20px 10px;border:1px solid #E2E2E2;border-top:none;">
-                            <div>
-                                <!--<div id="single-date" style="line-height:26px;text-align:center;" class="inp-txt full">
-                                    2015-05-14
-                                    <i class="glyphicon glyphicon-calendar" style="position:absolute;right:15px;top:11px;color:#aaa;"></i>
-                                </div>-->
-                                <div id="datepicker" data-date="05/28/2015"></div>
-                                <input type="hidden" id="my_hidden_input" />
-                                <div class="input-daterange" id="ddrg">
-                                    <input id="start_date" type="text" class="input-small" value="2012-04-05" />
-                                    <span class="add-on">to</span>
-                                    <input id="end_date" type="text" class="input-small" value="2012-04-19" />
-                                </div>
+        <div class="glacker">
+            <p class="inp-tt">活动时间</p>
+            <ul class="row-duotab clearfix" style="margin-top:8px;">
+                <li class="selected tab-bt" rel="add-c-tab-1">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                    确定的日子
+                </li>
+                <li class="tab-bt" rel="add-c-tab-2">
+                    <i class="glyphicon glyphicon-bullhorn"></i>
+                    大家的意见
+                </li>
+            </ul>
+            <div style="padding:10px 10px;border:1px solid #E2E2E2;border-top:none;">
 
-
-                            </div>
-                        </div>
+                <div id="add-c-tab-1" class="selected tab-cont">
+                    <p id="checked-time-solid"><span>请在下方选择活动时间</span></p>
+                    <div class="mg-ttblk">
+                        <span class="tt" id="jijj">十二月 2015</span>
+                        <span class="glyphicon glyphicon-menu-left mg-ttblk-i left" id="to-last-month"></span>
+                        <span class="glyphicon glyphicon-menu-right mg-ttblk-i right" id="to-next-month"></span>
                     </div>
-                    <!--<div class="glacker">
-                        <p class="inp-tt">活动类型</p>
-                        <div class="btn-group" role="group">
-                              <button type="button" class="btn btn-default active"><i class="glyphicon glyphicon-briefcase red"></i> 会议</button>
-                              <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-heart-empty red"></i> 出游</button>
-                              <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-glass red"></i> 聚会聚餐</button>
-                        </div>
-                    </div>-->
-                    <div class="glacker">
-                        <p class="inp-tt">活动描述</p>
-                        <textarea id="remark" class="inp-txt full"></textarea>
+                    <div id="calendar-check-time">
+                        <div></div>
                     </div>
+                </div>
+                <div id="add-c-tab-2" class="tab-cont">
+                    <p id="checked-time-range">
+                        选择一个时间段，让小伙伴们各自选出方便的2个时间，从而根据大多数人的选择，得到最佳活动时间
+                    </p>
+                    <button class="rowbtn">开始</button>
+                    <p id="px101">至</p>
+                    <button class="rowbtn">结束</button>
                 </div>
             </div>
         </div>
+
+        <div class="glacker">
+            <p class="inp-tt">地点</p>
+            <input type="text" maxlength="60" class="inp-txt full" />
+        </div>
+
+        <div class="glacker">
+            <p class="inp-tt">活动描述</p>
+            <textarea class="inp-txt full"></textarea>
+        </div>
     </div>
 </div>
+
+<!--
+    作者：vincedotnet@hotmail.com
+    时间：2015-06-01
+    描述：footerbar 不在该页显示，所以要加入这个style隐藏footerbar
+-->
+<style>
+    #footerbar {
+        display:none !important;
+    }
+</style>

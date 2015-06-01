@@ -34,7 +34,9 @@ input[type="date"] {
 	text-align: center;
 	font-size: 12px;
 	border-bottom: 1px solid #E2E2E2;
+	border-top: 1px solid transparent;
 	border-right: 1px solid #E2E2E2;
+	border-left: 1px solid transparent;
 	position: relative;
 }
 .row-duotab li:last-child {
@@ -172,6 +174,9 @@ textarea.inp-txt {
 .lightgray {
 	color: #aaa;
 }
+.transparent {
+	background: none transparent;
+}
 .big-box {
 	margin: 15px;
 	background: #FFF;
@@ -237,18 +242,29 @@ textarea.inp-txt {
 	display: block;
 }
 .gradhead {
-	background: linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
-	background: -o-linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
-	background: -ms-linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
-	background: -moz-linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
-	background: -webkit-linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
+	background: linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
+	background: -o-linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
+	background: -ms-linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
+	background: -moz-linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
+	background: -webkit-linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
 }
+/* tab (start) */
+
+.tab-cont {
+	display: none;
+}
+.tab-cont.selected {
+	display: block;
+}
+/* tab (end) */
 /* calendar (start) */
+
 .calendar-body {
-	border-top:1px solid #E2E2E2;
-	border-bottom:1px solid #E2E2E2;
+	border-top: 1px solid #E2E2E2;
+	border-bottom: 1px solid #E2E2E2;
 }
-.calendar-td, .calendar-th {
+.calendar-td,
+.calendar-th {
 	display: block;
 	text-align: center;
 	width: 14%;
@@ -307,7 +323,6 @@ textarea.inp-txt {
 .calendar-td.selected {
 	background: #F0F0F0;
 }
-
 /* calendar (end) */
 
 .rowbtn-wp {
@@ -402,16 +417,6 @@ textarea.inp-txt {
 .mg-listc-blk:active .mg-listc-pol {
 	background: #e4e4e4;
 }
-/*.mg-listc-nw {
-	color: #ff5831;
-	font-size: 12px;
-	margin-bottom: 5px;
-}*/
-.mg-listc-tme {
-	margin-left: 5px;
-	
-	color: #bbb;
-}
 .mg-listc-btt {
 	font-size: 18px;
 }
@@ -468,6 +473,9 @@ textarea.inp-txt {
 	color: #bbb;
 	margin-left: 5px;
 }
+
+
+
 #sharetoother .glyphicon {
 	margin-right: 3px;
 }
@@ -490,15 +498,15 @@ textarea.inp-txt {
 	overflow: auto;
 	padding-top: 50px;
 }
-#pge-cover .mg-ttblk {
+.mg-ttblk.fixed {
 	background: #333;
-	position: absolute;
+	position: fixed;
 	left: 0;
 	top: 0;
 	width: 100%;
 	z-index: 2;
 }
-#pge-cover .mg-ttblk * {
+.mg-ttblk.fixed * {
 	color: #FFF;
 }
 #pge-wps {
@@ -507,4 +515,88 @@ textarea.inp-txt {
 	top: 0;
 	width: 100%;
 	bottom: 0;
+}
+
+.tab-cont .mg-ttblk {
+	background:#FFE240;
+	color:rgba(0, 0, 0, .6);
+	font-size:12px;
+	height:40px;
+	line-height:40px;
+}
+.tab-cont .mg-ttblk-i {
+	height:40px;
+	width:40px;
+	line-height:40px;
+}
+.tab-cont .mg-ttblk .tt {
+	font-size:14px;
+}
+
+#checked-time-solid,
+#checked-time-range {
+	padding: 5px 10px;
+	text-align: center;
+	color: #999;
+	background: #F0F0F0;
+	border-radius: 2px;
+	margin-bottom:8px;
+}
+#checked-time-solid span {
+	display:block;
+}
+#checked-time-range {
+	text-align: left;
+}
+/* others */
+.busr-lst {
+	margin:0;
+	padding:0;
+}
+.busr-lst li {
+	float:left;
+	display:inline-block;
+	list-style: none;
+	margin-right:5px;
+	text-align:center;
+}
+.busr-lst li img {
+	display:inline-block;
+	width:40px;
+	height:40px;
+	border-radius:100px;
+}
+.busr-lst li p {
+	text-align:center;
+	font-size:10px;
+	margin-top:5px;
+}
+#px101 {
+	text-align: center;
+	margin: 0;
+	padding: 8px 0;
+}
+.p33comts {
+	
+}
+.p33comts .uxer {
+	width:20px;
+	height:20px;
+	border-radius:100px;
+	margin-right:8px;
+}
+.p33comts .uune {
+	color:#f60;
+}
+.p33comts .itm {
+	display:block;
+	padding:15px 0;
+	border-bottom:1px solid #E2E2E2;
+}
+.p33comts .ctxx {
+	margin-left:32px;
+}
+.p33comts .untme {
+	font-size:10px;
+	color:#aaa;
 }
