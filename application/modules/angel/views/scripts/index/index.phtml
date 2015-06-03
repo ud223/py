@@ -3,15 +3,17 @@
         	时间：2015-05-28
         	描述：view的内部代码
         -->
-
+<script src="<?php echo $this->jsPath("tools/calendar.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("tools/String.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("api/calendar.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("entity/calendar.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("action/index.js"); ?>"></script>
 <div class="big-box">
     <div class="mg-ttblk" style="background:#333;color:#FFF;border-radius:5px 5px 0 0;">
         <span class="tt" id="jijj">十二月 2015</span>
         <span class="glyphicon glyphicon-menu-left mg-ttblk-i left" id="to-last-month"></span>
         <span class="glyphicon glyphicon-menu-right mg-ttblk-i right" id="to-next-month"></span>
     </div>
-
-
     <div id="real-calendar">
         <div>
 
@@ -23,3 +25,27 @@
         <i class="glyphicon glyphicon-send"></i> 分享我的日历
     </button>
 </div>
+<script>
+    $(document).ready(function(){
+        var now = new Date();
+        $('#real-calendar div').Calendar({
+            'weekStart' : 1,
+            'date' : now
+        }).on('changeDay', function(event) {
+            $('#jijj').html(event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf());
+        });
+
+        //测试
+        localStorage.setItem("user_id", "123456");
+
+        var calendar = new Calendar();
+        var user_id = localStorage.getItem('user_id');
+
+
+        calendar.setYear($('#day_1').attr('year'));
+        calendar.setMonth($('#day_1').attr('month'));
+        calendar.setUser_Id(user_id);
+
+        calendar.getSchedule();
+    });
+</script>

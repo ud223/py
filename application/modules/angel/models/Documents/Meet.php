@@ -14,7 +14,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 class Meet extends AbstractDocument {
     //可选日期集合
     /** @ODM\Collection */
-    protected $options_date;
+    protected $options_date = array();
 
     /** @ODM\String */
     protected $selected_date;
@@ -26,7 +26,19 @@ class Meet extends AbstractDocument {
     protected $meet_text;
 
     /** @ODM\String */
-    protected $remake;
+    protected $remark;
+
+    /** @ODM\String */
+    protected $year;
+
+    /** @ODM\String */
+    protected $month;
+
+    /** @ODM\String */
+    protected $day;
+
+    /** @ODM\Int */
+    protected $identity;
 
     /** @ODM\String */
     protected $log;
@@ -38,17 +50,26 @@ class Meet extends AbstractDocument {
     protected $status;
 
     //申请人
-    /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
-    protected $proposer;
+    /** @ODM\String */
+    protected $proposer_id;
 
-    /** @ODM\ReferenceMany(targetDocument="\Documents\User") */
-    protected $users = array();
+    //参与人集合ID
+    /** @ODM\Collection */
+    protected $users_id = array();
 
-    public function addUser(\Documents\User $user) {
-        $this->users[] = $user;
+    public function addOptionsDate($p) {
+        $this->options_date[] = $p;
     }
 
-    public function clearCategory() {
-        $this->users = array();
+    public function clearOptionsDate() {
+        $this->options_date = arrray();
+    }
+
+    public function addUsersId($p) {
+        $this->users_id[] = $p;
+    }
+
+    public function clearUsersId() {
+        $this->users_id = array();
     }
 } 

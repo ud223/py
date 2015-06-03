@@ -8,6 +8,10 @@
     <title></title>
     <link rel="stylesheet" href="<?php echo $this->cssPath("bootcss.css"); ?>">
     <link rel="stylesheet" href="<?php echo $this->cssPath("global.css"); ?>">
+    <script src="<?php echo $this->jsPath("jquery-1.11.2.js"); ?>"></script>
+    <script src="<?php echo $this->jsPath("bootstrap.js"); ?>"></script>
+    <script src="<?php echo $this->jsPath("bootstrap.calendar.js"); ?>"></script>
+    <script src="<?php echo $this->jsPath("global.js"); ?>"></script>
 </head>
 <body ontouchstart="">
     <?php echo $this->layout()->content; ?>
@@ -25,21 +29,6 @@
             <div class="botlin"></div>
         </div>
     </div>
-    <script src="<?php echo $this->jsPath("jquery-1.11.2.js"); ?>"></script>
-    <script src="<?php echo $this->jsPath("bootstrap.js"); ?>"></script>
-    <script src="<?php echo $this->jsPath("bootstrap.calendar.js"); ?>"></script>
-    <script src="<?php echo $this->jsPath("global.js"); ?>"></script>
-    <script>
-        $(document).ready(function(){
-            var now = new Date();
-            $('#real-calendar div').Calendar({
-                'weekStart' : 1,
-                'date' : now
-            }).on('changeDay', function(event) {
-                $('#jijj').html(event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf());
-            });
-        });
-    </script>
 </body>
 </html>
 

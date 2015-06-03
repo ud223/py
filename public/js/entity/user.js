@@ -1,13 +1,13 @@
-var Meet = function () {
+var User = function () {
     var obj = new Object();
 
-    obj.start_date = false;
-    obj.end_date = false;
-    obj.selected_date = false;
-    obj.user_id = false;
-    obj.meet_text = false;
-    obj.remark = false;
-    obj.address = false;
+    obj.subscribe = false;
+    obj.openid = false;
+    obj.nickname = false;
+    obj.sex = false;
+    obj.language = false;
+    obj.city = false;
+    obj.province = false;
     //true:选择固定日期; false:选择日期区间
     obj.selected = true;
     //操作信息
@@ -42,8 +42,8 @@ var Meet = function () {
     }
     //切换聚会日期选择方式激发方法
     //特定日期聚会申请为true, 日期区间聚会申请为false
-    obj.select = function(t) {
-        this.selected = t;
+    obj.regUser = function() {
+
     }
 
     obj.check = function () {
@@ -53,9 +53,7 @@ var Meet = function () {
 
                 return false;
             }
-        }
-        else {
-            if (this.start_date == false || this.end_date == false) {
+            else {
                 this.message = "请先选择活动日期范围!";
 
                 return false;
@@ -85,11 +83,9 @@ var Meet = function () {
 
             return false;
         }
-
-        return true;
     }
 
-    obj.add = function () {
+    obj.Login = function () {
         if (!this.check()) {
             alert(this.message);
 
