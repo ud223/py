@@ -18,9 +18,7 @@ $(document).ready(function() {
 })
 
 function initCalendarClick(id) {
-    $(document).on('click', '#'+id, function () {
-        //localStorage.setItem("user_id", "123456");
-
+    $( '#'+id).tap(function () {
         var meetModel = new Meet();
 
         var user_id = localStorage.getItem('user_id');

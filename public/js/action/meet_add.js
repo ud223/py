@@ -40,7 +40,6 @@ $(document).ready(function() {
 
 function initCalendarClick() {
     $('.calendar-td').tap(function() {
-        alert(2);
         var date = $(this).attr('year') + '-'+  singleDateCheck($(this).attr('month')) + '-' + singleDateCheck($(this).attr('day'));
 
         $('#selected_date').val(date);
