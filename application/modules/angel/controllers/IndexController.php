@@ -196,14 +196,14 @@ class Angel_IndexController extends Angel_Controller_Action {
         $open_id = $this->getOpenId($code);
         $userInfo = $this->getUserInfo($open_id);
         $result = $this->addUser($userInfo);
-        echo 'haha'; exit;
+
         if ($result) {
             $this->view->isLogin = 1;
         }
         else {
             $this->view->isLogin = 0;
         }
-
+        exit('xixi');
         $this->view->openid = $open_id;
     }
 
