@@ -8,7 +8,7 @@ function loadMeets(data) {
 
         var id = this.id;
 
-        node.on('click', '.mg-listc-rarr', function() {
+        node.tap(function() {
            location.href = "/meet/view/"+ id;
         });
 
