@@ -96,15 +96,12 @@ var User = function () {
     }
 
     obj.valid = function () {
-        alert(2);
-        var user_id = location.getItem('user_id');
+        var user_id = localStorage.getItem('user_id');
 
         if (user_id) {
-            alert(1);
             return true;
         }
         else {
-            alert(0);
             return false;
         }
     }
