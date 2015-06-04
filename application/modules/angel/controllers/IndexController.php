@@ -203,7 +203,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         else {
             $this->view->isLogin = 0;
         }
-        exit('xixi');
+
         $this->view->openid = $open_id;
     }
 
