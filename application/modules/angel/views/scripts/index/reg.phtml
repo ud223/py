@@ -1,0 +1,15 @@
+<script type="text/javascript">
+    alert('start load');
+    var user_id = '<?php echo $this->openid ?>';
+    var isLogin = '<?php echo $this->isLogin ?>'
+    alert(user_id);
+    alert(isLogin);
+    if (isLogin == '1') {
+        localStorage.setItem('user_id', user_id);
+    }
+    else {
+        alert('用户登录失败!');
+    }
+
+    location.href = "/";
+</script>
