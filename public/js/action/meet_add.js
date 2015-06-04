@@ -36,6 +36,7 @@ $(document).ready(function() {
     //    meet.select(false)
     //})
     alert(1);
+    alert('length:'+ $('.calendar-td'));
     $('.calendar-td').tap(function() {
         alert(2);
         var date = $(this).attr('year') + '-'+  singleDateCheck($(this).attr('month')) + '-' + singleDateCheck($(this).attr('day'));
