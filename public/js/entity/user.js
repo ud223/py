@@ -100,9 +100,11 @@ var User = function () {
         var user_id = location.getItem('user_id');
 
         if (user_id) {
+            alert(1);
             return true;
         }
         else {
+            alert(0);
             return false;
         }
     }
