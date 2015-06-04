@@ -140,6 +140,9 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function getOpenId($code) {
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=". $this->app_id ."&secret=". $this->app_secret ."&code". $code ."&grant_type=authorization_code";
+
+        echo $url;
+
         $weixin = file_get_contents($url);
 
         $jsondecode = json_decode($weixin);
@@ -170,6 +173,9 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function regAction() {
         $code = $_GET['code'];
+
+        echo $code;
+
         $open_id = $this->getOpenId($code);
 
         $this->getUserInfo($open_id);
