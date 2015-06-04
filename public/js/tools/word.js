@@ -18,7 +18,7 @@ function loadWords(data) {
     //});
 
     for (i = 0; i < data.length; i++) {
-        var node = $('.words').clone(true);
+        var node = $('#word_model').clone(true);
 
         var date = data[i].date.date;
 

@@ -2,7 +2,7 @@ function loadMeets(data) {
     $('#meet-list').html('');
 
     $.each(data, function () {
-        var node = $('.mg-listc-blk').clone(true);
+        var node = $('#meet_model').clone(true);
 
         node.find('.mg-listc-btt').html(this.meet_text);
 
