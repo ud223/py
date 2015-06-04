@@ -9,17 +9,21 @@
 class  Angel_Model_Word extends Angel_Model_AbstractModel {
     protected $_document_class = '\Documents\Word';
 
-    public function addWord($meet_id, $text, $users) {
+    public function addWord($meet_id, $text, $user_id) {
         $data = array('meet_id' => $meet_id,
             'text' => $text,
-            'users' => $users);
+            'user_id' => $user_id);
 
         $result = $this->add($data);
 
         return $result;
     }
 
-    public function getLastWordByMeetId($meet_id) {
+    public function getWordsByMeetId($meet_id) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('meet_id')->equals($meet_id)->sort("created_at", -1);
 
+        $result = $query->getQuery()->execute();
+
+        return $result;
     }
 } 

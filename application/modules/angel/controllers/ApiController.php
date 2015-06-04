@@ -140,4 +140,111 @@ class Angel_ApiController extends Angel_Controller_Action {
             $this->_helper->json(array('data' => $message, 'code' => $code));
         }
     }
+
+    public function getMeetAction() {
+        $meetModel = $this->getModel('meet');
+
+        $code = 200;
+        $message = "日程安排获取成功!";
+
+        $user_id = $this->getParam('user_id');
+        $year = $this->getParam('year');
+        $month = $this->getParam('month');
+        $day = $this->getParam('day');
+
+//        $this->_helper->json(array('data' => $year.'-' . $month . '-' . $day.  '|' . $user_id, 'code' => $code)); exit;
+
+        $result = $meetModel->getScheduleByDate($user_id, $year, $month, $day);
+
+        if ($result) {
+            $meets = array();
+
+            foreach ($result as $r) {
+                $meets[] = array("id"=>$r->id, "meet_text"=>$r->meet_text, "address"=>$r->address, "remark"=>$r->remark, "users_id"=>$r->users_id, "date"=>$r->selected_date, "year"=>$r->year, "month"=>$r->month, "day"=>$r->day, "identity"=>$r->identity);
+            }
+
+            $this->_helper->json(array('data' => $meets, 'code' => $code));
+        }
+        else {
+            $code = 0;
+            $message = "获取日程安排失败!";
+
+            $this->_helper->json(array('data' => $message, 'code' => $code));
+        }
+    }
+
+    public function loadMeetAction() {
+        $meetModel = $this->getModel('meet');
+
+        $id = $this->getParam('id');
+        $user_id = $this->getParam('user_id');
+
+        $code = 200;
+        $message = "活动获取成功!";
+
+//        $this->_helper->json(array('data' => $id, 'code' => $code)); exit;
+
+        $result = $meetModel->getById($id);
+
+        $data = array("meet_text"=>$result->meet_text, "selected_date"=>$result->selected_date, "year"=>$result->year, "month"=>$result->month, "day"=>$result->day,"address"=>$result->address, "remark"=>$result->remark);
+
+        if ($result) {
+            $this->_helper->json(array('data' => $data, 'code' => $code));
+        }
+        else {
+            $code = 0;
+            $message = "活动信息获取失败!";
+
+            $this->_helper->json(array('data' => $message, 'code' => $code));
+        }
+    }
+
+    public function createWordAction() {
+        $wordModel = $this->getModel('word');
+
+        $user_id = $this->getParam('user_id');
+        $meet_id = $this->getParam('meet_id');
+        $word_text = $this->getParam('word_text');
+
+        $code = 200;
+        $message = "留言成功!";
+
+        $result = $wordModel->addWord($meet_id, $word_text, $user_id);
+
+        if (!$result) {
+            $code = 0;
+            $message = "留言失败!";
+        }
+
+        $this->_helper->json(array('data' => $message, 'code' => $code));
+    }
+
+    public function  getWordAction() {
+        $wordModel = $this->getModel('word');
+
+        $code = 200;
+        $message = "日程安排获取成功!";
+
+        $meet_id = $this->getParam('meet_id');
+
+//        $this->_helper->json(array('data' => $year.'-' . $month . '-' . $day.  '|' . $user_id, 'code' => $code)); exit;
+
+        $result = $wordModel->getWordsByMeetId($meet_id);
+
+        if ($result) {
+            $words = array();
+
+            foreach ($result as $r) {
+                $words[] = array("id"=>$r->id, "text"=>$r->text, "date"=>$r->created_at, "user_id"=>$r->user_id);
+            }
+
+            $this->_helper->json(array('data' => $words, 'code' => $code));
+        }
+        else {
+            $code = 0;
+            $message = "获取日程安排失败!";
+
+            $this->_helper->json(array('data' => $message, 'code' => $code));
+        }
+    }
 } 

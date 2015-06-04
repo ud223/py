@@ -99,5 +99,13 @@ var Meet = function () {
         addMeet(this.start_date, this.end_date, this.selected_date, this.meet_text, this.address, this.remark, this.user_id);
     }
 
+    obj.Query = function (user_id, year, month, day) {
+        QueryMeet(user_id, year, month, day);
+    }
+
+    obj.load = function (user_id, id) {
+        loadMeet(user_id, id);
+    }
+
     return obj;
 }

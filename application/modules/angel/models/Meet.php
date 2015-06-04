@@ -55,7 +55,7 @@ class Angel_Model_Meet extends Angel_Model_AbstractModel {
 
     //获取某年某月日程安排集合
     public function getSchedule($user_id, $year, $month) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('year')->equals($year)->field('month')->equals($month)->field('proposer_id')->equals($user_id)->field('status')->equals('1')->sort("created_at", -1);//->field('year')->equals($year)->field('month')->equals($month)->field('proposer_id')->equals($user_id)->field('status')->equals('1')
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('year')->equals($year)->field('month')->equals($month)->field('proposer_id')->equals($user_id)->field('status')->equals('1')->sort("created_at", -1);
 
         $result = $query->getQuery()->execute();
 
@@ -63,8 +63,8 @@ class Angel_Model_Meet extends Angel_Model_AbstractModel {
     }
 
     //获取某天日程安排集合
-    public function getScheduleByDate($user_id, $date) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('selected_date')->equals($date)->field('proposer_id')->equals($user_id)->field('status')->equals(1);
+    public function getScheduleByDate($user_id, $year, $month, $day) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('year')->equals($year)->field('month')->equals($month)->field('day')->equals($day)->field('proposer_id')->equals($user_id)->field('status')->equals('1')->sort("created_at", 1);
 
         $result = $query ->getQuery()->execute();
 

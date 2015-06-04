@@ -37,7 +37,7 @@ $(document).ready(function() {
     //})
 
     $(document).on('click', '.calendar-td', function() {
-        var date = $(this).attr('year') + '-'+  singleDateCheck($(this).attr('month')) + '-' + $(this).attr('day');
+        var date = $(this).attr('year') + '-'+  singleDateCheck($(this).attr('month')) + '-' + singleDateCheck($(this).attr('day'));
 
         $('#selected_date').val(date);
     })

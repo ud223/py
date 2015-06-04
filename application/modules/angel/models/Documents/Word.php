@@ -18,6 +18,6 @@ class Word extends AbstractDocument {
     /** @ODM\String */
     protected $text;
 
-    /** @ODM\ReferenceOne(targetDocument="\Documents\User") */
-    protected $users;
+    /** @ODM\String */
+    protected $user_id;
 } 

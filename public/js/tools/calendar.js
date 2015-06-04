@@ -12,5 +12,7 @@ function setCalendarOpt(data) {
         }
 
         $('#'+ id).html(identity);
+
+        initCalendarClick(id);
     })
 }

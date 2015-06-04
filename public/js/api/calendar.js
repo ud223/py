@@ -3,7 +3,7 @@
  */
 //获取日程安排
 function initSchedule(year, month, user_id) {
-    var url = '/api/Schedule/get';
+    var url = '/api/schedule/get';
 
     var  data = { 'user_id': user_id, 'year': year, 'month': month };
 

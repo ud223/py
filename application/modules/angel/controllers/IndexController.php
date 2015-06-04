@@ -105,6 +105,10 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function viewMeetAction() {
         $this->_helper->layout->setLayout('detail');
+
+        $id = $this->getParam('id');
+
+        $this->view->meet_id = $id;
     }
 
     public function voteMeetAction() {

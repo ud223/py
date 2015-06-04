@@ -24,3 +24,55 @@ function addMeet(start_date, end_date, selected_date, meet_text, address, remark
         }
     });
 }
+
+//加载某天聚会集合方法
+function QueryMeet(user_id, year, month, day) {
+    var url = '/api/meet/get';
+
+    var  data = { 'user_id': user_id, 'year': year, 'month': month, 'day': day }
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        method: 'get',
+        success: function (response) {
+            if (response.code == 200) {
+                //加载活动集合
+                loadMeets(response.data);
+            }
+            else {
+                alert(response.data);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
+//通过id加载聚会方法
+function loadMeet(user_id, id) {
+    var url = '/api/meet/load';
+
+    var  data = { 'id': id, 'user_id': user_id }
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        method: 'get',
+        success: function (response) {
+            if (response.code == 200) {
+                //加载特定活动
+                meetLoad(response.data);
+            }
+            else {
+                alert(response.data);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
