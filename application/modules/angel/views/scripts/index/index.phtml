@@ -39,6 +39,7 @@
 </div>
 <script>
     var appid = '<?php echo $this->appid ?>';
+    var openid = '<?php echo $this->openid ?>';
 
     $(document).ready(function(){
         var now = new Date();
@@ -51,7 +52,9 @@
 
         //测试
 //        localStorage.setItem("user_id", "123456");
-//        localStorage.clear();
+        localStorage.clear();
+        localStorage.setItem('user_id', openid);
+
         var user = new User();
 
         if (!user.valid()) {

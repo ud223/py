@@ -140,7 +140,10 @@ class Angel_IndexController extends Angel_Controller_Action {
         $openid = $this->getParam('id');
 
         if ($openid) {
-            exit('获取openid:'. $openid);
+            $this->view->openid = $openid;
+        }
+        else {
+            $this->view->openid = '';
         }
     }
 
