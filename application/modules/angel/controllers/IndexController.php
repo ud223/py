@@ -184,9 +184,9 @@ class Angel_IndexController extends Angel_Controller_Action {
             echo "added," . $result; exit;
             return true;
         }
-        echo 'add user'; exit;
+//        echo 'add user'; exit;
         $result = $userModel->addUser($openid, 0, $nickname, $sex, "", $city, $province, $country, $headimgurl, "");
-        echo $result;
+//        echo $result;
         return $result;
     }
 
