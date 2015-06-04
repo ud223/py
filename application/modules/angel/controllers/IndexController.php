@@ -175,7 +175,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $province = $data['province'];
         $country = $data['country'];
         $headimgurl = $data['headimgurl'];
-        echo 'query user:';
+        echo 'query user:'; exit;
         $result = $userModel->getUserByOpenId($openid);
         echo 'query over';
         //如果该openid用户已经添加
