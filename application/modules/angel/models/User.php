@@ -5,7 +5,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
     protected $_document_class = '\Documents\User';
 
     //新增用户只保存用户的微信访问token和登陆时间
-    public function addUser($openid, $subscribe, $nickname, $sex, $language, $city, $province, $country, $headimgurl, $subscribe_time, $last_time = null, $access_token = null) {
+    public function addUser($openid, $subscribe, $nickname, $sex, $language, $city, $province, $country, $headimgurl, $subscribe_time, $last_time = 0, $access_token = "") {
         $data = array('openid' => $openid,
             'subscribe' => $subscribe,
             'nickname' => $nickname,

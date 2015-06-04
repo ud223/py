@@ -165,7 +165,7 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function addUser($data) {
         $userModel = $this->getModel('user');
 
-        echo $data['nickname']; exit;
+//        echo $data['nickname']; exit;
 
         $openid = $data['openid'];
         $nickname = $data['nickname'];
@@ -182,7 +182,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             return true;
         }
 
-        $result = $userModel->addUser($openid, '', $nickname, $sex, $language, $city, $province, $country, $headimgurl, "");
+        $result = $userModel->addUser($openid, 0, $nickname, $sex, $language, $city, $province, $country, $headimgurl, "");
 
         return $result;
     }
