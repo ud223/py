@@ -173,6 +173,35 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->appid = $this->app_id;
     }
 
+    public function getOpenId($code) {
+        $weixin = file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=". $this->app_id ."&secret=". $this->app_secret ."&code". $code ."&grant_type=authorization_code");
+
+        $jsondecode = json_decode($weixin);
+        $array = get_object_vars($jsondecode);
+        $open_id = $array['openid'];
+        $this->access_token = $array['access_token'];
+
+        return $open_id;
+    }
+
+    public function getUserInfo($open_id) {
+        $weixin = file_get_contents("https://api.weixin.qq.com/sns/userinfo?access_token=". $this->access_token ."&openid=". $open_id ."&lang=zh_CN");
+
+        $jsondecode = json_decode($weixin);
+        $array = get_object_vars($jsondecode);
+
+        var_dump($array); exit;
+
+        return $array;
+    }
+
+    public function regAction() {
+        $code = $_GET['code'];
+        $open_id = $this->getOpenId($code);
+
+        $this->getUserInfo($open_id);
+    }
+
     public function addMeetAction() {
         $this->_helper->layout->setLayout('detail');
     }
