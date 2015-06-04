@@ -191,18 +191,18 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function regUserAction() {
-        $code = $_GET['code'];
-
-        $open_id = $this->getOpenId($code);
-        $userInfo = $this->getUserInfo($open_id);
-        $result = $this->addUser($userInfo);
-
-        if ($result) {
-            $this->view->isLogin = 1;
-        }
-        else {
-            $this->view->isLogin = 0;
-        }
+//        $code = $_GET['code'];
+//
+//        $open_id = $this->getOpenId($code);
+//        $userInfo = $this->getUserInfo($open_id);
+//        $result = $this->addUser($userInfo);
+//
+//        if ($result) {
+//            $this->view->isLogin = 1;
+//        }
+//        else {
+//            $this->view->isLogin = 0;
+//        }
 
 //        $this->view->openid = $open_id;
     }
