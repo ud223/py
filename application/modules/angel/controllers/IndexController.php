@@ -141,14 +141,9 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function getOpenId($code) {
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=". $this->app_id ."&secret=". $this->app_secret ."&code=". $code ."&grant_type=authorization_code";
 
-        echo $url;
-
         $weixin = file_get_contents($url);
-
         $jsondecode = json_decode($weixin);
         $array = get_object_vars($jsondecode);
-
-        var_dump($array); exit;
 
         $open_id = $array['openid'];
         $this->access_token = $array['access_token'];
@@ -159,14 +154,14 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function getUserInfo($open_id) {
         $url = "https://api.weixin.qq.com/sns/userinfo?access_token=". $this->access_token ."&openid=". $open_id ."&lang=zh_CN";
 
-        echo $url; exit;
+        echo $url;;
 
         $weixin = file_get_contents(url);
 
         $jsondecode = json_decode($weixin);
         $array = get_object_vars($jsondecode);
 
-        var_dump($array); exit;
+        var_dump($array);exit;
 
         return $array;
     }
