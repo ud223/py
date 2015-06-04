@@ -8,24 +8,6 @@ class Angel_IndexController extends Angel_Controller_Action {
     private $access_token = '';
 
     public function validAction() {
-//        $signature = $this->_request->getParam('signature', '');
-//        //微信加密签名，可以用$_GET['signature']
-//        $timestamp = $this->_request->getParam('timestamp', '');//时间戳
-//        $nonce = $this->_request->getParam('nonce', '');//随机数
-//        $echostr = $this->_request->getParam('echostr', '');//随机字符串
-//        /*
-//         * 加密/校验流程：
-//         *  1. 将token、timestamp、nonce三个参数进行字典序排序
-//     *  2. 将三个参数字符串拼接成一个字符串进行sha1加密
-//         *  3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
-//         */
-//        $arr = array(TOKEN, $timestamp, $nonce);//组装参数
-//        sort($arr);//字典排序
-//        $str = implode($arr);//组装字符串
-//        $sha1 = sha1($str);//sha1加密
-//        if ($sha1 == $signature) {
-//            echo  $echostr;
-//        }
         $this->valid();
     }
 
