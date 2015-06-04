@@ -177,12 +177,13 @@ class Angel_IndexController extends Angel_Controller_Action {
         $headimgurl = $data['headimgurl'];
 //        echo 'query user:'; exit;
         $result = $userModel->getUserByOpenId($openid);
-        echo 'query over'; exit;
+//        echo 'query over'; exit;
         //如果该openid用户已经添加
         if ($result) {
+            echo "added"; exit;
             return true;
         }
-        echo 'add user';
+        echo 'add user'; exit;
         $result = $userModel->addUser($openid, 0, $nickname, $sex, "", $city, $province, $country, $headimgurl, "");
         echo $result;
         return $result;
