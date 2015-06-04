@@ -175,15 +175,16 @@ class Angel_IndexController extends Angel_Controller_Action {
         $province = $data['province'];
         $country = $data['country'];
         $headimgurl = $data['headimgurl'];
-
+        echo 'query user';
         $result = $userModel->getUserByOpenId($openid);
+        echo $result;
         //如果该openid用户已经添加
         if ($result) {
             return true;
         }
-
+        echo 'add user';
         $result = $userModel->addUser($openid, 0, $nickname, $sex, $language, $city, $province, $country, $headimgurl, "");
-
+        echo $result;
         return $result;
     }
 
