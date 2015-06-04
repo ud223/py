@@ -3,6 +3,7 @@
         	时间：2015-05-28
         	描述：view的内部代码
         -->
+<script src="<?php echo $this->jsPath("weixin/weixin_user.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("tools/calendar.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("tools/String.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("tools/meet.js"); ?>"></script>
@@ -36,6 +37,8 @@
     </button>
 </div>
 <script>
+    var appid = '<?php echo $this->appid ?>';
+
     $(document).ready(function(){
         var now = new Date();
         $('#real-calendar div').Calendar({
@@ -46,11 +49,13 @@
         });
 
         //测试
-        localStorage.setItem("user_id", "123456");
+//        localStorage.setItem("user_id", "123456");
+//        alert(appid); return;
+
+        userLogin();
 
         var calendar = new Calendar();
         var user_id = localStorage.getItem('user_id');
-
 
         calendar.setYear($('#day_1').attr('year'));
         calendar.setMonth($('#day_1').attr('month'));

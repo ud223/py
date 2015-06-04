@@ -6,11 +6,11 @@ class Angel_IndexController extends Angel_Controller_Action {
     private $app_id = 'wx1122a6c5539bca36';
     private $app_secret = '867e2d618574b9b9d648063f290ef326';
     private $access_token = '';
-
+    //微信在验证
     public function validAction() {
         $this->valid();
     }
-
+    //微信在验证
     public function valid() {
         $echoStr = $_GET["echostr"];
 
@@ -20,7 +20,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             exit;
         }
     }
-
+    //微信在验证
     public function responseMsg() {
         //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
@@ -57,7 +57,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             exit;
         }
     }
-
+    //微信在验证
     private function checkSignature() {
         // you must define TOKEN by yourself
         if (!defined("TOKEN")) {
@@ -170,7 +170,7 @@ class Angel_IndexController extends Angel_Controller_Action {
 //        $this->get_user_info($open_id);
 //        $this->view->
 
-
+        $this->view->appid = $this->app_id;
     }
 
     public function addMeetAction() {

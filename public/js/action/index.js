@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $(document).on('click', '.glyphicon-home', function () {
+        //alert(1);
         location.href = '/';
     })
 
@@ -8,6 +9,7 @@ $(document).ready(function() {
     })
 
     $(document).on('click', '.glyphicon-plus', function () {
+        //alert(3);
         location.href = '/meet/add';
     })
 
@@ -26,7 +28,7 @@ function initCalendarClick(id) {
         var year = $('#'+ id).attr('year');
         var month = $('#'+ id).attr('month');
         var day = $('#'+ id).attr('day');
- 
+
         meetModel.Query(user_id, year, month, day);
     })
 }
