@@ -114,20 +114,20 @@ class Angel_IndexController extends Angel_Controller_Action {
 //    }
 //
 //    //http请求
-//    public function https_request($url, $data = null) {
-//        $curl = curl_init();
-//        curl_setopt($curl, CURLOPT_URL, $url);
-//        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-//        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-//        if (!empty($data)){
-//            curl_setopt($curl, CURLOPT_POST, 1);
-//            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-//        }
-//        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-//        $output = curl_exec($curl);
-//        curl_close($curl);
-//        return $output;
-//    }
+    public function https_request($url, $data = null) {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        if (!empty($data)){
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        }
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($curl);
+        curl_close($curl);
+        return $output;
+    }
 
     public function init() {
         $this->_helper->layout->setLayout('main');
@@ -154,10 +154,10 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function getUserInfo($open_id) {
         $url = "https://api.weixin.qq.com/sns/userinfo?access_token=". $this->access_token ."&openid=". $open_id ."&lang=zh_CN";
 
-        echo '\r\n 获取用户信息';
+        echo '\r\n getUserInfo: \r\n';
         echo $url;
 
-        $weixin = file_get_contents(url);
+        $weixin = file_get_contents($url);
 
         $jsondecode = json_decode($weixin);
         $array = get_object_vars($jsondecode);
