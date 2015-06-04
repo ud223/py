@@ -97,21 +97,20 @@ var User = function () {
 
     obj.valid = function () {
         var user_id = localStorage.getItem('user_id');
-
+        //如果缓存的user_id为直接复制给用户对象
         if (user_id) {
-            if (!this.user_id) {
-                this.user_id = user_id;
-            }
+            this.user_id = user_id;
 
             return true;
         }
         else {
+            //如果缓存的user_id为假，且用户类对象的user_id为真，就让对象的user_id覆盖缓存
             if (this.user_id) {
                 localStorage.setItem('user_id', this.user_id);
 
                 return true;
             }
-
+            //如果两者user_id都为假，直接返回没有登陆的提示， 需要登陆
             return false;
         }
     }
