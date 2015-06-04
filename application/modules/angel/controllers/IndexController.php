@@ -136,6 +136,12 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function indexAction() {
         $this->view->appid = $this->app_id;
+
+        $openid = $this->getParam('id');
+
+        if ($openid) {
+            exit('获取openid:'. $openid);
+        }
     }
 
     public function getOpenId($code) {
@@ -191,18 +197,21 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function regUserAction() {
-//        $code = $_GET['code'];
-//
-//        $open_id = $this->getOpenId($code);
-//        $userInfo = $this->getUserInfo($open_id);
-//        $result = $this->addUser($userInfo);
-//
-//        if ($result) {
+        $code = $_GET['code'];
+
+        $open_id = $this->getOpenId($code);
+        $userInfo = $this->getUserInfo($open_id);
+        $result = $this->addUser($userInfo);
+
+        if ($result) {
 //            $this->view->isLogin = 1;
-//        }
-//        else {
+            header("Location: /" . $open_id); exit;
+        }
+        else {
+            exit("注册或登陆失败,请重试!");
+
 //            $this->view->isLogin = 0;
-//        }
+        }
 
 //        $this->view->openid = $open_id;
     }
