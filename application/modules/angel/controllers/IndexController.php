@@ -190,7 +190,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         return $result;
     }
 
-    public function regAction() {
+    public function regUserAction() {
         $code = $_GET['code'];
 
         $open_id = $this->getOpenId($code);
