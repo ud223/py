@@ -204,7 +204,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             $this->view->isLogin = 0;
         }
 
-        $this->view->openid = $open_id;
+//        $this->view->openid = $open_id;
     }
 
     public function addMeetAction() {
