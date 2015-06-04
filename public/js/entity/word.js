@@ -16,9 +16,7 @@ var Word = function () {
     }
 
     obj.setText = function (text) {
-        alert(text);
         this.text = text;
-        alert(this.text);
     }
 
     obj.check = function () {
