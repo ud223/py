@@ -20,7 +20,7 @@ $(document).ready(function() {
 
 function initCalendarClick(id) {
     $(document).on('click', '#'+id, function () {
-        localStorage.setItem("user_id", "123456");
+        //localStorage.setItem("user_id", "123456");
 
         var meetModel = new Meet();
 

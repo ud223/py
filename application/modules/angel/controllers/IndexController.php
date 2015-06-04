@@ -154,27 +154,51 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function getUserInfo($open_id) {
         $url = "https://api.weixin.qq.com/sns/userinfo?access_token=". $this->access_token ."&openid=". $open_id ."&lang=zh_CN";
 
-        echo '\r\n getUserInfo: \r\n';
-        echo $url;
-
         $weixin = file_get_contents($url);
 
         $jsondecode = json_decode($weixin);
         $array = get_object_vars($jsondecode);
 
-        var_dump($array);exit;
-
         return $array;
+    }
+
+    public function addUser($data) {
+        $userModel = $this->getModel('user');
+
+        $openid = $data['openid'];
+        $nickname = $data['nickname'];
+        $sex = $data['sex'];
+        $city = $data['city'];
+        $province = $data['province'];
+        $country = $data['country'];
+        $headimgurl = $data['headimgurl'];
+
+        $result = $userModel->getUserByOpenId($openid);
+        //如果该openid用户已经添加
+        if ($result) {
+            return true;
+        }
+
+        $result = $userModel->addUser($openid, '', $nickname, $sex, "", $city, $province, $country, $headimgurl, "");
+
+        return $result;
     }
 
     public function regAction() {
         $code = $_GET['code'];
 
-        echo $code;
-
         $open_id = $this->getOpenId($code);
+        $userInfo = $this->getUserInfo($open_id);
+        $result = $this->addUser($userInfo);
 
-        $this->getUserInfo($open_id);
+        if ($result) {
+            $this->view->isLogin = 1;
+        }
+        else {
+            $this->view->isLogin = 0;
+        }
+
+        $this->view->openid = $open_id;
     }
 
     public function addMeetAction() {

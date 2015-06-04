@@ -53,7 +53,11 @@
 //        alert(appid); return;
 //        localStorage.clear();
 
-        userLogin();
+        var user = new User();
+
+        if (!user.valid()) {
+            userLogin();
+        }
 
         var calendar = new Calendar();
         var user_id = localStorage.getItem('user_id');

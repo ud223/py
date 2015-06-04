@@ -95,5 +95,16 @@ var User = function () {
         addMeet(this.start_date, this.end_date, this.selected_date, this.meet_text, this.address, this.remark, this.user_id);
     }
 
+    obj.valid = function () {
+        var user_id = location.getItem('user_id');
+
+        if (user_id) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     return obj;
 }

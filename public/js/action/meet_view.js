@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var meet = new Meet();
     //测试
-    localStorage.setItem('user_id', '123456');
+    //localStorage.setItem('user_id', '123456');
 
     var user_id = localStorage.getItem('user_id');
 
