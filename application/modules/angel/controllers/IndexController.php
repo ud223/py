@@ -178,7 +178,7 @@ class Angel_IndexController extends Angel_Controller_Action {
 //        echo 'query user:'; exit;
         $result = $userModel->getUserByOpenId($openid);
 //        echo 'query over'; exit;
-        echo count($result); exit;
+//        echo count($result); exit;
         //如果该openid用户已经添加
         if (count($result) == 1) {
             echo "added"; exit;
