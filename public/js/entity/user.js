@@ -96,6 +96,7 @@ var User = function () {
     }
 
     obj.valid = function () {
+        alert(2);
         var user_id = location.getItem('user_id');
 
         if (user_id) {
