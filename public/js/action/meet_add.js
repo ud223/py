@@ -4,7 +4,7 @@
 $(document).ready(function() {
     var meet = new Meet();
 
-    $(document).on('click', '#pge-cover-save', function() {
+    $('#pge-cover-save').tap(function() {
         //如果聚会确定日期
         if (meet.selected) {
             meet.setSelect_Date($('#selected_date').val());
@@ -24,7 +24,7 @@ $(document).ready(function() {
         meet.add();
     })
 
-    $(document).on('click', 'pge-cover-back', function() {
+    $('#pge-cover-back').tap(function() {
        location.href = "/";
     })
 
