@@ -154,7 +154,8 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function getUserInfo($open_id) {
         $url = "https://api.weixin.qq.com/sns/userinfo?access_token=". $this->access_token ."&openid=". $open_id ."&lang=zh_CN";
 
-        echo $url;;
+        echo '\r\n 获取用户信息';
+        echo $url;
 
         $weixin = file_get_contents(url);
 
