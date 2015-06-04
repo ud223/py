@@ -134,50 +134,19 @@ class Angel_IndexController extends Angel_Controller_Action {
         parent::init();
     }
 
-    public function isLogin() {
-
-    }
-
-    public function Login() {
-
-    }
-
-    public function regUser() {
-        //用户信息
-//        $userModel = $this->getModel('user');
-//
-//        $openid = '12345678';
-//        $subscribe = 1;
-//        $nickname = 'test_1';
-//        $sex = 1;
-//        $language = 'zh_CN';
-//        $city = '武汉';
-//        $province = '湖北';
-//        $country = '中国';
-//        $headimgurl = 'http://img.woyaogexing.com/2015/06/02/41cd866f421fb447!200x200.jpg'; //http://img.woyaogexing.com/2015/06/01/d0cb2cbac54701ce!200x200.jpg
-//        $subscribe_time = '1386160805';
-//
-//
-//        $userModel->addUser($openid, $subscribe, $nickname, $sex, $language, $city, $province, $country, $headimgurl, $subscribe_time, $last_time = null, $access_token = null);
-    }
-
     public function indexAction() {
-        //根据返回路径获取open_id
-        $open_id = "";
-        //获取用户的access_token
-//        $this->getAccessToken();
-        //重新获取用户的基本信息
-//        $this->get_user_info($open_id);
-//        $this->view->
-
         $this->view->appid = $this->app_id;
     }
 
     public function getOpenId($code) {
-        $weixin = file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=". $this->app_id ."&secret=". $this->app_secret ."&code". $code ."&grant_type=authorization_code");
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=". $this->app_id ."&secret=". $this->app_secret ."&code". $code ."&grant_type=authorization_code";
+        $weixin = file_get_contents($url);
 
         $jsondecode = json_decode($weixin);
         $array = get_object_vars($jsondecode);
+
+        var_dump($array); exit;
+
         $open_id = $array['openid'];
         $this->access_token = $array['access_token'];
 
