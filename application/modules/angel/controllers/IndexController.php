@@ -191,6 +191,7 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function regUserAction() {
+        $this->_helper->layout->setLayout('main');
         $code = $_GET['code'];
 
         $open_id = $this->getOpenId($code);
