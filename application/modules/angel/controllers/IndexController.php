@@ -180,7 +180,7 @@ class Angel_IndexController extends Angel_Controller_Action {
 //        echo 'query over'; exit;
         echo count($result); exit;
         //如果该openid用户已经添加
-        if (count($result) != 0) {
+        if (count($result) == 1) {
             echo "added," . $result; exit;
             return true;
         }
