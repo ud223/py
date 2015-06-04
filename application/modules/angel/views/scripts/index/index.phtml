@@ -55,17 +55,17 @@
         var user = new User();
 
         if (!user.valid()) {
-            alert('开始登录!');
             userLogin();
         }
+        else {
+            var calendar = new Calendar();
+            var user_id = localStorage.getItem('user_id');
 
-        var calendar = new Calendar();
-        var user_id = localStorage.getItem('user_id');
+            calendar.setYear($('#day_1').attr('year'));
+            calendar.setMonth($('#day_1').attr('month'));
+            calendar.setUser_Id(user_id);
 
-        calendar.setYear($('#day_1').attr('year'));
-        calendar.setMonth($('#day_1').attr('month'));
-        calendar.setUser_Id(user_id);
-
-        calendar.getSchedule();
+            calendar.getSchedule();
+        }
     });
 </script>

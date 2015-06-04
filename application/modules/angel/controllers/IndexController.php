@@ -165,6 +165,8 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function addUser($data) {
         $userModel = $this->getModel('user');
 
+        var_dump($data); exit;
+
         $openid = $data['openid'];
         $nickname = $data['nickname'];
         $sex = $data['sex'];
