@@ -181,7 +181,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         echo count($result); exit;
         //如果该openid用户已经添加
         if (count($result) == 1) {
-            echo "added," . $result; exit;
+            echo "added"; exit;
             return true;
         }
 //        echo 'add user'; exit;
