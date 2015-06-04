@@ -1,12 +1,104 @@
 <?php
 
+define("TOKEN", "yingxi");
+
 class Angel_IndexController extends Angel_Controller_Action {
-
-    protected $login_not_required = array('index');
-
     private $app_id = 'wx1122a6c5539bca36';
     private $app_secret = '867e2d618574b9b9d648063f290ef326';
     private $access_token = '';
+
+    public function validAction() {
+        $signature = $this->_request->getParam('signature', '');
+        //微信加密签名，可以用$_GET['signature']
+        $timestamp = $this->_request->getParam('timestamp', '');//时间戳
+        $nonce = $this->_request->getParam('nonce', '');//随机数
+        $echostr = $this->_request->getParam('echostr', '');//随机字符串
+        /*
+         * 加密/校验流程：
+         *  1. 将token、timestamp、nonce三个参数进行字典序排序
+     *  2. 将三个参数字符串拼接成一个字符串进行sha1加密
+         *  3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
+         */
+        $arr = array(TOKEN, $timestamp, $nonce);//组装参数
+        sort($arr);//字典排序
+        $str = implode($arr);//组装字符串
+        $sha1 = sha1($str);//sha1加密
+        if ($sha1 == $signature) {
+            echo  $echostr;
+        }
+//        $this->valid();
+    }
+
+    public function valid() {
+        $echoStr = $_GET["echostr"];
+
+        //valid signature , option
+        if($this->checkSignature()){
+            echo $echoStr;
+            exit;
+        }
+    }
+
+    public function responseMsg() {
+        //get post data, May be due to the different environments
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+
+        //extract post data
+        if (!empty($postStr)){
+            /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
+               the best way is to check the validity of xml by yourself */
+            libxml_disable_entity_loader(true);
+            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $fromUsername = $postObj->FromUserName;
+            $toUsername = $postObj->ToUserName;
+            $keyword = trim($postObj->Content);
+            $time = time();
+            $textTpl = "<xml>
+							<ToUserName><![CDATA[%s]]></ToUserName>
+							<FromUserName><![CDATA[%s]]></FromUserName>
+							<CreateTime>%s</CreateTime>
+							<MsgType><![CDATA[%s]]></MsgType>
+							<Content><![CDATA[%s]]></Content>
+							<FuncFlag>0</FuncFlag>
+							</xml>";
+            if(!empty( $keyword )) {
+                $msgType = "text";
+                $contentStr = "Welcome to wechat world!";
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                echo $resultStr;
+            }else{
+                echo "Input something...";
+            }
+
+        }else {
+            echo "";
+            exit;
+        }
+    }
+
+    private function checkSignature() {
+        // you must define TOKEN by yourself
+        if (!defined("TOKEN")) {
+            throw new Exception('TOKEN is not defined!');
+        }
+
+        $signature = $_GET["signature"];
+        $timestamp = $_GET["timestamp"];
+        $nonce = $_GET["nonce"];
+
+        $token = TOKEN;
+        $tmpArr = array($token, $timestamp, $nonce);
+        // use SORT_STRING rule
+        sort($tmpArr, SORT_STRING);
+        $tmpStr = implode( $tmpArr );
+        $tmpStr = sha1( $tmpStr );
+
+        if( $tmpStr == $signature ){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 //    //构造函数，获取Access Token
 //    public function getAccessToken($appid = NULL, $appsecret = NULL) {
