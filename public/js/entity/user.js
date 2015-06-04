@@ -99,9 +99,19 @@ var User = function () {
         var user_id = localStorage.getItem('user_id');
 
         if (user_id) {
+            if (!this.user_id) {
+                this.user_id = user_id;
+            }
+
             return true;
         }
         else {
+            if (this.user_id) {
+                localStorage.setItem('user_id', this.user_id);
+
+                return true;
+            }
+
             return false;
         }
     }

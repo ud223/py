@@ -52,12 +52,12 @@
 
         //测试
 //        localStorage.setItem("user_id", "123456");
-        localStorage.clear();
-        localStorage.setItem('user_id', openid);
+//        localStorage.clear();
 
-//        alert(localStorage.getItem('user_id'));
 
         var user = new User();
+
+        user.setUser_Id(openid);
 
         if (!user.valid()) {
             userLogin();
