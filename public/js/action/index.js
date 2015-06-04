@@ -1,17 +1,14 @@
 $(document).ready(function() {
-    alert('新增按钮:'+ $('#btn_add').length);
-    alert(1);
     $(document).on('click', '.glyphicon-home', function () {
         //alert(1);
         location.href = '/';
     })
-    alert(2);
+
     $(document).on('click', '.glyphicon-user', function () {
         alert('好友');
     })
-    alert(3);
-    $('.add-cal').tap(function () {
-        //alert(3);
+
+    $('#btn_add').tap(function () {
         location.href = '/meet/add';
     })
 
