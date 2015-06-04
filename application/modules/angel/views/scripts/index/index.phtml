@@ -55,6 +55,8 @@
         localStorage.clear();
         localStorage.setItem('user_id', openid);
 
+        alert(localStorage.getItem('user_id'));
+
         var user = new User();
 
         if (!user.valid()) {

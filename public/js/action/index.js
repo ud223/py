@@ -8,7 +8,7 @@ $(document).ready(function() {
         alert('好友');
     })
 
-    $(document).on('click', '.glyphicon-plus', function () {
+    $(document).on('click', '.add-cal', function () {
         //alert(3);
         location.href = '/meet/add';
     })
