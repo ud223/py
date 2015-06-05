@@ -70,7 +70,7 @@ class Angel_ApiController extends Angel_Controller_Action {
                 $options_date[] = date('Y-m-d', $dt_start);
             } while (($dt_start += 86400) <= $dt_end);
 
-            $this->_helper->json(array('data' => $options_date, 'code' => $code)); exit;
+//            $this->_helper->json(array('data' => $options_date, 'code' => $code)); exit;
         }
         else {
             $options_date[] = $selected_date;
