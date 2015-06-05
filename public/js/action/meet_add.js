@@ -1,9 +1,17 @@
 /**
  * Created by Administrator on 2015/6/1 0001.
  */
-$(document).ready(function() {
-    var meet = new Meet();
+var meet = new Meet();
 
+$(document).ready(function() {
+    initSubmit();
+
+    initBack();
+
+    initMeetType();
+})
+
+function initSubmit() {
     $('#pge-cover-save').tap(function() {
         //如果聚会确定日期
         if (meet.selected) {
@@ -13,9 +21,7 @@ $(document).ready(function() {
             meet.setStart_Date($('#start_date').val());
             meet.setEnd_Date($('#end_date').val());
         }
-        //测试
-        //localStorage.setItem('user_id', '123456');
-        //alert(localStorage.getItem('user_id')); return;
+
         meet.setMeet_Text($('#meet_text').val());
         meet.address = $('#address').val();
         meet.remark = $('#remark').val();
@@ -23,11 +29,7 @@ $(document).ready(function() {
 
         meet.add();
     })
-
-    initBack();
-
-    initMeetType();
-})
+}
 
 function initBack() {
     $('#pge-cover-back').tap(function() {
@@ -36,11 +38,14 @@ function initBack() {
 }
 
 function initMeetType() {
+    alert(1);
     $('add-tab-1').tap(function() {
+        alert(2);
         meet.select(true);
     })
 
     $('add-tab-2').tap(function() {
+        alert(3);
         meet.select(false);
     })
 }
