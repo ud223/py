@@ -100,6 +100,7 @@ var Meet = function () {
     }
 
     obj.Query = function(user_id, year, month, day) {
+        alert(4)
         QueryMeet(user_id, year, month, day);
     }
 

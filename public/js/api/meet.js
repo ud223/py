@@ -27,6 +27,7 @@ function addMeet(start_date, end_date, selected_date, meet_text, address, remark
 
 //加载某天聚会集合方法
 function QueryMeet(user_id, year, month, day) {
+    alert(5);
     var url = '/api/meet/get';
 
     var  data = { 'user_id': user_id, 'year': year, 'month': month, 'day': day }
@@ -37,9 +38,8 @@ function QueryMeet(user_id, year, month, day) {
         data: data,
         method: 'get',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
-
-                //alert(JSON.stringify(response)); return;
                 //加载活动集合
                 loadMeets(response.data);
             }

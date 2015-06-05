@@ -3,7 +3,7 @@ function setCalendarOpt(data) {
     $.each(data, function () {
         var id = "day_"+ this.day;
         var identity ="";
-        alert(id);
+
         if (this.identity == 2) {
             identity = "<div class='date-padding'>"+ this.day +"</div><span class='cbooker high'></span>";
         }

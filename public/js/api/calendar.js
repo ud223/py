@@ -13,7 +13,6 @@ function initSchedule(year, month, user_id) {
         data: data,
         method: 'get',
         success: function (response) {
-            alert(JSON.stringify(response));
             if (response.code == 200) {
                 if (response.data.length == 0) {
                     alert('当前没有日程安排');
