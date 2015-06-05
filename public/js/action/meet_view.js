@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     initBtnWord(user_id);
     initBtnBack();
-    
+
     initBtnCloseMeet(user_id);
     initBtnJoin(user_id);
 })
@@ -47,7 +47,7 @@ function initBtnCloseMeet(user_id) {
 //初始化加入按钮
 function initBtnJoin(user_id) {
     var isJoin = false;
-
+    alert(JSON.stringify(users_id)); return;
     $.each(users_id, function() {
         alert(this);
         if (this == user_id) {
