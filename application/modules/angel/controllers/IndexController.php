@@ -242,14 +242,17 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function testGetAction() {
         $userModule = $this->getModel('user');
 
-        $users_id = array();
-
-        $users_id[] = "123456";
-        $users_id[] = "1234567";
+//        $users_id = array();
+//
+//        $users_id[] = "123456";
+//        $users_id[] = "1234567";
 
 //        var_dump($users_id); exit;
 
-        $result = $userModule->getUserByOpenIds($users_id);
+        $user_id = "123456";
+
+//        $result = $userModule->getUserByOpenIds($users_id);
+        $result = $userModule->getUserByOpenId($user_id);
 
         if (!$result) {
             exit('failed');
