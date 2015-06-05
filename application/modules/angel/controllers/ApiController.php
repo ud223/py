@@ -151,7 +151,7 @@ class Angel_ApiController extends Angel_Controller_Action {
             return false;
         }
 
-        $user =  array("openid"=>$result->openid, "headimgurl"=>$result->headimgurl, "nickname"=>$result->nickname);
+        $user =  array("id"=>$result->id, "openid"=>$result->openid, "headimgurl"=>$result->headimgurl, "nickname"=>$result->nickname);
 
         $this->_helper->json(array('data' => $user, 'code' => 200)); exit;
 
