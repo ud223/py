@@ -56,7 +56,6 @@ var Meet = function () {
         }
         else {
             if (this.start_date == false || this.end_date == false) {
-                alert(1);
                 this.message = "请先选择活动日期范围!";
 
                 return false;
@@ -66,8 +65,7 @@ var Meet = function () {
                 var d2 = new Date(this.end_date);
 
                 if (d1 >= d2) {
-                    alert(2);
-                    alert("结束日期必须小于开始日期");
+                    this.message = "结束日期必须小于开始日期";
 
                     return false;
                 }
@@ -102,7 +100,6 @@ var Meet = function () {
     }
 
     obj.add = function () {
-        alert(0);
         if (!this.check()) {
             alert(this.message);
 
