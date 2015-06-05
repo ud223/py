@@ -20,4 +20,8 @@ $(document).ready(function() {
 
         word.add();
     });
+
+    $('#pge-cover-back').tap(function() {
+        location.href = "/";
+    })
 })
