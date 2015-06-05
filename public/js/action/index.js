@@ -26,6 +26,7 @@ $(document).ready(function() {
 
 function initCalendarClick(id) {
     $( '#'+id).tap(function () {
+        alert(0);
         var meetModel = new Meet();
 
         var user_id = localStorage.getItem('user_id');
