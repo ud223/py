@@ -171,8 +171,6 @@ class Angel_ApiController extends Angel_Controller_Action {
         $month = $this->getParam('month');
         $day = $this->getParam('day');
 
-//        $this->_helper->json(array('data' => $year.'-' . $month . '-' . $day.  '|' . $user_id, 'code' => $code)); exit;
-
         $result = $meetModel->getScheduleByDate($user_id, $year, $month, $day);
 
         if ($result) {
@@ -181,6 +179,8 @@ class Angel_ApiController extends Angel_Controller_Action {
             foreach ($result as $r) {
                 //通过users_id集合得到用户集合
 //                $users = $this->getUsersInfo($r->users_id);
+
+                $this->_helper->json(array('data' => count($r->users_id), 'code' => $code)); exit;
 
                 $meets[] = array("id"=>$r->id, "meet_text"=>$r->meet_text, "address"=>$r->address, "remark"=>$r->remark, "users"=>$r->users_id, "date"=>$r->selected_date, "year"=>$r->year, "month"=>$r->month, "day"=>$r->day, "identity"=>$r->identity);
             }
