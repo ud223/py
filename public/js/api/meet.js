@@ -55,10 +55,11 @@ function QueryMeet(user_id, year, month, day) {
 
 //通过id加载聚会方法
 function loadMeet(user_id, id) {
+    alert(2);
     var url = '/api/meet/load';
 
     var  data = { 'id': id, 'user_id': user_id }
-
+    alert(JSON.stringify(data));
     $.ajax({
         url: url,
         dataType: 'json',
