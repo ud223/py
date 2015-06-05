@@ -142,12 +142,13 @@ class Angel_ApiController extends Angel_Controller_Action {
     }
 
     public function getUsersInfo($users_id) {
-//        $this->_helper->json(array('data' => $users_id, 'code' => 200)); exit;
         $userModel = $this->getModel('user');
 
         $result = $userModel->getUserByOpenIds($users_id);
-
+        
         if (!$result) {
+            $this->_helper->json(array('data' => "查询报错", 'code' => 200)); exit;
+
             return false;
         }
 
@@ -156,6 +157,8 @@ class Angel_ApiController extends Angel_Controller_Action {
         foreach ($result as $r) {
             $users[] = array("openid"=>$r->openid, "headimgurl"=>$r->$headimgurl, "nickname"=>$r->nickname);
         }
+
+        $this->_helper->json(array('data' => $users, 'code' => 200)); exit;
 
         return $users;
     }
@@ -178,9 +181,9 @@ class Angel_ApiController extends Angel_Controller_Action {
 
             foreach ($result as $r) {
                 //通过users_id集合得到用户集合
-//                $users = $this->getUsersInfo($r->users_id);
+                $users = $this->getUsersInfo($r->users_id);
 
-                $this->_helper->json(array('data' => count($r->users_id), 'code' => $code)); exit;
+                $this->_helper->json(array('data' => $users, 'code' => $code)); exit;
 
                 $meets[] = array("id"=>$r->id, "meet_text"=>$r->meet_text, "address"=>$r->address, "remark"=>$r->remark, "users"=>$r->users_id, "date"=>$r->selected_date, "year"=>$r->year, "month"=>$r->month, "day"=>$r->day, "identity"=>$r->identity);
             }
