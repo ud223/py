@@ -222,9 +222,9 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->_helper->layout->setLayout('detail');
         $meetModel = $this->getModel('meet');
 
-        $id = $this->getParam('id');
+        $meet_id = $this->getParam('id');
 
-        $result = $meetModel->getById($id);
+        $result = $meetModel->getById($meet_id);
 
         $users_id = "";
 
@@ -232,7 +232,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             $users_id = $users_id . '|' . $id;
         }
 
-        $this->view->meet_id = $id;
+        $this->view->meet_id = $meet_id;
         $this->view->proposer_id = $result->proposer_id;
         $this->view->users_id = $users_id;
     }
