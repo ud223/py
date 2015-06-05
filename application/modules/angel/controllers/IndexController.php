@@ -226,9 +226,15 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $result = $meetModel->getById($id);
 
+        $users_id = array();
+
+        foreach ($result->users_id as $id) {
+            $users_id[] = $id;
+        }
+
         $this->view->meet_id = $id;
         $this->view->proposer_id = $result->proposer_id;
-        $this->view->users_id = $result->users_id;
+        $this->view->users_id = $users_id;
     }
 
     public function voteMeetAction() {
