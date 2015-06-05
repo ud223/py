@@ -58,7 +58,7 @@ function loadMeet(user_id, meet_id) {
     var url = '/api/meet/load';
 
     var  data = { 'id': meet_id, 'user_id': user_id }
-
+    alert(JSON.stringify(data)); 
     $.ajax({
         url: url,
         dataType: 'json',
