@@ -83,7 +83,7 @@ function joinMeet(user_id, meet_id) {
     alert(4);
     var url = '/api/meet/join';
 
-    var  data = { 'id': meet_id, 'user_id': user_id }
+    var  data = { 'meet_id': meet_id, 'user_id': user_id }
 
     $.ajax({
         url: url,
@@ -107,7 +107,7 @@ function joinMeet(user_id, meet_id) {
 function leaveMeet(user_id, meet_id) {
     var url = '/api/meet/leave';
 
-    var  data = { 'id': meet_id, 'user_id': user_id }
+    var  data = { 'meet_id': meet_id, 'user_id': user_id }
 
     $.ajax({
         url: url,
