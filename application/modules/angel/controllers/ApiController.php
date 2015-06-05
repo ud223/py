@@ -197,7 +197,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         if (!$meet) {
             $code = 0;
-            $message = "获取活动信息错误,活动参加失败!";
+            $message = "获取活动信息错误,活动参加失败!". $meet_id . '|' . $user_id;
 
             $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
         }
