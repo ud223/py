@@ -1,6 +1,6 @@
 function loadWords(data) {
     $('#word-list').html('');
-
+    alert(JSON.stringify(data));
     for (i = 0; i < data.length; i++) {
         var node = $('#word_model').clone(true);
 
