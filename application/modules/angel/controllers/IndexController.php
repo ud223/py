@@ -196,6 +196,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->proposer_id = $result->proposer_id;
         $this->view->users_id = $users_id;
         $this->view->user_id = $user_id;
+        $this->view->appid = $this->app_id;
     }
 
     public function voteMeetAction() {
