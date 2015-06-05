@@ -24,18 +24,26 @@ $(document).ready(function() {
         meet.add();
     })
 
-    $('#pge-cover-back').tap(function() {
-       location.href = "/";
-    })
+    initBack();
 
-    $(document).on('click', '.glyphicon-calendar', function() {
-        meet.select(true)
-    })
-
-    $(document).on('click', '.glyphicon-bullhorn', function() {
-        meet.select(false)
-    })
+    initMeetType();
 })
+
+function initBack() {
+    $('#pge-cover-back').tap(function() {
+        location.href = "/";
+    })
+}
+
+function initMeetType() {
+    $('add-tab-1').tap(function() {
+        meet.select(true);
+    })
+
+    $('add-tab-2').tap(function() {
+        meet.select(false);
+    })
+}
 
 function initCalendarClick() {
     $('.calendar-td').tap(function() {
