@@ -60,8 +60,7 @@ class Angel_ApiController extends Angel_Controller_Action {
         //日期范围
         $options_date = array();
 
-        if (!$selected_date) {
-            $this->_helper->json(array('data' => '1', 'code' => $code)); exit;
+        if ($selected_date == "false") {
             //将日期字符串转成 Timestamp
             $dt_start = strtotime($start_date);
             $dt_end   = strtotime($end_date);
@@ -70,6 +69,8 @@ class Angel_ApiController extends Angel_Controller_Action {
                 //将 Timestamp 转成 ISO Date添加到日期范围集合
                 $options_date[] = date('Y-m-d', $dt_start);
             } while (($dt_start += 86400) <= $dt_end);
+
+            $this->_helper->json(array('data' => $options_date, 'code' => $code)); exit;
         }
         else {
             $options_date[] = $selected_date;

@@ -6,14 +6,14 @@ function addMeet(start_date, end_date, selected_date, meet_text, address, remark
     var url = '/api/meet/add';
 
     var  data = { 'user_id': user_id, 'start_date': start_date, 'selected_date': selected_date, 'meet_text': meet_text, 'end_date': end_date, 'address': address, 'remark': remark }
-    alert(JSON.stringify(data)); return;
+    //alert(JSON.stringify(data)); return;
     $.ajax({
        url: url,
         dataType: 'json',
         data: data,
         method: 'post',
         success: function (response) {
-            alert(response.data);
+            alert(JSON.stringify(response.data));
 
             if (response.code == 200) {
                 location.href = '/';
