@@ -142,7 +142,7 @@ class Angel_ApiController extends Angel_Controller_Action {
     }
 
     public function getUsersInfo($users_id) {
-        $this->_helper->json(array('data' => $users_id, 'code' => $code)); exit;
+//        $this->_helper->json(array('data' => $users_id, 'code' => 200)); exit;
         $userModel = $this->getModel('user');
 
         $result = $userModel->getUserByOpenIds($users_id);
