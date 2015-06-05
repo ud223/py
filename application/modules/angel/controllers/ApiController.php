@@ -144,8 +144,14 @@ class Angel_ApiController extends Angel_Controller_Action {
     public function getUsersInfo($users_id) {
         $userModel = $this->getModel('user');
 
-        $result = $userModel->getUserByOpenIds($users_id);
+        $tmp_users_id = array();
+
+        foreach ($users_id as $u) {
+            $tmp_users_id[] = $u;
+        }
         
+        $result = $userModel->getUserByOpenIds($tmp_users_id);
+
         if (!$result) {
             $this->_helper->json(array('data' => "查询报错", 'code' => 200)); exit;
 
