@@ -4,8 +4,10 @@ $(document).ready(function() {
     loadThisMeet(user_id);
 
     initBtnWord(user_id);
-
     initBtnBack();
+
+    initBtnJoin(user_id);
+    initBtnCloseMeet(user_id);
 })
 
 //加载活动信息
@@ -39,7 +41,7 @@ function initBtnBack() {
 //初始化关闭活动按钮
 function initBtnCloseMeet(user_id) {
     if (user_id == proposer_id) {
-
+        $('#close_meet').show();
     }
 }
 //初始化加入按钮
@@ -56,9 +58,9 @@ function initBtnJoin(user_id) {
     });
 
     if (isJoin) {
-
+        $('#letmeleave').show();
     }
     else  {
-
+        $('#letmejoin').show();
     }
 }
