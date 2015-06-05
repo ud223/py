@@ -150,7 +150,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $result = $userModel->getUserByOpenIds($tmp_users_id);
 
-        $this->_helper->json(array('data' => '查询', 'code' => 200)); exit;
+//        $this->_helper->json(array('data' => '查询', 'code' => 200)); exit;
 
         if (!$result) {
             $this->_helper->json(array('data' => "查询报错", 'code' => 200)); exit;
@@ -161,6 +161,8 @@ class Angel_ApiController extends Angel_Controller_Action {
         $users = array();
 
         foreach ($result as $r) {
+            $this->_helper->json(array('data' => $r->openid, 'code' => 200)); exit;
+
             $users[] = array("openid"=>$r->openid, "headimgurl"=>$r->$headimgurl, "nickname"=>$r->nickname);
         }
 
