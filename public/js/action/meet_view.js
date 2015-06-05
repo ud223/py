@@ -20,10 +20,8 @@ $(document).ready(function() {
 })
 
 function validUser(user_id) {
-    alert(1);
     //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
     if (!user_id) {
-        alert(2);
         userLoginToMeet(meet_id);
     }
 }
@@ -41,6 +39,7 @@ function loadThisMeet(user_id) {
 //初始化留言提交按钮事件
 function initBtnWord(user_id) {
     $(document).on('click', '#word_submit', function () {
+        alert(1);
         var word = new Word();
 
         word.setMeet_Id(id);
