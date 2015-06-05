@@ -38,7 +38,6 @@ function loadThisMeet(user_id) {
 //初始化留言提交按钮事件
 function initBtnWord(user_id) {
     $(document).on('click', '#word_submit', function () {
-        alert(1);
         var word = new Word();
 
         word.setMeet_Id(meet_id);
@@ -64,8 +63,20 @@ function initBtnCloseMeet(user_id) {
 function initBtnJoin(user_id) {
     if (users_id.indexOf(user_id) > -1)  {
         $('#letmeleave').show();
+
+        $('#letmeleave').tap(function() {
+            var meet = new Meet();
+
+            meet.leave(user_id, meet_id);
+        })
     }
     else  {
         $('#letmejoin').show();
+
+        $('#letmejoin').tap(function() {
+            var meet = new Meet();
+
+            meet.join(user_id, meet_id);
+        })
     }
 }

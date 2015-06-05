@@ -103,8 +103,16 @@ var Meet = function () {
         QueryMeet(user_id, year, month, day);
     }
 
-    obj.load = function (user_id, id) {
-        loadMeet(user_id, id);
+    obj.load = function (user_id, meet_id) {
+        loadMeet(user_id, meet_id);
+    }
+
+    obj.join = function (user_id, meet_id) {
+        joinMeet(user_id, meet_id);
+    }
+
+    obj.leave = function (user_id, meet_id) {
+        leaveMeet(user_id, meet_id);
     }
 
     return obj;

@@ -58,17 +58,64 @@ function loadMeet(user_id, meet_id) {
     var url = '/api/meet/load';
 
     var  data = { 'id': meet_id, 'user_id': user_id }
-    //alert(JSON.stringify(data));
+
     $.ajax({
         url: url,
         dataType: 'json',
         data: data,
         method: 'get',
         success: function (response) {
-            //alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载特定活动
                 meetLoad(response.data);
+            }
+            else {
+                alert(response.data);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+加入活动
+function joinMeet(user_id, meet_id) {
+    var url = '/api/meet/join';
+
+    var  data = { 'id': meet_id, 'user_id': user_id }
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        method: 'get',
+        success: function (response) {
+            if (response.code == 200) {
+                location.reload();
+            }
+            else {
+                alert(response.data);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+//退出活动
+function leaveMeet(user_id, meet_id) {
+    var url = '/api/meet/leave';
+
+    var  data = { 'id': meet_id, 'user_id': user_id }
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        method: 'get',
+        success: function (response) {
+            if (response.code == 200) {
+                location.reload();
             }
             else {
                 alert(response.data);

@@ -31,7 +31,7 @@ class Angel_Model_Meet extends Angel_Model_AbstractModel {
     }
 
     //修改聚会信息
-    public function saveMeet($id, $options_date, $selected_date, $selected_date, $time_range, $meet_text, $remark, $address, $proposer_id, $users_id, $words, $year, $month, $day, $status = 1, $identity = 1) {
+    public function saveMeet($id, $options_date, $selected_date, $selected_date, $time_range, $meet_text, $remark, $address, $proposer_id, $users_id, $year, $month, $day, $status = 1, $identity = 1) {
         $data = array('options_date' => $options_date,
             'selected_date' => $selected_date,
 //            'time_range' => $time_range,
@@ -45,8 +45,7 @@ class Angel_Model_Meet extends Angel_Model_AbstractModel {
             'month' => $month,
             'day' => $day,
             'proposer_id' => $proposer_id,
-            'users_id' => $users_id,
-            'words' => $words);
+            'users_id' => $users_id);
 
         $result = $this->save($id, $data);
 
