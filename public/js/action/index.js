@@ -9,7 +9,14 @@ $(document).ready(function() {
     })
 
     $('#btn_add').tap(function () {
-        location.href = '/meet/add';
+        var user = new User();
+
+        if (!user.valid()) {
+            location.href = "/";
+        }
+        else {
+            location.href = '/meet/add';
+        }
     })
 
     $(document).on('click', '.glyphicon-send', function () {
