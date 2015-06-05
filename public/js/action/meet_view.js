@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    alert(user_id);
     //判断是否从后台得到用户的id，如果得到就不在从缓存中取用户id
     if (!user_id) {
         user_id = localStorage.getItem('user_id');
@@ -42,7 +41,7 @@ function initBtnWord(user_id) {
         alert(1);
         var word = new Word();
 
-        word.setMeet_Id(id);
+        word.setMeet_Id(meet_id);
         word.setUser_Id(user_id);
         word.setText($('#word_text').val());
 
