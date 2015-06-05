@@ -60,14 +60,15 @@ var Meet = function () {
 
                 return false;
             }
+            else {
+                var d1 = new Date(this.start_date);
+                var d2 = new Date(this.end_date);
 
-            var d1 = new Date(this.start_date);
-            var d2 = new Date(this.end_date);
+                if (d1 >= d2) {
+                    alert("结束日期必须小于开始日期");
 
-            if (d1 >= d2) {
-                alert("结束日期必须小于开始日期");
-
-                return false;
+                    return false;
+                }
             }
         }
 
