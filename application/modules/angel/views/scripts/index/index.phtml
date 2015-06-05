@@ -50,24 +50,23 @@
         });
 
         //测试
-//        localStorage.setItem("user_id", "123456");
 //        localStorage.clear();
-        var user = new User();
-
-        user.setUser_Id(openid);
-
-        if (!user.valid()) {
-            userLogin();
-        }
-        else {
-            var calendar = new Calendar();
-            var user_id = localStorage.getItem('user_id');
-
-            calendar.setYear($('#day_1').attr('year'));
-            calendar.setMonth($('#day_1').attr('month'));
-            calendar.setUser_Id(user_id);
-
-            calendar.getSchedule();
-        }
+//        var user = new User();
+//
+//        user.setUser_Id(openid);
+//
+//        if (!user.valid()) {
+//            userLogin();
+//        }
+//        else {
+//            var calendar = new Calendar();
+//            var user_id = localStorage.getItem('user_id');
+//
+//            calendar.setYear($('#day_1').attr('year'));
+//            calendar.setMonth($('#day_1').attr('month'));
+//            calendar.setUser_Id(user_id);
+//
+//            calendar.getSchedule();
+//        }
     });
 </script>

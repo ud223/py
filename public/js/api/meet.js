@@ -89,7 +89,7 @@ function joinMeet(user_id, meet_id) {
         url: url,
         dataType: 'json',
         data: data,
-        method: 'get',
+        method: 'post',
         success: function (response) {
             if (response.code == 200) {
                 location.reload();
@@ -113,10 +113,35 @@ function leaveMeet(user_id, meet_id) {
         url: url,
         dataType: 'json',
         data: data,
-        method: 'get',
+        method: 'post',
         success: function (response) {
             if (response.code == 200) {
                 location.reload();
+            }
+            else {
+                alert(response.data);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
+//关闭活动
+function closeMeet(user_id, meet_id) {
+    var url = '/api/meet/close';
+
+    var  data = { 'meet_id': meet_id, 'user_id': user_id }
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        method: 'post',
+        success: function (response) {
+            if (response.code == 200) {
+                location.href = "/";
             }
             else {
                 alert(response.data);

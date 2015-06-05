@@ -115,8 +115,8 @@ var Meet = function () {
         leaveMeet(user_id, meet_id);
     }
 
-    obj.test = function() {
-        alert('test');
+    obj.close = function(user_id, meet_id) {
+        closeMeet(user_id, meet_id);
     }
 
     return obj;

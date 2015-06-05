@@ -57,6 +57,12 @@ function initBtnBack() {
 function initBtnCloseMeet(user_id) {
     if (user_id == proposer_id) {
         $('#close_meet').show();
+
+        $('#close_meet').tap(function() {
+            var meet = new Meet();
+
+            meet.close(user_id, meet_id);
+        })
     }
 }
 //初始化加入按钮

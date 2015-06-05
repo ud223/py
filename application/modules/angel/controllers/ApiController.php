@@ -259,7 +259,34 @@ class Angel_ApiController extends Angel_Controller_Action {
 
     //关闭活动
     public function closeMeetAction() {
+        $meetModel = $this->getModel('meet');
 
+        $meet_id = $this->getParam('meet_id');
+        $user_id = $this->getParam('user_id');
+
+        $code = 200;
+        $message = "关闭成功!";
+
+        $meet = $meetModel->getById($meet_id);
+
+        if (!$meet) {
+            $code = 0;
+            $message = "获取活动信息错误,活动关闭失败!";
+
+            $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
+        }
+
+        //关闭活动需要踢掉所有参与用户,所以传一个空的用户数组
+        $users_id = array();
+
+        $result = $meetModel->saveMeet($meet_id, $meet->options_date, $meet->selected_date, $meet->selected_date, $meet->time_range, $meet->meet_text, $meet->remark, $meet->address, $meet->proposer_id, $users_id, $meet->year, $meet->month, $meet->day, 0);
+
+        if (!$result) {
+            $code = 0;
+            $message = "活动关闭失败!";
+        }
+
+        $this->_helper->json(array('data' => $message, 'code' => $code));
     }
 
     /*******************************************************************************************************************
