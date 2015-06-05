@@ -63,8 +63,9 @@ function initBtnCloseMeet(user_id) {
 function initBtnJoin(user_id) {
     if (users_id.indexOf(user_id) > -1)  {
         $('#letmeleave').show();
-
+        alert(11);
         $('#letmeleave').tap(function() {
+            alert(1);
             var meet = new Meet();
 
             meet.leave(user_id, meet_id);
@@ -72,8 +73,9 @@ function initBtnJoin(user_id) {
     }
     else  {
         $('#letmejoin').show();
-
+        alert(22);
         $('#letmejoin').tap(function() {
+            alert(2);
             var meet = new Meet();
 
             meet.join(user_id, meet_id);
