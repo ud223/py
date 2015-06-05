@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
 
-    loadMeet(user_id);
+    loadThisMeet(user_id);
 
     initBtnWord(user_id);
 
@@ -9,7 +9,7 @@ $(document).ready(function() {
 })
 
 //加载活动信息
-function loadMeet(user_id) {
+function loadThisMeet(user_id) {
     var meet = new Meet();
 
     meet.load(user_id, id);
