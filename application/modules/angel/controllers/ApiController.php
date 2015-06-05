@@ -139,6 +139,22 @@ class Angel_ApiController extends Angel_Controller_Action {
         }
     }
 
+    //获取单个用户的详细数据
+    public function getUserInfo($user_id) {
+        $userModel = $this->getModel('user');
+
+        $result = $userModel->getUserByOpenId($user_id);
+
+        if (!$result) {
+            return false;
+        }
+
+        $user =  array("openid"=>$result->openid, "headimgurl"=>$result->headimgurl, "nickname"=>$result->nickname);
+
+        return $user;
+    }
+
+    //获取用户集合的信息数据
     public function getUsersInfo($users_id) {
         $userModel = $this->getModel('user');
 
@@ -149,8 +165,6 @@ class Angel_ApiController extends Angel_Controller_Action {
         }
 
         $result = $userModel->getUserByOpenIds($tmp_users_id);
-
-//        $this->_helper->json(array('data' => '查询', 'code' => 200)); exit;
 
         if (!$result) {
             return false;
@@ -264,7 +278,9 @@ class Angel_ApiController extends Angel_Controller_Action {
             $words = array();
 
             foreach ($result as $r) {
-                $words[] = array("id"=>$r->id, "text"=>$r->text, "date"=>$r->created_at, "user_id"=>$r->user_id);
+                $user = $this->getUserInfo($r->user_id);
+
+                $words[] = array("id"=>$r->id, "text"=>$r->text, "date"=>$r->created_at, "user"=>$user);
             }
 
             $this->_helper->json(array('data' => $words, 'code' => $code));
