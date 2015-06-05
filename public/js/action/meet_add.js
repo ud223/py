@@ -15,7 +15,7 @@ $(document).ready(function() {
         }
         //测试
         //localStorage.setItem('user_id', '123456');
-        alert(localStorage.getItem('user_id')); return;
+        //alert(localStorage.getItem('user_id')); return;
         meet.setMeet_Text($('#meet_text').val());
         meet.address = $('#address').val();
         meet.remark = $('#remark').val();
