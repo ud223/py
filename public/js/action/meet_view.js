@@ -8,6 +8,8 @@ $(document).ready(function() {
         localStorage.setItem('user_id', user_id);
     }
 
+    validUser(user_id)
+
     loadThisMeet(user_id);
 
     initBtnWord(user_id);
