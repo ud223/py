@@ -5,9 +5,9 @@ $(document).ready(function() {
 
     initBtnWord(user_id);
     initBtnBack();
-
-    initBtnJoin(user_id);
+    
     initBtnCloseMeet(user_id);
+    initBtnJoin(user_id);
 })
 
 //加载活动信息
