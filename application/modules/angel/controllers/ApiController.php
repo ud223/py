@@ -147,6 +147,10 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $result = $userModel->getUserByOpenIds($users_id);
 
+        if (!$result) {
+            return false;
+        }
+
         $users = array();
 
         foreach ($result as $r) {
@@ -176,9 +180,9 @@ class Angel_ApiController extends Angel_Controller_Action {
 
             foreach ($result as $r) {
                 //通过users_id集合得到用户集合
-                $users = $this->getUsersInfo($r->users_id);
+//                $users = $this->getUsersInfo($r->users_id);
 
-                $meets[] = array("id"=>$r->id, "meet_text"=>$r->meet_text, "address"=>$r->address, "remark"=>$r->remark, "users"=>$users, "date"=>$r->selected_date, "year"=>$r->year, "month"=>$r->month, "day"=>$r->day, "identity"=>$r->identity);
+                $meets[] = array("id"=>$r->id, "meet_text"=>$r->meet_text, "address"=>$r->address, "remark"=>$r->remark, "users"=>$r->users_id, "date"=>$r->selected_date, "year"=>$r->year, "month"=>$r->month, "day"=>$r->day, "identity"=>$r->identity);
             }
 
             $this->_helper->json(array('data' => $meets, 'code' => $code));
