@@ -12,15 +12,13 @@ $(document).ready(function() {
 
 //加载活动信息
 function loadThisMeet(user_id) {
-    alert(1);
     var meet = new Meet();
-    alert(id);
-    alert(user_id);
-    meet.load(user_id, id);
+
+    meet.load(user_id, meet_id);
 
     var word = new Word();
 
-    word.load(id);
+    word.load(meet_id);
 }
 //初始化留言提交按钮事件
 function initBtnWord(user_id) {
