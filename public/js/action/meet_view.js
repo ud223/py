@@ -12,8 +12,10 @@ $(document).ready(function() {
 
 //加载活动信息
 function loadThisMeet(user_id) {
+    alert(1);
     var meet = new Meet();
-
+    alert(id);
+    alert(user_id);
     meet.load(user_id, id);
 
     var word = new Word();

@@ -65,6 +65,7 @@ function loadMeet(user_id, id) {
         data: data,
         method: 'get',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载特定活动
                 meetLoad(response.data);
