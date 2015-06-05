@@ -58,14 +58,14 @@ function loadMeet(user_id, meet_id) {
     var url = '/api/meet/load';
 
     var  data = { 'id': meet_id, 'user_id': user_id }
-    alert(JSON.stringify(data)); 
+    //alert(JSON.stringify(data));
     $.ajax({
         url: url,
         dataType: 'json',
         data: data,
         method: 'get',
         success: function (response) {
-            alert(JSON.stringify(response));
+            //alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载特定活动
                 meetLoad(response.data);
