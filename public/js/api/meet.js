@@ -39,7 +39,7 @@ function QueryMeet(user_id, year, month, day) {
         success: function (response) {
             if (response.code == 200) {
 
-                alert(JSON.stringify(response)); return;
+                //alert(JSON.stringify(response)); return;
                 //加载活动集合
                 loadMeets(response.data);
             }
