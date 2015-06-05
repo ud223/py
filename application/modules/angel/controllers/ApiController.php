@@ -150,9 +150,9 @@ class Angel_ApiController extends Angel_Controller_Action {
             $tmp_users_id[] = $u;
         }
 
-//        $this->_helper->json(array('data' => $tmp_users_id, 'code' => 200)); exit;
-
         $result = $userModel->getUserByOpenIds($tmp_users_id);
+
+        $this->_helper->json(array('data' => $result, 'code' => 200)); exit;
 
         if (!$result) {
             $this->_helper->json(array('data' => "查询报错", 'code' => 200)); exit;
