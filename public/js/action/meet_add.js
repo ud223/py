@@ -39,12 +39,12 @@ function initBack() {
 
 function initMeetType() {
     alert(1);
-    $('add-tab-1').tap(function() {
+    $('#add-tab-1').tap(function() {
         alert(2);
         meet.select(true);
     })
 
-    $('add-tab-2').tap(function() {
+    $('#add-tab-2').tap(function() {
         alert(3);
         meet.select(false);
     })
