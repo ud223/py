@@ -48,7 +48,7 @@ function initBtnCloseMeet(user_id) {
 function initBtnJoin(user_id) {
     alert(users_id);
     alert(user_id);
-    if (users_id.indexof(user_id) > -1)  {
+    if (users_id.indexOf(user_id) > -1)  {
         $('#letmeleave').show();
     }
     else  {
