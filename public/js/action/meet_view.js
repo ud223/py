@@ -1,5 +1,11 @@
 $(document).ready(function() {
-    var user_id = localStorage.getItem('user_id');
+    //判断是否从后台得到用户的id，如果得到就不在从缓存中取用户id
+    if (!user_id) {
+        user_id = localStorage.getItem('user_id');
+    }
+    else {
+        localStorage.setItem('user_id', user_id);
+    }
 
     loadThisMeet(user_id);
 
@@ -9,6 +15,13 @@ $(document).ready(function() {
     initBtnCloseMeet(user_id);
     initBtnJoin(user_id);
 })
+
+function validUser(user_id) {
+    //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
+    if (!user_id) {
+        userLoginToMeet(meet_id);
+    }
+}
 
 //加载活动信息
 function loadThisMeet(user_id) {
@@ -46,8 +59,6 @@ function initBtnCloseMeet(user_id) {
 }
 //初始化加入按钮
 function initBtnJoin(user_id) {
-    alert(users_id);
-    alert(user_id);
     if (users_id.indexOf(user_id) > -1)  {
         $('#letmeleave').show();
     }

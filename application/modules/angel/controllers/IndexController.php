@@ -82,53 +82,6 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
     }
 
-//    //构造函数，获取Access Token
-//    public function getAccessToken($appid = NULL, $appsecret = NULL) {
-//        if($appid) {
-//            $this->$app_id = $appid;
-//        }
-//        if($appsecret) {
-//            $this->$app_secret = $appsecret;
-//        }
-
-//        $this->lasttime = 1395049256;
-//        $this->access_token = "nRZvVpDU7LxcSi7GnG2LrUcmKbAECzRf0NyDBwKlng4nMPf88d34pkzdNcvhqm4clidLGAS18cN1RTSK60p49zIZY4aO13sF-eqsCs0xjlbad-lKVskk8T7gALQ5dIrgXbQQ_TAesSasjJ210vIqTQ";
-//        //这里需要修改成用户初次登陆或登陆超时重新登录的判断
-//        //如果当前时间大于过期时间就重新获取一次用户的access_token和获取时间
-//        if (time() > ($this->lasttime + 7200)) {
-//            $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->$app_id."&secret=".$this->$app_secret;
-//            $res = $this->https_request($url);
-//            $result = json_decode($res, true);
-//
-//            $this->$access_token = $result["access_token"];
-//            $lasttime = time();
-//        }
-//    }
-//    //获取用户基本信息
-//    public function get_user_info($openid) {
-//        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$this->access_token."&openid=".$openid."&lang=zh_CN";
-//        $res = $this->https_request($url);
-//
-//        //这里需修改成用户重新保存信息
-//        return json_decode($res, true);
-//    }
-//
-//    //http请求
-//    public function https_request($url, $data = null) {
-//        $curl = curl_init();
-//        curl_setopt($curl, CURLOPT_URL, $url);
-//        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-//        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-//        if (!empty($data)){
-//            curl_setopt($curl, CURLOPT_POST, 1);
-//            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-//        }
-//        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-//        $output = curl_exec($curl);
-//        curl_close($curl);
-//        return $output;
-//    }
-
     public function init() {
         $this->_helper->layout->setLayout('main');
         parent::init();
@@ -201,13 +154,19 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function regUserAction() {
         $code = $_GET['code'];
+        $meet_id = $this->getParam('id');
 
         $open_id = $this->getOpenId($code);
         $userInfo = $this->getUserInfo($open_id);
         $result = $this->addUser($userInfo);
 
         if ($result) {
-            header("Location: /" . $open_id); exit;
+            if ($meet_id) {
+                header("Location: /meet/view/" . $meet_id . "/"  . $open_id); exit;
+            }
+            else {
+                header("Location: /" . $open_id); exit;
+            }
         }
         else {
             exit("注册或登陆失败,请重试!");
@@ -220,9 +179,10 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function viewMeetAction() {
         $this->_helper->layout->setLayout('detail');
-        $meetModel = $this->getModel('meet');
 
+        $meetModel = $this->getModel('meet');
         $meet_id = $this->getParam('id');
+        $user_id = $this->getParam('userid');
 
         $result = $meetModel->getById($meet_id);
 
@@ -235,6 +195,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->meet_id = $meet_id;
         $this->view->proposer_id = $result->proposer_id;
         $this->view->users_id = $users_id;
+        $this->view->user_id = $user_id;
     }
 
     public function voteMeetAction() {
