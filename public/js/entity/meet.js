@@ -116,5 +116,9 @@ var Meet = function () {
         leaveMeet(user_id, meet_id);
     }
 
+    obj.test = function() {
+        alert('test');
+    }
+
     return obj;
 }

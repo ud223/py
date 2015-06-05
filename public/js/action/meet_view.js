@@ -80,6 +80,7 @@ function initBtnJoin(user_id) {
             alert(2);
             alert(user_id);
             alert(meet_id);
+            meet.test();
             meet.join(user_id, meet_id);
         })
     }
