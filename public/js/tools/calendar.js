@@ -1,5 +1,6 @@
 //设置主页日期已被安排活动
 function setCalendarOpt(data) {
+    alert(1);
     $.each(data, function () {
         var id = "day_"+ this.day;
         var identity ="";

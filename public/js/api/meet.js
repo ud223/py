@@ -80,7 +80,6 @@ function loadMeet(user_id, meet_id) {
 }
 加入活动
 function joinMeet(user_id, meet_id) {
-    alert(4);
     var url = '/api/meet/join';
 
     var  data = { 'meet_id': meet_id, 'user_id': user_id }
