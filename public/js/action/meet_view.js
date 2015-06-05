@@ -2,15 +2,25 @@ $(document).ready(function() {
     var meet = new Meet();
     //测试
     //localStorage.setItem('user_id', '123456');
-
     var user_id = localStorage.getItem('user_id');
 
+    loadMeet(user_id);
+
+    initBtnWord(user_id);
+
+    initBtnBack();
+})
+
+//加载活动信息
+function loadMeet(user_id) {
     meet.load(user_id, id);
 
     var word = new Word();
 
     word.load(id);
-
+}
+//初始化留言提交按钮事件
+function initBtnWord(user_id) {
     $(document).on('click', '#word_submit', function () {
         var word = new Word();
 
@@ -20,8 +30,36 @@ $(document).ready(function() {
 
         word.add();
     });
-
+}
+//初始化后退按钮
+function initBtnBack() {
     $('#pge-cover-back').tap(function() {
         location.href = "/";
     })
-})
+}
+//初始化关闭活动按钮
+function initBtnCloseMeet(user_id) {
+    if (user_id == proposer_id) {
+
+    }
+}
+//初始化加入按钮
+function initBtnJoin(user_id) {
+    var isJoin = false;
+
+    $.each(users_id, function() {
+        alert(this);
+        if (this == user_id) {
+            isJoin = true;
+
+            return;
+        }
+    });
+
+    if (isJoin) {
+
+    }
+    else  {
+
+    }
+}

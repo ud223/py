@@ -220,10 +220,15 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function viewMeetAction() {
         $this->_helper->layout->setLayout('detail');
+        $meetModel = $this->getModel('meet');
 
         $id = $this->getParam('id');
 
+        $result = $meetModel->getById($id);
+
         $this->view->meet_id = $id;
+        $this->view->proposer_id = $result->proposer_id;
+        $this->view->users_id = $result->users_id;
     }
 
     public function voteMeetAction() {
@@ -243,14 +248,11 @@ class Angel_IndexController extends Angel_Controller_Action {
         $userModule = $this->getModel('user');
 
 //        $users_id = array();
-//
 //        $users_id[] = "123456";
 //        $users_id[] = "1234567";
-
 //        var_dump($users_id); exit;
 
         $user_id = "123456";
-
 //        $result = $userModule->getUserByOpenIds($users_id);
         $result = $userModule->getUserByOpenId($user_id);
 
