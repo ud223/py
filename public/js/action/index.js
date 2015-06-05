@@ -26,15 +26,13 @@ $(document).ready(function() {
 
 function initCalendarClick(id) {
     $( '#'+id).tap(function () {
-        alert(0);
         var meetModel = new Meet();
-        alert(1);
+
         var user_id = localStorage.getItem('user_id');
-        alert(2);
         var year = $('#'+ id).attr('year');
         var month = $('#'+ id).attr('month');
         var day = $('#'+ id).attr('day');
-        alert(3);
+
         meetModel.Query(user_id, year, month, day);
     })
 }
