@@ -13,7 +13,7 @@ function userLogin() {
 
 function userLoginToMeet(meet_id) {
     alert(3);
-    var user_id = localStorage.getItem('user_id');
+    user_id = localStorage.getItem('user_id');
     var url = "http://cbook.test.angelhere.cn/reg/"+meet_id;
     alert(url);
     alert(user_id);
