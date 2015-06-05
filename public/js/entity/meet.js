@@ -65,7 +65,7 @@ var Meet = function () {
                 var d2 = new Date(this.end_date);
 
                 if (d1 >= d2) {
-                    this.message = "结束日期必须小于开始日期";
+                    this.message = "结束日期必须大于开始日期";
 
                     return false;
                 }
