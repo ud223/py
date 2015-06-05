@@ -1,7 +1,7 @@
 (function(){
     // 全几乎的tab部分
     var the_tabs = $('.tab-bt.selected');
-    if(the_tabs.length) {
+    //if(the_tabs.length) {
         var $ix = the_tabs.attr('rel');
         $('#' + $ix).show();
 
@@ -18,5 +18,5 @@
                 $('#' + $this.attr('rel')).show().addClass('selected');
             }
         });
-    }
+    //}
 })(jQuery);
