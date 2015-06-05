@@ -149,7 +149,9 @@ class Angel_ApiController extends Angel_Controller_Action {
         foreach ($users_id as $u) {
             $tmp_users_id[] = $u;
         }
-        
+
+        $this->_helper->json(array('data' => $tmp_users_id, 'code' => 200)); exit;
+
         $result = $userModel->getUserByOpenIds($tmp_users_id);
 
         if (!$result) {
