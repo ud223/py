@@ -229,7 +229,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $users_id = "";
 
         foreach ($result->users_id as $id) {
-            $users_id = $users_id . $id;
+            $users_id = $users_id . '|' . $id;
         }
 
         $this->view->meet_id = $id;
