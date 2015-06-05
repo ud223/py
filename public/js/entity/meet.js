@@ -102,10 +102,11 @@ var Meet = function () {
     }
 
     obj.add = function () {
+        alert(0);
         if (!this.check()) {
             alert(this.message);
 
-            return;;
+            return;
         }
 
         addMeet(this.start_date, this.end_date, this.selected_date, this.meet_text, this.address, this.remark, this.user_id);
