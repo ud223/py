@@ -7,7 +7,7 @@ $(document).ready(function() {
     initBtnBack();
 
     initBtnCloseMeet(user_id);
-    initBtnJoin(user_id);
+    //initBtnJoin(user_id);
 })
 
 //加载活动信息
