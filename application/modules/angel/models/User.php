@@ -46,7 +46,7 @@ class Angel_Model_User extends Angel_Model_AbstractModel {
     public function getUserByOpenId($openid) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)->field('openid')->equals($openid)->sort("created_at", -1);
 
-        $result = $query->getQuery()->execute();
+        $result = $query->getQuery();
 
         return $result;
     }
