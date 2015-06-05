@@ -14,7 +14,7 @@ $(document).ready(function() {
             meet.setEnd_Date($('#end_date').val());
         }
         //测试
-        localStorage.setItem('user_id', '123456');
+        //localStorage.setItem('user_id', '123456');
 
         meet.setMeet_Text($('#meet_text').val());
         meet.address = $('#address').val();
