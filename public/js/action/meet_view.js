@@ -46,6 +46,8 @@ function initBtnCloseMeet(user_id) {
 }
 //初始化加入按钮
 function initBtnJoin(user_id) {
+    alert(users_id);
+    alert(user_id);
     if (users_id.indexof(user_id) > -1)  {
         $('#letmeleave').show();
     }
