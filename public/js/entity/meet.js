@@ -43,6 +43,7 @@ var Meet = function () {
     //切换聚会日期选择方式激发方法
     //特定日期聚会申请为true, 日期区间聚会申请为false
     obj.select = function(t) {
+        alert(t);
         this.selected = t;
     }
 

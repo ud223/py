@@ -28,14 +28,13 @@ $(document).ready(function() {
        location.href = "/";
     })
 
-    //$(document).on('click', '.glyphicon-calendar', function() {
-    //    meet.select(true)
-    //})
-    //
-    //$(document).on('click', '.glyphicon-bullhorn', function() {
-    //    meet.select(false)
-    //})
+    $(document).on('click', '.glyphicon-calendar', function() {
+        meet.select(true)
+    })
 
+    $(document).on('click', '.glyphicon-bullhorn', function() {
+        meet.select(false)
+    })
 })
 
 function initCalendarClick() {
