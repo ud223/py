@@ -5,8 +5,14 @@ function loadMeets(data) {
         var node = $('#meet_model').clone(true);
 
         node.find('.mg-listc-btt').html(this.meet_text);
-
         var id = this.id;
+        var users = "";
+
+        $.each(this.users, function() {
+            users = users + '<span class="sli"><img src="'+ this.headimgurl +'"/></span>';
+        })
+
+        node.find('.mg-listc-usrs').html(users);
 
         node.tap(function() {
            location.href = "/meet/view/"+ id;

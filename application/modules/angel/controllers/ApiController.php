@@ -141,6 +141,20 @@ class Angel_ApiController extends Angel_Controller_Action {
         }
     }
 
+    public function getUsersInfo($users_id) {
+        $userModel = $this->getModel('user');
+
+        $result = $userModel->getUserByOpenIds($users_id);
+
+        $users = array();
+
+        foreach ($result as $r) {
+            $users[] = array("openid"=>$r->openid, "headimgurl"=>$r->$headimgurl, "nickname"=>$r->nickname);
+        }
+
+        return $users;
+    }
+
     public function getMeetAction() {
         $meetModel = $this->getModel('meet');
 
@@ -160,7 +174,10 @@ class Angel_ApiController extends Angel_Controller_Action {
             $meets = array();
 
             foreach ($result as $r) {
-                $meets[] = array("id"=>$r->id, "meet_text"=>$r->meet_text, "address"=>$r->address, "remark"=>$r->remark, "users_id"=>$r->users_id, "date"=>$r->selected_date, "year"=>$r->year, "month"=>$r->month, "day"=>$r->day, "identity"=>$r->identity);
+                //通过users_id集合得到用户集合
+                $users = $this->getUsersInfo($r->users_id);
+
+                $meets[] = array("id"=>$r->id, "meet_text"=>$r->meet_text, "address"=>$r->address, "remark"=>$r->remark, "users"=>$users, "date"=>$r->selected_date, "year"=>$r->year, "month"=>$r->month, "day"=>$r->day, "identity"=>$r->identity);
             }
 
             $this->_helper->json(array('data' => $meets, 'code' => $code));
