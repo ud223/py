@@ -7,8 +7,6 @@
  */
 
 class Angel_ApiController extends Angel_Controller_Action {
-    protected $login_not_required = array('index');
-
     public function init() {
         $this->_helper->layout->setLayout('main');
         parent::init();
@@ -152,7 +150,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $result = $userModel->getUserByOpenIds($tmp_users_id);
 
-        $this->_helper->json(array('data' => $result, 'code' => 200)); exit;
+        $this->_helper->json(array('data' => '查询', 'code' => 200)); exit;
 
         if (!$result) {
             $this->_helper->json(array('data' => "查询报错", 'code' => 200)); exit;

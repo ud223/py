@@ -114,20 +114,20 @@ class Angel_IndexController extends Angel_Controller_Action {
 //    }
 //
 //    //http请求
-    public function https_request($url, $data = null) {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-        if (!empty($data)){
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        }
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($curl);
-        curl_close($curl);
-        return $output;
-    }
+//    public function https_request($url, $data = null) {
+//        $curl = curl_init();
+//        curl_setopt($curl, CURLOPT_URL, $url);
+//        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+//        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+//        if (!empty($data)){
+//            curl_setopt($curl, CURLOPT_POST, 1);
+//            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+//        }
+//        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+//        $output = curl_exec($curl);
+//        curl_close($curl);
+//        return $output;
+//    }
 
     public function init() {
         $this->_helper->layout->setLayout('main');
@@ -207,16 +207,11 @@ class Angel_IndexController extends Angel_Controller_Action {
         $result = $this->addUser($userInfo);
 
         if ($result) {
-//            $this->view->isLogin = 1;
             header("Location: /" . $open_id); exit;
         }
         else {
             exit("注册或登陆失败,请重试!");
-
-//            $this->view->isLogin = 0;
         }
-
-//        $this->view->openid = $open_id;
     }
 
     public function addMeetAction() {
@@ -233,5 +228,39 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function voteMeetAction() {
         $this->_helper->layout->setLayout('detail');
+    }
+
+    //本地测试注册用户方法
+    public function testRegAction() {
+        $userModel = $this->getModel('user');
+
+        $result = $userModel->addUser("1234567", 0, "smple", 1, "", "aaa", "bbb", "ccc", "img", "");
+
+        exit('添加测试数据成功');
+    }
+    //本地测试查询用户方法
+    public function testGetAction() {
+        $userModule = $this->getModel('user');
+
+        $users_id = array();
+
+        $users_id[] = "123456";
+        $users_id[] = "1234567";
+
+//        var_dump($users_id); exit;
+
+        $result = $userModule->getUserByOpenIds($users_id);
+
+        if (!$result) {
+            exit('failed');
+        }
+
+        $msg = "";
+
+        foreach ($result as $r) {
+            $msg = $msg . $r->nickname . '|';
+        }
+
+        exit($msg);
     }
 }
