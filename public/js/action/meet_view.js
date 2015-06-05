@@ -20,8 +20,10 @@ $(document).ready(function() {
 })
 
 function validUser(user_id) {
+    alert(1);
     //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
     if (!user_id) {
+        alert(2);
         userLoginToMeet(meet_id);
     }
 }
