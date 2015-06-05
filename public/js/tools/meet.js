@@ -28,4 +28,13 @@ function meetLoad(data) {
     $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
     $(document).find('#address').html(data.address);
     $(document).find('#remark').html(data.remark);
+
+    $(document).find('.busr-lst').html("");
+    var users_html = "";
+
+    $.each(data.users, function() {
+        users_html = users_html + '<li><img src="'+ this.headimgurl +'"/></li>';
+    });
+
+    $(document).find('.busr-lst').html(users_html);
 }

@@ -153,8 +153,6 @@ class Angel_ApiController extends Angel_Controller_Action {
 //        $this->_helper->json(array('data' => '查询', 'code' => 200)); exit;
 
         if (!$result) {
-            $this->_helper->json(array('data' => "查询报错", 'code' => 200)); exit;
-
             return false;
         }
 
@@ -215,7 +213,9 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $result = $meetModel->getById($id);
 
-        $data = array("meet_text"=>$result->meet_text, "selected_date"=>$result->selected_date, "year"=>$result->year, "month"=>$result->month, "day"=>$result->day,"address"=>$result->address, "remark"=>$result->remark);
+        $users = $this->getUsersInfo($result->users_id);
+
+        $data = array("meet_text"=>$result->meet_text, "selected_date"=>$result->selected_date, "year"=>$result->year, "month"=>$result->month, "day"=>$result->day,"address"=>$result->address, "remark"=>$result->remark, "users"=>$users);
 
         if ($result) {
             $this->_helper->json(array('data' => $data, 'code' => $code));
