@@ -99,7 +99,7 @@ var Meet = function () {
         addMeet(this.start_date, this.end_date, this.selected_date, this.meet_text, this.address, this.remark, this.user_id);
     }
 
-    obj.Query = function (user_id, year, month, day) {
+    obj.Query = function(user_id, year, month, day) {
         QueryMeet(user_id, year, month, day);
     }
 
@@ -107,12 +107,12 @@ var Meet = function () {
         loadMeet(user_id, meet_id);
     }
 
-    obj.join = function (user_id, meet_id) {
+    obj.join = function(user_id, meet_id) {
         alert(3);
         joinMeet(user_id, meet_id);
     }
 
-    obj.leave = function (user_id, meet_id) {
+    obj.leave = function(user_id, meet_id) {
         leaveMeet(user_id, meet_id);
     }
 
