@@ -39,6 +39,7 @@
 </div>
 <script>
     var appid = '<?php echo $this->appid ?>';
+    var openid = '<?php echo $this->openid ?>';
 
     $(document).ready(function(){
         var now = new Date();
@@ -61,9 +62,11 @@
         else {
             var calendar = new Calendar();
             var user_id = localStorage.getItem('user_id');
+
             alert(user_id);
             alert($('#day_1').attr('year'));
             alert($('#day_1').attr('month'));
+
             calendar.setYear($('#day_1').attr('year'));
             calendar.setMonth($('#day_1').attr('month'));
             calendar.setUser_Id(user_id);
