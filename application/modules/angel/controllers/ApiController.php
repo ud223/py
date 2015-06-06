@@ -342,7 +342,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
                 break;
             }
-            $this->_helper->json(array('data' =>$vote->id . $vote->meet_id . $vote->date . $vote->num, 'code' => 0)); exit;
+
             $result = $voteModel->saveDateVote($vote->id, $vote->meet_id, $vote->date, $vote->num + 1);
         }
         else {
@@ -373,6 +373,7 @@ class Angel_ApiController extends Angel_Controller_Action {
         }
 
         if ($date1 != $date2) {
+            $this->_helper->json(array('data' =>$date2, 'code' => 0)); exit;
             $result = $this->insertVote($date2, $meet_id);
 
             if (!result) {
