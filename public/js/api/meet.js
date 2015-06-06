@@ -79,7 +79,6 @@ function QueryPendingMeet(user_id, fun, toUrl) {
 
 //通过id加载聚会方法
 function loadMeet(user_id, meet_id) {
-    alert(3);
     var url = '/api/meet/load';
 
     var  data = { 'id': meet_id, 'user_id': user_id }
@@ -90,7 +89,6 @@ function loadMeet(user_id, meet_id) {
         data: data,
         method: 'get',
         success: function (response) {
-            alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载特定活动
                 meetLoad(response.data);
@@ -104,7 +102,7 @@ function loadMeet(user_id, meet_id) {
         }
     });
 }
-加入活动
+//加入活动
 function joinMeet(user_id, meet_id) {
     var url = '/api/meet/join';
 

@@ -31,10 +31,17 @@ function loadMeets(data, toUrl) {
 }
 
 function meetLoad(data) {
-    alert(5);
     $(document).find('#title').html(data.meet_text);
     $(document).find('#meet_text').html(data.meet_text);
-    $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
+
+    if (data.selected_date == 'false') {
+        $(document).find('#start_date').html(data.start_date);
+        $(document).find('#end_date').html(data.end_date);
+    }
+    else {
+        $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
+    }
+
     $(document).find('#address').html(data.address);
     $(document).find('#remark').html(data.remark);
 

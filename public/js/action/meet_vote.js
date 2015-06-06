@@ -7,7 +7,7 @@ $(document).ready(function() {
     else {
         localStorage.setItem('user_id', user_id);
     }
-    alert(0);
+
     validUser(user_id)
 
     loadThisMeet(user_id);
@@ -28,8 +28,6 @@ function validUser(user_id) {
 
 //加载活动信息
 function loadThisMeet(user_id) {
-    alert(1);
-    alert(meet_id);
     var meet = new Meet();
 
     meet.load(user_id, meet_id);
