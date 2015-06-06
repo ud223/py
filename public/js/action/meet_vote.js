@@ -53,7 +53,6 @@ function initVoteSubmit() {
             meet.vote(meet_id, date1, date2, user_id, clearVote);
         }
         else {
-            alert(2); return;
             //先参加活动,成功后再提交投票
             if (meet.join(user_id, meet_id)) {
                 meet.vote(meet_id, date1, date2, user_id, clearVote);
@@ -75,8 +74,6 @@ function initSetMeetDate() {
 }
 
 function clearVote() {
-    //$('#first_date').val('');
-    //$('#second_date').val('');
     location.reload();
 }
 
