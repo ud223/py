@@ -22,7 +22,15 @@ $(document).ready(function() {
     $(document).on('click', '.glyphicon-send', function () {
         alert('分享');
     })
+
+    initBtnPending();
 })
+
+function initBtnPending() {
+    $('#glyphicon-pending').tap(function () {
+        location.href = '/meet/pending';
+    })
+}
 
 function initCalendarClick(id) {
     $( '#'+id).tap(function () {
