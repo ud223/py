@@ -21,9 +21,9 @@ function loadMeets(data, toUrl) {
             toUrl = "/meet/view/"+ id;
         }
         alert(toUrl);
-        node.tap(function() {
-           location.href = toUrl;
-        });
+        //node.tap(function() {
+        //   location.href = toUrl;
+        //});
         alert(1);
         $('#meet-list').append(node);
     })
