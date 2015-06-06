@@ -334,6 +334,12 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $result = $voteModel->getVoteByMeetIdAndDate($meet_id, $date);
 
+        foreach ($result as $r) {
+            $vote = $r;
+
+            break;
+        }
+        $this->_helper->json(array('data' => $vote->date, 'code' => 0)); exit;
         //如果该日期已经被投票过，那么就在num数字上加1
         if ($result) {
             if ($date == '2015-06-08') {
