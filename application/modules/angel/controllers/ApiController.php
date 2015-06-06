@@ -360,11 +360,30 @@ class Angel_ApiController extends Angel_Controller_Action {
         $date1 = $this->getParam('date1');
         $date2 = $this->getParam('date2');
 
+        $code = 200;
+        $message = "关闭成功!";
+
         $result = $this->insertVote(date1, $meet_id);
+
+        if (!result) {
+            $code = 0;
+            $message = "投票失败!";
+
+            $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
+        }
 
         if ($date1 != date2) {
             $result = $this->insertVote(date2, $meet_id);
+
+            if (!result) {
+                $code = 0;
+                $message = "投票失败!";
+
+                $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
+            }
         }
+
+        $this->_helper->json(array('data' => $message, 'code' => $code));;
     }
 
     public  function setVoteAction() {
