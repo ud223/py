@@ -367,9 +367,9 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $code = 200;
         $message = "投票成功!";
-        $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
+//        $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
         $result = $this->insertVote($date1, $meet_id);
-        $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
+//        $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
         if (!result) {
             $code = 0;
             $message = "投票失败!";
@@ -386,11 +386,11 @@ class Angel_ApiController extends Angel_Controller_Action {
 
                 $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
             }
-            $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
+//            $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
             $uvoteModel->addUserVote($meet_id, $date1, $date2, $user_id);
         }
         else {
-            $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
+//            $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
             $uvoteModel->addUserVote($meet_id, $date1, "", $user_id);
         }
 
