@@ -29,37 +29,47 @@ function validUser(user_id) {
 //初始化活动日期投票按钮
 function initVoteSubmit() {
     $('#submit-vote').tap(function() {
-        var date1 = $('#first_date').val();
-        var date2 = $('#second_date').val();
         var user_id = localStorage.getItem('user_id');
-
-        if (date1 == '' && date2 == '') {
-            alert('投票日期不能都为空!');
-
-            return;
-        }
-
-        if (date1 == '' && date2 != '') {
-            date1 = date2;
-        }
-
-        if (date1 != '' && date2 == '') {
-            date2 = date1;
-        }
 
         var meet = new Meet();
         //如果是创建者,就跳过参加活动的环节
         if (users_id.indexOf(user_id) > -1)  {
-            meet.vote(meet_id, date1, date2, user_id, clearVote);
+            voteDate();
         }
         else {
             //先参加活动,成功后再提交投票
-            if (meet.join(user_id, meet_id)) {
-                meet.vote(meet_id, date1, date2, user_id, clearVote);
-            }
+            meet.join(user_id, meet_id, voteDate) ;
         }
     });
 }
+
+function voteDate(data, msg) {
+    if (!data) {
+        alert(msg); return;
+    }
+
+    var date1 = $('#first_date').val();
+    var date2 = $('#second_date').val();
+    var user_id = localStorage.getItem('user_id');
+
+    if (date1 == '' && date2 == '') {
+        alert('投票日期不能都为空!');
+
+        return;
+    }
+
+    if (date1 == '' && date2 != '') {
+        date1 = date2;
+    }
+
+    if (date1 != '' && date2 == '') {
+        date2 = date1;
+    }
+    var meet = new Meet();
+
+    meet.vote(meet_id, date1, date2, user_id, clearVote);
+}
+
 //确认设置活动日期
 function initSetMeetDate() {
     if (user_id == proposer_id) {
