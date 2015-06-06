@@ -361,15 +361,16 @@ class Angel_ApiController extends Angel_Controller_Action {
         $uvoteModel = $this->getModel('uvote');
 
         $meet_id = $this->getParam('meet_id');
+        +
         $user_id = $this->getParam('user_id');
         $date1 = $this->getParam('date1');
         $date2 = $this->getParam('date2');
 
         $code = 200;
         $message = "投票成功!";
-//        $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
+
         $result = $this->insertVote($date1, $meet_id);
-//        $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
+
         if (!result) {
             $code = 0;
             $message = "投票失败!";
@@ -394,7 +395,7 @@ class Angel_ApiController extends Angel_Controller_Action {
             $uvoteModel->addUserVote($meet_id, $date1, "", $user_id);
         }
 
-        $this->_helper->json(array('data' => $message, 'code' => $code));;
+        $this->_helper->json(array('data' => $message, 'code' => $code));
     }
 
     public  function setVoteAction() {
@@ -405,7 +406,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $code = 200;
         $message = "活动日期确认成功!";
-
+        $this->_helper->json(array('data' => $meet_id, 'code' => $code)); exit;
         $voteDates = $voteModel->getVoteByMeetId($meet_id);
 
         if (!$voteDates) {
