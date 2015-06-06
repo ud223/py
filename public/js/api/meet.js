@@ -53,7 +53,6 @@ function QueryMeet(user_id, year, month, day) {
 
 //加载某天聚会集合方法
 function QueryPendingMeet(user_id, fun) {
-    alert(3);
     var url = '/api/meet/pending';
 
     var  data = { 'user_id': user_id  }

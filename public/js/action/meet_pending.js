@@ -14,7 +14,6 @@ function initBtnBack() {
 }
 
 function queryPendingMeet(user_id) {
-    alert(0);
     var meet = new Meet();
 
     meet.pending(user_id, loadMeets);
