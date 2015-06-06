@@ -177,7 +177,7 @@ function closeMeet(user_id, meet_id) {
 }
 
 //活动日期投票
-function voteMeet(date1, date2, meet_id, fun) {
+function voteMeet(meet_id, date1, date2, fun) {
     alert(3);
     var url = '/api/meet/vote/add';
 
