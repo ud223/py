@@ -340,7 +340,7 @@ class Angel_ApiController extends Angel_Controller_Action {
             break;
         }
         if ($date == '2015-06-08') {
-            $this->_helper->json(array('data' => $date . '|' . $vote->date, 'code' => 0));
+            $this->_helper->json(array('data' => $date . '|' . $vote->date .'|'. count($result), 'code' => 0));
             exit;
         }
         //如果该日期已经被投票过，那么就在num数字上加1
