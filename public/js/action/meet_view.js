@@ -88,10 +88,12 @@ function initBtnJoin(user_id) {
 }
 
 function afterJoin(data, msg) {
+    alert(1);
+    alert(data);
     if (data) {
         location.href = "/";
     }
     else {
-        alert(data);
+        alert(msg);
     }
 }

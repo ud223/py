@@ -116,7 +116,7 @@ function joinMeet(user_id, meet_id, fun) {
         data: data,
         method: 'post',
         success: function (response) {
-            alert(JSON.stringify(response));
+            //alert(JSON.stringify(response));
             if (response.code == 200) {
                 fun(true, "");
             }
