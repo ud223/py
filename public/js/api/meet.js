@@ -194,7 +194,7 @@ function voteMeet(meet_id, date1, date2, user_id, fun) {
         method: 'post',
         success: function (response) {
             if (response.code == 200) {
-                alert(response.data);
+                //alert(response.data);
 
                 if (fun) {
                     fun();
