@@ -16,6 +16,7 @@ $(document).ready(function() {
     initBtnCloseMeet(user_id);
     initBtnJoin(user_id);
     initVoteSubmit();
+    initSetMeetDate();
 })
 
 function validUser(user_id) {
@@ -47,6 +48,14 @@ function initVoteSubmit() {
         var meet = new Meet();
 
         meet.vote(meet_id, date1, date2, clearVote);
+    });
+}
+//确认设置活动日期
+function initSetMeetDate() {
+    $('#submit-vote').tap(function() {
+        var meet = new Meet();
+
+        meet.setMeetDate(meet_id);
     });
 }
 

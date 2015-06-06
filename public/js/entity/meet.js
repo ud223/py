@@ -137,8 +137,8 @@ var Meet = function () {
         voteMeet(meet_id, date1, date2, fun);
     }
 
-    obj.setDate = function(meet_id) {
-        setMeetDate(meet_id, fun);
+    obj.setMeetDate = function(meet_id) {
+        setMeetDate(meet_id);
     }
 
     return obj;
