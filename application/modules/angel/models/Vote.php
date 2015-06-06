@@ -11,9 +11,9 @@ class Angel_Model_Vote extends Angel_Model_AbstractModel {
 
     //添加活动日期投票
     public function addDateVote($meet_id, $date, $num = 1) {
-        $data = array('meet_id' => $meet_id,
-            'date' => $date,
-            'num' => $num);
+        $data = array('meet_id'=> $meet_id,
+            'date'=> $date,
+            'num'=> $num);
 
         $result = $this->add($data);
 
@@ -22,9 +22,9 @@ class Angel_Model_Vote extends Angel_Model_AbstractModel {
 
     //保存投票新结果
     public function saveDateVote($id, $meet_id, $date, $num) {
-        $data = array('meet_id' => $meet_id,
-            'date' => $date,
-            'num' => $num);
+        $data = array('meet_id'=> $meet_id,
+            'date'=> $date,
+            'num'=> $num);
 
         $result = $this->save($id, $data);
 
