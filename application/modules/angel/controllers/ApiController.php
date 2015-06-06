@@ -448,10 +448,10 @@ class Angel_ApiController extends Angel_Controller_Action {
         $options_date = array();
 
         foreach ($meet->options_date as $d) {
-            $options_datep[] = $d;
+            $options_date[] = $d;
         }
 
-        $result = $meetModel->saveMeet($meet_id, $options_date, $max_date, $meet->time_range, $meet->meet_text, $meet->remark, $meet->address, $meet->proposer_id, $users_id, $strDate[0], $strDate[1], $strDate[2]);
+        $result = $meetModel->saveMeet($meet_id, $options_date, $max_date, $meet->time_range, $meet->meet_text, $meet->remark, $meet->address, $meet->proposer_id, $users_id, $strDate[0], strToNumFormat($strDate[1]), strToNumFormat($strDate[2]));
 
         if (!$result) {
             $code = 0;
@@ -459,6 +459,14 @@ class Angel_ApiController extends Angel_Controller_Action {
         }
 
         $this->_helper->json(array('data' => $message .'|'.$max_date, 'code' => $code));
+    }
+
+    public function strToNumFormat($n) {
+        if (substr($n, 0, 1) == "0") {
+            return substr($n, 1, 1);
+        }
+
+        return $n;
     }
 
     public function getDateAction() {
