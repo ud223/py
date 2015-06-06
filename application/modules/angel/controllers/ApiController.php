@@ -336,7 +336,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         //如果该日期已经被投票过，那么就在num数字上加1
         if (count($result) == 0) {
-            $this->_helper->json(array('data' => $result, 'code' => 0)); exit;
+            $this->_helper->json(array('data' => count($result), 'code' => 0)); exit;
             foreach ($result as $r) {
                 $vote = $r;
 
