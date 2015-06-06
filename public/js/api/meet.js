@@ -51,6 +51,32 @@ function QueryMeet(user_id, year, month, day) {
     });
 }
 
+//加载某天聚会集合方法
+function QueryPendingMeet(user_id, fun) {
+    var url = '/api/meet/pending';
+
+    var  data = { 'user_id': user_id  }
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        method: 'get',
+        success: function (response) {
+            if (response.code == 200) {
+                //加载活动集合
+                fun(response.data);
+            }
+            else {
+                alert(response.data);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
 //通过id加载聚会方法
 function loadMeet(user_id, meet_id) {
     var url = '/api/meet/load';

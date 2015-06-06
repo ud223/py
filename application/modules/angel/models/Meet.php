@@ -69,4 +69,12 @@ class Angel_Model_Meet extends Angel_Model_AbstractModel {
 
         return $result;
     }
+
+    public function getPendingMeets($user_id) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('proposer_id')->equals($user_id)->field('selected_date')->equals("false")->field('status')->equals('1')->sort("created_at", 1);
+
+        $result = $query ->getQuery()->execute();
+
+        return $result;
+    }
 } 

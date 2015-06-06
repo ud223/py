@@ -113,6 +113,10 @@ var Meet = function () {
         QueryMeet(user_id, year, month, day);
     }
 
+    obj.pending = function(user_id, fun) {
+        QueryPendingMeet(user_id, fun);
+    }
+
     obj.load = function (user_id, meet_id) {
         loadMeet(user_id, meet_id);
     }

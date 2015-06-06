@@ -137,18 +137,17 @@ class Angel_IndexController extends Angel_Controller_Action {
         $province = $data['province'];
         $country = $data['country'];
         $headimgurl = $data['headimgurl'];
-//        echo 'query user:'; exit;
+
         $result = $userModel->getUserByOpenId($openid);
-//        echo 'query over'; exit;
-//        echo count($result); exit;
+
         //如果该openid用户已经添加
         if (count($result) == 1) {
 //            echo "added"; exit;
             return true;
         }
-//        echo 'add user'; exit;
+
         $result = $userModel->addUser($openid, 0, $nickname, $sex, "", $city, $province, $country, $headimgurl, "");
-//        echo $result;
+
         return $result;
     }
 
@@ -197,6 +196,10 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->users_id = $users_id;
         $this->view->user_id = $user_id;
         $this->view->appid = $this->app_id;
+    }
+
+    public function pendingMeetAction() {
+        $this->_helper->layout->setLayout('detail');
     }
 
     public function voteMeetAction() {

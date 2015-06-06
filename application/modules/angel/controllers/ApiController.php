@@ -157,6 +157,39 @@ class Angel_ApiController extends Angel_Controller_Action {
         }
     }
 
+    public function pendingMeetAction() {
+        $meetModel = $this->getModel('meet');
+
+        $user_id = $this->getParam('user_id');
+
+        $code = 200;
+        $message = "等待中活动获取成功!";
+
+        $result = $meetModel->getPendingMeets($user_id);
+
+        if ($result) {
+            $meets = array();
+
+            foreach ($result as $r) {
+                $length = count($r->options_date);
+                $start_date = $r->options_date[0];
+                $end_date = $r->options_date[$length - 1];
+                //通过users_id集合得到用户集合
+                $users = $this->getUsersInfo($r->users_id);
+
+                $meets[] = array("start_date"=>$start_date, "start_date"=>$end_date, "meet_text"=>$r->meet_text, "users"=>$users);
+            }
+
+            $this->_helper->json(array('data' => $meets, 'code' => $code));
+        }
+        else {
+            $code = 0;
+            $message = "等待中活动获取失败!";
+
+            $this->_helper->json(array('data' => $message, 'code' => $code));
+        }
+    }
+
     //根据活动id加载活动信息
     public function loadMeetAction() {
         $meetModel = $this->getModel('meet');
