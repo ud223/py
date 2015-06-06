@@ -331,7 +331,7 @@ class Angel_ApiController extends Angel_Controller_Action {
     //投票日期次数计算并保存
     public  function insertVote($date, $meet_id) {
         $voteModel = $this->getModel('vote');
-//        $this->_helper->json(array('data' => $meet_id.'|' .$date, 'code' => 0)); exit;
+        $this->_helper->json(array('data' => $meet_id.'|' .$date, 'code' => 0)); exit;
         $result = $voteModel->getVoteByMeetIdAndDate($meet_id, $date);
 //        $b = count($result);
 //        $this->_helper->json(array('data' => $b, 'code' => 0)); exit;
