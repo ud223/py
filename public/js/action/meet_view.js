@@ -80,6 +80,7 @@ function initBtnJoin(user_id) {
         $('#letmejoin').show();
 
         $('#letmejoin').tap(function() {
+            alert(1);
             var meet = new Meet();
 
             meet.join(user_id, meet_id);
