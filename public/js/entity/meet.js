@@ -122,6 +122,7 @@ var Meet = function () {
     }
 
     obj.join = function(user_id, meet_id) {
+        alert(1);
         return joinMeet(user_id, meet_id);
     }
 

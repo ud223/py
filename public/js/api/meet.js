@@ -107,7 +107,7 @@ function joinMeet(user_id, meet_id) {
     var url = '/api/meet/join';
 
     var  data = { 'meet_id': meet_id, 'user_id': user_id }
-
+    alert(2);
     $.ajax({
         url: url,
         dataType: 'json',
@@ -116,9 +116,11 @@ function joinMeet(user_id, meet_id) {
         success: function (response) {
             alert(JSON.stringify(response));
             if (response.code == 200) {
+                alert(3);
                 return true;
             }
             else {
+                alert(4);
                 alert(response.data);
 
                 return false;
