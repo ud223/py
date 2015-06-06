@@ -16,7 +16,7 @@ $(document).ready(function() {
     initBtnBack();
     initBtnCloseMeet(user_id);
     initBtnLeave(user_id);
-    //initVoteSubmit();
+    initVoteSubmit();
     initSetMeetDate();
 })
 

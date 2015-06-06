@@ -246,8 +246,6 @@ function getMeetDate(meet_id, user_id) {
         method: 'post',
         success: function (response) {
             if (response.code == 200) {
-                alert(JSON.stringify(response.data));
-
                 setVoteDate(response.data.first_date, response.data.second_date, response.data.isVote);
             }
             else {
