@@ -341,11 +341,6 @@ class Angel_ApiController extends Angel_Controller_Action {
         $this->_helper->json(array('data' => $message, 'code' => $code));
     }
 
-    //记录用户投票信息
-    public  function addVoteUser($meet_id, $date1, $date2, $user_id) {
-
-    }
-
     //投票日期次数计算并保存
     public  function insertVote($date, $meet_id) {
         $voteModel = $this->getModel('vote');

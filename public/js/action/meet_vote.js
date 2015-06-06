@@ -34,7 +34,7 @@ function initVoteSubmit() {
         var meet = new Meet();
         //如果是创建者,就跳过参加活动的环节
         if (users_id.indexOf(user_id) > -1)  {
-            voteDate();
+            voteDate(true, "");
         }
         else {
             //先参加活动,成功后再提交投票
