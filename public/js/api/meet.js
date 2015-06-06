@@ -63,6 +63,7 @@ function QueryPendingMeet(user_id, fun, toUrl) {
         data: data,
         method: 'get',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载活动集合
                 fun(response.data, toUrl);
