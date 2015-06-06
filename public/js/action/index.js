@@ -19,7 +19,7 @@ $(document).ready(function() {
         }
     })
 
-    $(document).on('click', '.glyphicon-send', function () {
+    $(document).on('click', '#share', function () {
         alert('分享');
     })
 
