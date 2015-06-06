@@ -1,5 +1,4 @@
-function loadMeets(data) {
-    alert(JSON.stringify(data));
+function loadMeets(data, url) {
     $('#meet-list').html('');
 
     $.each(data, function () {
@@ -15,8 +14,15 @@ function loadMeets(data) {
 
         node.find('.mg-listc-usrs').html(users);
 
+        if (url) {
+            url = url + "/" + id;
+        }
+        else {
+            url = "/meet/view/"+ id;
+        }
+
         node.tap(function() {
-           location.href = "/meet/view/"+ id;
+           location.href = url;
         });
 
         $('#meet-list').append(node);

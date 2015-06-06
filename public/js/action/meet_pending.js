@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
-    alert(user_id);
+
     initBtnBack();
 
     queryPendingMeet(user_id);

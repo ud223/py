@@ -177,7 +177,7 @@ class Angel_ApiController extends Angel_Controller_Action {
                 //通过users_id集合得到用户集合
                 $users = $this->getUsersInfo($r->users_id);
 
-                $meets[] = array("start_date"=>$start_date, "start_date"=>$end_date, "meet_text"=>$r->meet_text, "users"=>$users);
+                $meets[] = array("id"=>$r->id, "start_date"=>$start_date, "start_date"=>$end_date, "meet_text"=>$r->meet_text, "users"=>$users);
             }
 
             $this->_helper->json(array('data' => $meets, 'code' => $code));
