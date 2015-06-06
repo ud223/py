@@ -23,7 +23,12 @@ $(document).ready(function() {
         alert('分享');
     })
 
-    initBtnPending();
+    $(document).on('click', '#pending', function () {
+        alert(1);
+        location.href = '/meet/pending';
+    })
+
+    //initBtnPending();
 })
 
 function initBtnPending() {
