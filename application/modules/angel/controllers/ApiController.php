@@ -337,13 +337,12 @@ class Angel_ApiController extends Angel_Controller_Action {
 //        $this->_helper->json(array('data' => $b, 'code' => 0)); exit;
         //如果该日期已经被投票过，那么就在num数字上加1
         if ($result) {
-            $this->_helper->json(array('data' => 2, 'code' => 0)); exit;
             foreach ($result as $r) {
                 $vote = $r;
 
                 break;
             }
-
+            $this->_helper->json(array('data' =>$vote->id . $vote->meet_id . $vote->date . $vote->num, 'code' => 0)); exit;
             $result = $voteModel->saveDateVote($vote->id, $vote->meet_id, $vote->date, $vote->num + 1);
         }
         else {
