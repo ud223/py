@@ -438,7 +438,19 @@ class Angel_ApiController extends Angel_Controller_Action {
         $meet = $meetModel->getById($meet_id);
         $strDate = explode('-',$max_date);
 
-        $result = $meetModel->saveMeet($meet_id, $meet->options_date, $max_date, $meet->time_range, $meet->meet_text, $meet->remark, $meet->address, $meet->proposer_id, $meet->users_id, $strDate[0], $strDate[1], $strDate[2]);
+        $users_id = array();
+
+        foreach ($meet->users_id as $u) {
+            $users_id[] = $u;
+        }
+
+        $options_date = array();
+
+        foreach ($meet->options_date as $d) {
+            $options_datep[] = $d;
+        }
+
+        $result = $meetModel->saveMeet($meet_id, $options_datep, $max_date, $meet->time_range, $meet->meet_text, $meet->remark, $meet->address, $meet->proposer_id, $users_id, $strDate[0], $strDate[1], $strDate[2]);
 
         if (!$result) {
             $code = 0;
