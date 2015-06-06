@@ -13,9 +13,9 @@ $(document).ready(function() {
 
     initBtnWord(user_id);
     initBtnBack();
-
     initBtnCloseMeet(user_id);
     initBtnJoin(user_id);
+    initVoteSubmit();
 })
 
 function validUser(user_id) {
@@ -24,7 +24,7 @@ function validUser(user_id) {
         userLoginToMeet(meet_id);
     }
 }
-
+//初始化活动日期投票按钮
 function initVoteSubmit() {
     $('#submit-vote').tap(function() {
         var date1 = $('#first_date').val();
