@@ -31,6 +31,7 @@ function loadMeets(data, toUrl) {
 }
 
 function meetLoad(data) {
+    alert(5);
     $(document).find('#title').html(data.meet_text);
     $(document).find('#meet_text').html(data.meet_text);
     $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
