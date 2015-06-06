@@ -1,5 +1,7 @@
 function loadMeets(data, url) {
     $('#meet-list').html('');
+    alert(3);
+    alert(url);
 
     $.each(data, function () {
         var node = $('#meet_model').clone(true);
@@ -13,7 +15,7 @@ function loadMeets(data, url) {
         })
 
         node.find('.mg-listc-usrs').html(users);
-        alert(url);
+
         if (url) {
             url = url + "/" + id;
         }
