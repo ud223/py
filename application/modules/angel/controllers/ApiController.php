@@ -344,7 +344,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 //            exit;
 //        }
         //如果该日期已经被投票过，那么就在num数字上加1
-        if ($result) {
+        if (count($result) > 0) {
             if ($date == '2015-06-08') {
                 $this->_helper->json(array('data' => 2, 'code' => 0)); exit;
             }
