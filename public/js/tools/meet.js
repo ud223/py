@@ -31,6 +31,7 @@ function loadMeets(data, toUrl) {
 }
 
 function meetLoad(data) {
+    alert(JSON.stringify(data));
     $(document).find('#title').html(data.meet_text);
     $(document).find('#meet_text').html(data.meet_text);
 
