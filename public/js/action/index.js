@@ -27,7 +27,9 @@ $(document).ready(function() {
 })
 
 function initBtnPending() {
+    alert(0);
     $('.glyphicon-pending').tap(function () {
+        alert(1);
         location.href = '/meet/pending';
     })
 }
