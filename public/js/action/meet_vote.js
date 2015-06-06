@@ -52,7 +52,7 @@ function initVoteSubmit() {
 }
 //确认设置活动日期
 function initSetMeetDate() {
-    $('#submit-vote').tap(function() {
+    $('#close-vote').tap(function() {
         var meet = new Meet();
 
         meet.setMeetDate(meet_id);
