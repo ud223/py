@@ -332,9 +332,9 @@ class Angel_ApiController extends Angel_Controller_Action {
     public  function insertVote($date, $meet_id) {
         $voteModel = $this->getModel('vote');
 
-//        $this->_helper->json(array('data' => "开始插入", 'code' => 0)); exit;
-
         $result = $voteModel->getVoteByMeetIdAndDate($meet_id, $date);
+
+//        $this->_helper->json(array('data' => "获取之前投票结果", 'code' => 0)); exit;
 
         //如果该日期已经被投票过，那么就在num数字上加1
         if ($result) {

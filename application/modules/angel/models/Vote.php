@@ -7,7 +7,7 @@
  */
 
 class Angel_Model_Vote extends Angel_Model_AbstractModel {
-    protected $_document_class = '\Documents\DateVote';
+    protected $_document_class = '\Documents\Vote';
 
     //添加活动日期投票
     public function addDateVote($meet_id, $date, $num = 1) {
