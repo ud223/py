@@ -416,7 +416,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $code = 200;
         $message = "活动日期确认成功!";
-//        $this->_helper->json(array('data' => $meet_id, 'code' => $code)); exit;
+
         $voteDates = $voteModel->getVoteByMeetId($meet_id);
 
         if (!$voteDates) {
@@ -434,6 +434,8 @@ class Angel_ApiController extends Angel_Controller_Action {
                 $max_date = $r->vote_date;
             }
         }
+
+        $this->_helper->json(array('data' => $max_date, 'code' => $code)); exit;
         //获取当前活动
         $meet = $meetModel->getById($meet_id);
         $strDate = explode('-',$max_date);
