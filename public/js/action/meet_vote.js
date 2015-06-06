@@ -30,6 +30,7 @@ function initVoteSubmit() {
     $('#submit-vote').tap(function() {
         var date1 = $('#first_date').val();
         var date2 = $('#second_date').val();
+        var user_id = localStorage.getItem('user_id');
 
         if (date1 == '' && date2 == '') {
             alert('投票日期不能都为空!');
@@ -47,7 +48,7 @@ function initVoteSubmit() {
 
         var meet = new Meet();
 
-        meet.vote(meet_id, date1, date2, clearVote);
+        meet.vote(meet_id, date1, date2, user_id, clearVote);
     });
 }
 //确认设置活动日期
