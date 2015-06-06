@@ -430,7 +430,7 @@ class Angel_ApiController extends Angel_Controller_Action {
         $max_num = 0;
         //冒泡获取最大投票数日期
         foreach ($voteDates as $r) {
-            if ($max_num > $r->num) {
+            if ($r->num > $max_num) {
                 $max_date = $r->vote_date;
             }
         }
