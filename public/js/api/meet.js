@@ -168,6 +168,7 @@ function closeMeet(user_id, meet_id) {
         data: data,
         method: 'post',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
                 location.href = "/";
             }
