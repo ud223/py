@@ -202,11 +202,16 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $result = $meetModel->getById($id);
 
-        $users = $this->getUsersInfo($result->users_id);
-
-        $data = array("meet_text"=>$result->meet_text, "selected_date"=>$result->selected_date, "year"=>$result->year, "month"=>$result->month, "day"=>$result->day,"address"=>$result->address, "remark"=>$result->remark, "users"=>$users);
 
         if ($result) {
+            $users = $this->getUsersInfo($result->users_id);
+            $length = count($result->options_date);
+            $start_date = $result->options_date[0];
+            $end_date = $result->options_date[$length - 1];
+
+            $data = array("meet_text"=>$result->meet_text, "start_date"=>$start_date, "start_date"=>$end_date, "selected_date"=>$result->selected_date, "year"=>$result->year, "month"=>$result->month, "day"=>$result->day,"address"=>$result->address, "remark"=>$result->remark, "users"=>$users);
+
+
             $this->_helper->json(array('data' => $data, 'code' => $code));
         }
         else {
