@@ -425,7 +425,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
             $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
         }
-
+        $this->_helper->json(array('data' => count($voteDates), 'code' => $code)); exit;
         $max_date = "";
         $max_num = 0;
         //冒泡获取最大投票数日期
@@ -434,7 +434,6 @@ class Angel_ApiController extends Angel_Controller_Action {
                 $max_date = $r->vote_date;
             }
         }
-
         $this->_helper->json(array('data' => $max_date, 'code' => $code)); exit;
         //获取当前活动
         $meet = $meetModel->getById($meet_id);
