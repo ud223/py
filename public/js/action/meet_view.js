@@ -80,11 +80,10 @@ function initBtnJoin(user_id) {
         $('#letmejoin').show();
 
         $('#letmejoin').tap(function() {
-            alert(1);
             var meet = new Meet();
 
             if (meet.join(user_id, meet_id)) {
-                alert("加入成功!");
+                location.href = "/"
             }
             else {
                 alert("加入失败!");
