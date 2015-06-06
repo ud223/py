@@ -328,26 +328,19 @@ class Angel_ApiController extends Angel_Controller_Action {
         $this->_helper->json(array('data' => $message, 'code' => $code));
     }
 
+    //记录用户投票信息
+    public  function addVoteUser($meet_id, $date1, $date2, $user_id) {
+
+    }
+
     //投票日期次数计算并保存
     public  function insertVote($date, $meet_id) {
         $voteModel = $this->getModel('vote');
 
         $result = $voteModel->getVoteByMeetIdAndDate($meet_id, $date);
 
-//        foreach ($result as $r) {
-//            $vote = $r;
-//
-//            break;
-//        }
-//        if ($date == '2015-06-08') {
-//            $this->_helper->json(array('data' => $date . '|' . $vote->date .'|'. count($result), 'code' => 0));
-//            exit;
-//        }
         //如果该日期已经被投票过，那么就在num数字上加1
         if (count($result) > 0) {
-//            if ($date == '2015-06-08') {
-//                $this->_helper->json(array('data' => 2, 'code' => 0)); exit;
-//            }
             foreach ($result as $r) {
                 $vote = $r;
 
@@ -357,9 +350,6 @@ class Angel_ApiController extends Angel_Controller_Action {
             $result = $voteModel->saveDateVote($vote->id, $vote->meet_id, $vote->date, $vote->num + 1);
         }
         else {
-//            if ($date == '2015-06-08') {
-//                $this->_helper->json(array('data' => 1, 'code' => 0)); exit;
-//            }
             $result = $voteModel->addDateVote($meet_id, $date);
         }
 
@@ -368,6 +358,8 @@ class Angel_ApiController extends Angel_Controller_Action {
 
     //添加投票日期
     public function addVoteAction() {
+        $UVoteModel = $this->getModel('uvote');
+
         $meet_id = $this->getParam('meet_id');
         $user_id = $this->getParam('user_id');
         $date1 = $this->getParam('date1');
@@ -394,6 +386,11 @@ class Angel_ApiController extends Angel_Controller_Action {
 
                 $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
             }
+
+            $UVoteModel->addUserVote($meet_id, $date1, $date2, $user_id);
+        }
+        else {
+            $UVoteModel->addUserVote($meet_id, $date1, "", $user_id);
         }
 
         $this->_helper->json(array('data' => $message, 'code' => $code));;

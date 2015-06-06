@@ -21,10 +21,4 @@ class Vote extends AbstractDocument {
     //投票选中次数
     /** @ODM\Int */
     protected $num;
-//    //次选日期
-//    /** @ODM\String */
-//    protected $second_date;
-    //建议人ID
-//    /** @ODM\String */
-//    protected $user_id;
 } 
