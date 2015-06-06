@@ -371,6 +371,8 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $result = $this->insertVote($date1, $meet_id);
 
+        $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
+
         if (!result) {
             $code = 0;
             $message = "投票失败!";
