@@ -5,7 +5,7 @@ namespace Documents;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** @ODM\Document */
-class UVote extends AbstractDocument {
+class Uvote extends AbstractDocument {
     //活动ID
     /** @ODM\String */
     protected $meet_id;

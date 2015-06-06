@@ -6,8 +6,8 @@
  * Time: 下午 5:15
  */
 
-class Angel_Model_UVote extends Angel_Model_AbstractModel {
-    protected $_document_class = '\Documents\UVote';
+class Angel_Model_Uvote extends Angel_Model_AbstractModel {
+    protected $_document_class = '\Documents\Uvote';
 
     //记录用户活动日期投票
     public function addUserVote($meet_id, $first_date, $second_date, $user_id) {
