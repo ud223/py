@@ -56,8 +56,7 @@ function QueryPendingMeet(user_id, fun, toUrl) {
     var url = '/api/meet/pending';
 
     var  data = { 'user_id': user_id  }
-    alert(url);
-    alert(user_id);
+
     $.ajax({
         url: url,
         dataType: 'json',

@@ -1,6 +1,6 @@
 function loadMeets(data, toUrl) {
     $('#meet-list').html('');
-    alert(JSON.stringify(data));
+
     $.each(data, function () {
         var node = $('#meet_model').clone(true);
 
@@ -20,11 +20,11 @@ function loadMeets(data, toUrl) {
         else {
             toUrl = "/meet/view/"+ meet_id;
         }
-        alert(toUrl);
-        //node.tap(function() {
-        //   location.href = toUrl;
-        //});
-        alert(1);
+
+        node.tap(function() {
+           location.href = toUrl;
+        });
+
         $('#meet-list').append(node);
     })
 }
