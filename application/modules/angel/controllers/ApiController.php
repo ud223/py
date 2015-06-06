@@ -354,7 +354,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
     //添加投票日期
     public function addVoteAction() {
-        $meet_id = $this->getParam('meet-id');
+        $meet_id = $this->getParam('meet_id');
         $user_id = $this->getParam('user_id');
         $date1 = $this->getParam('date1');
         $date2 = $this->getParam('date2');
