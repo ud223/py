@@ -332,15 +332,19 @@ class Angel_ApiController extends Angel_Controller_Action {
     public  function insertVote($date, $meet_id) {
         $voteModel = $this->getModel('vote');
 
+        $this->_helper->json(array('data' => "开始插入", 'code' => 0)); exit;
+
         $result = $voteModel->getVoteByMeetIdAndDate($meet_id, $date);
 
         //如果该日期已经被投票过，那么就在num数字上加1
         if ($result) {
-            $voteModel->saveDateVote($result->id, $result->meet_id, $result->date, $result->num + 1);
+            $result = $voteModel->saveDateVote($result->id, $result->meet_id, $result->date, $result->num + 1);
         }
         else {
-            $voteModel->addDateVote($result->meet_id, $result->date);
+            $result = $voteModel->addDateVote($result->meet_id, $result->date);
         }
+
+        return $result;
     }
 
     //添加投票日期
@@ -350,10 +354,10 @@ class Angel_ApiController extends Angel_Controller_Action {
         $date1 = $this->getParam('date1');
         $date2 = $this->getParam('date2');
 
-        $this->insertVote(date1, $meet_id);
+        $result = $this->insertVote(date1, $meet_id);
 
         if ($date1 != date2) {
-            $this->insertVote(date2, $meet_id);
+            $result = $this->insertVote(date2, $meet_id);
         }
     }
 

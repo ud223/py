@@ -35,7 +35,7 @@ function initVoteSubmit() {
 
             return;
         }
-        alert(0);
+
         if (date1 == '' && date2 != '') {
             date1 = date2;
         }
@@ -43,7 +43,7 @@ function initVoteSubmit() {
         if (date1 != '' && date2 == '') {
             date2 = date1;
         }
-        alert(1);
+
         var meet = new Meet();
 
         meet.vote(meet_id, date1, date2, clearVote);

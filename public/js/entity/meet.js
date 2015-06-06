@@ -134,7 +134,6 @@ var Meet = function () {
     }
 
     obj.vote = function(meet_id, date1, date2, fun) {
-        alert(2);
         voteMeet(meet_id, date1, date2, fun);
     }
 

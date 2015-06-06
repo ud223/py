@@ -178,7 +178,6 @@ function closeMeet(user_id, meet_id) {
 
 //活动日期投票
 function voteMeet(meet_id, date1, date2, fun) {
-    alert(3);
     var url = '/api/meet/vote/add';
 
     var  data = { 'meet_id': meet_id, 'date1': date1, 'date2': date2 };
