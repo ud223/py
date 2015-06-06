@@ -17,28 +17,37 @@
         padding-bottom:10px;
     }
 </style>
+<script src="<?php echo $this->jsPath("weixin/weixin_user.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("tools/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("tools/word.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("entity/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("entity/word.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("api/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("api/word.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("action/meet_vote.js"); ?>"></script>
 <div class="mg-ttblk fixed">
     <!-- 此处最多显示8个汉字 -->
     <span class="tt">吃烧烤吧吃烧烤吧 ...</span>
     <span class="glyphicon glyphicon-chevron-left mg-ttblk-i left" id="pge-cover-back"></span>
-    <button class="rowbtn" id="letmeleave">退出</button>
+    <button class="rowbtn" style="display: none" id="letmejoin">我加入</button>
+    <button class="rowbtn" style="display: none" id="letmeleave">我退出</button>
 </div>
 <div class="big-box" style="margin-top:65px;">
     <div class="wp">
         <div class="glacker">
             <p class="inp-tt">活动主题</p>
-            <label class="lbke">吃烧烤吧吃烧烤吧吃烧烤吧</label>
+            <label class="lbke" id="meet_text"></label>
         </div>
         <div class="glacker">
             <p class="inp-tt">活动时间</p>
             <div class="p33i9plp label label-warning">投票中</div>
             <div class="alttimect">
-                <div class="l">
-                    2015年5月10日
+                <div class="l" id="start_date">
+
                 </div>
                 <div class="m">至</div>
-                <div class="r">
-                    2015年6月10日
+                <div class="r" id="end_date">
+
                 </div>
                 <div class="clear"></div>
             </div>
@@ -68,66 +77,30 @@
 
         <div class="glacker">
             <p class="inp-tt">地点</p>
-            <label class="lbke">江汉路步行街</label>
+            <label class="lbke" id="address"></label>
         </div>
 
         <div class="glacker">
             <p class="inp-tt">详细描述</p>
-            <label class="lbke">今天不醉不归，不许开车，不许带老婆，不许带小孩，不许带爸爸妈妈...</label>
+            <label class="lbke" id="remark"></label>
         </div>
 
         <div class="glacker">
             <p class="inp-tt">已同意参加的人</p>
             <ul class="busr-lst">
-                <li>
-                    <img src="https://d3ui957tjb5bqd.cloudfront.net/images/users/21/216/216361/avatar-75-75.jpg?1431794597"/>
-                </li>
-                <li>
-                    <img src="https://d3ui957tjb5bqd.cloudfront.net/images/users/78/785/785751/avatar-50-50.jpg?1429437610"/>
-                </li>
-                <li>
-                    <img src="https://d13yacurqjgara.cloudfront.net/users/11867/avatars/mini/95017d34c19948a322f660a5e4e6f6ae.jpg?1419025083"/>
-                </li>
             </ul>
             <div class="clear"></div>
         </div>
         <div class="glacker p33comts">
             <p class="inp-tt">评论</p>
-            <div>
-                <div class="itm">
-                    <div>
-                        <img class="uxer" src="https://d3ui957tjb5bqd.cloudfront.net/images/users/78/785/785751/avatar-50-50.jpg?1429437610" />
-                        <span class="uune">愤怒的小马</span>
-                        <span class="untme">2015年1月10日 15:12</span>
-                    </div>
-                    <div class="ctxx">
-                        具有其自己的语法规则，他的命名是由"@keyframes"开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式
-                    </div>
-                </div>
-                <div class="itm">
-                    <div>
-                        <img class="uxer" src="https://d3ui957tjb5bqd.cloudfront.net/images/users/78/785/785751/avatar-50-50.jpg?1429437610" />
-                        <span class="uune">愤怒的小马</span>
-                        <span class="untme">2015年1月10日 15:12</span>
-                    </div>
-                    <div class="ctxx">
-                        具有其自己的语法规则，他的命名是由"@keyframes"开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式
-                    </div>
-                </div>
-                <div class="itm">
-                    <div>
-                        <img class="uxer" src="https://d3ui957tjb5bqd.cloudfront.net/images/users/78/785/785751/avatar-50-50.jpg?1429437610" />
-                        <span class="uune">愤怒的小马</span>
-                        <span class="untme">2015年1月10日 15:12</span>
-                    </div>
-                    <div class="ctxx">
-                        具有其自己的语法规则，他的命名是由"@keyframes"开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式
-                    </div>
-                </div>
+            <div id="word-list">
+
             </div>
             <p class="inp-tt" style="margin-top:5px;">发表留言</p>
             <textarea class="inp-txt full"></textarea>
-            <button class="rowbtn">提交</button>
+            <button class="rowbtn" id="word_submit">提交</button>
+            <div class="clear-5"></div>
+            <button class="rowbtn" style="display: none" id="close_meet">关闭活动</button>
         </div>
     </div>
 </div>
@@ -141,3 +114,12 @@
         display:none !important;
     }
 </style>
+<script type="text/javascript">
+    var appid = '<?php echo $this->appid ?>';
+    var openid = '<?php echo $this->openid ?>';
+    //初始化meet_id
+    var meet_id = '<?php echo $this->meet_id ?>';
+    var proposer_id = '<?php echo $this->proposer_id ?>';
+    var users_id = '<?php echo $this->users_id ?>';
+    var user_id = '<?php echo $this->user_id ?>'
+</script>
