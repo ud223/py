@@ -122,7 +122,7 @@ var Meet = function () {
     }
 
     obj.join = function(user_id, meet_id) {
-        joinMeet(user_id, meet_id);
+        return joinMeet(user_id, meet_id);
     }
 
     obj.leave = function(user_id, meet_id) {

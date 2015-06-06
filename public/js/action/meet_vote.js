@@ -15,7 +15,7 @@ $(document).ready(function() {
     initBtnWord(user_id);
     initBtnBack();
     initBtnCloseMeet(user_id);
-    initBtnJoin(user_id);
+    initBtnLeave(user_id);
     //initVoteSubmit();
     initSetMeetDate();
 })
@@ -49,7 +49,9 @@ function initVoteSubmit() {
 
         var meet = new Meet();
 
-        meet.vote(meet_id, date1, date2, user_id, null);
+        if (meet.join(user_id, meet_id)) {
+            meet.vote(meet_id, date1, date2, user_id, clearVote);
+        }
     });
 }
 //确认设置活动日期
@@ -66,8 +68,9 @@ function initSetMeetDate() {
 }
 
 function clearVote() {
-    $('#first_date').val('');
-    $('#second_date').val('');
+    //$('#first_date').val('');
+    //$('#second_date').val('');
+    location.reload();
 }
 
 //加载活动信息
@@ -118,8 +121,8 @@ function initBtnCloseMeet(user_id) {
         })
     }
 }
-//初始化加入按钮
-function initBtnJoin(user_id) {
+//初始化离开按钮
+function initBtnLeave(user_id) {
     if (users_id.indexOf(user_id) > -1)  {
         $('#letmeleave').show();
 
@@ -127,15 +130,6 @@ function initBtnJoin(user_id) {
             var meet = new Meet();
 
             meet.leave(user_id, meet_id);
-        })
-    }
-    else  {
-        $('#letmejoin').show();
-
-        $('#letmejoin').tap(function() {
-            var meet = new Meet();
-
-            meet.join(user_id, meet_id);
         })
     }
 }

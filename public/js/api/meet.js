@@ -115,10 +115,13 @@ function joinMeet(user_id, meet_id) {
         method: 'post',
         success: function (response) {
             if (response.code == 200) {
-                location.reload();
+                //location.reload();
+                return true;
             }
             else {
                 alert(response.data);
+
+                return false;
             }
         },
         error: function () {
