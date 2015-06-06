@@ -52,7 +52,7 @@ function QueryMeet(user_id, year, month, day) {
 }
 
 //加载某天聚会集合方法
-function QueryPendingMeet(user_id, fun) {
+function QueryPendingMeet(user_id, fun, url) {
     var url = '/api/meet/pending';
 
     var  data = { 'user_id': user_id  }
@@ -65,7 +65,7 @@ function QueryPendingMeet(user_id, fun) {
         success: function (response) {
             if (response.code == 200) {
                 //加载活动集合
-                fun(response.data);
+                fun(response.data, url);
             }
             else {
                 alert(response.data);
