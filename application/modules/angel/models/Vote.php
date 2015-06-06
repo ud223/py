@@ -32,7 +32,7 @@ class Angel_Model_Vote extends Angel_Model_AbstractModel {
     }
 
     public function getVoteByMeetIdAndDate($meet_id, $date) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('vote_date')->equals($date)->field('meet_id')->equals($meet_id)->sort("created_at", -1);
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('date')->equals($date)->field('meet_id')->equals($meet_id)->sort("created_at", -1);
 
         $result = $query->getQuery();
 
