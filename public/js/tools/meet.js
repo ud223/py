@@ -1,7 +1,5 @@
 function loadMeets(data, url) {
     $('#meet-list').html('');
-    alert(3);
-    alert(url);
 
     $.each(data, function () {
         var node = $('#meet_model').clone(true);
