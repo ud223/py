@@ -83,7 +83,12 @@ function initBtnJoin(user_id) {
             alert(1);
             var meet = new Meet();
 
-            meet.join(user_id, meet_id);
+            if (meet.join(user_id, meet_id)) {
+                alert("加入成功!");
+            }
+            else {
+                alert("加入失败!");
+            }
         })
     }
 }
