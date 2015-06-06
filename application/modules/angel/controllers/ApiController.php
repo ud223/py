@@ -358,9 +358,9 @@ class Angel_ApiController extends Angel_Controller_Action {
         $user_id = $this->getParam('user_id');
         $date1 = $this->getParam('date1');
         $date2 = $this->getParam('date2');
-
+        $this->_helper->json(array('data' => $date1 .$date2 , 'code' => $code)); exit;
         $code = 200;
-        $message = "关闭成功!";
+        $message = "投票成功!";
 
         $result = $this->insertVote(date1, $meet_id);
 
