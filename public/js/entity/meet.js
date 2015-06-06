@@ -114,6 +114,7 @@ var Meet = function () {
     }
 
     obj.pending = function(user_id, fun) {
+        alert(2);
         QueryPendingMeet(user_id, fun);
     }
 

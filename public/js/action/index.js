@@ -24,7 +24,6 @@ $(document).ready(function() {
     })
 
     $(document).on('click', '#pending', function () {
-        alert(1);
         location.href = '/meet/pending';
     })
 
@@ -32,10 +31,7 @@ $(document).ready(function() {
 })
 
 function initBtnPending() {
-    alert(0);
-    alert($('#pending').length);
     $(document).on("click", "#pending", function () {
-        alert(1);
         location.href = '/meet/pending';
     })
 }

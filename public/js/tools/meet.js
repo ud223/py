@@ -1,4 +1,5 @@
 function loadMeets(data) {
+    alert(4);
     $('#meet-list').html('');
 
     $.each(data, function () {
