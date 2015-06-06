@@ -204,6 +204,24 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function voteMeetAction() {
         $this->_helper->layout->setLayout('detail');
+
+        $meetModel = $this->getModel('meet');
+        $meet_id = $this->getParam('id');
+        $user_id = $this->getParam('userid');
+
+        $result = $meetModel->getById($meet_id);
+
+        $users_id = "";
+
+        foreach ($result->users_id as $id) {
+            $users_id = $users_id . '|' . $id;
+        }
+
+        $this->view->meet_id = $meet_id;
+        $this->view->proposer_id = $result->proposer_id;
+        $this->view->users_id = $users_id;
+        $this->view->user_id = $user_id;
+        $this->view->appid = $this->app_id;
     }
 
     //本地测试注册用户方法
