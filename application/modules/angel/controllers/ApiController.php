@@ -458,7 +458,7 @@ class Angel_ApiController extends Angel_Controller_Action {
             $message = "活动日期确认失败!";
         }
 
-        $this->_helper->json(array('data' => $message .'|'.$max_date, 'code' => $code));
+        $this->_helper->json(array('data' => $message, 'code' => $code));
     }
 
     public function strToNumFormat($n) {
