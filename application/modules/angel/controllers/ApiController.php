@@ -287,13 +287,20 @@ class Angel_ApiController extends Angel_Controller_Action {
         $users_id = array();
 
         foreach ($meet->users_id as $u) {
-            if ($u != $user_id) {
-                $users_id[] = $u;
+            if ($u == $user_id) {
+                continue;
             }
+
+            $users_id[] = $u;
         }
 
-        $result = $meetModel->saveMeet($meet_id, $meet->options_date, $meet->selected_date, $meet->selected_date, $meet->time_range, $meet->meet_text, $meet->remark, $meet->address, $meet->proposer_id, $users_id, $meet->year, $meet->month, $meet->day);
+        $options_date = array();
 
+        foreach ($meet->options_date as $d) {
+            $options_date[] = $d;
+        }
+
+        $result = $meetModel->saveMeet($meet_id, $options_date, $meet->selected_date, "", $meet->meet_text, $meet->remark, $meet->address, $meet->proposer_id, $users_id, $meet->year, $meet->month, $meet->day);
         if (!$result) {
             $code = 0;
             $message = "活动退出失败!";
