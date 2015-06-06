@@ -373,8 +373,9 @@ class Angel_ApiController extends Angel_Controller_Action {
         }
 
         if ($date1 != $date2) {
-            $this->_helper->json(array('data' =>$date2, 'code' => 0)); exit;
             $result = $this->insertVote($date2, $meet_id);
+
+            $this->_helper->json(array('data' =>$result, 'code' => 0)); exit;
 
             if (!result) {
                 $code = 0;
