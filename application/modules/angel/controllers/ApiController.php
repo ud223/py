@@ -460,7 +460,7 @@ class Angel_ApiController extends Angel_Controller_Action {
             break;
         }
 
-        $this->_helper->json(array('data' => array("first_date"=>$first_date, "senond_date"=>$second_date, "isVote"=>$isVote), 'code' => $code));
+        $this->_helper->json(array('data' => array("first_date"=>$first_date, "second_date"=>$second_date, "isVote"=>$isVote), 'code' => $code));
     }
 
     /*******************************************************************************************************************
