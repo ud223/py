@@ -25,6 +25,6 @@ class Vote extends AbstractDocument {
 //    /** @ODM\String */
 //    protected $second_date;
     //建议人ID
-    /** @ODM\String */
-    protected $user_id;
+//    /** @ODM\String */
+//    protected $user_id;
 } 
