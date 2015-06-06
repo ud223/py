@@ -6,7 +6,7 @@ function addMeet(start_date, end_date, selected_date, meet_text, address, remark
     var url = '/api/meet/add';
 
     var  data = { 'user_id': user_id, 'start_date': start_date, 'selected_date': selected_date, 'meet_text': meet_text, 'end_date': end_date, 'address': address, 'remark': remark }
-    //alert(JSON.stringify(data)); return;
+
     $.ajax({
        url: url,
         dataType: 'json',
@@ -89,7 +89,6 @@ function loadMeet(user_id, meet_id) {
         data: data,
         method: 'get',
         success: function (response) {
-            alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载特定活动
                 meetLoad(response.data);
@@ -116,7 +115,6 @@ function joinMeet(user_id, meet_id) {
         method: 'post',
         success: function (response) {
             if (response.code == 200) {
-                //location.reload();
                 return true;
             }
             else {
@@ -185,7 +183,7 @@ function voteMeet(meet_id, date1, date2, user_id, fun) {
     var url = '/api/meet/vote/add';
 
     var  data = { 'meet_id': meet_id, 'date1': date1, 'date2': date2, 'user_id': user_id };
-
+    alert(JSON.stringify(data));
     $.ajax({
         url: url,
         dataType: 'json',

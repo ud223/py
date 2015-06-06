@@ -48,9 +48,17 @@ function initVoteSubmit() {
         }
 
         var meet = new Meet();
-
-        if (meet.join(user_id, meet_id)) {
+        //如果是创建者,就跳过参加活动的环节
+        if (users_id.indexOf(user_id) > -1)  {
+            alert(1); return;
             meet.vote(meet_id, date1, date2, user_id, clearVote);
+        }
+        else {
+            alert(2); return;
+            //先参加活动,成功后再提交投票
+            if (meet.join(user_id, meet_id)) {
+                meet.vote(meet_id, date1, date2, user_id, clearVote);
+            }
         }
     });
 }
