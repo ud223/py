@@ -13,7 +13,7 @@ function loadMeets(data, url) {
         })
 
         node.find('.mg-listc-usrs').html(users);
-
+        alert(url);
         if (url) {
             url = url + "/" + id;
         }
