@@ -386,10 +386,11 @@ class Angel_ApiController extends Angel_Controller_Action {
 
                 $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
             }
-
+            $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
             $UVoteModel->addUserVote($meet_id, $date1, $date2, $user_id);
         }
         else {
+            $this->_helper->json(array('data' => $meet_id. $date1. $date2. $user_id, 'code' => $code)); exit;
             $UVoteModel->addUserVote($meet_id, $date1, "", $user_id);
         }
 
