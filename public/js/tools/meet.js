@@ -22,6 +22,7 @@ function loadMeets(data, toUrl) {
         }
 
         node.tap(function() {
+            alert(toUrl);
            location.href = toUrl;
         });
 
