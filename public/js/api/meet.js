@@ -181,7 +181,7 @@ function voteMeet(meet_id, date1, date2, fun) {
     var url = '/api/meet/vote/add';
 
     var  data = { 'meet_id': meet_id, 'date1': date1, 'date2': date2 };
-
+    alert(JSON.stringify(data));
     $.ajax({
         url: url,
         dataType: 'json',
