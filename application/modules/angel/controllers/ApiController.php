@@ -328,6 +328,75 @@ class Angel_ApiController extends Angel_Controller_Action {
         $this->_helper->json(array('data' => $message, 'code' => $code));
     }
 
+    //投票日期次数计算并保存
+    public  function insertVote($date, $meet_id) {
+        $voteModel = $this->getModel('vote');
+
+        $result = $voteModel->getVoteByMeetIdAndDate($meet_id, $date);
+
+        //如果该日期已经被投票过，那么就在num数字上加1
+        if ($result) {
+            $voteModel->saveDateVote($result->id, $result->meet_id, $result->date, $result->num + 1);
+        }
+        else {
+            $voteModel->addDateVote($result->meet_id, $result->date);
+        }
+    }
+
+    //添加投票日期
+    public function addVoteAction() {
+        $meet_id = $this->getParam('meet-id');
+        $user_id = $this->getParam('user_id');
+        $date1 = $this->getParam('date1');
+        $date2 = $this->getParam('date2');
+
+        $this->insertVote(date1, $meet_id);
+
+        if ($date1 != date2) {
+            $this->insertVote(date2, $meet_id);
+        }
+    }
+
+    public  function setVoteAction() {
+        $voteModel = $this->getModel('vote');
+        $meetModel = $this->getModel('meet');
+
+        $meet_id = $this->getParam('meet_id');
+
+        $code = 200;
+        $message = "活动日期确认成功!";
+
+        $voteDates = $voteModel->getVoteByMeetId($meet_id);
+
+        if (!$voteDates) {
+            $code = 0;
+            $message = "请先投票活动日期!";
+
+            $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
+        }
+
+        $max_date = "";
+        $max_num = 0;
+        //冒泡获取最大投票数日期
+        foreach ($voteDates as $r) {
+            if ($max_num > $r->num) {
+                $max_date = $r->vote_date;
+            }
+        }
+        //获取当前活动
+        $meet = $meetModel->getById($meet_id);
+        $strDate = explode('-',$max_date);
+
+        $result = $meetModel->saveMeet($meet_id, $meet->options_date, $max_date, $meet->time_range, $meet->meet_text, $meet->remark, $meet->address, $meet->proposer_id, $meet->users_id, $strDate[0], $strDate[1], $strDate[2]);
+
+        if (!$result) {
+            $code = 0;
+            $message = "活动日期确认失败!";
+        }
+
+        $this->_helper->json(array('data' => $message, 'code' => $code));
+    }
+
     /*******************************************************************************************************************
      *  留言代码块
      *

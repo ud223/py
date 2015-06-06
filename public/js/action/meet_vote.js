@@ -25,6 +25,36 @@ function validUser(user_id) {
     }
 }
 
+function initVoteSubmit() {
+    $('#submit-vote').tap(function() {
+        var date1 = $('#first_date').val();
+        var date2 = $('#second_date').val();
+
+        if (date1 == '' && date2 == '') {
+            alert('投票日期不能都为空!');
+
+            return;
+        }
+
+        if (date1 == '' && date2 != '') {
+            date1 = date2;
+        }
+
+        if (date1 != '' && date2 == '') {
+            date2 = date1;
+        }
+
+        var meet = new Meet();
+
+        meet.vote(meet_id, date1, date2, clearVote);
+    });
+}
+
+function clearVote() {
+    $('#first_date').val('');
+    $('#second_date').val('');
+}
+
 //加载活动信息
 function loadThisMeet(user_id) {
     var meet = new Meet();

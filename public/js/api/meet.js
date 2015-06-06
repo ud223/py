@@ -175,3 +175,56 @@ function closeMeet(user_id, meet_id) {
         }
     });
 }
+
+//活动日期投票
+function voteMeet(date1, date2, meet_id, fun) {
+    var url = '/api/meet/vote/add';
+
+    var  data = { 'meet_id': meet_id, 'date1': date1, 'date2': date2 };
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        method: 'post',
+        success: function (response) {
+            if (response.code == 200) {
+                alert(response.data);
+
+                fun();
+            }
+            else {
+                alert(response.data);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
+function setMeetDate(meet_id) {
+    var url = '/api/meet/vote/set';
+
+    var  data = { 'meet_id': meet_id };
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        method: 'post',
+        success: function (response) {
+            if (response.code == 200) {
+                alert(response.data);
+
+                location.href = "/";
+            }
+            else {
+                alert(response.data);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}

@@ -133,5 +133,13 @@ var Meet = function () {
         closeMeet(user_id, meet_id);
     }
 
+    obj.vote = function(meet_id, date1, date2, fun) {
+        voteMeet(meet_id, date1, date2, fun);
+    }
+
+    obj.setDate = function(meet_id) {
+        setMeetDate(meet_id, fun);
+    }
+
     return obj;
 }
