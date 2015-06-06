@@ -20,11 +20,11 @@ function loadMeets(data, toUrl) {
         else {
             toUrl = "/meet/view/"+ id;
         }
-
+        alert(toUrl);
         node.tap(function() {
            location.href = toUrl;
         });
-
+        alert(1);
         $('#meet-list').append(node);
     })
 }
