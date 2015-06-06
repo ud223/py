@@ -81,14 +81,17 @@ function initBtnJoin(user_id) {
 
         $('#letmejoin').tap(function() {
             var meet = new Meet();
-            alert(0);
-            if (meet.join(user_id, meet_id)) {
-                alert(5);
-                location.href = "/"
-            }
-            else {
-                alert("加入失败!");
-            }
+
+            meet.join(user_id, meet_id, afterJoin);
         })
+    }
+}
+
+function afterJoin(data, msg) {
+    if (data) {
+        location.href = "/";
+    }
+    else {
+        alert(data);
     }
 }

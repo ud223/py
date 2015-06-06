@@ -121,9 +121,8 @@ var Meet = function () {
         loadMeet(user_id, meet_id);
     }
 
-    obj.join = function(user_id, meet_id) {
-        alert(1);
-        return joinMeet(user_id, meet_id);
+    obj.join = function(user_id, meet_id, fun) {
+        joinMeet(user_id, meet_id, fun);
     }
 
     obj.leave = function(user_id, meet_id) {

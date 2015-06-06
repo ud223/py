@@ -253,7 +253,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         if (!$result) {
             $code = 0;
-            $message = "活动参加失败!";
+            $message = $result;//"活动参加失败!";
         }
 
         $this->_helper->json(array('data' => $message, 'code' => $code));

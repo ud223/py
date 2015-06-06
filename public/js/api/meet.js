@@ -103,11 +103,13 @@ function loadMeet(user_id, meet_id) {
     });
 }
 //加入活动
-function joinMeet(user_id, meet_id) {
+function joinMeet(user_id, meet_id, fun) {
     var url = '/api/meet/join';
 
     var  data = { 'meet_id': meet_id, 'user_id': user_id }
-    alert(2);
+
+    var result = false;
+
     $.ajax({
         url: url,
         dataType: 'json',
@@ -116,14 +118,10 @@ function joinMeet(user_id, meet_id) {
         success: function (response) {
             alert(JSON.stringify(response));
             if (response.code == 200) {
-                alert(3);
-                return true;
+                fun(true, "");
             }
             else {
-                alert(4);
-                alert(response.data);
-
-                return false;
+                fun(false, response.data);
             }
         },
         error: function () {
