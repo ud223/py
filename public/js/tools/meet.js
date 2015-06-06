@@ -7,6 +7,7 @@ function loadMeets(data, toUrl) {
         node.find('.mg-listc-btt').html(this.meet_text);
         var meet_id = this.id;
         var users = "";
+        var url = toUrl;
 
         $.each(this.users, function() {
             users = users + '<span class="sli"><img src="'+ this.headimgurl +'"/></span>';
@@ -15,15 +16,15 @@ function loadMeets(data, toUrl) {
         node.find('.mg-listc-usrs').html(users);
 
         if (toUrl) {
-            toUrl = toUrl + "/" + meet_id;
+            url = toUrl + "/" + meet_id;
         }
         else {
-            toUrl = "/meet/view/"+ meet_id;
+            url = "/meet/view/"+ meet_id;
         }
 
         node.tap(function() {
-            alert(toUrl);
-           location.href = toUrl;
+            alert(url);
+           location.href = url;
         });
 
         $('#meet-list').append(node);
