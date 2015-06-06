@@ -17,10 +17,10 @@ class Vote extends AbstractDocument {
     protected $meet_id;
     //首选日期
     /** @ODM\String */
-    protected $vote_date;
+    protected $date;
     //投票选中次数
     /** @ODM\Int */
-    protected $vote_num;
+    protected $num;
 //    //次选日期
 //    /** @ODM\String */
 //    protected $second_date;
