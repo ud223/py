@@ -1,6 +1,6 @@
-function loadMeets(data, url) {
+function loadMeets(data, toUrl) {
     $('#meet-list').html('');
-
+    alert(toUrl);
     $.each(data, function () {
         var node = $('#meet_model').clone(true);
 
@@ -14,15 +14,15 @@ function loadMeets(data, url) {
 
         node.find('.mg-listc-usrs').html(users);
 
-        if (url) {
-            url = url + "/" + id;
+        if (toUrl) {
+            toUrl = toUrl + "/" + id;
         }
         else {
-            url = "/meet/view/"+ id;
+            toUrl = "/meet/view/"+ id;
         }
 
         node.tap(function() {
-           location.href = url;
+           location.href = toUrl;
         });
 
         $('#meet-list').append(node);
