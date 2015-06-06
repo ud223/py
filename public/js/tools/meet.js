@@ -5,7 +5,7 @@ function loadMeets(data, toUrl) {
         var node = $('#meet_model').clone(true);
 
         node.find('.mg-listc-btt').html(this.meet_text);
-        var id = this.id;
+        var meet_id = this.id;
         var users = "";
 
         $.each(this.users, function() {
@@ -15,10 +15,10 @@ function loadMeets(data, toUrl) {
         node.find('.mg-listc-usrs').html(users);
 
         if (toUrl) {
-            toUrl = toUrl + "/" + id;
+            toUrl = toUrl + "/" + meet_id;
         }
         else {
-            toUrl = "/meet/view/"+ id;
+            toUrl = "/meet/view/"+ meet_id;
         }
         alert(toUrl);
         //node.tap(function() {
