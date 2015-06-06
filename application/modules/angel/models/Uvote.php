@@ -20,4 +20,12 @@ class Angel_Model_Uvote extends Angel_Model_AbstractModel {
 
         return $result;
     }
-} 
+
+    public function getMeetDateByUserId($meet_id, $user_id) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('user_id')->equals($user_id)->field('meet_id')->equals($meet_id)->sort("created_at", -1);
+
+        $result = $query->getQuery();
+
+        return $result;
+    }
+ }

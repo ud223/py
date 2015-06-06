@@ -438,6 +438,31 @@ class Angel_ApiController extends Angel_Controller_Action {
         $this->_helper->json(array('data' => $message, 'code' => $code));
     }
 
+    public function getDateAction() {
+        $uvoteModel = $this->getModel('uvote');
+
+        $meet_id = $this->getParam('meet_id');
+        $user_id = $this->getParam('user_id');
+
+        $result = $uvoteModel->getMeetDateByUserId($meet_id, $user_id);
+
+        $first_date = "";
+        $second_date = "";
+        $isVote = 0;
+        $code = 200;
+        $message = "获取投票日期成功!";
+
+        foreach ($result as $r) {
+            $first_date = $r->first_date;
+            $second_date = $r->second_date;
+            $isVote = 1;
+
+            break;
+        }
+
+        $this->_helper->json(array('data' => array("first_date"=>$first_date, "senond_date"=>$second_date, "isVote"=>$isVote), 'code' => $code));
+    }
+
     /*******************************************************************************************************************
      *  留言代码块
      *

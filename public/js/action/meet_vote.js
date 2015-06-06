@@ -10,12 +10,13 @@ $(document).ready(function() {
     validUser(user_id)
 
     loadThisMeet(user_id);
+    loadMeetVoteDate(user_id);
 
     initBtnWord(user_id);
     initBtnBack();
     initBtnCloseMeet(user_id);
     initBtnJoin(user_id);
-    initVoteSubmit();
+    //initVoteSubmit();
     initSetMeetDate();
 })
 
@@ -48,16 +49,20 @@ function initVoteSubmit() {
 
         var meet = new Meet();
 
-        meet.vote(meet_id, date1, date2, user_id, clearVote);
+        meet.vote(meet_id, date1, date2, user_id, null);
     });
 }
 //确认设置活动日期
 function initSetMeetDate() {
-    $('#close-vote').tap(function() {
-        var meet = new Meet();
+    if (user_id == proposer_id) {
+        $('#close-vote').show();
 
-        meet.setMeetDate(meet_id);
-    });
+        $('#close-vote').tap(function () {
+            var meet = new Meet();
+
+            meet.setMeetDate(meet_id);
+        });
+    }
 }
 
 function clearVote() {
@@ -75,6 +80,14 @@ function loadThisMeet(user_id) {
 
     word.load(meet_id);
 }
+
+//加载用户已投票日期
+function loadMeetVoteDate(user_id) {
+    var meet = new Meet();
+
+    meet.getMeetDate(meet_id, user_id);
+}
+
 //初始化留言提交按钮事件
 function initBtnWord(user_id) {
     $(document).on('click', '#word_submit', function () {
@@ -124,5 +137,17 @@ function initBtnJoin(user_id) {
 
             meet.join(user_id, meet_id);
         })
+    }
+}
+
+function setVoteDate(first_date, second_date, isVote) {
+    if (isVote) {
+        $('#first_date').val(first_date);
+        $('#second_date').val(second_date);
+    }
+    else {
+        $('#submit-vote').show();
+
+        initVoteSubmit();
     }
 }

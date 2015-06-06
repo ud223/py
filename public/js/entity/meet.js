@@ -141,5 +141,9 @@ var Meet = function () {
         setMeetDate(meet_id);
     }
 
+    obj.getMeetDate = function(meet_id, user_id) {
+        getMeetDate(meet_id, user_id);
+    }
+
     return obj;
 }
