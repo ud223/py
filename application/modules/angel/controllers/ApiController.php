@@ -342,7 +342,7 @@ class Angel_ApiController extends Angel_Controller_Action {
     }
 
     //投票日期次数计算并保存
-    public  function insertVote($date, $meet_id) {
+    public  function insertVote($date, $meet_id, $num) {
         $voteModel = $this->getModel('vote');
 
         $result = $voteModel->getVoteByMeetIdAndDate($meet_id, $date);
@@ -355,10 +355,10 @@ class Angel_ApiController extends Angel_Controller_Action {
                 break;
             }
 
-            $result = $voteModel->saveDateVote($vote->id, $vote->meet_id, $vote->date, $vote->num + 1);
+            $result = $voteModel->saveDateVote($vote->id, $vote->meet_id, $vote->date, $vote->num + $num);
         }
         else {
-            $result = $voteModel->addDateVote($meet_id, $date);
+            $result = $voteModel->addDateVote($meet_id, $date, $num);
         }
 
         return $result;
@@ -376,8 +376,8 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $code = 200;
         $message = "投票成功!";
-
-        $result = $this->insertVote($date1, $meet_id);
+        //这里的参数 2 是标识date1为首选日期,加2分
+        $result = $this->insertVote($date1, $meet_id, 2);
 
         if (!result) {
             $code = 0;
@@ -387,7 +387,8 @@ class Angel_ApiController extends Angel_Controller_Action {
         }
 
         if ($date1 != $date2) {
-            $result = $this->insertVote($date2, $meet_id);
+            //这里的参数 1 是标识date2为备选日期,加1分
+            $result = $this->insertVote($date2, $meet_id, 1);
 
             if (!result) {
                 $code = 0;

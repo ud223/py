@@ -206,6 +206,8 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->_helper->layout->setLayout('detail');
 
         $meetModel = $this->getModel('meet');
+        $voteModel = $this->getModel('vote');
+
         $meet_id = $this->getParam('id');
         $user_id = $this->getParam('userid');
 
@@ -217,11 +219,14 @@ class Angel_IndexController extends Angel_Controller_Action {
             $users_id = $users_id . '|' . $id;
         }
 
+        $vote = $voteModel->getVoteByMeetId($meet_id);
+
         $this->view->meet_id = $meet_id;
         $this->view->proposer_id = $result->proposer_id;
         $this->view->users_id = $users_id;
         $this->view->user_id = $user_id;
         $this->view->appid = $this->app_id;
+        $this->view->vote = count($vote);
     }
 
     //本地测试注册用户方法

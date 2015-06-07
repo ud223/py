@@ -47,7 +47,7 @@ function voteDate(data, msg) {
     if (!data) {
         alert(msg); return;
     }
-    
+
     var user_id = localStorage.getItem('user_id');
 
     var strFirst_date = $('#first_date').val();
@@ -64,7 +64,7 @@ function voteDate(data, msg) {
 
 //确认设置活动日期
 function initSetMeetDate() {
-    if (user_id == proposer_id) {
+    if (user_id == proposer_id && vote > 0) {
         $('#close-vote').show();
 
         $('#close-vote').tap(function () {
