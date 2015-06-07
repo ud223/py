@@ -176,18 +176,18 @@ function validDateRange() {
     var start_date = new Date(strStart_date);
     var end_date = new Date(strEnd_date);
 
-    if (start_date == '' && end_date == '') {
+    if (strFirst_date == '' && strSecond_date == '') {
         alert('投票日期不能都为空!');
 
         return false;
     }
 
-    if (start_date == '' && end_date != '') {
-        start_date = end_date;
+    if (strFirst_date == '' && strSecond_date != '') {
+        strFirst_date = strSecond_date;
     }
 
-    if (start_date != '' && end_date == '') {
-        end_date = start_date;
+    if (strFirst_date != '' && strSecond_date == '') {
+        strSecond_date = strFirst_date;
     }
 
     var first_date = new Date(strFirst_date);
