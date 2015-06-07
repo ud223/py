@@ -169,10 +169,7 @@ function validDateRange() {
     var strEnd_date = $('#end_date').attr("end_date");
     var strFirst_date = $('#first_date').val();
     var strSecond_date = $('#second_date').val();
-    alert(strStart_date);
-    alert(strEnd_date);
-    alert(strFirst_date);
-    alert(strSecond_date);
+
     var start_date = new Date(strStart_date);
     var end_date = new Date(strEnd_date);
 
@@ -193,13 +190,13 @@ function validDateRange() {
     var first_date = new Date(strFirst_date);
     var second_date = new Date(strSecond_date);
 
-    if (first_date > end_date || start_date < first_date) {
+    if (first_date > end_date || first_date < start_date) {
         alert("超出选择日期范围!");
 
         return false;
     }
 
-    if (second_date > end_date || start_date < second_date) {
+    if (second_date > end_date || second_date < start_date) {
         alert("超出选择日期范围!");
 
         return false;
