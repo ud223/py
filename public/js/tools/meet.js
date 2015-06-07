@@ -38,7 +38,7 @@ function meetLoad(data) {
         $(document).find('#start_date').html(data.start_date);
         $(document).find('#end_date').html(data.end_date);
         $(document).find('#start_date').attr('start_date', data.start_date);
-        $(document).find('#start_date').attr('end_date', data.end_date);
+        $(document).find('#end_date').attr('end_date', data.end_date);
     }
     else {
         $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
