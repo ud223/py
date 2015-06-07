@@ -419,7 +419,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         $voteDates = $voteModel->getVoteByMeetId($meet_id);
 
-        if (!$voteDates) {
+        if (count($voteDates) == 0) {
             $code = 0;
             $message = "请先投票活动日期!";
 

@@ -48,23 +48,27 @@ function voteDate(data, msg) {
         alert(msg); return;
     }
 
-    var date1 = $('#first_date').val();
-    var date2 = $('#second_date').val();
+    //var date1 = $('#first_date').val();
+    //var date2 = $('#second_date').val();
     var user_id = localStorage.getItem('user_id');
 
-    if (date1 == '' && date2 == '') {
-        alert('投票日期不能都为空!');
-
+    //if (date1 == '' && date2 == '') {
+    //    alert('投票日期不能都为空!');
+    //
+    //    return;
+    //}
+    //
+    //if (date1 == '' && date2 != '') {
+    //    date1 = date2;
+    //}
+    //
+    //if (date1 != '' && date2 == '') {
+    //    date2 = date1;
+    //}
+    //投票验证失败, return
+    if (!validDateRange())
         return;
-    }
 
-    if (date1 == '' && date2 != '') {
-        date1 = date2;
-    }
-
-    if (date1 != '' && date2 == '') {
-        date2 = date1;
-    }
     var meet = new Meet();
 
     meet.vote(meet_id, date1, date2, user_id, clearVote);
@@ -158,4 +162,45 @@ function setVoteDate(first_date, second_date, isVote) {
 
         initVoteSubmit();
     }
+}
+
+function validDateRange() {
+    var strStart_date = $('#start_date').val();
+    var strEnd_date = $('#end_date').val();
+    var strFirst_date = $('#first_date').val();
+    var strSecond_date = $('#second_date').val();
+
+    var start_date = new Date(strStart_date);
+    var end_date = new (strEnd_date);
+
+    if (start_date == '' && end_date == '') {
+        alert('投票日期不能都为空!');
+
+        return false;
+    }
+
+    if (start_date == '' && end_date != '') {
+        start_date = end_date;
+    }
+
+    if (start_date != '' && end_date == '') {
+        end_date = start_date;
+    }
+
+    var first_date = new Date(strFirst_date);
+    var second_date = new Date(strSecond_date);
+
+    if (first_date > end_date || start_date < first_date) {
+        alert("超出选择日期范围!");
+
+        return false;
+    }
+
+    if (second_date > end_date || start_date < second_date) {
+        alert("超出选择日期范围!");
+
+        return false;
+    }
+
+    return true;
 }
