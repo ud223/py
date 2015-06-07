@@ -47,31 +47,19 @@ function voteDate(data, msg) {
     if (!data) {
         alert(msg); return;
     }
-
-    //var date1 = $('#first_date').val();
-    //var date2 = $('#second_date').val();
+    
     var user_id = localStorage.getItem('user_id');
 
-    //if (date1 == '' && date2 == '') {
-    //    alert('投票日期不能都为空!');
-    //
-    //    return;
-    //}
-    //
-    //if (date1 == '' && date2 != '') {
-    //    date1 = date2;
-    //}
-    //
-    //if (date1 != '' && date2 == '') {
-    //    date2 = date1;
-    //}
+    var strFirst_date = $('#first_date').val();
+    var strSecond_date = $('#second_date').val();
+
     //投票验证失败, return
     if (!validDateRange())
         return;
 
     var meet = new Meet();
 
-    meet.vote(meet_id, date1, date2, user_id, clearVote);
+    meet.vote(meet_id, strFirst_date, strSecond_date, user_id, clearVote);
 }
 
 //确认设置活动日期
