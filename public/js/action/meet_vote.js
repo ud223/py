@@ -169,9 +169,12 @@ function validDateRange() {
     var strEnd_date = $('#end_date').val();
     var strFirst_date = $('#first_date').val();
     var strSecond_date = $('#second_date').val();
-
+    alert(strStart_date);
+    alert(strEnd_date);
+    alert(strFirst_date);
+    alert(strSecond_date);
     var start_date = new Date(strStart_date);
-    var end_date = new (strEnd_date);
+    var end_date = new Date(strEnd_date);
 
     if (start_date == '' && end_date == '') {
         alert('投票日期不能都为空!');
