@@ -165,8 +165,8 @@ function setVoteDate(first_date, second_date, isVote) {
 }
 
 function validDateRange() {
-    var strStart_date = $('#start_date').val();
-    var strEnd_date = $('#end_date').val();
+    var strStart_date = $('#start_date').html();
+    var strEnd_date = $('#end_date').html();
     var strFirst_date = $('#first_date').val();
     var strSecond_date = $('#second_date').val();
     alert(strStart_date);
