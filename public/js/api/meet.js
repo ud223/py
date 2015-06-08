@@ -30,7 +30,7 @@ function QueryMeet(user_id, year, month, day) {
     var url = '/api/meet/get';
 
     var  data = { 'user_id': user_id, 'year': year, 'month': month, 'day': day }
-
+    alert(JSON.stringify(data));
     $.ajax({
         url: url,
         dataType: 'json',
