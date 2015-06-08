@@ -4,7 +4,7 @@ $(document).ready(function() {
     })
 
     $(".glyphicon-user").tap(function () {
-        alert('我的好友:功能暂未');
+        //alert('我的好友:功能暂未');
     })
 
     $('#btn_add').tap(function () {
@@ -19,7 +19,7 @@ $(document).ready(function() {
     })
 
     $("#share").tap(function () {
-        alert('分享');
+        //alert('分享');
     })
 
     $("#pending").tap(function () {
