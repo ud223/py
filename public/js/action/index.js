@@ -1,11 +1,10 @@
 $(document).ready(function() {
-    $(document).on('click', '.glyphicon-home', function () {
-        //alert(1);
+    $(".glyphicon-home").tap(function () {
         location.href = '/';
     })
 
-    $(document).on('click', '.glyphicon-user', function () {
-        alert('好友');
+    $(".glyphicon-user").tap(function () {
+        alert('我的好友:功能暂未');
     })
 
     $('#btn_add').tap(function () {
@@ -19,24 +18,16 @@ $(document).ready(function() {
         }
     })
 
-    $(document).on('click', '#share', function () {
+    $("#share").tap(function () {
         alert('分享');
     })
 
-    $(document).on('click', '#pending', function () {
+    $("#pending").tap(function () {
         location.href = '/meet/pending';
     })
-
-    //initBtnPending();
 })
 
-function initBtnPending() {
-    $(document).on("click", "#pending", function () {
-        location.href = '/meet/pending';
-    })
-}
-
-function initCalendarClick(id) {
+function initCalendarClick(id, year, month, day) {
     $( '#'+id).tap(function () {
         var meetModel = new Meet();
 

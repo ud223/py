@@ -1,33 +1,48 @@
 function loadMeets(data, toUrl) {
+    if ($('#meet-list').html() == "") {
+        $('#meet-list').html('');
+
+        return;
+    }
+
     $('#meet-list').html('');
 
-    $.each(data, function () {
-        var node = $('#meet_model').clone(true);
+    if (data.length == 0) {
+        var node = $('meet_add_model').clone(true);
 
-        node.find('.mg-listc-btt').html(this.meet_text);
-        var meet_id = this.id;
-        var users = "";
-        var url = toUrl;
-
-        $.each(this.users, function() {
-            users = users + '<span class="sli"><img src="'+ this.headimgurl +'"/></span>';
-        })
-
-        node.find('.mg-listc-usrs').html(users);
-
-        if (toUrl) {
-            url = toUrl + "/" + meet_id;
-        }
-        else {
-            url = "/meet/view/"+ meet_id;
-        }
-
-        node.tap(function() {
-           location.href = url;
-        });
+        node.find('.mg-listc-btt').html("当天没有活动安排");
 
         $('#meet-list').append(node);
-    })
+    }
+    else {
+        $.each(data, function () {
+            var node = $('#meet_model').clone(true);
+
+            node.find('.mg-listc-btt').html(this.meet_text);
+            var meet_id = this.id;
+            var users = "";
+            var url = toUrl;
+
+            $.each(this.users, function() {
+                users = users + '<span class="sli"><img src="'+ this.headimgurl +'"/></span>';
+            })
+
+            node.find('.mg-listc-usrs').html(users);
+
+            if (toUrl) {
+                url = toUrl + "/" + meet_id;
+            }
+            else {
+                url = "/meet/view/"+ meet_id;
+            }
+
+            node.tap(function() {
+                location.href = url;
+            });
+
+            $('#meet-list').append(node);
+        })
+    }
 }
 
 function meetLoad(data) {

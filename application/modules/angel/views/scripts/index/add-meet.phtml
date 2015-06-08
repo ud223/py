@@ -15,10 +15,6 @@
 <div class="big-box" style="margin-top:65px;">
     <div class="wp">
         <div class="glacker">
-            <p class="inp-tt">活动主题 <span class="red">*</span></p>
-            <input id="meet_text" type="text" placeholder="活动的主题内容（限30个中文字）" maxlength="60" class="inp-txt full" />
-        </div>
-        <div class="glacker">
             <p class="inp-tt">活动时间</p>
             <ul class="row-duotab clearfix" style="margin-top:8px;">
                 <li class="selected tab-bt" rel="add-c-tab-1" id="add-tab-1">
@@ -55,13 +51,17 @@
             </div>
         </div>
         <div class="glacker">
+            <p class="inp-tt">活动主题 <span class="red">*</span></p>
+            <input id="meet_text" type="text" placeholder="活动的主题内容（限30个中文字）" maxlength="60" class="inp-txt full" />
+        </div>
+        <div class="glacker">
             <p class="inp-tt">地点</p>
             <input id="address" type="text" maxlength="60" class="inp-txt full" />
         </div>
-        <div class="glacker">
-            <p class="inp-tt">活动描述</p>
-            <textarea id="remark" class="inp-txt full"></textarea>
-        </div>
+<!--        <div class="glacker">-->
+<!--            <p class="inp-tt">活动描述</p>-->
+            <textarea id="remark" style="display: none" class="inp-txt full"></textarea>
+<!--        </div>-->
     </div>
 </div>
 <input type="hidden" id="selected_date">

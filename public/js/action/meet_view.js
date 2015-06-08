@@ -92,6 +92,6 @@ function afterJoin(data, msg) {
         location.href = "/";
     }
     else {
-        alert(msg);
+        //alert(msg);
     }
 }

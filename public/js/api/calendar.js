@@ -15,19 +15,19 @@ function initSchedule(year, month, user_id) {
         success: function (response) {
             if (response.code == 200) {
                 if (response.data.length == 0) {
-                    alert('当前没有日程安排');
+                    //alert('当前没有日程安排');
 
                     return false;
                 }
                 else {
                     //设置日期占用样式
-                    setCalendarOpt(response.data);
+                    //setCalendarOpt(response.data);
                 }
 
                 return response.data;
             }
             else {
-                alert(response.data);
+                //alert(response.data);
             }
         },
         error: function () {
