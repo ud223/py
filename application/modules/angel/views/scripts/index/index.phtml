@@ -54,12 +54,7 @@
             $('#jijj').html(event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf());
 
             var meetModel = new Meet();
-
-            var user_id = localStorage.getItem('user_id');
-            var year = $('#'+ id).attr('year');
-            var month = $('#'+ id).attr('month');
-            var day = $('#'+ id).attr('day');
-
+            
             var user_id = localStorage.getItem('user_id');
 
             meetModel.Query(user_id, event.day.valueOf(), event.month.valueOf(), event.year.valueOf());
