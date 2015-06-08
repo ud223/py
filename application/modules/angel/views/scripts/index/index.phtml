@@ -51,8 +51,19 @@
             'weekStart' : 1,
             'date' : now
         }).on('changeDay', function(event) {
-            $('#jijj').html(event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf());
-            alert(event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf());
+            var load_date = event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf();
+
+            $('#jijj').html(load_date);
+
+            if ($('#meet-list').attr('load_date') == load_date + "_load") {
+                $('#meet-list').html('');
+                $('#meet-list').attr('load_date', load_date);
+
+                return;
+            }
+
+            $('#meet-list').attr('load_date', load_date + "_load");
+
             var meetModel = new Meet();
 
             var user_id = localStorage.getItem('user_id');
