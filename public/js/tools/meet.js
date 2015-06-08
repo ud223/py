@@ -1,16 +1,14 @@
 function loadMeets(data, toUrl) {
-    //if ($('#meet-list').html() != "") {
-    //    $('#meet-list').html('');
-    //
-    //    return;
-    //}
-
     $('#meet-list').html('');
 
     if (data.length == 0) {
         var node = $('#meet_add_model').clone(true);
 
         node.find('.mg-listc-btt').html("当天没有活动安排");
+
+        node.tap(function() {
+            location.href = "/meet/add";
+        });
 
         $('#meet-list').append(node);
     }

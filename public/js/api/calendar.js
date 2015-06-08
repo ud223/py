@@ -15,8 +15,6 @@ function initSchedule(year, month, user_id) {
         success: function (response) {
             if (response.code == 200) {
                 if (response.data.length == 0) {
-                    //alert('当前没有日程安排');
-
                     return false;
                 }
                 else {
