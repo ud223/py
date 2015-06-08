@@ -1,6 +1,6 @@
 function loadMeets(data, toUrl) {
     alert(JSON.stringify(data));
-    if ($('#meet-list').html() == "") {
+    if ($('#meet-list').html() != "") {
         $('#meet-list').html('');
 
         return;
