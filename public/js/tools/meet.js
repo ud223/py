@@ -10,7 +10,7 @@ function loadMeets(data, toUrl) {
 
     if (data.length == 0) {
         alert(1)
-        var node = $('meet_add_model').clone(true);
+        var node = $('#meet_add_model').clone(true);
 
         node.find('.mg-listc-btt').html("当天没有活动安排");
 
