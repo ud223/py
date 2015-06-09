@@ -196,11 +196,12 @@ function validDateRange() {
 }
 
 function loadProposerInfo(user_id) {
+    alert(JSON.stringify(create_date));
     if (proposer_id != user_id) {
         $('#proposer_info').show();
 
         $('#nickname').html(nickname);
         $('#headimgurl').attr("src", headimgurl);
-        $('#create_date').html("发起于 "+ craeted_at.date);
+        $('#create_date').html("发起于 "+ create_date.date);
     }
 }
