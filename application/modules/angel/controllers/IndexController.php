@@ -243,7 +243,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->proposer_id = $result->proposer_id;
         $this->view->nickname = $user->nickname;
         $this->view->headimgurl = $user->headimgurl;
-        $this->view->craete_date = $user->created_at;
+        $this->view->create_date = $user->created_at;
         $this->view->users_id = $users_id;
         $this->view->user_id = $user_id;
         $this->view->appid = $this->app_id;
