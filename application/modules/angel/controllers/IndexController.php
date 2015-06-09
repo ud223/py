@@ -238,7 +238,6 @@ class Angel_IndexController extends Angel_Controller_Action {
             break;
         }
 
-
         $this->view->meet_id = $meet_id;
         $this->view->proposer_id = $result->proposer_id;
         $this->view->nickname = $user->nickname;
@@ -248,6 +247,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->user_id = $user_id;
         $this->view->appid = $this->app_id;
         $this->view->vote = count($vote);
+        $this->view->title = "活动:" . $result->meet_text;
     }
 
 
