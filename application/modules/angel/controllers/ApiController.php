@@ -604,7 +604,7 @@ class Angel_ApiController extends Angel_Controller_Action {
         $code = 200;
         $message = "用户信息获取成功!";
 
-        $result = getUserInfo($user_id);
+        $result = $this->getUserInfo($user_id);
 
         if (!$result) {
             $code = 0;
