@@ -215,6 +215,7 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $meetModel = $this->getModel('meet');
         $voteModel = $this->getModel('vote');
+        $userModel = $this->getModel('user');
 
         $meet_id = $this->getParam('id');
         $user_id = $this->getParam('userid');
@@ -229,11 +230,20 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $vote = $voteModel->getVoteByMeetId($meet_id);
 
+        $users = $userModel->getUserByOpenId($result->proposer_id);
+
+        foreach ($users as $u) {
+            $user = $u;
+
+            break;
+        }
+
+
         $this->view->meet_id = $meet_id;
         $this->view->proposer_id = $result->proposer_id;
-        $this->view->nickname = $result->nickname;
-        $this->view->headimgurl = $result->headimgurl;
-//        $this->view->craeted_at = $result->craeted_at;
+        $this->view->nickname = $user->nickname;
+        $this->view->headimgurl = $user->headimgurl;
+//        $this->view->craeted_at = $user->craeted_at;
         $this->view->users_id = $users_id;
         $this->view->user_id = $user_id;
         $this->view->appid = $this->app_id;
