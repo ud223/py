@@ -3,7 +3,7 @@ function loadUser(user_id) {
     var url = '/api/meet/get';
 
     var  data = { 'user_id': user_id }
-
+    alert(user_id);
     $.ajax({
         url: url,
         dataType: 'json',
