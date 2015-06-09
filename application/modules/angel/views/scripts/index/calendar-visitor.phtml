@@ -1,0 +1,118 @@
+<!--
+        	作者：vincedotnet@hotmail.com
+        	时间：2015-05-28
+        	描述：view的内部代码
+        -->
+<script src="<?php echo $this->jsPath("weixin/weixin_user.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("tools/calendar.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("tools/String.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("tools/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("api/calendar.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("api/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("entity/calendar.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("entity/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("entity/user.js"); ?>"></script>
+<div class="big-box gamerbod nmt">
+    <div class="wp relative">
+        <img class="ssimg" src="<?php echo $this->headimgurl ?>" />
+        <div class="rdcts">
+            <div class="rdcrs">
+                <span><?php echo $this->ncikname ?></span>
+            </div>
+            <div class="rdcfs">
+                组织委员
+            </div>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="big-box">
+    <div class="mg-ttblk" style="background:#333;color:#FFF;border-radius:5px 5px 0 0;">
+        <span class="tt" id="jijj">十二月 2015</span>
+        <span class="glyphicon glyphicon-menu-left mg-ttblk-i left" id="to-last-month"></span>
+        <span class="glyphicon glyphicon-menu-right mg-ttblk-i right" id="to-next-month"></span>
+    </div>
+    <div id="real-calendar">
+        <div>
+
+        </div>
+    </div>
+</div>
+<div class="big-box transparent">
+    <button class="rowbtn">
+        <i class="glyphicon glyphicon-send"></i> 分享我的日历
+    </button>
+</div>
+
+<!--
+    作者：vincedotnet@hotmail.com
+    时间：2015-06-01
+    描述：以下为页脚，放到layout母版中
+-->
+<div id="footerbar">
+    <div class="itm selected">
+        <i class="glyphicon glyphicon-home"></i>
+        <div class="botlin"></div>
+    </div>
+    <div class="itm md">
+        <i class="glyphicon glyphicon-user"></i>
+        <div class="botlin"></div>
+    </div>
+    <div class="itm">
+        <i class="glyphicon glyphicon-plus"></i>
+        <div class="botlin"></div>
+    </div>
+</div>
+
+<script>
+    var appid = '<?php echo $this->appid ?>';
+    var openid = '<?php echo $this->openid ?>';
+    var user_id = '<?php echo $this->user_id ?>';
+
+    $(document).ready(function(){
+
+        var now = new Date();
+        $('#real-calendar div').Calendar({
+            'weekStart' : 1,
+            'date' : now
+        }).on('changeDay', function(event) {
+            $('#jijj').html(event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf());
+            $('#jijj').html(load_date);
+
+            if ($('#meet-list').attr('load_date') == load_date + "_load") {
+                $('#meet-list').html('');
+                $('#meet-list').attr('load_date', load_date);
+
+                return;
+            }
+
+            $('#meet-list').attr('load_date', load_date + "_load");
+
+            var meetModel = new Meet();
+
+            var user_id = localStorage.getItem('user_id');
+
+            meetModel.Query(user_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
+        });
+        //测试
+//        localStorage.clear();
+        var user = new User();
+
+        user.setUser_Id(openid);
+
+        if (!user.valid()) {
+            userLogin();
+        }
+        else {
+            var calendar = new Calendar();
+            var user_id = localStorage.getItem('user_id');
+
+            calendar.setYear($('#day_1').attr('year'));
+            calendar.setMonth($('#day_1').attr('month'));
+            calendar.setUser_Id(user_id);
+
+            calendar.getSchedule();
+        }
+    });
+</script>
