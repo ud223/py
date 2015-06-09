@@ -90,14 +90,28 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function indexAction() {
         $this->view->appid = $this->app_id;
 
+        $userModel = $this->getModel('user');
+
         $openid = $this->getParam('id');
         $share_id = $this->getParam('share_id');
 
         if ($openid) {
             $this->view->openid = $openid;
+
+            $users = $userModel->getUserByOpenId($openid);
+
+            foreach ($users as $u) {
+                $user = $u;
+                break;
+            }
+
+            $this->view->nickname = $user->nickname;
+            $this->view->headimgurl = $user->headimgurl;
         }
         else {
             $this->view->openid = '';
+            $this->view->nickname = '';
+            $this->view->headimgurl = '';
         }
 
         if ($share_id) {

@@ -3,6 +3,7 @@
         	时间：2015-05-28
         	描述：view的内部代码
         -->
+<script src="<?php echo $this->jsPath("weixin/share.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("weixin/weixin_user.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("tools/calendar.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("tools/String.js"); ?>"></script>
@@ -60,6 +61,8 @@
     var appid = '<?php echo $this->appid ?>';
     var openid = '<?php echo $this->openid ?>';
     var share_id = '<?php echo $this->share_id ?>';
+    var nickname = '<?php echo $this->nickname ?>';
+    var headimgurl = '<?php echo $this->headimgurl ?>';
 
     $(document).ready(function(){
         var now = new Date();
