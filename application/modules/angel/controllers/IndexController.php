@@ -151,6 +151,14 @@ class Angel_IndexController extends Angel_Controller_Action {
         return $result;
     }
 
+//    public function visitorRegUser($meet_id, $user_id) {
+//        $meetModel = $this->getModel('meet');
+//
+//        $meet = $meetModel->getById($meet_id);
+//
+//
+//    }
+
     public function regUserAction() {
         $code = $_GET['code'];
         $meet_id = $this->getParam('id');
@@ -223,10 +231,70 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $this->view->meet_id = $meet_id;
         $this->view->proposer_id = $result->proposer_id;
+        $this->view->nickname = $result->nickname;
+        $this->view->headimgurl = $result->headimgurl;
+        $this->view->craeted_at = $result->craeted_at;
         $this->view->users_id = $users_id;
         $this->view->user_id = $user_id;
         $this->view->appid = $this->app_id;
         $this->view->vote = count($vote);
+    }
+
+
+    public function resultAction() {
+        $this->_helper->layout->setLayout('normal');
+
+        $date = $this->getParam('date');
+        $meet_id = $this->getParam('meet_id');
+
+        $this->view->date = $date;
+        $this->view->meet_id = $meet_id;
+    }
+
+    public function successAction() {
+        $this->_helper->layout->setLayout('normal');
+
+        $meetModel = $this->getModel('model');
+
+        $meet_id = $this->getParam('meet_id');
+
+        $result = $meetModel->getById($meet_id);
+
+        $this->view->meet_text = $result->meet_text;
+        $this->view->meet_id = $meet_id;
+    }
+
+    public function calendarVisitorAction() {
+        $userModel = $this->getModel('user');
+
+        $user_id = $this->getParam('user_id');
+
+        $result = $userModel->getUserByOpenId($user_id);
+
+        foreach ($result as $r) {
+            $user = $r;
+
+            break;
+        }
+
+        $this->view->appid = $this->app_id;
+
+        $openid = $this->getParam('id');
+
+        if ($openid) {
+            $this->view->user_id = $openid;
+        }
+        else {
+            $this->view->user_id = '';
+        }
+
+        $this->view->headimgurl = $user->headimgurl;
+        $this->view->ncikname = $user->ncikname;
+        $this->view->openid = $user_id;
+    }
+
+    public function cbookerVisitorAction() {
+        $this->_helper->layout->setLayout('detail');
     }
 
     //本地测试注册用户方法

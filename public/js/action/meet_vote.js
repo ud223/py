@@ -11,6 +11,7 @@ $(document).ready(function() {
 
     loadThisMeet(user_id);
     loadMeetVoteDate(user_id);
+    loadProposerInfo(user_id);
 
     initBtnWord(user_id);
     initBtnBack();
@@ -192,4 +193,14 @@ function validDateRange() {
     }
 
     return true;
+}
+
+function loadProposerInfo(user_id) {
+    if (proposer_id != user_id) {
+        $('#proposer_info').show();
+
+        $('#nickname').html(nickname);
+        $('#headimgurl').attr("src", headimgurl);
+        $('#create_date').html("发起于 "+ craeted_at.date);
+    }
 }

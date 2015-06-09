@@ -33,6 +33,21 @@
     <button class="rowbtn" style="display: none" id="letmeleave">我退出</button>
 </div>
 <div class="big-box" style="margin-top:65px;">
+    <div id="proposer_info" class="big-box gamerbod" style="display: none">
+        <div class="wp relative">
+            <img id="headimgurl" class="ssimg" src="" />
+            <div class="rdcts">
+                <div class="rdcrs">
+                    <span id="nickname"></span><span class="rdcps"></span>
+                </div>
+                <div class="rdcfs" id="create_date">
+                    发起于 2015年6月14日
+                </div>
+            </div>
+            <button class="rdcym">TA的日程</button>
+            <div class="clear"></div>
+        </div>
+    </div>
     <div class="wp">
         <div class="glacker">
             <p class="inp-tt">活动时间</p>
@@ -125,4 +140,7 @@
     var users_id = '<?php echo $this->users_id ?>';
     var user_id = '<?php echo $this->user_id ?>'
     var vote = '<?php echo $this->vote ?>'
+    var nickname = '<?php echo $this->nickname ?>';
+    var headimgurl = '<?php echo $this->headimgurl ?>'
+    var create_date = '<?php echo $this->craeted_at ?>'
 </script>
