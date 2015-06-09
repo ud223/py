@@ -21,6 +21,7 @@ $(document).ready(function() {
 
     $("#share").tap(function () {
         //location.href = "/?share_id="+ user_id;
+        alert(nickname);
         if (!nickname) {
             var user = new User();
 
@@ -28,7 +29,7 @@ $(document).ready(function() {
 
             user.load(user_id);
         }
-
+        alert(nickname);
         var wx = new _WXShare(headimgurl, 50, 50, nickname + "分享了他的日程安排", "", "/?share_id="+ user_id, "");
 
         wx._ShareFriend();
