@@ -9,6 +9,7 @@ $(document).ready(function() {
 //初始化后退按钮
 function initBtnBack() {
     $('#pge-cover-back').tap(function() {
+        localStorage.setItem('share_id', '');
         location.href = "/";
     })
 }

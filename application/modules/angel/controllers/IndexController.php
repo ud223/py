@@ -91,12 +91,20 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->appid = $this->app_id;
 
         $openid = $this->getParam('id');
+        $share_id = $this->getParam('share_id');
 
         if ($openid) {
             $this->view->openid = $openid;
         }
         else {
             $this->view->openid = '';
+        }
+
+        if ($share_id) {
+            $this->view->share_id = $share_id;
+        }
+        else {
+            $this->view->share_id = '';
         }
     }
 

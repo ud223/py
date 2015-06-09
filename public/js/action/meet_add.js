@@ -33,6 +33,7 @@ function initSubmit() {
 
 function initBack() {
     $('#pge-cover-back').tap(function() {
+        localStorage.setItem('share_id', '');
         location.href = "/";
     })
 }

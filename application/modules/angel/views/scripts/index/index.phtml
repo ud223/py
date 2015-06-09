@@ -59,6 +59,7 @@
 <script>
     var appid = '<?php echo $this->appid ?>';
     var openid = '<?php echo $this->openid ?>';
+    var share_id = '<?php echo $this->share_id ?>';
 
     $(document).ready(function(){
         var now = new Date();
@@ -86,6 +87,10 @@
             meetModel.Query(user_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
 
+        if (share_id) {
+            localStorage.setItem('share_id', share_id);
+        }
+
         //测试
 //        localStorage.clear();
         var user = new User();
@@ -98,6 +103,11 @@
         else {
             var calendar = new Calendar();
             var user_id = localStorage.getItem('user_id');
+            var share_id = localStorage.getItem('share_id');
+            //如果分享id不为空，则用分享id替换用户id
+            if (share_id) {
+                user_id = share_id;
+            }
 
             calendar.setYear($('#day_1').attr('year'));
             calendar.setMonth($('#day_1').attr('month'));

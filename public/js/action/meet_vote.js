@@ -114,6 +114,7 @@ function initBtnWord(user_id) {
 //初始化后退按钮
 function initBtnBack() {
     $('#pge-cover-back').tap(function() {
+        localStorage.setItem('share_id', '');
         location.href = "/";
     })
 }
@@ -202,5 +203,9 @@ function loadProposerInfo(user_id) {
         $('#nickname').html(nickname);
         $('#headimgurl').attr("src", headimgurl);
         $('#create_date').html("发起于 "+ dateToZhcn(create_date));
+
+        $('#master_schedule').tap(function() {
+           location.href = "/?share_id="+ user_id;
+        });
     }
 }

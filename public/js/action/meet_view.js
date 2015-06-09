@@ -50,6 +50,7 @@ function initBtnWord(user_id) {
 //初始化后退按钮
 function initBtnBack() {
     $('#pge-cover-back').tap(function() {
+        localStorage.setItem('share_id', '');
         location.href = "/";
     })
 }
@@ -89,6 +90,7 @@ function initBtnJoin(user_id) {
 
 function afterJoin(data, msg) {
     if (data) {
+        localStorage.setItem('share_id', '');
         location.href = "/";
     }
     else {
