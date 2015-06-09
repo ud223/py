@@ -559,7 +559,7 @@ class Angel_ApiController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
 
         $result = $userModel->getUserByOpenId($user_id);
-
+        $this->_helper->json(array('data' => count($result), 'code' => 0)); exit;
         if (!$result) {
             return false;
         }
@@ -611,6 +611,6 @@ class Angel_ApiController extends Angel_Controller_Action {
             $message = "用户信息获取失败!!";
         }
 
-        $this->_helper->json(array('data' => $result, 'code' => $code));
+        $this->_helper->json(array('data' => count($result), 'code' => $code));
     }
 } 
