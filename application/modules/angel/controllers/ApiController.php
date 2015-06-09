@@ -597,4 +597,20 @@ class Angel_ApiController extends Angel_Controller_Action {
 
         return $users;
     }
+
+    public function getUserAction() {
+        $user_id = $this->getParam('user_id');
+
+        $code = 200;
+        $message = "用户信息获取成功!";
+
+        $result = getUserInfo($user_id);
+
+        if (!$result) {
+            $code = 0;
+            $message = "用户信息获取失败!!";
+        }
+
+        $this->_helper->json(array('data' => $result, 'code' => $code));
+    }
 } 
