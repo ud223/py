@@ -22,7 +22,9 @@ $(document).ready(function() {
     $("#share").tap(function () {
         //location.href = "/?share_id="+ user_id;
 
-        _WXShare(headimgurl, 50, 50, nickname + "分享了他的日程安排", "", "/?share_id="+ user_id, "")
+        _WXShare(headimgurl, 50, 50, nickname + "分享了他的日程安排", "", "/?share_id="+ user_id, "");
+
+        _WXShare._ShareFriend();
     })
 
     $("#pending").tap(function () {
