@@ -1,6 +1,6 @@
 function loadMeets(data, toUrl, day) {
     var list = $('#mg-listc').find('.mg-listc').clone(true);
-    var old_day = list.attr('day');
+    var old_day = $(document).find('.node-list').attr('day');
 
     $(document).find('.node-list').remove();
 
