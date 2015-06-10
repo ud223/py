@@ -46,7 +46,7 @@ var Calendar = function () {
 
     obj.getSchedule = function () {
         if (!this.check()) {
-            //alert(this.message);
+            alert(this.message);
 
             return;;
         }
