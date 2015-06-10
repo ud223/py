@@ -103,8 +103,6 @@ function afterJoin(data, msg) {
 }
 
 function loadProposerInfo(user_id) {
-    alert(proposer_id);
-    alert(user_id);
     if (proposer_id != user_id) {
         $('#proposer_info').show();
 
@@ -113,7 +111,8 @@ function loadProposerInfo(user_id) {
         $('#create_date').html("发起于 "+ dateToZhcn(create_date));
 
         $('#master_schedule').tap(function() {
-            location.href = "/?share_id="+ user_id;
+            alert('aaa');
+            //location.href = "/?share_id="+ user_id;
         });
     }
 }
