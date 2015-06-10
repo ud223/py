@@ -287,13 +287,23 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->_helper->layout->setLayout('normal');
 
         $meetModel = $this->getModel('meet');
+        $userModel = $this->getModel('user');
 
         $meet_id = $this->getParam('meet_id');
-//        exit($meet_id);
+
         $result = $meetModel->getById($meet_id);
-//        exit($result);
+
+//        $users = $userModel->getUserByOpenId($result->proposer_id);
+//
+//        foreach ($users as $u) {
+//            $user = $u;
+//
+//            break;
+//        }
+
         $this->view->meet_text = $result->meet_text;
         $this->view->meet_id = $meet_id;
+//        $this->view->headimgurl = $user->headimgurl;
     }
 
     public function calendarVisitorAction() {
