@@ -306,7 +306,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->meet_id = $meet_id;
     }
 
-    public function shareAction() {
+    public function shareMasterAction() {
         $this->_helper->layout->setLayout('main');
         $userModel = $this->getModel('user');
 
