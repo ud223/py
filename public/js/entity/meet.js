@@ -138,7 +138,6 @@ var Meet = function () {
     }
 
     obj.setMeetDate = function(meet_id, fun) {
-        alert(1);
         setMeetDate(meet_id, fun);
     }
 

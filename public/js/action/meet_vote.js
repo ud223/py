@@ -71,7 +71,7 @@ function initSetMeetDate() {
 
         $('#close-vote').tap(function () {
             var meet = new Meet();
-            alert(0);
+
             meet.setMeetDate(meet_id, setMeetSelectedDate);
         });
     }
