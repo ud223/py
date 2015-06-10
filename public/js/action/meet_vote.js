@@ -72,13 +72,17 @@ function initSetMeetDate() {
         $('#close-vote').tap(function () {
             var meet = new Meet();
 
-            meet.setMeetDate(meet_id);
+            meet.setMeetDate(meet_id, setMeetDate);
         });
     }
 }
 
-function clearVote(meet_id) {
+function setMeetDate(meet_id) {
     location.href = "/result/"+ meet_id;
+}
+
+function clearVote() {
+    location.reload();
 }
 
 //加载活动信息

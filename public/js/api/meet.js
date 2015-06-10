@@ -196,7 +196,7 @@ function voteMeet(meet_id, date1, date2, user_id, fun) {
                 //alert(response.data);
 
                 if (fun) {
-                    fun(meet_id);
+                    fun();
                 }
             }
             else {
@@ -209,7 +209,7 @@ function voteMeet(meet_id, date1, date2, user_id, fun) {
     });
 }
 //设定投票最多的日期为活动日期
-function setMeetDate(meet_id) {
+function setMeetDate(meet_id, fun) {
     var url = '/api/meet/vote/set';
 
     var  data = { 'meet_id': meet_id };
@@ -221,12 +221,15 @@ function setMeetDate(meet_id) {
         method: 'post',
         success: function (response) {
             if (response.code == 200) {
-                alert(response.data);
-
-                location.href = "/";
+                //alert(response.data);
+                //
+                //location.href = "/";
+                if (fun) {
+                    fun(meet_id);
+                }
             }
             else {
-                alert(response.data);
+                //alert(response.data);
             }
         },
         error: function () {
