@@ -110,9 +110,9 @@ function loadProposerInfo(user_id) {
         $('#headimgurl').attr("src", headimgurl);
         $('#create_date').html("发起于 "+ dateToZhcn(create_date));
 
-        $('#master_schedule').tap(function() {
-            alert('aaa');
-            //location.href = "/?share_id="+ user_id;
-        });
+        //$('#master_schedule').tap(function() {
+        //    alert('aaa');
+        //    //location.href = "/?share_id="+ user_id;
+        //});
     }
 }
