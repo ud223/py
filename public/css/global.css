@@ -402,8 +402,8 @@ textarea.inp-txt {
 }
 .mg-ttblk-i {
 	display: inline-block;
-	height: 50px;
-	width: 100px;
+	height: 30px;
+	width: 70px;
 	line-height: 50px;
 	position: absolute;
 	left: 0;
