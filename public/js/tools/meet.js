@@ -1,5 +1,4 @@
 function loadMeets(data, toUrl, day) {
-    alert(JSON.stringify(data));
     var list = $('#mg-listc').find('.mg-listc').clone(true);
 
     $(document).find('.node-list').remove();
@@ -7,9 +6,9 @@ function loadMeets(data, toUrl, day) {
     list.addClass('node-list');
 
     if (data.length == 0) {
-        //if (is_share) {
-        //    return;
-        //}
+        if (is_share) {
+            return;
+        }
 
         var node = $('#meet_add_model').clone(true);
 
@@ -26,33 +25,33 @@ function loadMeets(data, toUrl, day) {
     else {
         $.each(data, function () {
             var node = $('#meet_model').clone(true);
-            alert(1);
+
             node.find('.mg-listc-btt').html(this.meet_text);
-            alert(11);
+
             var meet_id = this.id;
-            alert(12);
+
             var users = "";
             var url = "";
-            alert(2);
+
             $.each(this.users, function() {
                 var share_url = "/share/"+ this.openid;
 
                 users = users + '<span class="sli"><a href="'+ share_url +'"><img src="'+ this.headimgurl +'"/></a></span>';
             })
-            alert(3);
+
             node.find('.mg-listc-usrs').html(users);
-            alert(4);
+
             if (toUrl) {
                 url = toUrl + "/" + meet_id;
             }
             else {
                 url = "/meet/view/"+ meet_id;
             }
-            alert(5);
+
             node.tap(function() {
                 location.href = url;
             });
-            alert(6);
+
             list.append(node);
         });
 
