@@ -70,7 +70,9 @@ function meetLoad(data) {
     var users_html = "";
 
     $.each(data.users, function() {
-        users_html = users_html + '<li><img src="'+ this.headimgurl +'"/></li>';
+        var share_url = "/share/"+ this.openid;
+
+        users_html = users_html + '<li><a href="'+ share_url +'"><img src="'+ this.headimgurl +'"/></a></li>';
     });
 
     $(document).find('.busr-lst').html(users_html);
