@@ -134,11 +134,11 @@ var Meet = function () {
     }
 
     obj.vote = function(meet_id, date1, date2, user_id, fun) {
-        alert(2);
         voteMeet(meet_id, date1, date2, user_id, fun);
     }
 
     obj.setMeetDate = function(meet_id, fun) {
+        alert(1);
         setMeetDate(meet_id, fun);
     }
 

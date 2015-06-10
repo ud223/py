@@ -71,13 +71,13 @@ function initSetMeetDate() {
 
         $('#close-vote').tap(function () {
             var meet = new Meet();
-
-            meet.setMeetDate(meet_id, setMeetDate);
+            alert(0);
+            meet.setMeetDate(meet_id, setMeetSelectedDate);
         });
     }
 }
 
-function setMeetDate(meet_id) {
+function setMeetSelectedDate(meet_id) {
     location.href = "/result/"+ meet_id;
 }
 
