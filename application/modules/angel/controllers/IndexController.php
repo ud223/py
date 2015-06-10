@@ -310,7 +310,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
 
         $proposer_id = $this->getParam('id');
-
+        exit('haha');
         $users = $userModel->getUserByOpenId($proposer_id);
 
         foreach ($users as $u) {
