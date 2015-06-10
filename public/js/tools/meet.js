@@ -5,7 +5,7 @@ function loadMeets(data, toUrl) {
         if (is_share) {
             retur;
         }
-        
+
         var node = $('#meet_add_model').clone(true);
 
         node.find('.mg-listc-btt').html("当天没有活动安排");
@@ -26,7 +26,7 @@ function loadMeets(data, toUrl) {
             var url = toUrl;
 
             $.each(this.users, function() {
-                users = users + '<span class="sli"><img src="'+ this.headimgurl +'"/></span>';
+                users = users + '<span class="sli"><a href="/share/"+ this.openid ><img src="'+ this.headimgurl +'"/></a></span>';
             })
 
             node.find('.mg-listc-usrs').html(users);
