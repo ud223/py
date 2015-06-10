@@ -285,7 +285,7 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function successAction() {
         $this->_helper->layout->setLayout('normal');
-
+        exit("dddd");
         $meetModel = $this->getModel('model');
 
         $meet_id = $this->getParam('meet_id');
