@@ -70,7 +70,7 @@
             $('#jijj').html(load_date);
 
             $('day_'+ event.year.valueOf()).addClass('selected');
-            
+
 //            if ($('#meet-list').attr('load_date') == load_date + "_load") {
 //                $('#meet-list').html('');
 //                $('#meet-list').attr('load_date', load_date);
@@ -83,7 +83,7 @@
             var meetModel = new Meet();
 
             var user_id = localStorage.getItem('user_id');
-            alert(1);
+
             meetModel.Query(user_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
 

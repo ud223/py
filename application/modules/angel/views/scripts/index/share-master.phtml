@@ -58,19 +58,12 @@
             $('#jijj').html(load_date);
 
             $('day_'+ event.year.valueOf()).addClass('selected');
-            
-            if ($('#meet-list').attr('load_date') == load_date + "_load") {
-                $('#meet-list').html('');
-                $('#meet-list').attr('load_date', load_date);
-
-                return;
-            }
-
-            $('#meet-list').attr('load_date', load_date + "_load");
 
             var meetModel = new Meet();
 
-            meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
+            var user_id = localStorage.getItem('user_id');
+
+            meetModel.Query(user_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
         //测试
 //        localStorage.clear();
