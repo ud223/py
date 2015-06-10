@@ -54,11 +54,11 @@ function voteDate(data, msg) {
 
     var strFirst_date = $('#first_date').val();
     var strSecond_date = $('#second_date').val();
-    alert(0);
+
     //投票验证失败, return
     if (!validDateRange())
         return;
-    alert(1);
+
     var meet = new Meet();
 
     meet.vote(meet_id, strFirst_date, strSecond_date, user_id, clearVote);
