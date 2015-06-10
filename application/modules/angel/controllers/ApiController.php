@@ -89,6 +89,8 @@ class Angel_ApiController extends Angel_Controller_Action {
             $code = 0;
             $message = "活动安排添加失败!";
         }
+        //将新增的活动ID赋值给回复变量
+        $message = $result;
 
         $this->_helper->json(array('data' => $message, 'code' => $code));
     }

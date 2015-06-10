@@ -13,10 +13,8 @@ function addMeet(start_date, end_date, selected_date, meet_text, address, remark
         data: data,
         method: 'post',
         success: function (response) {
-            alert(response.data);
-
             if (response.code == 200) {
-                location.href = '/';
+                location.href = '/success/' + response.data;
             }
         },
         error: function () {
