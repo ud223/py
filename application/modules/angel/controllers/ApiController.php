@@ -428,7 +428,7 @@ class Angel_ApiController extends Angel_Controller_Action {
 
             $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
         }
-//        $this->_helper->json(array('data' => count($voteDates), 'code' => $code)); exit;
+        $this->_helper->json(array('data' => count($voteDates), 'code' => $code)); exit;
         $max_date = "";
         $max_num = 0;
         //冒泡获取最大投票数日期

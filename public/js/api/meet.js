@@ -221,7 +221,7 @@ function setMeetDate(meet_id, fun) {
         method: 'post',
         success: function (response) {
             if (response.code == 200) {
-                //alert(response.data);
+                alert(JSON.stringify(response.data)); return;
                 //
                 //location.href = "/";
                 if (fun) {
