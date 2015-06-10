@@ -108,7 +108,7 @@ function loadProposerInfo(user_id) {
         $('#create_date').html("发起于 "+ dateToZhcn(create_date));
 
         $('#master_schedule').tap(function() {
-            location.href = "/?share_id="+ user_id;
+            location.href = "/share/" + proposer_id;
         });
     }
 }

@@ -306,6 +306,24 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->meet_id = $meet_id;
     }
 
+    public function shareAction() {
+        $userModel = $this->getModel('user');
+
+        $proposer_id = $this->getParam('id');
+
+        $users = $userModel->getUserByOpenId($proposer_id);
+
+        foreach ($users as $u) {
+            $user = $u;
+
+            break;
+        }
+
+        $this->view->proposer_id = $proposer_id;
+        $this->view->nickname = $user->nickname;
+        $this->view->headimgurl = $user->headimgurl;
+    }
+
     public function calendarVisitorAction() {
         $userModel = $this->getModel('user');
 
