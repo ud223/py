@@ -42,12 +42,6 @@
     </div>
 </div>
 
-<div class="mg-listc">
-    <div id="meet-list">
-
-    </div>
-</div>
-
 <div class="big-box transparent">
     <button class="rowbtn" id="share">
         <i class="glyphicon glyphicon-send"></i> 分享我的日历
@@ -75,6 +69,10 @@
 
             $('#jijj').html(load_date);
 
+            $('day_'+ event.year.valueOf()).addClass('selected');
+
+            insertMeetList($('day_'+ event.year.valueOf()))
+
             if ($('#meet-list').attr('load_date') == load_date + "_load") {
                 $('#meet-list').html('');
                 $('#meet-list').attr('load_date', load_date);
@@ -94,6 +92,8 @@
         if (share_id) {
             localStorage.setItem('share_id', share_id);
         }
+
+        $('#jijj').html(now.getMonth() + "月-" + now.getYear() + "年");
 
         //测试
 //        localStorage.clear();
