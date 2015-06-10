@@ -6,7 +6,7 @@ $(document).ready(function() {
     else {
         localStorage.setItem('user_id', user_id);
     }
-
+    alert(user_id);
     validUser(user_id)
 
     loadThisMeet(user_id);
