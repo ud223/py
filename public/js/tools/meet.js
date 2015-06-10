@@ -25,10 +25,10 @@ function loadMeets(data, toUrl) {
             var meet_id = this.id;
             var users = "";
             var url = toUrl;
-            var tmp_user_id = this.openid;
-            var share_url = "/share/"+ tmp_user_id;
 
             $.each(this.users, function() {
+                var share_url = "/share/"+ this.openid;
+
                 users = users + '<span class="sli"><a href="'+ share_url +'"><img src="'+ this.headimgurl +'"/></a></span>';
             })
 
