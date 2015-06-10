@@ -104,7 +104,7 @@
             context.live_date = nxt;
             context.renderCalendar(nxt);
 
-            $('#jijj').html(conetext.mm+1+'月-'+context.yn);
+            $('#jijj').html(conetext.mm + 1 + '月-' + context.yn);
         });
     };
 
