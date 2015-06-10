@@ -27,7 +27,7 @@
         <span class="glyphicon glyphicon-menu-right mg-ttblk-i right" id="to-next-month"></span>
     </div>
     <div id="real-calendar">
-        <div>
+        <div id="meet-list">
 
         </div>
     </div>
@@ -49,7 +49,7 @@
             'date' : now
         }).on('changeDay', function(event) {
             var load_date = event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf();
-            
+
             $('#jijj').html(load_date);
 
             if ($('#meet-list').attr('load_date') == load_date + "_load") {
