@@ -1,10 +1,10 @@
 function loadMeets(data, toUrl, day) {
     var list = $('#mg-listc').find('.mg-listc').clone(true);
+    var old_day = list.attr('day');
 
     $(document).find('.node-list').remove();
 
     list.addClass('node-list');
-
 
     if (data.length == 0) {
         if (is_share) {
@@ -24,8 +24,7 @@ function loadMeets(data, toUrl, day) {
         $('#day_'+ day).parent().after(list);
     }
     else {
-        alert(list.attr('day'));
-        if (list.attr('day') == day) {
+        if (old_day == day) {
             list.attr('day', '');
             return;
         }
