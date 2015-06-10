@@ -61,9 +61,7 @@
             $('#meet-list').attr('load_date', load_date + "_load");
 
             var meetModel = new Meet();
-
-            var user_id = localStorage.getItem('user_id');
-
+            
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
         //测试
@@ -76,13 +74,13 @@
 //            userLogin();
 //        }
 //        else {
-            alert(0);
+
             var calendar = new Calendar();
-            alert(proposer_id);
+
             calendar.setYear($('#day_1').attr('year'));
             calendar.setMonth($('#day_1').attr('month'));
             calendar.setUser_Id(proposer_id);
-            alert(1);
+
             calendar.getSchedule();
 //        }
     });
