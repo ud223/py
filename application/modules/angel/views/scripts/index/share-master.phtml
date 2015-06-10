@@ -37,15 +37,15 @@
 
     </div>
 </div>
-<div class="big-box transparent">
-    <button class="rowbtn">
-        <i class="glyphicon glyphicon-send"></i> 分享我的日历
-    </button>
-</div>
+<!--<div class="big-box transparent">-->
+<!--    <button class="rowbtn">-->
+<!--        <i class="glyphicon glyphicon-send"></i> 分享我的日历-->
+<!--    </button>-->
+<!--</div>-->
 <script>
     var appid = '<?php echo $this->appid ?>';
     var proposer_id = '<?php echo $this->proposer_id ?>';
-
+    var is_share = true;
     $(document).ready(function(){
 
         var now = new Date();

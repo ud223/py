@@ -2,6 +2,10 @@ function loadMeets(data, toUrl) {
     $('#meet-list').html('');
 
     if (data.length == 0) {
+        if (is_share) {
+            retur;
+        }
+        
         var node = $('#meet_add_model').clone(true);
 
         node.find('.mg-listc-btt').html("当天没有活动安排");
