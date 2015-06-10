@@ -5,7 +5,7 @@ function loadMeets(data, toUr, day) {
     $(document).find('.node-list').remove();
 
     list.addClass('node-list');
-    alert(data.length);
+
     if (data.length == 0) {
         //if (is_share) {
         //    return;
@@ -24,34 +24,33 @@ function loadMeets(data, toUr, day) {
         $('#day_'+ day).parent().after(list);
     }
     else {
-        alert(2);
         $.each(data, function () {
             var node = $('#meet_model').clone(true);
-
+            alert(1);
             node.find('.mg-listc-btt').html(this.meet_text);
             var meet_id = this.id;
             var users = "";
             var url = toUrl;
-
+            alert(2);
             $.each(this.users, function() {
                 var share_url = "/share/"+ this.openid;
 
                 users = users + '<span class="sli"><a href="'+ share_url +'"><img src="'+ this.headimgurl +'"/></a></span>';
             })
-
+            alert(3);
             node.find('.mg-listc-usrs').html(users);
-
+            alert(4);
             if (toUrl) {
                 url = toUrl + "/" + meet_id;
             }
             else {
                 url = "/meet/view/"+ meet_id;
             }
-
+            alert(5);
             node.tap(function() {
                 location.href = url;
             });
-
+            alert(6);
             list.append(node);
         });
 
