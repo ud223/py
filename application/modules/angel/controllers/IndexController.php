@@ -307,6 +307,7 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function shareAction() {
+        $this->_helper->layout->setLayout('main');
         $userModel = $this->getModel('user');
 
         $proposer_id = $this->getParam('id');
@@ -318,10 +319,11 @@ class Angel_IndexController extends Angel_Controller_Action {
 
             break;
         }
-        exit($user->nickname);
+
         $this->view->proposer_id = $proposer_id;
         $this->view->nickname = $user->nickname;
         $this->view->headimgurl = $user->headimgurl;
+        exit('xixi');
     }
 
     public function calendarVisitorAction() {
