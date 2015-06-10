@@ -1,6 +1,4 @@
-function loadMeets(data, toUrl) {
-    alert(1); return;
-
+function loadMeets(data, toUr, day) {
     var list = $('#mg-listc').clone(true);
 
     $('#meet-list').html('');
@@ -18,7 +16,9 @@ function loadMeets(data, toUrl) {
             location.href = "/meet/add";
         });
 
-        $('#meet-list').append(node);
+        list.append(node);
+
+        $('#day_'+ day).parent().after(list);
     }
     else {
         $.each(data, function () {

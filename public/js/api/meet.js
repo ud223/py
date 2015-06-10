@@ -35,9 +35,10 @@ function QueryMeet(user_id, year, month, day) {
         data: data,
         method: 'get',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载活动集合
-                loadMeets(response.data);
+                loadMeets(response.data, null, day);
             }
             else {
                 //alert(response.data);
