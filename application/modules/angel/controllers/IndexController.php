@@ -323,7 +323,6 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->proposer_id = $proposer_id;
         $this->view->nickname = $user->nickname;
         $this->view->headimgurl = $user->headimgurl;
-        exit('xixi');
     }
 
     public function calendarVisitorAction() {
