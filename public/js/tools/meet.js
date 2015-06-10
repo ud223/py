@@ -8,7 +8,7 @@ function loadMeets(data, toUrl, day) {
         list.attr('day', '');
         return;
     }
-
+    list.attr('day', day);
     list.addClass('node-list');
 
     if (data.length == 0) {
@@ -29,7 +29,6 @@ function loadMeets(data, toUrl, day) {
         $('#day_'+ day).parent().after(list);
     }
     else {
-        list.attr('day', day);
         $.each(data, function () {
             var node = $('#meet_model').clone(true);
 
