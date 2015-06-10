@@ -285,13 +285,13 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function successAction() {
         $this->_helper->layout->setLayout('normal');
-        exit("dddd");
+
         $meetModel = $this->getModel('model');
 
         $meet_id = $this->getParam('meet_id');
 
         $result = $meetModel->getById($meet_id);
-
+        exit($result);
         $this->view->meet_text = $result->meet_text;
         $this->view->meet_id = $meet_id;
     }
