@@ -24,6 +24,7 @@ function loadMeets(data, toUrl, day) {
         $('#day_'+ day).parent().after(list);
     }
     else {
+        alert(list.attr('day'));
         if (list.attr('day') == day) {
             list.attr('day', '');
             return;
