@@ -96,6 +96,14 @@
         }
 
         this.renderCalendar(now);
+
+        var context = this;
+        $('#to-next-month').click(function(){
+            context.update_date('nxt');
+            var nxt = new Date(context.yn, context.mm, 1);
+            context.live_date = nxt;
+            context.renderCalendar(nxt);
+        });
     };
 
     Plugin.prototype.renderEvents = function(events, elem) {

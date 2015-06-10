@@ -22,9 +22,6 @@ $(document).ready(function() {
     $("#share").tap(function () {
         //location.href = "/?share_id="+ user_id;
         alert(nickname);
-        var wx = new _WXShare(headimgurl, 50, 50, nickname + "分享了他的日程安排", "", "/?share_id="+ user_id, "");
-
-        wx._ShareFriend();
     })
 
     $("#pending").tap(function () {
@@ -48,4 +45,14 @@ function initCalendarClick(id, year, month, day) {
 function loadUserInfo(data) {
     headimgurl = data.headimgurl;
     nickname = data.nickname;
+}
+
+function insertMeetList(ele) {
+    var list = $('#mg-listc').clone(true);
+
+    ele.aftr(list);
+}
+
+function clearMeetList() {
+    
 }
