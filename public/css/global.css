@@ -403,7 +403,7 @@ textarea.inp-txt {
 .mg-ttblk-i {
 	display: inline-block;
 	height: 50px;
-	width: 50px;
+	width: 100px;
 	line-height: 50px;
 	position: absolute;
 	left: 0;
