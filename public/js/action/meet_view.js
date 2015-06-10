@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     loadThisMeet(user_id);
     loadProposerInfo(user_id);
-    
+
     initBtnWord(user_id);
     initBtnBack();
 
@@ -100,6 +100,8 @@ function afterJoin(data, msg) {
 }
 
 function loadProposerInfo(user_id) {
+    alert(proposer_id);
+    alert(user_id);
     if (proposer_id != user_id) {
         $('#proposer_info').show();
 
