@@ -295,7 +295,9 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $meet = $meetModel->getById($meet_id);
 
-        $this->view->date = $meet->selected_date;
+        $strDate = explode('-', $meet->selected_date);
+
+        $this->view->date = $strDate[0] . '年' . $strDate[1] . '月' . $strDate[2] . '日';
         $this->view->meet_id = $meet_id;
     }
 
@@ -303,23 +305,13 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->_helper->layout->setLayout('normal');
 
         $meetModel = $this->getModel('meet');
-        $userModel = $this->getModel('user');
 
         $meet_id = $this->getParam('meet_id');
 
         $result = $meetModel->getById($meet_id);
 
-//        $users = $userModel->getUserByOpenId($result->proposer_id);
-//
-//        foreach ($users as $u) {
-//            $user = $u;
-//
-//            break;
-//        }
-
         $this->view->meet_text = $result->meet_text;
         $this->view->meet_id = $meet_id;
-//        $this->view->headimgurl = $user->headimgurl;
     }
 
     public function calendarVisitorAction() {
