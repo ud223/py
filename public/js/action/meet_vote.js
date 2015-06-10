@@ -49,7 +49,7 @@ function voteDate(data, msg) {
         //alert(msg);
         return;
     }
-
+    alert(0);
     var user_id = localStorage.getItem('user_id');
 
     var strFirst_date = $('#first_date').val();
@@ -58,7 +58,7 @@ function voteDate(data, msg) {
     //投票验证失败, return
     if (!validDateRange())
         return;
-
+    alert(1);
     var meet = new Meet();
 
     meet.vote(meet_id, strFirst_date, strSecond_date, user_id, clearVote);

@@ -185,13 +185,14 @@ function voteMeet(meet_id, date1, date2, user_id, fun) {
     var url = '/api/meet/vote/add';
 
     var  data = { 'meet_id': meet_id, 'date1': date1, 'date2': date2, 'user_id': user_id };
-    //alert(JSON.stringify(data)); return;
+    alert(JSON.stringify(data));// return;
     $.ajax({
         url: url,
         dataType: 'json',
         data: data,
         method: 'post',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
                 //alert(response.data);
 
