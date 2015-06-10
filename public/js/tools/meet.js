@@ -7,9 +7,9 @@ function loadMeets(data, toUr, day) {
     list.addClass('node-list');
 
     if (data.length == 0) {
-        if (is_share) {
-            retur;
-        }
+        //if (is_share) {
+        //    return;
+        //}
 
         var node = $('#meet_add_model').clone(true);
 
@@ -51,7 +51,7 @@ function loadMeets(data, toUr, day) {
                 location.href = url;
             });
 
-            $('#meet-list').append(node);
+            list.append(node);
         })
     }
 }
