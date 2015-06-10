@@ -10,7 +10,8 @@ $(document).ready(function() {
     validUser(user_id)
 
     loadThisMeet(user_id);
-
+    loadProposerInfo(user_id);
+    
     initBtnWord(user_id);
     initBtnBack();
 
@@ -95,5 +96,19 @@ function afterJoin(data, msg) {
     }
     else {
         //alert(msg);
+    }
+}
+
+function loadProposerInfo(user_id) {
+    if (proposer_id != user_id) {
+        $('#proposer_info').show();
+
+        $('#nickname').html(nickname);
+        $('#headimgurl').attr("src", headimgurl);
+        $('#create_date').html("发起于 "+ dateToZhcn(create_date));
+
+        $('#master_schedule').tap(function() {
+            location.href = "/?share_id="+ user_id;
+        });
     }
 }

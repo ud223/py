@@ -33,18 +33,18 @@
     <button class="rowbtn" style="display: none" id="letmeleave">我退出</button>
 </div>
 <div class="big-box" style="margin-top:65px;">
-    <div class="big-box gamerbod" style="display: none">
+    <div id="proposer_info"  class="big-box gamerbod" style="display: none">
         <div class="wp relative">
-            <img class="ssimg" src="http://tp2.sinaimg.cn/1764222885/50/5714301852/1" />
+            <img class="ssimg" src="<?php echo $this->headimgurl ?>" />
             <div class="rdcts">
                 <div class="rdcrs">
-                    <span>张三三三</span><span class="rdcps">发起人</span>
+                    <span><?php echo $this->nickname ?></span><span class="rdcps"></span>
                 </div>
-                <div class="rdcfs">
-                    发起于 2015年6月14日
+                <div class="rdcfs"  id="create_date">
+
                 </div>
             </div>
-            <button class="rdcym">TA的日程</button>
+            <button class="rdcym" id="master_schedule">TA的日程</button>
             <div class="clear"></div>
         </div>
     </div>
@@ -105,4 +105,7 @@
     var proposer_id = '<?php echo $this->proposer_id ?>';
     var users_id = '<?php echo $this->users_id ?>';
     var user_id = '<?php echo $this->user_id ?>'
+    var nickname = '<?php echo $this->nickname ?>';
+    var headimgurl = '<?php echo $this->headimgurl ?>'
+    var create_date = '<?php echo $this->create_date ?>'
 </script>
