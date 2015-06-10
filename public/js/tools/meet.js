@@ -1,4 +1,5 @@
 function loadMeets(data, toUrl) {
+    alert(1);
     $('#meet-list').html('');
 
     if (data.length == 0) {
