@@ -98,6 +98,16 @@
         this.renderCalendar(now);
 
         var context = this;
+
+        $('#to-last-month').click(function(){
+            context.update_date('prv');
+            var prv = new Date(context.yp, context.mm, 1);
+            context.live_date = prv;
+            context.renderCalendar(prv);
+
+            $('#jijj').html(context.mm - 1 + '月-' + context.yn);
+        });
+
         $('#to-next-month').click(function(){
             context.update_date('nxt');
             var nxt = new Date(context.yn, context.mm, 1);
