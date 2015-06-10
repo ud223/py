@@ -1,4 +1,4 @@
-function loadMeets(data, toUr, day) {
+function loadMeets(data, toUrl, day) {
     alert(JSON.stringify(data));
     var list = $('#mg-listc').find('.mg-listc').clone(true);
 
