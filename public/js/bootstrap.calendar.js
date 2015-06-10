@@ -103,6 +103,8 @@
             var nxt = new Date(context.yn, context.mm, 1);
             context.live_date = nxt;
             context.renderCalendar(nxt);
+
+            $('#jijj').html(conetext.mm+1+'月-'+context.yn);
         });
     };
 
