@@ -1,10 +1,11 @@
 function loadMeets(data, toUr, day) {
+    alert(JSON.stringify(data));
     var list = $('#mg-listc').find('.mg-listc').clone(true);
 
     $(document).find('.node-list').remove();
 
     list.addClass('node-list');
-
+    alert(data.length);
     if (data.length == 0) {
         //if (is_share) {
         //    return;
@@ -23,6 +24,7 @@ function loadMeets(data, toUr, day) {
         $('#day_'+ day).parent().after(list);
     }
     else {
+        alert(2);
         $.each(data, function () {
             var node = $('#meet_model').clone(true);
 
