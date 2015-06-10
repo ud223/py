@@ -292,7 +292,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $meetModel = $this->getModel('meet');
 
         $meet_id = $this->getParam('meet_id');
-
+        exit($meet_id);
         $meet = $meetModel->getById($meet_id);
 
         $this->view->date = $meet->selected_date;

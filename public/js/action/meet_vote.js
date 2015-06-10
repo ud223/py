@@ -164,35 +164,33 @@ function validDateRange() {
     var strEnd_date = $('#end_date').attr("end_date");
     var strFirst_date = $('#first_date').val();
     var strSecond_date = $('#second_date').val();
-    alert(10);
+
     var start_date = new Date(strStart_date);
     var end_date = new Date(strEnd_date);
-    alert(11);
-    alert(strFirst_date);
-    alert(strSecond_date);
+
     if (strFirst_date == '' && strSecond_date == '') {
         alert('投票日期不能都为空!');
 
         return false;
     }
-    alert(12);
+
     if (strFirst_date == '' && strSecond_date != '') {
         strFirst_date = strSecond_date;
     }
-    alert(13);
+
     if (strFirst_date != '' && strSecond_date == '') {
         strSecond_date = strFirst_date;
     }
-    alert(14);
+
     var first_date = new Date(strFirst_date);
     var second_date = new Date(strSecond_date);
-    alert(15);
+
     if (first_date > end_date || first_date < start_date) {
         alert("超出选择日期范围!");
 
         return false;
     }
-    alert(16);
+
     if (second_date > end_date || second_date < start_date) {
         alert("超出选择日期范围!");
 
