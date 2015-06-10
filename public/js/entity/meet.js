@@ -90,11 +90,11 @@ var Meet = function () {
             return false;
         }
 
-        if (!this.remark) {
-            this.message = "请先填写活动描述!";
-
-            return false;
-        }
+        //if (!this.remark) {
+        //    this.message = "请先填写活动描述!";
+        //
+        //    return false;
+        //}
 
         return true;
     }
