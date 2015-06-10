@@ -173,14 +173,6 @@ class Angel_IndexController extends Angel_Controller_Action {
         return $result;
     }
 
-//    public function visitorRegUser($meet_id, $user_id) {
-//        $meetModel = $this->getModel('meet');
-//
-//        $meet = $meetModel->getById($meet_id);
-//
-//
-//    }
-
     public function regUserAction() {
         $code = $_GET['code'];
         $meet_id = $this->getParam('id');
@@ -297,7 +289,7 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $strDate = explode('-', $meet->selected_date);
 
-        $this->view->date = $strDate[0] . '年' . $strDate[1] . '月' . $strDate[2] . '日';
+        $this->view->date = $strDate[0] . '年' . $this->strToIntFormat($strDate[1]) . '月' . $this->strToIntFormat($strDate[2]) . '日';
         $this->view->meet_id = $meet_id;
     }
 
@@ -379,5 +371,13 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
 
         exit($msg);
+    }
+
+    public function strToIntFormat($n) {
+        if (substr($n, 0, 1) == '0') {
+            return substr($n, 1, 1);
+        }
+
+        return $n;
     }
 }
