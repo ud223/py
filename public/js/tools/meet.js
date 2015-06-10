@@ -32,7 +32,7 @@ function loadMeets(data, toUr, day) {
             var meet_id = this.id;
             alert(12);
             var users = "";
-            var url = toUrl;
+            var url = "";
             alert(2);
             $.each(this.users, function() {
                 var share_url = "/share/"+ this.openid;
