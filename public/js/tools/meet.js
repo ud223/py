@@ -17,6 +17,7 @@ function loadMeets(data, toUrl) {
         $('#meet-list').append(node);
     }
     else {
+        alert(JSON.stringify(data));
         $.each(data, function () {
             var node = $('#meet_model').clone(true);
 
