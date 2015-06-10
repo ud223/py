@@ -1,4 +1,8 @@
 function loadMeets(data, toUrl) {
+    alert(1); return;
+
+    var list = $('#mg-listc').clone(true);
+
     $('#meet-list').html('');
 
     if (data.length == 0) {
