@@ -50,7 +50,7 @@ var Calendar = function () {
 
             return;;
         }
-
+        alert(2);
         initSchedule(this.year, this.month, this.user_id);
     }
 

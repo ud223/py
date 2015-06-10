@@ -76,12 +76,13 @@
 //            userLogin();
 //        }
 //        else {
+            alert(0);
             var calendar = new Calendar();
 
             calendar.setYear($('#day_1').attr('year'));
             calendar.setMonth($('#day_1').attr('month'));
             calendar.setUser_Id(proposer_id);
-
+            alert(1);
             calendar.getSchedule();
 //        }
     });
