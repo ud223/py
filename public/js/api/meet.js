@@ -225,9 +225,9 @@ function setMeetDate(meet_id, fun) {
 
                 //
                 //location.href = "/";
-                if (fun) {
-                    fun(meet_id);
-                }
+                //if (fun) {
+                //    fun(meet_id);
+                //}
             }
             else {
                 //alert(response.data);
