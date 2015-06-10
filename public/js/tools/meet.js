@@ -1,8 +1,9 @@
 function loadMeets(data, toUr, day) {
+    alert(1);
     var list = $('#mg-listc').find('.mg-listc').clone(true);
-
+    alert(2);
     $(document).find('.node-list').remove();
-
+    alert(3);
     list.addClass('node-list');
 
     if (data.length == 0) {
