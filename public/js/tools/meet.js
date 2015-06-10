@@ -28,7 +28,9 @@ function loadMeets(data, toUr, day) {
             var node = $('#meet_model').clone(true);
             alert(1);
             node.find('.mg-listc-btt').html(this.meet_text);
+            alert(11);
             var meet_id = this.id;
+            alert(12);
             var users = "";
             var url = toUrl;
             alert(2);
