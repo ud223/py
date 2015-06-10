@@ -290,9 +290,9 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->_helper->layout->setLayout('normal');
 
         $meetModel = $this->getModel('meet');
-        exit("haha");
+
         $meet_id = $this->getParam('meet_id');
-        exit($meet_id);
+
         $meet = $meetModel->getById($meet_id);
 
         $this->view->date = $meet->selected_date;
