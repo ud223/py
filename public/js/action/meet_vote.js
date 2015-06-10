@@ -171,7 +171,7 @@ function validDateRange() {
     alert(strFirst_date);
     alert(strSecond_date);
     if (strFirst_date == '' && strSecond_date == '') {
-        //alert('投票日期不能都为空!');
+        alert('投票日期不能都为空!');
 
         return false;
     }
@@ -188,13 +188,13 @@ function validDateRange() {
     var second_date = new Date(strSecond_date);
     alert(15);
     if (first_date > end_date || first_date < start_date) {
-        //alert("超出选择日期范围!");
+        alert("超出选择日期范围!");
 
         return false;
     }
     alert(16);
     if (second_date > end_date || second_date < start_date) {
-        //alert("超出选择日期范围!");
+        alert("超出选择日期范围!");
 
         return false;
     }
