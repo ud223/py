@@ -25,9 +25,10 @@ function loadMeets(data, toUrl) {
             var meet_id = this.id;
             var users = "";
             var url = toUrl;
+            var tmp_user_id = this.openid;
 
             $.each(this.users, function() {
-                users = users + '<span class="sli"><a href="/share/"+ this.openid ><img src="'+ this.headimgurl +'"/></a></span>';
+                users = users + '<span class="sli"><a href="/share/"+ tmp_user_id ><img src="'+ this.headimgurl +'"/></a></span>';
             })
 
             node.find('.mg-listc-usrs').html(users);
