@@ -407,7 +407,7 @@ textarea.inp-txt {
 	line-height: 50px;
 	position: absolute;
 	left: 0;
-	top: 0;
+	top: 10;
 }
 .mg-ttblk-i.right {
 	left: auto;
