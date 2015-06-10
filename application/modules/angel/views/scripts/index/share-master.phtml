@@ -48,7 +48,8 @@
             'weekStart' : 1,
             'date' : now
         }).on('changeDay', function(event) {
-            $('#jijj').html(event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf());
+            var load_date = event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf();
+            
             $('#jijj').html(load_date);
 
             if ($('#meet-list').attr('load_date') == load_date + "_load") {
@@ -61,7 +62,7 @@
             $('#meet-list').attr('load_date', load_date + "_load");
 
             var meetModel = new Meet();
-            
+
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
         //测试
