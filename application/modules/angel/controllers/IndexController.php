@@ -289,10 +289,13 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function resultAction() {
         $this->_helper->layout->setLayout('normal');
 
-        $date = $this->getParam('date');
+        $meetModel = $this->getModel('meet');
+
         $meet_id = $this->getParam('meet_id');
 
-        $this->view->date = $date;
+        $meet = $meetModel->getById($meet_id);
+
+        $this->view->date = $meet->selected_date;
         $this->view->meet_id = $meet_id;
     }
 
