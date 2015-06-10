@@ -105,7 +105,7 @@
             context.live_date = prv;
             context.renderCalendar(prv);
 
-            $('#jijj').html(context.mm - 1 + '月-' + context.yn);
+            //$('#jijj').html(context.mm - 1 + '月-' + context.yn);
         });
 
         $('#to-next-month').click(function(){
