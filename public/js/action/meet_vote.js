@@ -168,6 +168,8 @@ function validDateRange() {
     var start_date = new Date(strStart_date);
     var end_date = new Date(strEnd_date);
     alert(11);
+    alert(strFirst_date);
+    alert(strSecond_date);
     if (strFirst_date == '' && strSecond_date == '') {
         //alert('投票日期不能都为空!');
 
