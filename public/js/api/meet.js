@@ -196,11 +196,11 @@ function voteMeet(meet_id, date1, date2, user_id, fun) {
                 //alert(response.data);
 
                 if (fun) {
-                    fun();
+                    fun(meet_id);
                 }
             }
             else {
-                alert(response.data);
+                //alert(response.data);
             }
         },
         error: function () {

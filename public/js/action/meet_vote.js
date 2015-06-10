@@ -77,8 +77,8 @@ function initSetMeetDate() {
     }
 }
 
-function clearVote() {
-    location.reload();
+function clearVote(meet_id) {
+    location.href = "/result/"+ meet_id;
 }
 
 //加载活动信息
