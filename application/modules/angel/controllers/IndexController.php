@@ -186,7 +186,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $userInfo = $this->getUserInfo($open_id);
         $result = $this->addUser($userInfo);
 
-        if (substr($web_url, count($web_url) - 1, 1) != "/") {
+        if (substr($web_url, strlen($web_url) - 1, 1) != "/") {
             $web_url = $web_url . "/";
         }
         exit($web_url);
