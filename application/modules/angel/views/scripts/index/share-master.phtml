@@ -67,16 +67,15 @@
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
         //测试
-//        localStorage.clear();
-//        var user = new User();
-//
-//        user.setUser_Id(openid);
-//
-//        if (!user.valid()) {
-//            userLogin();
-//        }
-//        else {
+        localStorage.clear();
+        var user = new User();
 
+        user.setUser_Id(openid);
+        alert(window.location.href);
+        if (!user.valid()) {
+            wx_Login(window.location.href);
+        }
+        else {
             var calendar = new Calendar();
 
             calendar.setYear($('#day_1').attr('year'));
@@ -84,6 +83,6 @@
             calendar.setUser_Id(proposer_id);
 
             calendar.getSchedule();
-//        }
+        }
     });
 </script>
