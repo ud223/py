@@ -81,9 +81,6 @@ function voteDate(data, msg) {
 
 //确认设置活动日期
 function initSetMeetDate(user_id) {
-    alert(user_id);
-    alert(proposer_id);
-    alert(vote);
     if (user_id == proposer_id && vote > 0) {
         $('#close-vote').show();
 
