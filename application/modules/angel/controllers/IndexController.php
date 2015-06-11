@@ -342,9 +342,9 @@ class Angel_IndexController extends Angel_Controller_Action {
         else {
             $view_type = 1;
         }
-        exit('11');
-        $users = $userModel->getUserByOpenId($result->$proposer_id);
 
+        $users = $userModel->getUserByOpenId($result->$proposer_id);
+        exit('11');
         foreach ($users as $u) {
             $user = $u;
 
