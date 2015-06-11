@@ -24,6 +24,7 @@ $(document).ready(function() {
     })
 
     $("#share").tap(function () {
+        alert(1);
         location.href = "/share/"+ user_id;
     })
 
