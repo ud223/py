@@ -18,9 +18,9 @@ $(document).ready(function() {
     initBtnCloseMeet(user_id);
     initBtnJoin(user_id);
 
-    if (user_id == proposer_id) {
-        switchSharingBds();
-    }
+    //if (user_id == proposer_id) {
+    //    switchSharingBds();
+    //}
 })
 
 function switchSharingBds(){

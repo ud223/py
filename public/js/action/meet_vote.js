@@ -27,9 +27,9 @@ $(document).ready(function() {
     initVoteSubmit();
     initSetMeetDate();
 
-    if (user_id == proposer_id) {
-        switchSharingBds();
-    }
+    //if (user_id == proposer_id) {
+    //    switchSharingBds();
+    //}
 })
 
 function switchSharingBds(){
