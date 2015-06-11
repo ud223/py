@@ -325,6 +325,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
 
         $proposer_id = $this->getParam('id');
+        $user_id = $this->getParam('user_id');
 
         $users = $userModel->getUserByOpenId($proposer_id);
 
@@ -338,6 +339,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->proposer_id = $proposer_id;
         $this->view->nickname = $user->nickname;
         $this->view->headimgurl = $user->headimgurl;
+        $this->view->user_id = $user_id;
     }
 
     public function calendarVisitorAction() {

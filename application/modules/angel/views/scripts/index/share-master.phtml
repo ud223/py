@@ -46,6 +46,7 @@
 <script>
     var appid = '<?php echo $this->appid ?>';
     var proposer_id = '<?php echo $this->proposer_id ?>';
+    var open_id = '<?php echo $this->user_id ?>';
     var is_share = true;
     $(document).ready(function(){
 
@@ -68,6 +69,11 @@
         });
         //测试
 //        localStorage.clear();
+
+        if (open_id) {
+            localStorage.setItem('user_id', open_id);
+        }
+
         var user = new User();
 
         var user_id = localStorage.getItem('user_id');
