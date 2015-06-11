@@ -94,15 +94,11 @@
         $('#jijj').html(now.getMonth() + 1 + "月-" + now.getFullYear() + "年");
 
         //测试
-        localStorage.clear();
+//        localStorage.clear();
         var user = new User();
 
         user.setUser_Id(openid);
 
-//        if (!user.valid()) {
-//            userLogin();
-//        }
-//        alert(window.location.href);
         if (!user.valid()) {
             wx_Login(window.location.href);
         }
