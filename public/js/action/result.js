@@ -7,7 +7,7 @@ function initShare() {
     $('#share').tap(function() {
         switchSharingBds();
 
-        location.href = window.location.href + '#' +"/meet/vote/" + meet_id;
+        location.href = window.location.href + '#' +"/meet/view/" + meet_id;
     });
 }
 
