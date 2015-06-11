@@ -24,7 +24,7 @@ function initShare() {
         else {
             url = window.location.href + '#' +"/meet/vote/" + meet_id;
         }
-
+        alert(url);
         location.href = url;
     });
 }
