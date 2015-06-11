@@ -7,7 +7,7 @@ $(document).ready(function() {
     //    localStorage.setItem('user_id', user_id);
     //}
 
-    localStorage.clear(); return;
+    //localStorage.clear(); return;
 
     var user_id = localStorage.getItem('user_id');
 
