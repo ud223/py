@@ -25,6 +25,23 @@
 <script src="<?php echo $this->jsPath("api/meet.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("api/word.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("action/meet_vote.js"); ?>"></script>
+<script type="text/javascript">
+    document.title = "我们有新的活动啦，快来参加";
+    var appid = '<?php echo $this->appid ?>';
+    var openid = '<?php echo $this->openid ?>';
+    //初始化meet_id
+    var meet_id = '<?php echo $this->meet_id ?>';
+    var proposer_id = '<?php echo $this->proposer_id ?>';
+    var users_id = '<?php echo $this->users_id ?>';
+    //    var user_id = '<?php //echo $this->user_id ?>//'
+    var vote = '<?php echo $this->vote ?>'
+    var nickname = '<?php echo $this->nickname ?>';
+    var headimgurl = '<?php echo $this->headimgurl ?>'
+    var create_date = '<?php echo $this->create_date ?>'
+
+    //    alert(window.location.href);
+</script>
+<img style="position:absolute;top:-2000px;" src="<?php echo $this->headimgurl ?>">
 <div class="mg-ttblk fixed">
     <!-- 此处最多显示8个汉字 -->
     <span class="tt" id="title"></span>
@@ -133,19 +150,3 @@
         display:none !important;
     }
 </style>
-<script type="text/javascript">
-    document.title = "我们有新的活动啦，快来参加";
-    var appid = '<?php echo $this->appid ?>';
-    var openid = '<?php echo $this->openid ?>';
-    //初始化meet_id
-    var meet_id = '<?php echo $this->meet_id ?>';
-    var proposer_id = '<?php echo $this->proposer_id ?>';
-    var users_id = '<?php echo $this->users_id ?>';
-//    var user_id = '<?php //echo $this->user_id ?>//'
-    var vote = '<?php echo $this->vote ?>'
-    var nickname = '<?php echo $this->nickname ?>';
-    var headimgurl = '<?php echo $this->headimgurl ?>'
-    var create_date = '<?php echo $this->create_date ?>'
-
-//    alert(window.location.href);
-</script>

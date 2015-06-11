@@ -97,25 +97,29 @@ class Angel_IndexController extends Angel_Controller_Action {
 //        exit($openid);
 //        $share_id = $this->getParam('share_id');
 
-        if ($openid) {
-//            exit("xixi");
-            $this->view->openid = $openid;
+//        if ($openid) {
+////            exit("xixi");
+//            $this->view->openid = $openid;
+//
+//            $users = $userModel->getUserByOpenId($openid);
+//
+//            foreach ($users as $u) {
+//                $user = $u;
+//                break;
+//            }
+//
+//            $this->view->nickname = $user->nickname;
+//            $this->view->headimgurl = $user->headimgurl;
+//        }
+//        else {
+//            $this->view->openid = '';
+//            $this->view->nickname = '';
+//            $this->view->headimgurl = '';
+//        }
 
-            $users = $userModel->getUserByOpenId($openid);
-
-            foreach ($users as $u) {
-                $user = $u;
-                break;
-            }
-
-            $this->view->nickname = $user->nickname;
-            $this->view->headimgurl = $user->headimgurl;
-        }
-        else {
-            $this->view->openid = '';
-            $this->view->nickname = '';
-            $this->view->headimgurl = '';
-        }
+        $this->view->openid = '';
+        $this->view->nickname = '';
+        $this->view->headimgurl = '';
 
         $this->view->share_id = '';
     }
@@ -326,6 +330,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->_helper->layout->setLayout('normal');
 
         $meetModel = $this->getModel('meet');
+        $userModel = $this->getModel('user');
 
         $meet_id = $this->getParam('meet_id');
 
@@ -338,10 +343,18 @@ class Angel_IndexController extends Angel_Controller_Action {
             $view_type = 1;
         }
 
+        $users = $userModel->getUserByOpenId($result->$proposer_id);
+
+        foreach ($users as $u) {
+            $user = $u;
+
+            break;
+        }
 
         $this->view->meet_text = $result->meet_text;
         $this->view->meet_id = $meet_id;
         $this->view->view_type = $view_type;
+        $this->view->headimgurl = $user->headimgurl;
     }
 
     public function shareMasterAction() {
