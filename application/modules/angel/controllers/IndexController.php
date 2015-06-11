@@ -93,8 +93,8 @@ class Angel_IndexController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
 
         $openid = $this->getParam('id');
-        exit($openid);
-        $share_id = $this->getParam('share_id');
+//        exit($openid);
+//        $share_id = $this->getParam('share_id');
 
         if ($openid) {
             $this->view->openid = $openid;
@@ -115,12 +115,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             $this->view->headimgurl = '';
         }
 
-        if ($share_id) {
-            $this->view->share_id = $share_id;
-        }
-        else {
-            $this->view->share_id = '';
-        }
+        $this->view->share_id = '';
     }
 
     public function getOpenId($code) {
