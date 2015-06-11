@@ -17,6 +17,7 @@ function userLoginToMeet(meet_id) {
 }
 
 function wx_Login(toUrl) {
+    alert(toUrl);
     var tmp_toUrl = encodeURI(toUrl);
 
     var url = "http://cbook.test.angelhere.cn/reg?web_url="+ tmp_toUrl;

@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    alert(user_id); return;
     //判断是否从后台得到用户的id，如果得到就不在从缓存中取用户id
     if (!user_id) {
         user_id = localStorage.getItem('user_id');
@@ -7,7 +6,7 @@ $(document).ready(function() {
     else {
         localStorage.setItem('user_id', user_id);
     }
-
+    alert(user_id);
     validUser(user_id)
 
     loadThisMeet(user_id);
