@@ -39,6 +39,14 @@ function switchSharingBds(){
         $('#sharing-bds').hide();
     });
 }
+
+function validUser(user_id) {
+    //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
+    if (!user_id) {
+        //userLoginToMeet(meet_id);
+        wx_Login(window.location.href);
+    }
+}
 //初始化活动日期投票按钮
 function initVoteSubmit() {
     $('#submit-vote').tap(function() {
