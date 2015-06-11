@@ -15,17 +15,17 @@ function hrefUrl() {
 }
 
 function initShare() {
+    if (view_type == 1) {
+        url = window.location.href + '#' +"/meet/view/" + meet_id;
+    }
+    else {
+        url = window.location.href + '#' +"/meet/vote/" + meet_id;
+    }
+
+    location.href = url;
+
     $('#share').tap(function() {
         switchSharingBds();
-
-        if (view_type == 1) {
-            url = window.location.href + '#' +"/meet/view/" + meet_id;
-        }
-        else {
-            url = window.location.href + '#' +"/meet/vote/" + meet_id;
-        }
-
-        location.href = url;
     });
 }
 

@@ -1,13 +1,24 @@
 $(document).ready(function () {
+    hrefUrl();
     initMyIndex();
     initShare();
 });
 
+function hrefUrl() {
+    var url = window.location.href;
+
+    var urls = url.split("#");
+
+    if (urls.length > 1) {
+        location.href = urls[1];
+    }
+}
+
 function initShare() {
+    location.href = window.location.href + '#' +"/meet/view/" + meet_id;
+    
     $('#share').tap(function() {
         switchSharingBds();
-
-        location.href = window.location.href + '#' +"/meet/view/" + meet_id;
     });
 }
 
