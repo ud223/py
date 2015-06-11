@@ -12,7 +12,7 @@ $(document).ready(function() {
         var user = new User();
 
         var user_id = localStorage.getItem('user_id');
-        
+
         user.setUser_Id(user_id)
 
         if (!user.valid()) {
@@ -24,8 +24,7 @@ $(document).ready(function() {
     })
 
     $("#share").tap(function () {
-        //location.href = "/?share_id="+ user_id;
-        alert(nickname);
+        location.href = "/share/"+ user_id;
     })
 
     $("#pending").tap(function () {

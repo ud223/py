@@ -259,6 +259,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->nickname = $user->nickname;
         $this->view->headimgurl = $user->headimgurl;
         $this->view->create_date = date_format($user->created_at, 'Y-m-d');
+        $this->view->title = "我们有新的活动啦，快来参加";
     }
 
     public function pendingMeetAction() {

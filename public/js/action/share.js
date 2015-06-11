@@ -1,4 +1,11 @@
 $(document).ready(function() {
+    $.switchSharingBds = function(){
+        $('#sharing-bds').show();
+        $('#sharing-bds').tap(function(){
+            $('#sharing-bds').hide();
+        });
+    }
+
     $(".glyphicon-home").tap(function () {
         localStorage.setItem('share_id', '');
         location.href = '/';
