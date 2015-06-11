@@ -12,6 +12,10 @@ $(document).ready(function() {
     }
     else {
         localStorage.setItem('user_id', user_id);
+
+        location.href = window.location.href.replace('/'+ user_id, '');
+
+        alert(location.href);
     }
 
     validUser(user_id)
