@@ -196,10 +196,10 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
         else {
             if (substr($web_url, strlen($web_url) - 1, 1) != "/") {
-                $web_url = $web_url . "/"  . $open_id;
+                $web_url = $web_url;
             }
             else {
-                $web_url = $web_url . $open_id;
+                $web_url = $web_url;
             }
         }
 
@@ -216,6 +216,8 @@ class Angel_IndexController extends Angel_Controller_Action {
 //            }
 //            exit($web_url);
 //            header("Location:". $web_url); exit;
+            $this->view->url = $web_url;
+            $this->view->openid = $open_id;
         }
         else {
             exit("注册或登陆失败,请重试!");
@@ -274,7 +276,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
 
         $meet_id = $this->getParam('id');
-        $user_id = $this->getParam('userid');
+//        $user_id = $this->getParam('userid');
 
         $result = $meetModel->getById($meet_id);
 
@@ -300,10 +302,8 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->headimgurl = $user->headimgurl;
         $this->view->create_date = date_format($user->created_at, 'Y-m-d');
         $this->view->users_id = $users_id;
-        $this->view->user_id = $user_id;
         $this->view->appid = $this->app_id;
         $this->view->vote = count($vote);
-        $this->view->title = "活动:" . $result->meet_text;
     }
 
 

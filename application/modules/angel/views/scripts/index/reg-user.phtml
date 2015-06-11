@@ -1,4 +1,9 @@
 用户信息处理中...
 <script type="text/javascript">
+    var user_id = '<?php echo $this->openid?>';
+    var url = '<?php echo $this->url ?>';
 
+    if (user_id) {
+        location.href = url;
+    }
 </script>

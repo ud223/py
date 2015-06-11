@@ -2,29 +2,32 @@ $(document).ready(function() {
     //alert(user_id);
     //alert(1);
     //localStorage.clear(); return;
-    if (!user_id) {
-        localStorage.clear();
-    }
+    //if (!user_id) {
+    //    localStorage.clear();
+    //}
     //alert(user_id);
     //判断是否从后台得到用户的id，如果得到就不在从缓存中取用户id
-    if (!user_id) {
-        user_id = localStorage.getItem('user_id');
-    }
-    else {
-        localStorage.setItem('user_id', user_id);
 
-        var url =  window.location.href;
+    var user_id = localStorage.getItem('user_id');
 
-        //alert(user_id);
-        url = url.replace('/'+ user_id, '');
-
-        //alert(url); return;
-
-        location.href = url;
-
-        //alert(location.href);
-    }
-
+    //if (!user_id) {
+    //
+    //}
+    //else {
+    //    localStorage.setItem('user_id', user_id);
+    //
+    //    var url =  window.location.href;
+    //
+    //    //alert(user_id);
+    //    url = url.replace('/'+ user_id, '');
+    //
+    //    //alert(url); return;
+    //
+    //    location.href = url;
+    //
+    //    //alert(location.href);
+    //}
+    alert(window.location.href);
     validUser(user_id)
     loadThisMeet(user_id);
 
