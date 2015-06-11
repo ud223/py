@@ -1,7 +1,7 @@
 $(document).ready(function() {
     //alert(user_id);
     //alert(1);
-    //localStorage.clear(); return;
+    localStorage.clear(); return;
     if (!user_id) {
         localStorage.clear();
     }
@@ -15,14 +15,14 @@ $(document).ready(function() {
 
         var url =  window.location.href;
 
-        alert(user_id);
+        //alert(user_id);
         url = url.replace('/'+ user_id, '');
 
-        alert(url); return;
+        //alert(url); return;
 
         location.href = url;
 
-        alert(location.href);
+        //alert(location.href);
     }
 
     validUser(user_id)

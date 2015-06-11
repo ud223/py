@@ -215,7 +215,7 @@ class Angel_IndexController extends Angel_Controller_Action {
 //                header("Location: /" . $open_id); exit;
 //            }
 //            exit($web_url);
-            header("Location:". $web_url); exit;
+//            header("Location:". $web_url); exit;
         }
         else {
             exit("注册或登陆失败,请重试!");
