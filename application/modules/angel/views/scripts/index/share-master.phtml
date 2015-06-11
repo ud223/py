@@ -70,7 +70,9 @@
         localStorage.clear();
         var user = new User();
 
-        user.setUser_Id(openid);
+        var user_id = localStorage.getItem('user_id');
+
+        user.setUser_Id(user_id);
         alert(window.location.href);
         if (!user.valid()) {
             wx_Login(window.location.href);
