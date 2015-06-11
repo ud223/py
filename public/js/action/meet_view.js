@@ -6,7 +6,7 @@ $(document).ready(function() {
     else {
         localStorage.setItem('user_id', user_id);
     }
-    alert(user_id);
+
     validUser(user_id)
 
     loadThisMeet(user_id);
@@ -23,8 +23,7 @@ function validUser(user_id) {
     //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
     if (!user_id) {
         //userLoginToMeet(meet_id);
-        alert(window.location.href);
-        wx_Login(window.location.href);
+         wx_Login(window.location.href);
     }
 }
 
