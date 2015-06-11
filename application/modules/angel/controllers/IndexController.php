@@ -343,8 +343,8 @@ class Angel_IndexController extends Angel_Controller_Action {
             $view_type = 1;
         }
 
-        $users = $userModel->getUserByOpenId($result->$proposer_id);
-        exit('11');
+        $users = $userModel->getUserByOpenId($result->proposer_id);
+
         foreach ($users as $u) {
             $user = $u;
 
