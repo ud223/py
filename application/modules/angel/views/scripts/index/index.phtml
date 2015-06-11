@@ -95,10 +95,16 @@
 
         //测试
 //        localStorage.clear();
+        if (open_id) {
+            localStorage.setItem('user_id', open_id);
+        }
+
         var user = new User();
 
+        var user_id = localStorage.getItem('user_id');
+
         user.setUser_Id(openid);
-        alert(window.location.href);
+//        alert(window.location.href);
         if (!user.valid()) {
             wx_Login(window.location.href);
         }
