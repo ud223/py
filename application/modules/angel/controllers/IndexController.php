@@ -88,17 +88,17 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function indexAction() {
-        exit('1');
+//        exit('1');
         $this->view->appid = $this->app_id;
 
         $userModel = $this->getModel('user');
-        exit('ixix');
+//        exit('ixix');
         $openid = $this->getParam('id');
 //        exit($openid);
 //        $share_id = $this->getParam('share_id');
 
         if ($openid) {
-            exit("xixi");
+//            exit("xixi");
             $this->view->openid = $openid;
 
             $users = $userModel->getUserByOpenId($openid);
