@@ -1,6 +1,6 @@
 $(document).ready(function() {
     //alert(user_id);
-    //alert(1);
+    alert(1);
     //localStorage.clear(); return;
     if (!user_id) {
         localStorage.clear();
@@ -13,10 +13,11 @@ $(document).ready(function() {
     else {
         localStorage.setItem('user_id', user_id);
     }
-
+    alert(2);
     validUser(user_id)
-
+    alert(3);
     loadThisMeet(user_id);
+    alert(4);
     loadMeetVoteDate(user_id);
     loadProposerInfo(user_id);
 
