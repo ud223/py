@@ -16,3 +16,10 @@ function initMyIndex() {
         location.href = "/";
     });
 }
+
+function switchSharingBds(){
+    $('#sharing-bds').show();
+    $('#sharing-bds').tap(function(){
+        $('#sharing-bds').hide();
+    });
+}
