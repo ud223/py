@@ -15,9 +15,12 @@ $(document).ready(function() {
 
         var url =  window.location.href;
 
+        alert(user_id);
+        url = url.replace('/'+ user_id, '');
+
         alert(url); return;
 
-        location.href = url.replace('/'+ user_id, '');
+        location.href = url;
 
         alert(location.href);
     }
