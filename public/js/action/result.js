@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 function initShare() {
     $('#share').tap(function() {
-
+        location.href = "/meet/vote/" + meet_id;
     });
 }
 

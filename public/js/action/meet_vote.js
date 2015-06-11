@@ -26,13 +26,17 @@ $(document).ready(function() {
     initBtnLeave(user_id);
     initVoteSubmit();
     initSetMeetDate();
+    
+    if (user_id == proposer_id) {
+        switchSharingBds();
+    }
 })
 
-function validUser(user_id) {
-    //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
-    if (!user_id) {
-        wx_Login(window.location.href);
-    }
+function switchSharingBds(){
+    $('#sharing-bds').show();
+    $('#sharing-bds').tap(function(){
+        $('#sharing-bds').hide();
+    });
 }
 //初始化活动日期投票按钮
 function initVoteSubmit() {
