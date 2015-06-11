@@ -94,13 +94,17 @@
         $('#jijj').html(now.getMonth() + 1 + "月-" + now.getFullYear() + "年");
 
         //测试
-//        localStorage.clear();
+        localStorage.clear();
         var user = new User();
 
         user.setUser_Id(openid);
 
+//        if (!user.valid()) {
+//            userLogin();
+//        }
+//        alert(window.location.href);
         if (!user.valid()) {
-            userLogin();
+            wx_Login(window.location.href);
         }
         else {
             var calendar = new Calendar();
@@ -116,14 +120,6 @@
             calendar.setUser_Id(user_id);
 
             calendar.getSchedule();
-
-//            if (!nickname) {
-//                var user = new User();
-//
-//                var user_id = localStorage.getItem('user_id');
-//
-//                user.load(user_id);
-//            }
         }
     });
 </script>

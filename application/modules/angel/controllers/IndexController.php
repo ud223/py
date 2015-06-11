@@ -179,18 +179,19 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $tmp_web_url = $this->getParam('web_url');
         $web_url = urldecode($tmp_web_url);
-        exit($web_url);
+
         $open_id = $this->getOpenId($code);
         $userInfo = $this->getUserInfo($open_id);
         $result = $this->addUser($userInfo);
 
         if ($result) {
-            if ($meet_id) {
-                header("Location: /meet/view/" . $meet_id . "/"  . $open_id); exit;
-            }
-            else {
-                header("Location: /" . $open_id); exit;
-            }
+//            if ($meet_id) {
+//                header("Location: /meet/view/" . $meet_id . "/"  . $open_id); exit;
+//            }
+//            else {
+//                header("Location: /" . $open_id); exit;
+//            }
+            exit($web_url);
         }
         else {
             exit("注册或登陆失败,请重试!");
