@@ -189,7 +189,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         if (substr($web_url, strlen($web_url) - 1, 1) != "/") {
             $web_url = $web_url . "/";
         }
-        exit($web_url);
+//        exit($web_url);
 
         $web_url = $web_url . $open_id;
 
@@ -200,8 +200,8 @@ class Angel_IndexController extends Angel_Controller_Action {
 //            else {
 //                header("Location: /" . $open_id); exit;
 //            }
-            exit($web_url);
-//            header("Location:". $web_url); exit;
+//            exit($web_url);
+            header("Location:". $web_url); exit;
         }
         else {
             exit("注册或登陆失败,请重试!");
