@@ -20,8 +20,8 @@ $(document).ready(function() {
     initBtnBack();
     initBtnCloseMeet(user_id);
     initBtnLeave(user_id);
-    initVoteSubmit();
-    initSetMeetDate();
+    initVoteSubmit(user_id);
+    initSetMeetDate(user_id);
 
     //if (user_id == proposer_id) {
     //    switchSharingBds();
@@ -80,7 +80,7 @@ function voteDate(data, msg) {
 }
 
 //确认设置活动日期
-function initSetMeetDate() {
+function initSetMeetDate(user_id) {
     alert(user_id);
     alert(proposer_id);
     alert(vote);
