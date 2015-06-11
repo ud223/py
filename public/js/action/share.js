@@ -32,7 +32,6 @@ $(document).ready(function() {
 })
 
 function switchSharingBds(){
-    alert(0);
     $('#sharing-bds').show();
     $('#sharing-bds').tap(function(){
         $('#sharing-bds').hide();

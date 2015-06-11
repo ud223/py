@@ -355,6 +355,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->nickname = $user->nickname;
         $this->view->headimgurl = $user->headimgurl;
         $this->view->user_id = $user_id;
+        $this->view->title = $user->nickname . '的日程安排';
     }
 
     public function calendarVisitorAction() {
