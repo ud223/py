@@ -26,7 +26,7 @@ $(document).ready(function() {
     initBtnLeave(user_id);
     initVoteSubmit();
     initSetMeetDate();
-    
+
     if (user_id == proposer_id) {
         switchSharingBds();
     }
