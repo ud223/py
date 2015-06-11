@@ -13,11 +13,10 @@ $(document).ready(function() {
     else {
         localStorage.setItem('user_id', user_id);
     }
-    alert(user_id);
+
     validUser(user_id)
-    alert(3);
     loadThisMeet(user_id);
-    alert(4);
+
     loadMeetVoteDate(user_id);
     loadProposerInfo(user_id);
 
