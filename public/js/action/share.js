@@ -1,6 +1,4 @@
 $(document).ready(function() {
-
-
     $(".glyphicon-home").tap(function () {
         localStorage.setItem('share_id', '');
         location.href = '/';

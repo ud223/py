@@ -331,8 +331,17 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $result = $meetModel->getById($meet_id);
 
+        if ($result->selected_date == 'false') {
+            $view_type = 0;
+        }
+        else {
+            $view_type = 1;
+        }
+
+
         $this->view->meet_text = $result->meet_text;
         $this->view->meet_id = $meet_id;
+        $this->view->view_type = $view_type;
     }
 
     public function shareMasterAction() {
