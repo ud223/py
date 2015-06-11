@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    switchSharingBds();
+
 
     $(".glyphicon-home").tap(function () {
         localStorage.setItem('share_id', '');
@@ -29,6 +29,12 @@ $(document).ready(function() {
     $("#pending").tap(function () {
         location.href = '/meet/pending';
     })
+
+    var user_id = localStorage.getItem('user_id');
+
+    if (user_id == proposer_id) {
+        switchSharingBds();
+    }
 })
 
 function switchSharingBds(){
