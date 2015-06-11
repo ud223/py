@@ -88,6 +88,7 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function indexAction() {
+        exit('1');
         $this->view->appid = $this->app_id;
 
         $userModel = $this->getModel('user');
