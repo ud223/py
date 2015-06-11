@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    alert(user_id);
     if (!user_id) {
         localStorage.clear();
     }
