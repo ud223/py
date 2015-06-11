@@ -191,17 +191,23 @@ class Angel_IndexController extends Angel_Controller_Action {
         $userInfo = $this->getUserInfo($open_id);
         $result = $this->addUser($userInfo);
 //        exit($web_url);
-        if (substr($web_url, strlen($web_url) - 1, 1) != "/") {
-            $web_url = $web_url . "/";
-        }
+
 
         if ($web_url == "/") {
-            $web_url = $web_url . $id;
+            $web_url = $web_url . $open_id;
+        }
+        else {
+            if (substr($web_url, strlen($web_url) - 1, 1) != "/") {
+                $web_url = $web_url . "/"  . $open_id;
+            }
+            else {
+                $web_url = $web_url . $open_id;
+            }
         }
 
-        exit($web_url);
-
-        $web_url = $web_url . $open_id;
+//        exit($web_url);
+//
+//        $web_url = $web_url;
 
         if ($result) {
 //            if ($meet_id) {
