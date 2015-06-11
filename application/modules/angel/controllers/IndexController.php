@@ -93,6 +93,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
 
         $openid = $this->getParam('id');
+        exit($openid);
         $share_id = $this->getParam('share_id');
 
         if ($openid) {
