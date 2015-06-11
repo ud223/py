@@ -1,11 +1,4 @@
 $(document).ready(function() {
-    $.switchSharingBds = function(){
-        $('#sharing-bds').show();
-        $('#sharing-bds').tap(function(){
-            $('#sharing-bds').hide();
-        });
-    }
-
     switchSharingBds();
 
     $(".glyphicon-home").tap(function () {
@@ -37,6 +30,14 @@ $(document).ready(function() {
         location.href = '/meet/pending';
     })
 })
+
+function switchSharingBds(){
+    alert(0);
+    $('#sharing-bds').show();
+    $('#sharing-bds').tap(function(){
+        $('#sharing-bds').hide();
+    });
+}
 
 function initCalendarClick(id, year, month, day) {
     $( '#'+id).tap(function () {
