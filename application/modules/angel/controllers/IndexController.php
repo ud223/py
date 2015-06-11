@@ -186,11 +186,11 @@ class Angel_IndexController extends Angel_Controller_Action {
         else {
             $web_url = str_replace("http://cbook.test.angelhere.cn/", "/", $web_url);
         }
-        exit($web_url);
+//        exit($web_url);
         $open_id = $this->getOpenId($code);
         $userInfo = $this->getUserInfo($open_id);
         $result = $this->addUser($userInfo);
-        exit($web_url);
+//        exit($web_url);
         if (substr($web_url, strlen($web_url) - 1, 1) != "/") {
             $web_url = $web_url . "/";
         }
@@ -199,7 +199,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             $web_url = $web_url . $id;
         }
 
-        exit($web_url);
+//        exit($web_url);
 
         $web_url = $web_url . $open_id;
 
