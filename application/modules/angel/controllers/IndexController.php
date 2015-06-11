@@ -325,7 +325,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $userModel = $this->getModel('user');
 
         $proposer_id = $this->getParam('id');
-        $user_id = $this->getParam('user_id');
+        $user_id = $this->getParam('userid');
 
         $users = $userModel->getUserByOpenId($proposer_id);
 
