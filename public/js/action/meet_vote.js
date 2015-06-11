@@ -2,9 +2,9 @@ $(document).ready(function() {
     //alert(user_id);
     //alert(1);
     //localStorage.clear(); return;
-    //if (!user_id) {
-    //    localStorage.clear();
-    //}
+    if (!user_id) {
+        localStorage.clear();
+    }
     //alert(user_id);
     //判断是否从后台得到用户的id，如果得到就不在从缓存中取用户id
 
