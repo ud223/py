@@ -91,7 +91,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->appid = $this->app_id;
 
         $userModel = $this->getModel('user');
-
+        exit('ixix');
         $openid = $this->getParam('id');
 //        exit($openid);
 //        $share_id = $this->getParam('share_id');
