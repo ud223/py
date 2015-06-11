@@ -6,6 +6,8 @@ $(document).ready(function() {
         });
     }
 
+    switchSharingBds();
+
     $(".glyphicon-home").tap(function () {
         localStorage.setItem('share_id', '');
         location.href = '/';
@@ -28,10 +30,7 @@ $(document).ready(function() {
 
     $("#share").tap(function () {
         //location.href = "/?share_id="+ user_id;
-        alert(nickname);
-        var wx = new _WXShare(headimgurl, 50, 50, nickname + "分享了他的日程安排", "", "/?share_id="+ user_id, "");
 
-        wx._ShareFriend();
     })
 
     $("#pending").tap(function () {
