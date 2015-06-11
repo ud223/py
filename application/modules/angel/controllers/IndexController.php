@@ -425,6 +425,10 @@ class Angel_IndexController extends Angel_Controller_Action {
         exit($msg);
     }
 
+    public function clearAction() {
+
+    }
+
     public function strToIntFormat($n) {
         if (substr($n, 0, 1) == '0') {
             return substr($n, 1, 1);
