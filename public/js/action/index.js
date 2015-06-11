@@ -12,8 +12,8 @@ $(document).ready(function() {
         var user = new User();
 
         var user_id = localStorage.getItem('user_id');
-
-        user.setUser_id(user_id)
+        alert(user_id);
+        user.setUser_Id(user_id)
 
         if (!user.valid()) {
             location.href = "/";
