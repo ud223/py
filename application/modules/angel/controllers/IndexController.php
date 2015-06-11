@@ -180,6 +180,8 @@ class Angel_IndexController extends Angel_Controller_Action {
         $tmp_web_url = $this->getParam('web_url');
         $web_url = urldecode($tmp_web_url);
 
+        $web_url = str_replace("http://cbook.test.angelhere.cn/", "/", $web_url);
+
         $open_id = $this->getOpenId($code);
         $userInfo = $this->getUserInfo($open_id);
         $result = $this->addUser($userInfo);
