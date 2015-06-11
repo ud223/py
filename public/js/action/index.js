@@ -11,6 +11,10 @@ $(document).ready(function() {
     $('#btn_add').tap(function () {
         var user = new User();
 
+        var user_id = localStorage.getItem('user_id');
+
+        user.setUser_id(user_id)
+
         if (!user.valid()) {
             location.href = "/";
         }
@@ -54,5 +58,5 @@ function insertMeetList(ele) {
 }
 
 function clearMeetList() {
-    
+
 }
