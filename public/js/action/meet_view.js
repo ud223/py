@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    localStorage.clear();
+
     //判断是否从后台得到用户的id，如果得到就不在从缓存中取用户id
     if (!user_id) {
         user_id = localStorage.getItem('user_id');
