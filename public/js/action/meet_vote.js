@@ -27,7 +27,8 @@ $(document).ready(function() {
     //
     //    //alert(location.href);
     //}
-    alert(window.location.href);
+    alert(1);
+    alert(location.href);
     validUser(user_id)
     loadThisMeet(user_id);
 
