@@ -24,8 +24,9 @@ $(document).ready(function() {
     })
 
     $("#share").tap(function () {
-        alert(1);
-        location.href = '/meet/pending';
+        var user_id = localStorage.getItem('user_id');
+
+        location.href = '/share/'+ user_id;
     })
 
     $("#pending").tap(function () {
