@@ -21,8 +21,6 @@ function queryPendingMeet(user_id) {
 }
 
 function loadPendingList(data, toUrl, day) {
-    alert(JSON.stringify(data));
-
     $.each(data, function () {
         var node = $('#meet_model').clone(true);
 
