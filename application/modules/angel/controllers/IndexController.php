@@ -199,7 +199,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             $web_url = $web_url . $id;
         }
 
-//        exit($web_url);
+        exit($web_url);
 
         $web_url = $web_url . $open_id;
 
