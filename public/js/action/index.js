@@ -51,13 +51,3 @@ function loadUserInfo(data) {
     headimgurl = data.headimgurl;
     nickname = data.nickname;
 }
-
-function insertMeetList(ele) {
-    var list = $('#mg-listc').clone(true);
-
-    ele.aftr(list);
-}
-
-function clearMeetList() {
-
-}

@@ -54,7 +54,7 @@
 <script src="<?php echo $this->jsPath("action/index.js"); ?>"></script>
 <script>
     var appid = '<?php echo $this->appid ?>';
-    var open_id = '<?php echo $this->openid ?>';
+//    var open_id = '<?php //echo $this->openid ?>//';
     var share_id = '<?php echo $this->share_id ?>';
     var nickname = '<?php echo $this->nickname ?>';
     var headimgurl = '<?php echo $this->headimgurl ?>';
@@ -100,13 +100,9 @@
             localStorage.setItem('user_id', open_id);
         }
 
-        var user = new User();
-
         var user_id = localStorage.getItem('user_id');
-
-        user.setUser_Id(user_id);
 //        alert(window.location.href);
-        if (!user.valid()) {
+        if (!user_id) {
             wx_Login(window.location.href);
         }
         else {

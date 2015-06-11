@@ -30,6 +30,8 @@ $(document).ready(function() {
 
     var user_id = localStorage.getItem('user_id');
 
+    validUser(user_id);
+
     if (user_id == proposer_id) {
         switchSharingBds();
     }
@@ -40,6 +42,14 @@ function switchSharingBds(){
     $('#sharing-bds').tap(function(){
         $('#sharing-bds').hide();
     });
+}
+
+function validUser(user_id) {
+    //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
+    if (!user_id) {
+        //userLoginToMeet(meet_id);
+        wx_Login(window.location.href);
+    }
 }
 
 function initCalendarClick(id, year, month, day) {
