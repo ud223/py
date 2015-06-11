@@ -1,7 +1,7 @@
 $(document).ready(function() {
     //alert(user_id);
     //alert(1);
-    localStorage.clear(); return;
+    //localStorage.clear(); return;
     if (!user_id) {
         localStorage.clear();
     }
