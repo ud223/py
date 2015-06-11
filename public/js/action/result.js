@@ -5,6 +5,8 @@ $(document).ready(function () {
 
 function initShare() {
     $('#share').tap(function() {
+        switchSharingBds();
+
         location.href = "/meet/vote/" + meet_id;
     });
 }

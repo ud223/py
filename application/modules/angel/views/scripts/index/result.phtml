@@ -1,4 +1,9 @@
 <script src="<?php echo $this->jsPath("action/result.js"); ?>"></script>
+<script type="text/javascript">
+    var meet_id = '<?php echo $this->meet_id ?>';
+    document.title = "我们有新的活动啦，快来参加";
+</script>
+<img style="position:absolute;top:-2000px;" src="<?php echo $this->headimgurl ?>">
 <div class="big-box">
     <div class="wp">
         <div id="pgx1">
@@ -13,6 +18,9 @@
             <button id="myIndex" class="rowbtn">也可以在“我的主页”查看</button>
         </div>
     </div>
+</div>
+<div id="sharing-bds">
+    <img src="/img/sharing.png" />
 </div>
 <style>
     #pgx1 {

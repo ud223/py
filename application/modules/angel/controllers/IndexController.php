@@ -315,6 +315,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->_helper->layout->setLayout('normal');
 
         $meetModel = $this->getModel('meet');
+        $userModel = $this->getModel('user');
 
         $meet_id = $this->getParam('meet_id');
 
@@ -322,8 +323,17 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $strDate = explode('-', $meet->selected_date);
 
+        $users = $userModel->getUserByOpenId($meet->proposer_id);
+
+        foreach ($users as $u) {
+            $user = $u;
+
+            break;
+        }
+
         $this->view->date = $strDate[0] . '年' . $this->strToIntFormat($strDate[1]) . '月' . $this->strToIntFormat($strDate[2]) . '日';
         $this->view->meet_id = $meet_id;
+        $this->view->headimgurl = $user->headimgurl;
     }
 
     public function successAction() {
