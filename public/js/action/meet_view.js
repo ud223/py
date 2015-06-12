@@ -12,7 +12,7 @@ $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
 
     validUser(user_id)
-    akert('a1');
+    alert('a1');
     loadThisMeet(user_id);
     loadProposerInfo(user_id);
 
