@@ -38,6 +38,7 @@ function queryWord(meet_id) {
         data: data,
         method: 'get',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载活动集合
                 loadWords(response.data);

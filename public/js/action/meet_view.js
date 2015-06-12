@@ -1,12 +1,4 @@
 $(document).ready(function() {
-    //判断是否从后台得到用户的id，如果得到就不在从缓存中取用户id
-    //if (!user_id) {
-    //    user_id = localStorage.getItem('user_id');
-    //}
-    //else {
-    //    localStorage.setItem('user_id', user_id);
-    //}
-
     //localStorage.clear(); return;
 
     var user_id = localStorage.getItem('user_id');
@@ -32,8 +24,7 @@ function switchSharingBds(){
 function validUser(user_id) {
     //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
     if (!user_id) {
-        //userLoginToMeet(meet_id);
-         wx_Login(window.location.href);
+        wx_Login(window.location.href);
     }
 }
 
