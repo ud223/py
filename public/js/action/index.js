@@ -34,7 +34,7 @@ $(document).ready(function() {
     })
 })
 
-function getSchedule() {
+function getSchedule(user_id) {
     var calendar = new Calendar();
 
     calendar.setYear($('#day_1').attr('year'));
