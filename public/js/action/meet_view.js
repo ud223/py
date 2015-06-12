@@ -10,7 +10,7 @@ $(document).ready(function() {
     //localStorage.clear(); return;
 
     var user_id = localStorage.getItem('user_id');
-    alert('a');
+
     validUser(user_id)
     alert('b');
     loadThisMeet(user_id);
