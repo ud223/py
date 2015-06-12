@@ -14,12 +14,15 @@ $(document).ready(function() {
     validUser(user_id)
     alert('a1');
     loadThisMeet(user_id);
+    alert('a2');
     loadProposerInfo(user_id);
-
+    alert('a3');
     initBtnWord(user_id);
+    alert('a4');
     initBtnBack();
-
+    alert('a5');
     initBtnCloseMeet(user_id);
+    alert('a6');
     initBtnJoin(user_id);
 
     //if (user_id == proposer_id) {
