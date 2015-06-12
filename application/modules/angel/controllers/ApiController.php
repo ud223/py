@@ -531,7 +531,7 @@ class Angel_ApiController extends Angel_Controller_Action {
         $meet_id = $this->getParam('meet_id');
 
         $result = $wordModel->getWordsByMeetId($meet_id);
-
+        $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
         if ($result) {
             $words = array();
 
