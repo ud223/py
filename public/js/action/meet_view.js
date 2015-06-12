@@ -12,7 +12,7 @@ $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
 
     validUser(user_id)
-    
+
     loadThisMeet(user_id);
     //loadProposerInfo(user_id);
     //
@@ -43,9 +43,9 @@ function loadThisMeet(user_id) {
 
     meet.load(user_id, meet_id);
 
-    var word = new Word();
-
-    word.load(meet_id);
+    //var word = new Word();
+    //
+    //word.load(meet_id);
 }
 //初始化留言提交按钮事件
 function initBtnWord(user_id) {
