@@ -11,15 +11,15 @@ $(document).ready(function() {
 
     var user_id = localStorage.getItem('user_id');
 
-    validUser(user_id)
-
-    loadThisMeet(user_id);
-    loadProposerInfo(user_id);
-
-    initBtnWord(user_id);
-    initBtnBack();
-    initBtnCloseMeet(user_id);
-    initBtnJoin(user_id);
+    //validUser(user_id)
+    //
+    //loadThisMeet(user_id);
+    //loadProposerInfo(user_id);
+    //
+    //initBtnWord(user_id);
+    //initBtnBack();
+    //initBtnCloseMeet(user_id);
+    //initBtnJoin(user_id);
 })
 
 function switchSharingBds(){
