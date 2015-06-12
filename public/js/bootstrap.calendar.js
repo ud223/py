@@ -106,6 +106,8 @@
             context.renderCalendar(prv);
 
             $('#jijj').html(context.mm + 1 + '月-' + context.yn);
+
+            getSchedule();
         });
 
         $('#to-next-month').click(function(){
@@ -115,6 +117,8 @@
             context.renderCalendar(nxt);
 
             $('#jijj').html(context.mm + 1 + '月-' + context.yn);
+
+            getSchedule();
         });
     };
 

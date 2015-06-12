@@ -106,7 +106,6 @@
             wx_Login(window.location.href);
         }
         else {
-            var calendar = new Calendar();
             var user_id = localStorage.getItem('user_id');
             var share_id = localStorage.getItem('share_id');
             //如果分享id不为空，则用分享id替换用户id
@@ -114,11 +113,7 @@
                 user_id = share_id;
             }
 
-            calendar.setYear($('#day_1').attr('year'));
-            calendar.setMonth($('#day_1').attr('month'));
-            calendar.setUser_Id(user_id);
-
-            calendar.getSchedule();
+            getSchedule();
         }
     });
 </script>
