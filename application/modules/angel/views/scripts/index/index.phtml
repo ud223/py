@@ -110,6 +110,8 @@
                 user_id = share_id;
             }
 
+            localStorage.setItem('schedule_user_id', user_id);
+
             getSchedule();
         }
     });

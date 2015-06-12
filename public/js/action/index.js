@@ -34,17 +34,6 @@ $(document).ready(function() {
     })
 })
 
-function getSchedule() {
-    var calendar = new Calendar();
-
-    var user_id = localStorage.getItem('user_id');
-
-    calendar.setYear($('#day_1').attr('year'));
-    calendar.setMonth($('#day_1').attr('month'));
-    calendar.setUser_Id(user_id);
-
-    calendar.getSchedule();
-}
 
 function initCalendarClick(id, year, month, day) {
     $( '#'+id).tap(function () {

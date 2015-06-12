@@ -82,13 +82,17 @@
             wx_Login(window.location.href);
         }
         else {
-            var calendar = new Calendar();
+//            var calendar = new Calendar();
+//
+//            calendar.setYear($('#day_1').attr('year'));
+//            calendar.setMonth($('#day_1').attr('month'));
+//            calendar.setUser_Id(proposer_id);
+//
+//            calendar.getSchedule();
 
-            calendar.setYear($('#day_1').attr('year'));
-            calendar.setMonth($('#day_1').attr('month'));
-            calendar.setUser_Id(proposer_id);
+            localStorage.setItem('schedule_user_id', proposer_id);
 
-            calendar.getSchedule();
+            getSchedule();
         }
     });
 </script>
