@@ -21,8 +21,8 @@ function initSchedule(year, month, user_id) {
                     //设置日期占用样式
                     setCalendarOpt(response.data);
                 }
-
-                return response.data;
+                //
+                //return response.data;
             }
             else {
                 //alert(response.data);
