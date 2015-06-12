@@ -34,8 +34,10 @@ $(document).ready(function() {
     })
 })
 
-function getSchedule(user_id) {
+function getSchedule() {
     var calendar = new Calendar();
+
+    var user_id = localStorage.getItem('user_id');
 
     calendar.setYear($('#day_1').attr('year'));
     calendar.setMonth($('#day_1').attr('month'));
