@@ -77,19 +77,10 @@
 //        localStorage.clear();
         var user_id = localStorage.getItem('user_id');
 
-//        alert(window.location.href);
         if (!user_id) {
             wx_Login(window.location.href);
         }
         else {
-//            var calendar = new Calendar();
-//
-//            calendar.setYear($('#day_1').attr('year'));
-//            calendar.setMonth($('#day_1').attr('month'));
-//            calendar.setUser_Id(proposer_id);
-//
-//            calendar.getSchedule();
-
             localStorage.setItem('schedule_user_id', proposer_id);
 
             getSchedule();

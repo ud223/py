@@ -459,7 +459,7 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function clearAction() {
-
+//        exit('xixi');
     }
 
     public function strToIntFormat($n) {
