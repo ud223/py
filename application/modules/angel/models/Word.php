@@ -22,7 +22,7 @@ class  Angel_Model_Word extends Angel_Model_AbstractModel {
     public function getWordsByMeetId($meet_id) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)->field('meet_id')->equals($meet_id)->sort("created_at", -1);
 
-        $result = $query->getQuery()->execute();
+        $result = $query->getQuery();
 
         return $result;
     }
