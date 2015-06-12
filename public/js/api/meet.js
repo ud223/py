@@ -80,15 +80,15 @@ function loadMeet(user_id, meet_id) {
     var url = '/api/meet/load';
 
     var  data = { 'id': meet_id, 'user_id': user_id }
-    alert('a2');
+
     $.ajax({
         url: url,
         dataType: 'json',
         data: data,
         method: 'get',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
-                alert('a3');
                 //加载特定活动
                 meetLoad(response.data);
             }

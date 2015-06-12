@@ -12,7 +12,7 @@ $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
 
     validUser(user_id)
-    alert('b');
+
     loadThisMeet(user_id);
     loadProposerInfo(user_id);
 
@@ -31,9 +31,7 @@ function switchSharingBds(){
 
 function validUser(user_id) {
     //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
-    alert(user_id);
     if (!user_id) {
-        alert('b1');
         //userLoginToMeet(meet_id);
          wx_Login(window.location.href);
     }

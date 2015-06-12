@@ -118,7 +118,6 @@ var Meet = function () {
     }
 
     obj.load = function (user_id, meet_id) {
-        alert('a1');
         loadMeet(user_id, meet_id);
     }
 
