@@ -14,12 +14,12 @@ $(document).ready(function() {
     validUser(user_id)
 
     loadThisMeet(user_id);
-    //loadProposerInfo(user_id);
-    //
-    //initBtnWord(user_id);
-    //initBtnBack();
-    //initBtnCloseMeet(user_id);
-    //initBtnJoin(user_id);
+    loadProposerInfo(user_id);
+
+    initBtnWord(user_id);
+    initBtnBack();
+    initBtnCloseMeet(user_id);
+    initBtnJoin(user_id);
 })
 
 function switchSharingBds(){
@@ -43,9 +43,9 @@ function loadThisMeet(user_id) {
 
     meet.load(user_id, meet_id);
 
-    //var word = new Word();
-    //
-    //word.load(meet_id);
+    var word = new Word();
+
+    word.load(meet_id);
 }
 //初始化留言提交按钮事件
 function initBtnWord(user_id) {

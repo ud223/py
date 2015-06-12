@@ -43,7 +43,7 @@ function queryWord(meet_id) {
                 loadWords(response.data);
             }
             else {
-                alert(response.data);
+                //alert(response.data);
             }
         },
         error: function () {
