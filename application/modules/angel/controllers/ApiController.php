@@ -534,7 +534,7 @@ class Angel_ApiController extends Angel_Controller_Action {
         $this->_helper->json(array('data' => $message, 'code' => $code)); exit;
         if ($result) {
             $words = array();
-
+            $this->_helper->json(array('data' => "aaa", 'code' => $code)); exit;
             foreach ($result as $r) {
                 $user = $this->getUserInfo($r->user_id);
 
