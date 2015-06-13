@@ -106,9 +106,11 @@
             context.renderCalendar(prv);
 
             $('#jijj').html(context.mm + 1 + '月-' + context.yn);
-            alert(now.getDay());
+            var d = new Date();
 
-            if (context.yn == now.getFullYear() && context.mm == now.getMonth()) {
+            alert(d.getDay());
+
+            if (context.yn == d.getFullYear() && context.mm == d.getMonth()) {
                 $('#day_'+ now.getDay()).addClass('today');
             }
 
@@ -122,9 +124,12 @@
             context.renderCalendar(nxt);
 
             $('#jijj').html(context.mm + 1 + '月-' + context.yn);
-            alert(now.getDay());
 
-            if (context.yn == now.getFullYear() && context.mm == now.getMonth()) {
+            var d = new Date();
+
+            alert(d.getDay());
+
+            if (context.yn == d.getFullYear() && context.mm == d.getMonth()) {
                 $('#day_'+ now.getDay()).addClass('today');
             }
 
