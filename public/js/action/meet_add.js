@@ -53,5 +53,8 @@ function initCalendarClick() {
         var date = $(this).attr('year') + '-'+  singleDateCheck($(this).attr('month')) + '-' + singleDateCheck($(this).attr('day'));
 
         $('#selected_date').val(date);
+
+        $('.selected').removeClass('selected');
+        $('#day_'+ $(this).attr('day')).addClass('selected');
     })
 }
