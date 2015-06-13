@@ -43,7 +43,7 @@ var Word = function () {
 
     obj.add = function () {
         if (!this.check()) {
-            alert(this.message);
+            $.alertbox({ msg:this.message });
 
             return;;
         }

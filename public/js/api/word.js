@@ -19,7 +19,7 @@ function addWord(user_id, word_text, meet_id) {
                 location.reload();
             }
 
-            alert(response.data);
+            $.alertbox({ msg:response.data });
         },
         error: function () {
 
@@ -43,7 +43,7 @@ function queryWord(meet_id) {
                 loadWords(response.data);
             }
             else {
-                //alert(response.data);
+                $.alertbox({ msg:response.data });
             }
         },
         error: function () {

@@ -87,7 +87,7 @@ var User = function () {
 
     obj.Login = function () {
         if (!this.check()) {
-            alert(this.message);
+            $.alertbox({ msg:this.message });
 
             return;;
         }

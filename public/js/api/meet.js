@@ -66,7 +66,7 @@ function QueryPendingMeet(user_id, fun, toUrl) {
                 fun(response.data, toUrl);
             }
             else {
-                alert(response.data);
+                $.alertbox({ msg:response.data });
             }
         },
         error: function () {
@@ -92,7 +92,7 @@ function loadMeet(user_id, meet_id) {
                 meetLoad(response.data);
             }
             else {
-                alert(response.data);
+                $.alertbox({ msg:response.data });
             }
         },
         error: function () {
@@ -145,7 +145,7 @@ function leaveMeet(user_id, meet_id) {
                 location.reload();
             }
             else {
-                alert(response.data);
+                $.alertbox({ msg:response.data });
             }
         },
         error: function () {
@@ -171,7 +171,7 @@ function closeMeet(user_id, meet_id) {
                 location.href = "/";
             }
             else {
-                alert(response.data);
+                $.alertbox({ msg:response.data });
             }
         },
         error: function () {
@@ -254,7 +254,7 @@ function getMeetDate(meet_id, user_id) {
                 setVoteDate(response.data.first_date, response.data.second_date, response.data.isVote);
             }
             else {
-                alert(response.data);
+                $.alertbox({ msg:response.data });
             }
         },
         error: function () {
