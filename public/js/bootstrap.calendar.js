@@ -107,6 +107,10 @@
 
             $('#jijj').html(context.mm + 1 + '月-' + context.yn);
 
+            if (context.yn == now.getFullYear() && context.mm + 1 == now.getMonth()) {
+                $('#day_'+ now.getDay()).addClass('today');
+            }
+
             getSchedule();
         });
 
@@ -117,6 +121,10 @@
             context.renderCalendar(nxt);
 
             $('#jijj').html(context.mm + 1 + '月-' + context.yn);
+
+            if (context.yn == now.getFullYear() && context.mm + 1 == now.getMonth()) {
+                $('#day_'+ now.getDay()).addClass('today');
+            }
 
             getSchedule();
         });
