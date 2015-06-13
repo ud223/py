@@ -108,10 +108,8 @@
             $('#jijj').html(context.mm + 1 + '月-' + context.yn);
             var d = new Date();
 
-            alert(d.getDay());
-
             if (context.yn == d.getFullYear() && context.mm == d.getMonth()) {
-                $('#day_'+ now.getDay()).addClass('today');
+                $('#day_'+ now.getDate()).addClass('today');
             }
 
             getSchedule();
@@ -127,10 +125,8 @@
 
             var d = new Date();
 
-            alert(d.getDay());
-
             if (context.yn == d.getFullYear() && context.mm == d.getMonth()) {
-                $('#day_'+ now.getDay()).addClass('today');
+                $('#day_'+ now.getDate()).addClass('today');
             }
 
             getSchedule();
