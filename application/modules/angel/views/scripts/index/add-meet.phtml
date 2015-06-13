@@ -90,6 +90,9 @@
             $('#checked-time-solid span').html('活动将开始于：' + event.month.valueOf() + '月' + event.day.valueOf() + '日');
             $('#checked-time-solid span').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
                 $(this).removeClass('animated').removeClass('swing');
+
+                $('.selected').removeClass('selected');
+                $('#day_'+ event.day.valueOf()).addClass('selected');
             });
         });
 
