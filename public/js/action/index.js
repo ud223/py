@@ -5,7 +5,7 @@ $(document).ready(function() {
     })
 
     $(".glyphicon-user").tap(function () {
-        //alert('我的好友:功能暂未');
+        $.alertbox({ msg:'我的好友:功能暂部署!' });
     })
 
     $('#btn_add').tap(function () {
