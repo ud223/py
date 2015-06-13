@@ -106,7 +106,8 @@
             context.renderCalendar(prv);
 
             $('#jijj').html(context.mm + 1 + '月-' + context.yn);
-
+            alert(context.yn +":"+ now.getFullYear());
+            alert(context.mm + ":" + now.getMonth());
             if (context.yn == now.getFullYear() && context.mm == now.getMonth() + 1) {
                 $('#day_'+ now.getDay()).addClass('today');
             }
