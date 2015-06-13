@@ -54,7 +54,7 @@ function initCalendarClick() {
 
         $('#selected_date').val(date);
 
-        $('.selected').removeClass('selected');
+        //$('.selected').removeClass('selected');
         $('#day_'+ $(this).attr('day')).addClass('selected');
     })
 }
