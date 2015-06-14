@@ -112,6 +112,8 @@
             }
 
             getSchedule();
+
+            initPassCalendar(context.yn, context.mm + 1);
         });
 
         $('#to-next-month').click(function(){
@@ -127,6 +129,8 @@
             }
 
             getSchedule();
+
+            initPassCalendar(context.yn, context.mm + 1);
         });
     };
 

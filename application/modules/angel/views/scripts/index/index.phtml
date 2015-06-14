@@ -72,15 +72,6 @@
             $('.selected').removeClass('selected');
             $('#day_'+ event.day.valueOf()).addClass('selected');
 
-//            if ($('#meet-list').attr('load_date') == load_date + "_load") {
-//                $('#meet-list').html('');
-//                $('#meet-list').attr('load_date', load_date);
-//
-//                return;
-//            }
-
-//            $('#meet-list').attr('load_date', load_date + "_load");
-
             var meetModel = new Meet();
 
             var user_id = localStorage.getItem('user_id');
@@ -93,6 +84,8 @@
         }
 
         $('#jijj').html(now.getMonth() + 1 + "月-" + now.getFullYear() + "年");
+
+        initPassCalendar(now.getFullYear(), now.getMonth() + 1);
 
         //测试
 //        localStorage.clear();
