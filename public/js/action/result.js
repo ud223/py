@@ -11,6 +11,8 @@ function hrefUrl() {
     alert(urls[1]);
     if (urls.length > 1) {
         location.href = urls[1];
+
+        return;
     }
 }
 
