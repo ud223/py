@@ -58,8 +58,7 @@ function addPassStyel(day) {
     var d = $('#day_'+ day);
 
     if (d) {
-        alert(d);
-        d.addClass('pass');
+        $('#day_'+ day).addClass('pass');
     }
 }
 
