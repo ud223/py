@@ -82,8 +82,8 @@
 
             var user_id = localStorage.getItem('user_id');
             var strDate = curDate.split('-');
-            alert(JSON.stringify(strDate));
-            meetModel.Query(proposer_id, strDate[0], strDate[1],  strDate[2]);
+
+            meetModel.Query(proposer_id, strDate[0], singleDateCheck(strDate[1]),  singleDateCheck(strDate[2]));
         }
 
         var user_id = localStorage.getItem('user_id');
