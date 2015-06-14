@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function hrefUrl() {
     var url = window.location.href;
-
+    alert(url);
     var urls = url.split("#");
     alert(urls[1]);
     if (urls.length > 1) {
