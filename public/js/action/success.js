@@ -24,7 +24,7 @@ function initShare() {
     var user_id = localStorage.getItem('user_id');
 
     url =  window.location.href + '#' +"/share/"+ user_id +"/" + meet_id;
-
+    alert(url);
     location.href = url;
 
     $('#share').tap(function() {

@@ -18,8 +18,9 @@ function addWord(user_id, word_text, meet_id) {
             if (response.code == 200) {
                 location.reload();
             }
-
-            $.alertbox({ msg:response.data });
+            else {
+                $.alertbox({ msg:response.data });
+            }
         },
         error: function () {
 
