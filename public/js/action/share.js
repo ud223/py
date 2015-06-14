@@ -1,15 +1,38 @@
 $(document).ready(function() {
+    var user_id = localStorage.getItem('user_id');
+
+    validUser(user_id);
+
+    if (user_id == proposer_id) {
+        switchSharingBds();
+    }
+
+    //初始化按钮事件
+    initBtnHome();
+    initBtnFriend();
+    initBtnAdd();
+})
+
+function initBtnHome() {
     $(".glyphicon-home").tap(function () {
         localStorage.setItem('share_id', '');
         location.href = '/';
     })
+}
 
+function initBtnFriend() {
     $(".glyphicon-user").tap(function () {
-        //alert('我的好友:功能暂未');
+        $.alertbox({ msg:'我的好友:功能暂部署!' });
     })
+}
 
+function initBtnAdd() {
     $('#btn_add').tap(function () {
         var user = new User();
+
+        var user_id = localStorage.getItem('user_id');
+
+        user.setUser_Id(user_id)
 
         if (!user.valid()) {
             location.href = "/";
@@ -18,24 +41,15 @@ $(document).ready(function() {
             location.href = '/meet/add';
         }
     })
+}
 
+function initBtnShare() {
     $("#share").tap(function () {
-        //location.href = "/?share_id="+ user_id;
+        var user_id = localStorage.getItem('user_id');
 
+        location.href = '/share/'+ user_id;
     })
-
-    $("#pending").tap(function () {
-        location.href = '/meet/pending';
-    })
-
-    var user_id = localStorage.getItem('user_id');
-
-    validUser(user_id);
-
-    if (user_id == proposer_id) {
-        switchSharingBds();
-    }
-})
+}
 
 function switchSharingBds(){
     $('#sharing-bds').show();

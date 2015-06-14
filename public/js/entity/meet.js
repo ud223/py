@@ -47,11 +47,22 @@ var Meet = function () {
     }
 
     obj.check = function () {
+        var today = new Date();
+
         if (this.selected) {
             if (!this.selected_date) {
                 this.message = "请先选择活动日期!";
 
                 return false;
+            }
+            else {
+                var date = new Date(this.selected_date);
+
+                if (date < today && date.getDate() != today.getDate()) {
+                    this.message = "活动日期必须从今天开始!";
+
+                    return false;
+                }
             }
         }
         else {
@@ -69,6 +80,13 @@ var Meet = function () {
 
                     return false;
                 }
+                else {
+                    if (d1 < today && d1.getDate() != today.getDate()) {
+                        this.message = "活动日期必须从今天开始!";
+
+                        return false;
+                    }
+                }
             }
         }
 
@@ -84,11 +102,11 @@ var Meet = function () {
             return false;
         }
 
-        if (!this.address) {
-            this.message = "请先填写活动地点!";
-
-            return false;
-        }
+        //if (!this.address) {
+        //    this.message = "请先填写活动地点!";
+        //
+        //    return false;
+        //}
 
         //if (!this.remark) {
         //    this.message = "请先填写活动描述!";
