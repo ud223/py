@@ -60,6 +60,7 @@
     var headimgurl = '<?php echo $this->headimgurl ?>';
     var is_share = false;
     $(document).ready(function(){
+        validEnvironment();
         var now = new Date();
         $('#real-calendar div').Calendar({
             'weekStart' : 1,
@@ -86,9 +87,6 @@
         $('#jijj').html(now.getMonth() + 1 + "月-" + now.getFullYear() + "年");
 
         initPassCalendar(now.getFullYear(), now.getMonth() + 1);
-
-        //测试
-//        localStorage.clear();
 
         var user_id = localStorage.getItem('user_id');
 
