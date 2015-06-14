@@ -7,7 +7,7 @@ $(document).ready(function () {
 function hrefUrl() {
     var url = window.location.href;
     alert("网址："+url);
-    return;
+    //return;
     var urls = url.split("#");
     alert(urls[1]);
     if (urls.length > 1) {
