@@ -385,11 +385,23 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $meet = $meetModel->getById($meet_id);
 
+        if ($meet->selected_date == "false") {
+            foreach ($meet->options_date as $d) {
+                $date = $d;
+
+                break;
+            }
+        }
+        else {
+            $date = $meet->selected_date;
+        }
+
         $this->view->appid = $this->app_id;
         $this->view->proposer_id = $proposer_id;
         $this->view->nickname = $user->nickname;
         $this->view->headimgurl = $user->headimgurl;
         $this->view->day = $meet->day;
+        $this->view->date = $date;
         $this->view->proposer_id = $proposer_id;
         $this->view->title = $user->nickname . '的日程安排';
     }

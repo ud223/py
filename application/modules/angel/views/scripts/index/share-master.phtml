@@ -53,7 +53,7 @@
     var appid = '<?php echo $this->appid ?>';
     var proposer_id = '<?php echo $this->proposer_id ?>';
     var meet_day = '<?php echo $this->day ?>';
-    var proposer_id = '<?php echo $this->proposer_id ?>';
+    var curDate = '<?php echo $this->date ?>';
     var is_share = true;
     $(document).ready(function(){
         var now = new Date();
@@ -66,7 +66,7 @@
 
             $('#jijj').html(load_date);
 
-            $('#day_'+ event.year.valueOf()).addClass('selected');
+            $('#day_'+ event.day.valueOf()).addClass('selected');
 
             var meetModel = new Meet();
 
@@ -74,9 +74,16 @@
 
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
-        alert(meet_day);
+
         if (meet_day) {
-            $('#day_'+ meet_day).click();
+            $('#day_'+ meet_day).addClass('selected');
+
+            var meetModel = new Meet();
+
+            var user_id = localStorage.getItem('user_id');
+            var strDate = curDate.split('-');
+
+            meetModel.Query(proposer_id, strDate[0], strDate[1],  strDate[2]);
         }
 
         var user_id = localStorage.getItem('user_id');
