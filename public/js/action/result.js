@@ -8,7 +8,7 @@ function hrefUrl() {
     var url = window.location.href;
 
     var urls = url.split("#");
-
+    alert(urls[1]);
     if (urls.length > 1) {
         location.href = urls[1];
     }
