@@ -56,8 +56,8 @@
     var proposer_id = '<?php echo $this->proposer_id ?>';
     var is_share = true;
     $(document).ready(function(){
-
         var now = new Date();
+
         $('#real-calendar div').Calendar({
             'weekStart' : 1,
             'date' : now
@@ -75,9 +75,9 @@
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
 
-        if (meet_day) {
-            $('#day_'+ meet_day).click();
-        }
+//        if (meet_day) {
+//            $('#day_'+ meet_day).click();
+//        }
 
         var user_id = localStorage.getItem('user_id');
 
