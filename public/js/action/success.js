@@ -15,12 +15,15 @@ function hrefUrl() {
 }
 
 function initShare() {
-    if (view_type == 1) {
-        url = window.location.href + '#' +"/meet/view/" + meet_id;
-    }
-    else {
-        url = window.location.href + '#' +"/meet/vote/" + meet_id;
-    }
+    //if (view_type == 1) {
+    //    url = window.location.href + '#' +"/meet/view/" + meet_id;
+    //}
+    //else {
+    //    url = window.location.href + '#' +"/meet/vote/" + meet_id;
+    //}
+    var user_id = localStorage.getItem('user_id');
+
+    url =  window.location.href + '#' +"/share/"+ user_id +"/" + meet_id;
 
     location.href = url;
 
