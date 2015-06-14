@@ -15,8 +15,10 @@ function hrefUrl() {
 }
 
 function initShare() {
-    location.href = window.location.href + '#' +"/meet/view/" + meet_id;
-    
+    var user_id = localStorage.getItem('user_id');
+
+    url =  window.location.href + '#' +"/share/"+ user_id +"/" + meet_id;
+
     $('#share').tap(function() {
         switchSharingBds();
     });
