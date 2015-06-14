@@ -52,7 +52,7 @@
     document.title = '<?php echo $this->nickname?>' + "日程安排";
     var appid = '<?php echo $this->appid ?>';
     var proposer_id = '<?php echo $this->proposer_id ?>';
-//    var open_id = '<?php //echo $this->user_id ?>//';
+    var day = '<?php echo $this->day ?>';
     var proposer_id = '<?php echo $this->proposer_id ?>';
     var is_share = true;
     $(document).ready(function(){
@@ -74,8 +74,11 @@
 
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
-        //测试
-//        localStorage.clear();
+
+        if (day) {
+            $('#day_'+ day).tap();
+        }
+
         var user_id = localStorage.getItem('user_id');
 
         if (!user_id) {

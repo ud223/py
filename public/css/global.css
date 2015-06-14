@@ -383,6 +383,18 @@ textarea.inp-txt {
 	border-radius: 5px;
 	outline: none !important;
 }
+
+.rowbtn.red {
+   background: #FF4C34;
+    color: #fff;
+    display: block;
+    height: 36px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    outline: none !important;
+}
+
 .rowbtn:active {
 	background: #444;
 }

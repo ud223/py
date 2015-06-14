@@ -72,18 +72,18 @@ function initBtnCloseMeet(user_id) {
 //初始化加入按钮
 function initBtnJoin(user_id) {
     if (users_id.indexOf(user_id) > -1)  {
-        $('#letmeleave').show();
+        $('#btn_leave').show();
 
-        $('#letmeleave').tap(function() {
+        $('#btn_leave').tap(function() {
             var meet = new Meet();
 
             meet.leave(user_id, meet_id);
         })
     }
     else  {
-        $('#letmejoin').show();
+        $('#btn_join').show();
 
-        $('#letmejoin').tap(function() {
+        $('#btn_join').tap(function() {
             var meet = new Meet();
 
             meet.join(user_id, meet_id, afterJoin);

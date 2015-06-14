@@ -1,4 +1,5 @@
 function loadMeets(data, toUrl, day) {
+    alert(JSON.stringify(data));
     var list = $('#mg-listc').find('.mg-listc').clone(true);
     var old_day = $(document).find('.node-list').attr('day');
 
@@ -45,13 +46,19 @@ function loadMeets(data, toUrl, day) {
                 users = users + '<span class="sli"><a href="'+ share_url +'"><img src="'+ this.headimgurl +'"/></a></span>';
             })
 
+            var meet_date = this.month + "月" + this.day + "日 活动" ;
+
+            node.find('.meet_date').html(meet_date);
             node.find('.mg-listc-usrs').html(users);
 
             if (toUrl) {
                 url = toUrl + "/" + meet_id;
             }
             else {
-                url = "/meet/view/"+ meet_id;
+                if (this.seleted == 1)
+                    url = "/meet/view/"+ meet_id;
+                else
+                    url = "/meet/vote/"+meet_id;
             }
 
             node.tap(function() {

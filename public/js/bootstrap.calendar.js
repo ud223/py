@@ -99,7 +99,7 @@
 
         var context = this;
 
-        $('#to-last-month').click(function(){
+        $('#to-last-month').tap(function(){
             context.update_date('prv');
             var prv = new Date(context.yp, context.mm, 1);
             context.live_date = prv;
@@ -116,7 +116,7 @@
             initPassCalendar(context.yn, context.mm + 1);
         });
 
-        $('#to-next-month').click(function(){
+        $('#to-next-month').tap(function(){
             context.update_date('nxt');
             var nxt = new Date(context.yn, context.mm, 1);
             context.live_date = nxt;

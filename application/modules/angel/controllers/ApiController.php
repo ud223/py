@@ -70,7 +70,11 @@ class Angel_ApiController extends Angel_Controller_Action {
                 $options_date[] = date('Y-m-d', $dt_start);
             } while (($dt_start += 86400) <= $dt_end);
 
-//            $this->_helper->json(array('data' => $options_date, 'code' => $code)); exit;
+            $strDate = explode("-", $start_date);
+
+            $year = $strDate[0];
+            $month = $this->NumOpt($strDate[1]);
+            $day = $this->NumOpt($strDate[2]);
         }
         else {
             $options_date[] = $selected_date;
@@ -146,7 +150,21 @@ class Angel_ApiController extends Angel_Controller_Action {
                 //通过users_id集合得到用户集合
                 $users = $this->getUsersInfo($r->users_id);
 
-                $meets[] = array("id"=>$r->id, "meet_text"=>$r->meet_text, "address"=>$r->address, "remark"=>$r->remark, "users"=>$users, "date"=>$r->selected_date, "year"=>$r->year, "month"=>$r->month, "day"=>$r->day, "identity"=>$r->identity);
+                if ($r->selected_date == "false") {
+                    foreach ($r->options_date as $d) {
+                        $selected_date = $d;
+
+                        break;
+                    }
+
+                    $seleted = '0';
+                }
+                else {
+                    $selected_date = $r->selected_date;
+                    $seleted = '1';
+                }
+
+                $meets[] = array("id"=>$r->id, "meet_text"=>$r->meet_text, "address"=>$r->address, "remark"=>$r->remark, "users"=>$users, "date"=>$selected_date, "year"=>$r->year, "month"=>$r->month, "day"=>$r->day, "identity"=>$r->identity, 'seleted'=>$seleted);
             }
 
             $this->_helper->json(array('data' => $meets, 'code' => $code));

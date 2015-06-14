@@ -34,6 +34,8 @@ function validUser(user_id) {
 }
 //初始化活动日期投票按钮
 function initVoteSubmit() {
+    $('#ps_text').show();
+
     $('#submit-vote').tap(function() {
         var user_id = localStorage.getItem('user_id');
 
@@ -142,9 +144,9 @@ function initBtnCloseMeet(user_id) {
 //初始化离开按钮
 function initBtnLeave(user_id) {
     if (users_id.indexOf(user_id) > -1)  {
-        $('#letmeleave').show();
+        $('#btn_leave').show();
 
-        $('#letmeleave').tap(function() {
+        $('#btn_leave').tap(function() {
             var meet = new Meet();
 
             meet.leave(user_id, meet_id);
