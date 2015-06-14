@@ -6,7 +6,8 @@ $(document).ready(function () {
 
 function hrefUrl() {
     var url = window.location.href;
-    alert(url); return;
+    alert("网址："+url);
+    return;
     var urls = url.split("#");
     alert(urls[1]);
     if (urls.length > 1) {
