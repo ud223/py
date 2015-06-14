@@ -52,7 +52,7 @@
     document.title = '<?php echo $this->nickname?>' + "日程安排";
     var appid = '<?php echo $this->appid ?>';
     var proposer_id = '<?php echo $this->proposer_id ?>';
-//    var meet_day = '<?php //echo $this->day ?>//';
+    var meet_day = '<?php echo $this->day ?>';
     var proposer_id = '<?php echo $this->proposer_id ?>';
     var is_share = true;
     $(document).ready(function(){
@@ -74,7 +74,7 @@
 
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
-
+        alert(meet_day);
 //        if (meet_day) {
 //            $('#day_'+ meet_day).click();
 //        }
