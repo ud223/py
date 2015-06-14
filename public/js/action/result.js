@@ -16,9 +16,9 @@ function hrefUrl() {
 
 function initShare() {
     var user_id = localStorage.getItem('user_id');
-
+    alert(1);
     url =  window.location.href + '#' +"/share/"+ user_id +"/" + meet_id;
-
+    alert(url);
     $('#share').tap(function() {
         switchSharingBds();
     });
