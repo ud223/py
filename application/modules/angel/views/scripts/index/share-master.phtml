@@ -75,9 +75,9 @@
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
         alert(meet_day);
-//        if (meet_day) {
-//            $('#day_'+ meet_day).click();
-//        }
+        if (meet_day) {
+            $('#day_'+ meet_day).click();
+        }
 
         var user_id = localStorage.getItem('user_id');
 
