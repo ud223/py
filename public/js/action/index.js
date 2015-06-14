@@ -55,6 +55,7 @@ function initPassCalendar(year, month) {
 }
 
 function addPassStyel(day) {
+    alert(day);
     var d = $('#day_'+ day);
 
     if (d) {
