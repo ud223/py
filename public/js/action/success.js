@@ -22,9 +22,9 @@ function initShare() {
     //    url = window.location.href + '#' +"/meet/vote/" + meet_id;
     //}
     var user_id = localStorage.getItem('user_id');
-    alert(1);
+
     url =  window.location.href + '#' +"/share/"+ user_id +"/" + meet_id;
-    alert(url);
+
     location.href = url;
 
     $('#share').tap(function() {
