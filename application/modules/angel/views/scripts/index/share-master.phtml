@@ -83,7 +83,7 @@
             var user_id = localStorage.getItem('user_id');
             var strDate = curDate.split('-');
 
-            meetModel.Query(proposer_id, strDate[0], singleDateCheck(strDate[1]),  singleDateCheck(strDate[2]));
+            meetModel.Query(proposer_id, strDate[0], numDateCheck(strDate[1]),  numDateCheck(strDate[2]));
         }
 
         var user_id = localStorage.getItem('user_id');
