@@ -12,15 +12,13 @@ $(document).ready(function() {
 })
 
 function initDate() {
-    alert(day);
     if (day) {
-        alert(3);
         $('#day_'+ day).addClass('selected');
         $('#day_'+ day).addClass('node');
 
-        var date =$('#day_'+day).attr('year') + '-'+  singleDateCheck($('#day_'+day).attr('month')) + '-' + singleDateCheck($('#day_'+day).attr('day'));
+        var d =$('#day_'+ day).attr('year') + '-'+  $('#day_'+ day).attr('month') + '-' + $('#day_'+ day).attr('day');
 
-        $('#selected_date').val(date);
+        $('#selected_date').val(d);
     }
 }
 
