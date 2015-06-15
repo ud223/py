@@ -47,7 +47,7 @@ function loadMeets(data, toUrl, day) {
 
             var meet_date = this.month + "月" + this.day + "日 活动" ;
 
-            node.find('.meet_date').html(meet_date);
+            list.find('.meet_date').html(meet_date);
             node.find('.mg-listc-usrs').html(users);
 
             if (toUrl) {
