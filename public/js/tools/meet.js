@@ -11,24 +11,7 @@ function loadMeets(data, toUrl, day) {
     list.attr('day', day);
     list.addClass('node-list');
 
-    if (data.length == 0) {
-        if (is_share) {
-            return;
-        }
-
-        var node = $('#meet_add_model').clone(true);
-
-        node.find('.mg-listc-btt').html("当天没有活动安排");
-
-        node.tap(function() {
-            location.href = "/meet/add";
-        });
-
-        list.append(node);
-
-        $('#day_'+ day).parent().after(list);
-    }
-    else {
+    if (data.length > 0) {
         $.each(data, function () {
             var node = $('#meet_model').clone(true);
 
@@ -69,6 +52,22 @@ function loadMeets(data, toUrl, day) {
 
         $('#day_'+ day).parent().after(list);
     }
+
+    if (is_share) {
+        return;
+    }
+
+    var node = $('#meet_add_model').clone(true);
+
+    node.find('.mg-listc-btt').html("当天没有活动安排");
+
+    node.tap(function() {
+        location.href = "/meet/add/"+ day;
+    });
+
+    list.append(node);
+
+    $('#day_'+ day).parent().after(list);
 }
 
 function meetLoad(data) {
