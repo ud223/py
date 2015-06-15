@@ -9,9 +9,6 @@ $(document).ready(function() {
     initBack();
 
     initMeetType();
-    alert(1);
-    initDate();
-    alert(2);
 })
 
 function initDate() {
