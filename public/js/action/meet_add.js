@@ -18,6 +18,7 @@ function initDate() {
 
         var d =$('#day_'+ day).attr('year') + '-'+  $('#day_'+ day).attr('month') + '-' + $('#day_'+ day).attr('day');
 
+        $('#show_seletced_date').html($('#day_'+ day).attr('month') + '月' + $('#day_'+ day).attr('day') + '日')
         $('#selected_date').val(d);
     }
 }
