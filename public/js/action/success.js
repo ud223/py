@@ -7,8 +7,7 @@ $(document).ready(function () {
 
 function initMeetUrl() {
     var url = '';
-    alert(view_type);
-    alert(meet_id);
+
     if (view_type == 1) {
         url = "/meet/view/" + meet_id;
     }
