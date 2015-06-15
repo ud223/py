@@ -5,7 +5,7 @@ var meet = new Meet();
 
 $(document).ready(function() {
     initFootbar();
-    
+
     initSubmit();
 
     initBack();
@@ -51,6 +51,7 @@ function initSubmit() {
 }
 
 function initBack() {
+    alert(1);
     $('#pge-cover-back').tap(function() {
         localStorage.setItem('share_id', '');
         location.href = "/";
