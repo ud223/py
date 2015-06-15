@@ -333,14 +333,12 @@ textarea.inp-txt {
 .gamerbod .ssimg {
 	width: 40px;
 	height: 40px;
-	position: absolute;
-	left: 15px;
-	top: 15px;
 	display: inline-block;
+    float:left;
 }
 .gamerbod .rdcts {
 	float: left;
-	margin-left: 55px;
+	margin-left: 15px;
 	margin-right: 80px;
 }
 .gamerbod .rdcrs {
@@ -414,7 +412,7 @@ textarea.inp-txt {
 }
 .mg-ttblk-i {
 	display: inline-block;
-	height: 30px;
+	height: 50px;
 	width: 70px;
 	line-height: 50px;
 	position: absolute;
@@ -665,6 +663,7 @@ textarea.inp-txt {
 #sharing-bds img {
 	width: 100%;
 }
+
 #letmejoin,
 #letmeleave {
 	width: auto;
@@ -744,4 +743,14 @@ textarea.inp-txt {
 }
 .p3jnid button:active {
 	background: #4CBF4C;
+}
+
+#btn_join, #btn_leave {
+    display: none;
+    right:15px;
+    top:50%;
+    margin-top:-18px;
+    position:absolute;
+    width:auto !important;
+    line-height:normal;
 }
