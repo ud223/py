@@ -34,8 +34,6 @@ function validUser(user_id) {
 }
 //初始化活动日期投票按钮
 function initVoteSubmit() {
-    $('#ps_text').show();
-
     $('#submit-vote').tap(function() {
         var user_id = localStorage.getItem('user_id');
 
@@ -164,7 +162,8 @@ function setVoteDate(first_date, second_date, isVote) {
     }
     else {
         $('#submit-vote').show();
-
+        $('#ps_text').show();
+        
         initVoteSubmit();
     }
 }
