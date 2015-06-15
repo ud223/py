@@ -143,7 +143,10 @@ function initBtnCloseMeet(user_id) {
 }
 //初始化离开按钮
 function initBtnLeave(user_id) {
-    if (users_id.indexOf(user_id) > -1 && user_id != proposer_id)  {
+    if (users_id.indexOf(user_id) > -1)  {
+        if (user_id == proposer_id)
+            return;
+
         $('#btn_leave').show();
 
         $('#btn_leave').tap(function() {
