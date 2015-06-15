@@ -14,9 +14,7 @@ $(document).ready(function() {
 })
 
 function initFootbar() {
-    alert(0);
     $('#btn_home').parent().removeClass('selected');
-    alert(1);
     $('#btn_add').addClass('selected');
 }
 
@@ -53,7 +51,6 @@ function initSubmit() {
 }
 
 function initBack() {
-    alert(1);
     $('#pge-cover-back').tap(function() {
         localStorage.setItem('share_id', '');
         location.href = "/";
