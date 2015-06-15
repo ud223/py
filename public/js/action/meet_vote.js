@@ -1,12 +1,13 @@
 $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
-
+    toShareUrl();
     validUser(user_id)
     loadThisMeet(user_id);
 
     loadMeetVoteDate(user_id);
     loadProposerInfo(user_id);
 
+    initBtnShare(user_id);
     initBtnWord(user_id);
     initBtnBack();
     initBtnCloseMeet(user_id);
@@ -19,11 +20,31 @@ $(document).ready(function() {
     //}
 })
 
-function switchSharingBds(){
+function toShareUrl() {
+    var url = location.href;
+
+    var strUrl = url.split("#");
+
+    if (strUrl.length > 1) {
+        location.href = strUrl[1];
+    }
+}
+
+function initBtnShare(user_id) {
+    $('.glyphicon-share').tap(function () {
+        shareMeet(user_id);
+    });
+}
+
+function shareMeet(user_id){
     $('#sharing-bds').show();
     $('#sharing-bds').tap(function(){
         $('#sharing-bds').hide();
     });
+
+    var share_url = window.location.href + "#/share/" + user_id +"/"+ meet_id;
+
+    location.href = share_url;
 }
 
 function validUser(user_id) {
@@ -163,7 +184,7 @@ function setVoteDate(first_date, second_date, isVote) {
     else {
         $('#submit-vote').show();
         $('#ps_text').show();
-        
+
         initVoteSubmit();
     }
 }
