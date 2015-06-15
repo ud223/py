@@ -92,7 +92,7 @@ function meetLoad(data) {
 
     $(document).find('.busr-lst').html("");
     var users_html = "";
-
+    
     $.each(data.users, function() {
         var share_url = "/share/"+ this.openid;
 
