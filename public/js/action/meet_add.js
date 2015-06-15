@@ -17,8 +17,9 @@ $(document).ready(function() {
 function initDate() {
     alert(day);
     if (day) {
-        $('#day_'+day).addClass('selected');
-        $('#day_'+day).addClass('node');
+        alert(3);
+        $('#day_'+ day).addClass('selected');
+        $('#day_'+ day).addClass('node');
 
         var date =$('#day_'+day).attr('year') + '-'+  singleDateCheck($('#day_'+day).attr('month')) + '-' + singleDateCheck($('#day_'+day).attr('day'));
 
