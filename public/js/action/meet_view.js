@@ -7,6 +7,7 @@ $(document).ready(function() {
     loadThisMeet(user_id);
     loadProposerInfo(user_id);
 
+    initBtnShare(user_id);
     initBtnWord(user_id);
     initBtnBack();
     initBtnCloseMeet(user_id);
@@ -23,9 +24,9 @@ function toShareUrl() {
     }
 }
 
-function initBtnShare() {
+function initBtnShare(user_id) {
     $('.glyphicon-share').tap(function () {
-       shareMeet();
+       shareMeet(user_id);
     });
 }
 
