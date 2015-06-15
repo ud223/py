@@ -70,7 +70,9 @@ function initBtnCloseMeet(user_id) {
 }
 //初始化加入按钮
 function initBtnJoin(user_id) {
-    if (users_id.indexOf(user_id) > -1)  {
+    alert(user_id);
+    alert(proposer_id);
+    if (users_id.indexOf(user_id) > -1 && user_id != proposer_id)  {
         $('#btn_leave').show();
 
         $('#btn_leave').tap(function() {
