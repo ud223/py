@@ -3,7 +3,7 @@ function loadWords(data) {
 
     if (data.length == 0) {
         alert($('.words-ttt').html());
-        $('.words-ttt').html('暂无评论');
+        $('#test-tt').html('暂无评论');
 
         return;
     }
