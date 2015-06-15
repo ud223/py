@@ -87,12 +87,16 @@ function meetLoad(data) {
         $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
     }
 
-    $(document).find('#address').html(data.address);
+    if (data.address)
+        $(document).find('#address').html(data.address);
+    else
+        $(document).find('#address').html("暂无地址");
+    
     $(document).find('#remark').html(data.remark);
 
     $(document).find('.busr-lst').html("");
     var users_html = "";
-    
+
     $.each(data.users, function() {
         var share_url = "/share/"+ this.openid;
 
