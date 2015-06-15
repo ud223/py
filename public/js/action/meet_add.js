@@ -9,11 +9,13 @@ $(document).ready(function() {
     initBack();
 
     initMeetType();
-
+    alert(1);
     initDate();
+    alert(2);
 })
 
 function initDate() {
+    alert(day);
     if (day) {
         $('#day_'+day).addClass('selected');
         $('#day_'+day).addClass('node');
