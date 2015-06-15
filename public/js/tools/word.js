@@ -2,8 +2,8 @@ function loadWords(data) {
     $('#word-list').html('');
 
     if (data.length == 0) {
-        alert($('.word-title').html());
-        $('.word-title').html('暂无评论');
+        alert($('.words-ttt').html());
+        $('.words-ttt').html('暂无评论');
 
         return;
     }
