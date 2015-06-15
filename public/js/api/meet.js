@@ -116,12 +116,14 @@ function joinMeet(user_id, meet_id, fun) {
         success: function (response) {
             //alert(JSON.stringify(response));
             if (response.code == 200) {
-                if (fun) {
-                    fun(true, "");
-                }
+                //if (fun) {
+                //    fun(true, "");
+                //}
+                location.reload();
             }
             else {
-                fun(false, response.data);
+                $.alertbox({ msg:response.data });
+                //fun(false, response.data);
             }
         },
         error: function () {
