@@ -408,6 +408,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->date = $date;
         $this->view->proposer_id = $proposer_id;
         $this->view->title = $user->nickname . '的日程安排';
+        $this->view->meet_id = $meet_id;
     }
 
     public function calendarVisitorAction() {
