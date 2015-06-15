@@ -237,7 +237,7 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function viewMeetAction() {
-        $this->_helper->layout->setLayout('detail');
+//        $this->_helper->layout->setLayout('detail');
 
         $meetModel = $this->getModel('meet');
         $userModel = $this->getModel('user');
@@ -273,11 +273,11 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function pendingMeetAction() {
-        $this->_helper->layout->setLayout('detail');
+//        $this->_helper->layout->setLayout('detail');
     }
 
     public function voteMeetAction() {
-        $this->_helper->layout->setLayout('detail');
+//        $this->_helper->layout->setLayout('detail');
 
         $meetModel = $this->getModel('meet');
         $voteModel = $this->getModel('vote');
