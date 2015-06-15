@@ -11,12 +11,19 @@ input[type="date"] {
 	background: #FFF;
 	border: 1px solid #E2E2E2;
 }
+.pad-10 {
+    padding:10px;
+}
+.pad-15 {
+    padding:15px;
+}
 .datepicker.datepicker-inline {
 	width: 100%;
 }
 .table-condensed {
 	width: 100%;
 }
+
 /* 主要的模块样式 */
 
 .row-duotab {
