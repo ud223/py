@@ -2,7 +2,6 @@ function loadWords(data) {
     $('#word-list').html('');
 
     if (data.length == 0) {
-        alert($('#test-tt').length);
         $('#test-tt').html('暂无留言');
 
         return;
