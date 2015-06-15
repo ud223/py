@@ -2,7 +2,21 @@ $(document).ready(function () {
     hrefUrl();
     initMyIndex();
     initShare();
+    initMeetUrl();
 });
+
+function initMeetUrl() {
+    var url = '';
+
+    if (view_type == 1) {
+        url = "/meet/view/" + meet_id;
+    }
+    else {
+        url = "/meet/vote/" + meet_id;
+    }
+
+    $('#pgx3').attr('href', url)
+}
 
 function hrefUrl() {
     var url = window.location.href;
@@ -15,12 +29,7 @@ function hrefUrl() {
 }
 
 function initShare() {
-    //if (view_type == 1) {
-    //    url = window.location.href + '#' +"/meet/view/" + meet_id;
-    //}
-    //else {
-    //    url = window.location.href + '#' +"/meet/vote/" + meet_id;
-    //}
+
     var user_id = localStorage.getItem('user_id');
 
     url =  window.location.href + '#' +"/share/"+ user_id +"/" + meet_id;
