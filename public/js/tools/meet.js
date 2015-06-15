@@ -59,7 +59,10 @@ function loadMeets(data, toUrl, day) {
 
     var node = $('#meet_add_model').clone(true);
 
-    node.find('.mg-listc-btt').html("当天没有活动安排");
+    if (data.length == 0)
+        node.find('.mg-listc-btt').html("当天没有活动安排");
+    else
+        node.find('.mg-listc-btt').html("当天新增活动安排");
 
     node.tap(function() {
         location.href = "/meet/add/"+ day;
