@@ -21,6 +21,7 @@ $(document).ready(function() {
     initBtnAdd();
     initBtnShare();
     initBtnPending();
+    queryPendingMeet();
 })
 
 function loadCalendar() {
@@ -155,4 +156,16 @@ function initCalendarClick(id, year, month, day) {
 function loadUserInfo(data) {
     headimgurl = data.headimgurl;
     nickname = data.nickname;
+}
+
+function queryPendingMeet(user_id) {
+    var meet = new Meet();
+
+    meet.pending(user_id, pendingOpt);
+}
+
+function pendingOpt(data) {
+    if (data.length > 0) {
+        $('#pending').show();
+    }
 }
