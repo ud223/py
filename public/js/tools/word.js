@@ -2,7 +2,7 @@ function loadWords(data) {
     $('#word-list').html('');
 
     if (data.length == 0) {
-        alert($('.word-title'));
+        alert($('.word-title').html());
         $('.word-title').html('暂无评论');
 
         return;
