@@ -11,6 +11,10 @@ function loadMeets(data, toUrl, day) {
     list.attr('day', day);
     list.addClass('node-list');
 
+    var meet_date = $('#day_'+ day).attr('month')+ "月" + day + "日 活动" ;
+
+    list.find('.meet_date').html(meet_date);
+
     if (data.length > 0) {
         $.each(data, function () {
             var node = $('#meet_model').clone(true);
@@ -28,9 +32,6 @@ function loadMeets(data, toUrl, day) {
                 users = users + '<span class="sli"><a href="'+ share_url +'"><img src="'+ this.headimgurl +'"/></a></span>';
             })
 
-            var meet_date = this.month + "月" + this.day + "日 活动" ;
-
-            list.find('.meet_date').html(meet_date);
             node.find('.mg-listc-usrs').html(users);
 
             if (toUrl) {
@@ -59,10 +60,10 @@ function loadMeets(data, toUrl, day) {
 
     var node = $('#meet_add_model').clone(true);
 
-    if (data.length == 0)
-        node.find('.mg-listc-btt').html("当天没有活动安排");
-    else
-        node.find('.mg-listc-btt').html("当天新增活动安排");
+    //if (data.length == 0)
+    //    node.find('.mg-listc-btt').html("当天没有活动安排");
+    //else
+    //    node.find('.mg-listc-btt').html("当天新增活动安排");
 
     node.tap(function() {
         location.href = "/meet/add/"+ day;
@@ -91,7 +92,7 @@ function meetLoad(data) {
         $(document).find('#address').html(data.address);
     else
         $(document).find('#address').html("暂无地址");
-    
+
     $(document).find('#remark').html(data.remark);
 
     $(document).find('.busr-lst').html("");
