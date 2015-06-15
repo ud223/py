@@ -4,12 +4,19 @@
 var meet = new Meet();
 
 $(document).ready(function() {
+    initFootbar();
+    
     initSubmit();
 
     initBack();
 
     initMeetType();
 })
+
+function initFootbar() {
+    $('. glyphicon-home').parent().removeClass('selected');
+    $('#btn_add').addClass('selected');
+}
 
 function initDate() {
     if (day) {
