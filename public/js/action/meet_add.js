@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 function initFootbar() {
     alert(0);
-    $('. glyphicon-home').parent().removeClass('selected');
+    $('#btn_home').parent().removeClass('selected');
     alert(1);
     $('#btn_add').addClass('selected');
 }
