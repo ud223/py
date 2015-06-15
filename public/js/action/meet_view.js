@@ -2,10 +2,11 @@ $(document).ready(function() {
     //localStorage.clear(); return;
 
     var user_id = localStorage.getItem('user_id');
-
+    alert(1);
     validUser(user_id)
-
+    alert(2);
     loadThisMeet(user_id);
+    alert(3);
     loadProposerInfo(user_id);
 
     initBtnWord(user_id);
