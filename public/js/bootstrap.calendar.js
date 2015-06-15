@@ -76,7 +76,7 @@
 //			click : $.proxy(this.click, this)
 //		});
 
-        this.calendar = $(template.replace("%msg_today%", this.msg_today)).appendTo(this.element).tap($.proxy(this.click, this));
+        this.calendar = $(template.replace("%msg_today%", this.msg_today)).appendTo(this.element).tap($.proxy(this.tap, this));
 
         this.live_date = new Date();
 
@@ -90,9 +90,9 @@
         this.yn = mon.getFullYear();
 
         if (this.component) {
-            this.component.on('click', $.proxy(this.show, this));
+            this.component.tap($.proxy(this.show, this));
         } else {
-            this.element.on('click', $.proxy(this.show, this));
+            this.element.tap($.proxy(this.show, this));
         }
 
         this.renderCalendar(now);
@@ -278,7 +278,8 @@
         this.calendar.find('.calendar-header').append(_html);
     };
 
-    Plugin.prototype.click = function(e) {
+    //modify
+    Plugin.prototype.tap = function(e) {
 
         e.stopPropagation();
         e.preventDefault();
