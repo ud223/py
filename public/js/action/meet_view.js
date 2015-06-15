@@ -2,7 +2,7 @@ $(document).ready(function() {
     //localStorage.clear(); return;
 
     var user_id = localStorage.getItem('user_id');
-
+    toShareUrl();
     validUser(user_id)
     loadThisMeet(user_id);
     loadProposerInfo(user_id);
@@ -13,12 +13,32 @@ $(document).ready(function() {
     initBtnJoin(user_id);
 })
 
-//function switchSharingBds(){
-//    $('#sharing-bds').show();
-//    $('#sharing-bds').tap(function(){
-//        $('#sharing-bds').hide();
-//    });
-//}
+function toShareUrl() {
+    var url = location.href;
+
+    var strUrl = url.split("#");
+
+    if (strUrl.length > 1) {
+        location.href = strUrl[1];
+    }
+}
+
+function initBtnShare() {
+    $('.glyphicon-share').tap(function () {
+       shareMeet();
+    });
+}
+
+function shareMeet(user_id){
+    $('#sharing-bds').show();
+    $('#sharing-bds').tap(function(){
+        $('#sharing-bds').hide();
+    });
+
+    var share_url = window.location.href + "#/share/" + user_id +"/"+ meet_id;
+
+    location.href = share_url;
+}
 
 function validUser(user_id) {
     //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里

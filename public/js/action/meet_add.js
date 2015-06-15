@@ -14,8 +14,12 @@ $(document).ready(function() {
 })
 
 function initFootbar() {
-    $('#btn_home').parent().removeClass('selected');
+    $('#btn_home').removeClass('selected');
     $('#btn_add').addClass('selected');
+
+    $('#btn_home').tap(function() {
+        location.href = "/";
+    })
 }
 
 function initDate() {

@@ -752,7 +752,13 @@ textarea.inp-txt {
 .p3jnid button:active {
 	background: #4CBF4C;
 }
-
+.share-the-day {
+    position:absolute;
+    right:15px;
+    top:50%;
+    margin-top:-10px;
+    font-size:20px;
+}
 #btn_join, #btn_leave {
     display: none;
     right:15px;
