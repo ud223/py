@@ -23,10 +23,12 @@ function loadMeets(data, toUrl, day) {
 
             var meet_id = this.id;
 
-            if (meet_id == cur_meet_id) {
-                node.find('#let-join').show();
+            if (cur_meet_id) {
+                if (meet_id == cur_meet_id) {
+                    node.find('#let-join').show();
+                }
             }
-
+            
             var users = "";
             var url = "";
 
