@@ -9,7 +9,20 @@ $(document).ready(function() {
     initBack();
 
     initMeetType();
+
+    initDate();
 })
+
+function initDate() {
+    if (day) {
+        $('#day_'+day).addClass('selected');
+        $('#day_'+day).addClass('node');
+
+        var date =$('#day_'+day).attr('year') + '-'+  singleDateCheck($('#day_'+day).attr('month')) + '-' + singleDateCheck($('#day_'+day).attr('day'));
+
+        $('#selected_date').val(date);
+    }
+}
 
 function initSubmit() {
     $('#pge-cover-save').tap(function() {

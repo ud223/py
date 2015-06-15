@@ -230,6 +230,10 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function addMeetAction() {
         $this->_helper->layout->setLayout('detail');
+
+        $day = $this->getParam("day");
+
+        $this->view->day = $day;
     }
 
     public function viewMeetAction() {

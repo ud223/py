@@ -9,7 +9,7 @@
 <script src="<?php echo $this->jsPath("api/meet.js"); ?>"></script>
 <div class="mg-ttblk fixed" style="padding: 10px">
     <!-- 此处最多显示8个汉字 -->
-    <span class="tt" id="title">创建活动</span>
+    <span class="tt" id="title"></span>
     <span class="glyphicon glyphicon-chevron-left mg-ttblk-i left" id="pge-cover-back"></span>
 <!--    <span class="glyphicon glyphicon-ok mg-ttblk-i right" id="pge-cover-save"></span>-->
 </div>
@@ -82,6 +82,8 @@
     }
 </style>
 <script>
+    var day = '<?php echo $this->day ?>';
+
     $(document).ready(function(){
         var now = new Date();
         $('#calendar-check-time div').Calendar({
