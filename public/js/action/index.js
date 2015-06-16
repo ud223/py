@@ -70,9 +70,8 @@ function vaildUser() {
 }
 
 function loadUser(user_id) {
-    alert(0);
     var user = new User();
-    alert(1);
+
     user.load(user_id);
 }
 

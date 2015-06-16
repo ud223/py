@@ -1,9 +1,9 @@
 //加载某天聚会集合方法
 function getUserInfo(user_id) {
-    var url = '/api/meet/get';
+    var url = '/api/user/get';
 
     var  data = { 'user_id': user_id }
-    alert(user_id);
+
     $.ajax({
         url: url,
         dataType: 'json',
