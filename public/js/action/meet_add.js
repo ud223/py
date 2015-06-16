@@ -89,7 +89,7 @@ function initCalendarClick() {
         else {
             alert(1);
             $('#selected_date').val('');
-            $('#show_seletced_date').html("");
+            $('#show_seletced_date').html(" ");
         }
     })
 }
