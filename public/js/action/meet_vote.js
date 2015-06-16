@@ -165,7 +165,7 @@ function initBtnLeave(user_id) {
     if (users_id.indexOf(user_id) > -1)  {
         //if (user_id == proposer_id)
         //    return;
-
+        alert(1);
         $('#btn_leave').show();
 
         $('#btn_leave').tap(function() {
