@@ -87,9 +87,8 @@ function initCalendarClick() {
             $('#selected_date').val(date);
         }
         else {
-            alert(1);
             $('#selected_date').val('');
-            $('#show_seletced_date').html(" ");
+            $('#show_seletced_date').html("当前选择日期已过");
         }
     })
 }
