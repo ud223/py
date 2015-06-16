@@ -12,7 +12,9 @@ $(document).ready(function() {
     initBtnFriend();
     initBtnAdd();
     initBtnBack();
+    alert(5);
     initBtnShare();
+    alert(6);
 })
 
 function initBtnShare(user_id) {
