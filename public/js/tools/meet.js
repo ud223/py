@@ -14,9 +14,12 @@ function loadMeets(data, toUrl, day) {
         return;
     }
 
+    $('.selected').removeClass('selected');
+    $('#day_'+ day).addClass('selected');
+
     list.attr('day', day);
     list.addClass('node-list');
-    
+
     var meet_date = $('#day_' + day).attr('month') + "月" + day + "日";
 
     if (data.length > 0) {
