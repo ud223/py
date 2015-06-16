@@ -163,8 +163,8 @@ function initBtnCloseMeet(user_id) {
 //初始化离开按钮
 function initBtnLeave(user_id) {
     if (users_id.indexOf(user_id) > -1)  {
-        if (user_id == proposer_id)
-            return;
+        //if (user_id == proposer_id)
+        //    return;
 
         $('#btn_leave').show();
 
@@ -232,7 +232,7 @@ function validDateRange() {
 
 function loadProposerInfo(user_id) {
     if (proposer_id != user_id) {
-        $('#proposer_info').show();
+        //$('#proposer_info').show();
 
         $('#nickname').html(nickname);
         $('#headimgurl').attr("src", headimgurl);

@@ -126,7 +126,7 @@ function afterJoin(data, msg) {
 
 function loadProposerInfo(user_id) {
     if (proposer_id != user_id) {
-        $('#proposer_info').show();
+        //$('#proposer_info').show();
 
         $('#nickname').html(nickname);
         $('#headimgurl').attr("src", headimgurl);
