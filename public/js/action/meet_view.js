@@ -92,8 +92,8 @@ function initBtnCloseMeet(user_id) {
 //初始化加入按钮
 function initBtnJoin(user_id) {
     if (users_id.indexOf(user_id) > -1)  {
-        if (user_id == proposer_id)
-            return;
+        //if (user_id == proposer_id)
+        //    return;
 
         $('#btn_leave').show();
 
