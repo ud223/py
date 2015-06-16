@@ -116,7 +116,7 @@ var User = function () {
     }
 
     obj.load = function(user_id) {
-        loadUser(user_id);
+        getUserInfo(user_id);
     }
 
     return obj;

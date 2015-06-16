@@ -1,5 +1,5 @@
 //加载某天聚会集合方法
-function loadUser(user_id) {
+function getUserInfo(user_id) {
     var url = '/api/meet/get';
 
     var  data = { 'user_id': user_id }
