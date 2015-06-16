@@ -11,7 +11,14 @@ function loadMeets(data, toUrl, day) {
     list.attr('day', day);
     list.addClass('node-list');
 
-    var meet_date = $('#day_'+ day).attr('month')+ "月" + day + "日 活动" ;
+    var meet_date = $('#day_'+ day).attr('month')+ "月" + day + "日" ;
+
+    if (data.length > 0) {
+        meet_date = meet_date + " 活动";
+    }
+    else {
+        meet_date = meet_date + " 无活动安排";
+    }
 
     list.find('.meet_date').html(meet_date);
 
