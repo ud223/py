@@ -182,7 +182,7 @@ textarea.inp-txt {
 	color: #aaa;
 }
 .transparent {
-	background: none transparent;
+	background: none transparent !important;
 }
 .big-box {
 	margin: 15px;
@@ -790,3 +790,30 @@ textarea.inp-txt {
     /*width:auto !important;*/
     /*line-height:normal;*/
 /*}*/
+
+.miowobtn {
+    height:50px;
+    line-height:50px;
+    color:#FFF;
+    width:50px;
+    display:inline-block;
+    background:#4CBF4C;
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    font-size:32px;
+    font-weight:bold;
+    border:none;
+    padding:0;
+    margin:0;
+    margin-left:-25px;
+    top:auto;
+    font-family: arial;
+    border-radius:100px;
+}
+.cbook-title-x1 {
+    text-align:center;
+    padding:20px 15px 5px 15px;
+    margin:0;
+    font-size:24px;
+}
