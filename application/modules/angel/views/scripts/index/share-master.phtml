@@ -104,6 +104,8 @@
             localStorage.setItem('schedule_user_id', proposer_id);
 
             getSchedule();
+            //初始化过期日历样式
+            initPassCalendar(cur_date.getFullYear(), cur_date.getMonth() + 1);
         }
     });
 </script>

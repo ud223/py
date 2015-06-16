@@ -8,9 +8,6 @@ $(document).ready(function() {
         switchSharingBds();
     }
 
-    //初始化过期日历样式
-    initPassCalendar(cur_date.getFullYear(), cur_date.getMonth() + 1);
-    alert(4);
     //初始化按钮事件
     initBtnHome();
     initBtnFriend();
@@ -22,25 +19,20 @@ function initPassCalendar(year, month) {
     var d = new Date();
 
     if (year < d.getFullYear()) {
-        alert(1);
         for (i = 1; i < 32; i++) {
             addPassStyel(i);
         }
     }
     else if (year == d.getFullYear() && month < d.getMonth() + 1) {
-        alert(2);
         for (i = 1; i < 32; i++) {
             addPassStyel(i);
         }
     }
     else if (year == d.getFullYear() && month == d.getMonth() + 1) {
-        alert(3);
-        alert(d.getDate());
         for (i = 1; i < d.getDate(); i++) {
             addPassStyel(i);
         }
     }
-    alert(3);
 }
 
 function addPassStyel(day) {
