@@ -98,9 +98,11 @@
             $('#checked-time-solid span').addClass('animated swing');
 
             if (chooseDate < now) {
+                alert(1);
                 $('#checked-time-solid span').html('活动日期不能小于今天');
             }
             else {
+                alert(2);
                 $('#checked-time-solid span').html('活动将开始于：' + event.month.valueOf() + '月' + event.day.valueOf() + '日');
             }
 
