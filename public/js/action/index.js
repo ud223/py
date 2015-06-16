@@ -113,7 +113,7 @@ function initBtnPending() {
 
 function initPassCalendar(year, month) {
     var d = new Date();
-
+    alert(1);
     if (year < d.getFullYear()) {
         for (i = 1; i < 32; i++) {
             addPassStyel(i);
