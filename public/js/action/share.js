@@ -12,7 +12,30 @@ $(document).ready(function() {
     initBtnFriend();
     initBtnAdd();
     initBtnBack();
+    initBtnShare();
 })
+
+function initBtnShare(user_id) {
+    $('.glyphicon-share').tap(function () {
+        shareMeet(user_id);
+    });
+}
+
+function shareMeet(user_id){
+    $('#sharing-bds').show();
+    $('#sharing-bds').tap(function(){
+        $('#sharing-bds').hide();
+    });
+
+    var share_param = "#/share/" + user_id +"/"+ meet_id;
+    var share_url = window.location.href
+
+    if (share_url.indexOf(share_param) < 0) {
+        share_url = share_url + share_param;
+    }
+
+    location.href = share_url;
+}
 
 function initPassCalendar(year, month) {
     var d = new Date();
