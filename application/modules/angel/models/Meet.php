@@ -98,6 +98,15 @@ class Angel_Model_Meet extends Angel_Model_AbstractModel {
         return $result;
     }
 
+    //获取某天日程安排集合
+    public function getNotAcceptScheduleByDate($user_id, $date) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('$options_date')->all($date)->field('users_id')->all($user_id)->field('status')->equals('1')->sort("created_at", 1);
+
+        $result = $query ->getQuery()->execute();
+
+        return $result;
+    }
+
     public function getPendingMeets($user_id) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)->field('users_id')->all($user_id)->field('selected_date')->equals("false")->field('status')->equals('1')->sort("created_at", 1);
 

@@ -43,8 +43,7 @@ class Zend_Log
      */
     protected $_priorities = array();
 
-    /**
-     * @var array of Zend_Log_Writer_Abstract
+    /**-
      */
     protected $_writers = array();
 

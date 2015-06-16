@@ -28,7 +28,7 @@ function loadMeets(data, toUrl, day) {
                     node.find('#let-join').show();
                 }
             }
-            
+
             var users = "";
             var url = "";
 
