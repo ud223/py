@@ -22,9 +22,11 @@ function loadMeets(data, toUrl, day) {
             node.find('.mg-listc-btt').html(this.meet_text);
 
             var meet_id = this.id;
-
+            alert(cur_meet_id);
             if (cur_meet_id) {
+                alert(meet_id);
                 if (meet_id == cur_meet_id) {
+                    alert(1);
                     node.find('#let-join').show();
                 }
             }
