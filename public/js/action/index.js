@@ -64,6 +64,15 @@ function vaildUser() {
     if (!user_id) {
         wx_Login(window.location.href);
     }
+    else {
+        loadUser(user_id);
+    }
+}
+
+function loadUser(user_id) {
+    var user = new User();
+
+    user.load(user_id);
 }
 
 function loadSchedule(user_id) {
@@ -180,6 +189,8 @@ function initCalendarClick(id, year, month, day) {
 function loadUserInfo(data) {
     headimgurl = data.headimgurl;
     nickname = data.nickname;
+
+    document.title = nickname + "的日程安排";
 }
 
 function queryPendingMeet(user_id) {
