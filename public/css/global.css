@@ -777,6 +777,10 @@ textarea.inp-txt {
     margin-top:-10px;
     font-size:20px;
 }
+
+.bak-tlable {
+    margin-left:15px;
+}
 /*#btn_join, #btn_leave {*/
     /*display: none;*/
     /*right:15px;*/
