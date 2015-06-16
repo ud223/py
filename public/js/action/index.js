@@ -33,7 +33,7 @@ function loadCalendar() {
     }).on('changeDay', function(event) {
         var load_date = event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf();
 
-        $('#jijj').html(load_date);
+        //$('#jijj').html(load_date);
 
         //$('.selected').removeClass('selected');
         //$('#day_'+ event.day.valueOf()).addClass('selected');
