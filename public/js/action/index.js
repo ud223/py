@@ -1,16 +1,18 @@
 $(document).ready(function() {
     var now = new Date();
-
+    alert(0);
     vaildUser();
+    alert(1);
     //加载日历
     loadCalendar();
-
+    alert(2);
     if (share_id) {
         localStorage.setItem('share_id', share_id);
     }
+    alert(3);
     //初始化当前年月日到标题文本框
     $('#jijj').html(now.getMonth() + 1 + "月-" + now.getFullYear() + "年");
-
+    alert(4);
     //初始化过期日历样式
     initPassCalendar(now.getFullYear(), now.getMonth() + 1);
     //加载日程安排
