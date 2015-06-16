@@ -328,7 +328,10 @@ textarea.inp-txt {
 	color: rgba(0, 0, 0, .6);
 }
 .calendar-td.selected {
-	background: #F0F0F0;
+	background: #444;
+}
+.calendar-td.selected * {
+    color:#FFF;
 }
 /* calendar (end) */
 
@@ -376,10 +379,11 @@ textarea.inp-txt {
 	margin-top:15px;
 }
 .meet_date {
-    padding:15px;
+    padding:5px;
     margin:0;
+    font-size:10px;
     text-align:center;
-    border-bottom:1px solid #e2e2e2;
+    border-bottom:1px solid #444;
 }
 .rowbtn-wp {
 	padding: 15px;
@@ -406,9 +410,9 @@ textarea.inp-txt {
     outline: none !important;
 }
 
-.rowbtn:active {
-	background: #444;
-}
+/*.rowbtn:active {*/
+	/*background: #444;*/
+/*}*/
 .rowbtn * {
 	color: #fff;
 }
@@ -441,7 +445,8 @@ textarea.inp-txt {
 .mg-listc {
 	/*display: none;*/
 	
-	background: #f0f0f0;
+	background: #333;
+    color:#FFF;
 	padding: 0;
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 }
@@ -455,7 +460,7 @@ textarea.inp-txt {
 
 .mg-listc-blk {
 	background: transparent;
-	border-bottom: 1px solid #e4e4e4;
+	border-bottom: 1px solid #444;
 	display: block;
 	-webkit-tap-highlight-color: red;
 }
@@ -463,12 +468,11 @@ textarea.inp-txt {
 	background: rgba(0, 0, 0, .05);
 }
 .mg-listc-ni {
-	border-left: 1px solid rgba(0, 0, 0, .06);
-	margin-left: 30px;
-	padding: 0 30px 0 15px;
+	border-left: 5px solid #ffe240;
+	padding: 0 30px 0 0;
 }
 .mg-listc-pd {
-	padding: 15px;
+	padding: 10px 15px;
 }
 .mg-listc-pol {
 	text-align: center;
