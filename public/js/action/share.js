@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var now = new Date();
     var user_id = localStorage.getItem('user_id');
 
     validUser(user_id);
@@ -7,12 +8,34 @@ $(document).ready(function() {
         switchSharingBds();
     }
 
+    //初始化过期日历样式
+    initPassCalendar(now.getFullYear(), now.getMonth() + 1);
     //初始化按钮事件
     initBtnHome();
     initBtnFriend();
     initBtnAdd();
     initBtnBack();
 })
+
+function initPassCalendar(year, month) {
+    var d = new Date();
+
+    if (year < d.getFullYear()) {
+        for (i = 1; i < 32; i++) {
+            addPassStyel(i);
+        }
+    }
+    else if (year == d.getFullYear() && month < d.getMonth() + 1) {
+        for (i = 1; i < 32; i++) {
+            addPassStyel(i);
+        }
+    }
+    else if (year == d.getFullYear() && month == d.getMonth() + 1) {
+        for (i = 1; i < d.getDate(); i++) {
+            addPassStyel(i);
+        }
+    }
+}
 
 function initBtnHome() {
     $(".glyphicon-home").tap(function () {
