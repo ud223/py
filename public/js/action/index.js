@@ -18,7 +18,7 @@ $(document).ready(function() {
     //加载日程安排
     loadSchedule();
     //初始化按钮事件
-    initBtnHome();
+    //initBtnHome();
     initBtnFriend();
     initBtnAdd();
     initBtnShare();
