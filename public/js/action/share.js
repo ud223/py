@@ -13,7 +13,7 @@ $(document).ready(function() {
     initBtnAdd();
     initBtnBack();
     alert(5);
-    initBtnShare();
+    initBtnShare(user_id);
     alert(6);
 })
 
