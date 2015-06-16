@@ -191,6 +191,7 @@ function loadUserInfo(data) {
     nickname = data.nickname;
 
     document.title = nickname + "的日程安排";
+    $('#share-headimg').attr('src', headimgurl);
 }
 
 function queryPendingMeet(user_id) {
