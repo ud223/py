@@ -375,6 +375,12 @@ textarea.inp-txt {
 .gamerbod.nmt {
 	margin-top:15px;
 }
+.meet_date {
+    padding:15px;
+    margin:0;
+    text-align:center;
+    border-bottom:1px solid #e2e2e2;
+}
 .rowbtn-wp {
 	padding: 15px;
 }
