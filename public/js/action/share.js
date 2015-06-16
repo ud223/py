@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var cur_date = new Date();
     var user_id = localStorage.getItem('user_id');
 
     validUser(user_id);
@@ -29,9 +28,7 @@ function initPassCalendar(year, month) {
         }
     }
     else if (year == d.getFullYear() && month == d.getMonth() + 1) {
-        alert('aa')
         for (i = 1; i < d.getDate(); i++) {
-            alert(i);
             addPassStyel(i);
         }
     }
@@ -39,7 +36,7 @@ function initPassCalendar(year, month) {
 
 function addPassStyel(day) {
     var d = $('#day_'+ day);
-    alert(day);
+
     if (d) {
         $('#day_'+ day).addClass('past');
     }
