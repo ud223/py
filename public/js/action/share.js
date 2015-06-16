@@ -37,7 +37,7 @@ function initPassCalendar(year, month) {
 
 function addPassStyel(day) {
     var d = $('#day_'+ day);
-
+    alert(day);
     if (d) {
         $('#day_'+ day).addClass('past');
     }
