@@ -773,12 +773,12 @@ textarea.inp-txt {
     margin-top:-10px;
     font-size:20px;
 }
-#btn_join, #btn_leave {
-    display: none;
-    right:15px;
-    top:50%;
-    margin-top:-18px;
-    position:absolute;
-    width:auto !important;
-    line-height:normal;
-}
+/*#btn_join, #btn_leave {*/
+    /*display: none;*/
+    /*right:15px;*/
+    /*top:50%;*/
+    /*margin-top:-18px;*/
+    /*position:absolute;*/
+    /*width:auto !important;*/
+    /*line-height:normal;*/
+/*}*/
