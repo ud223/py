@@ -73,13 +73,18 @@ function initMeetType() {
 
 function initCalendarClick() {
     $('.calendar-td').tap(function() {
+        var d1 =  new Date(date);
+        var d2 = new Date();
+
+        if (d1 < d2) {
+            $('.node').removeClass('selected');
+            $('.node').removeClass('node');
+            $('#day_'+ $(this).attr('day')).addClass('selected');
+            $('#day_'+ $(this).attr('day')).addClass('node');
+        }
+
         var date = $(this).attr('year') + '-'+  singleDateCheck($(this).attr('month')) + '-' + singleDateCheck($(this).attr('day'));
 
         $('#selected_date').val(date);
-
-        $('.node').removeClass('selected');
-        $('.node').removeClass('node');
-        $('#day_'+ $(this).attr('day')).addClass('selected');
-        $('#day_'+ $(this).attr('day')).addClass('node');
     })
 }
