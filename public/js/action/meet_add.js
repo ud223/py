@@ -86,5 +86,9 @@ function initCalendarClick() {
 
             $('#selected_date').val(date);
         }
+        else {
+            $('#selected_date').val('');
+            $('#checked-time-solid span').html('');
+        }
     })
 }
