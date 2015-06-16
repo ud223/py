@@ -27,7 +27,7 @@ function loadMeets(data, toUrl, day) {
                 alert(meet_id);
                 if (meet_id == cur_meet_id) {
                     alert(1);
-                    node.find('#let-join').show();
+                    node.find('.let-join').show();
                 }
             }
 
