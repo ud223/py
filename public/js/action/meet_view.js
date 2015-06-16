@@ -72,7 +72,6 @@ function initBtnWord(user_id) {
 }
 //初始化后退按钮
 function initBtnBack(user_id) {
-    alert(1);
     $('#pge-cover-back').html("返回"+ nickname +"的云步客");
 
     $('#pge-cover-back').tap(function() {

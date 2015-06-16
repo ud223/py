@@ -9,7 +9,7 @@ $(document).ready(function() {
 
     initBtnShare(user_id);
     initBtnWord(user_id);
-    initBtnBack();
+    initBtnBack(user_id);
     initBtnCloseMeet(user_id);
     initBtnLeave(user_id);
     initVoteSubmit(user_id);
@@ -142,10 +142,18 @@ function initBtnWord(user_id) {
     });
 }
 //初始化后退按钮
-function initBtnBack() {
+function initBtnBack(user_id) {
+    $('#pge-cover-back').html("返回"+ nickname +"的云步客");
+
     $('#pge-cover-back').tap(function() {
         localStorage.setItem('share_id', '');
-        location.href = "/";
+
+        if (user_id == proposer_id) {
+            location.href = "/";
+        }
+        else {
+            location.href = "/share/"+ proposer_id;
+        }
     })
 }
 //初始化关闭活动按钮
