@@ -3,9 +3,9 @@ $(document).ready(function() {
 
     validUser(user_id);
 
-    if (user_id == proposer_id) {
-        switchSharingBds();
-    }
+    //if (user_id == proposer_id) {
+    //    switchSharingBds();
+    //}
 
     //初始化按钮事件
     initBtnHome();
