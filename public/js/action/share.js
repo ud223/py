@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var now = new Date();
+    var cur_date = new Date();
     var user_id = localStorage.getItem('user_id');
 
     validUser(user_id);
@@ -9,7 +9,7 @@ $(document).ready(function() {
     }
 
     //初始化过期日历样式
-    initPassCalendar(now.getFullYear(), now.getMonth() + 1);
+    initPassCalendar(cur_date.getFullYear(), cur_date.getMonth() + 1);
     //初始化按钮事件
     initBtnHome();
     initBtnFriend();
