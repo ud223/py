@@ -19,25 +19,36 @@ $(document).ready(function() {
 })
 
 function initPassCalendar(year, month) {
-    alert(1);
     var d = new Date();
-    alert(2);
+
     if (year < d.getFullYear()) {
+        alert(1);
         for (i = 1; i < 32; i++) {
             addPassStyel(i);
         }
     }
     else if (year == d.getFullYear() && month < d.getMonth() + 1) {
+        alert(2);
         for (i = 1; i < 32; i++) {
             addPassStyel(i);
         }
     }
     else if (year == d.getFullYear() && month == d.getMonth() + 1) {
+        alert(3);
+        alert(d.getDate());
         for (i = 1; i < d.getDate(); i++) {
             addPassStyel(i);
         }
     }
     alert(3);
+}
+
+function addPassStyel(day) {
+    var d = $('#day_'+ day);
+
+    if (d) {
+        $('#day_'+ day).addClass('past');
+    }
 }
 
 function initBtnHome() {
