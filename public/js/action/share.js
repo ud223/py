@@ -13,11 +13,11 @@ $(document).ready(function() {
     initBtnAdd();
     initBtnBack();
     alert(5);
-    initBtnShare(user_id);
+    initBtnShareMeet(user_id);
     alert(6);
 })
 
-function initBtnShare(user_id) {
+function initBtnShareMeet(user_id) {
     alert(0);
     $('.glyphicon-share').tap(function () {
         shareMeet(user_id);
