@@ -92,11 +92,7 @@
             'past_date' : new Date().valueOf()
         }).on('changeDay', function(event) {
             var strDate = event.year.valueOf() + '-' + singleDateCheck(event.month.valueOf()) + '-' + singleDateCheck(event.day.valueOf());
-<<<<<<< HEAD
-//            alert(strDate);
-=======
-            alert(strDate);
->>>>>>> f415627d23ce9796736048091d56cc0dd55134b1
+
             var chooseDate = new Date(strDate);
 
             $('#checked-time-solid span').addClass('animated swing');
