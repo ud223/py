@@ -91,8 +91,17 @@
             'date' : now,
             'past_date' : new Date().valueOf()
         }).on('changeDay', function(event) {
+            var chooseDate = new Date(event.year.valueOf() + '-' +event.month.valueOf() + '-' + event.day.valueOf());
+
             $('#checked-time-solid span').addClass('animated swing');
-            $('#checked-time-solid span').html('活动将开始于：' + event.month.valueOf() + '月' + event.day.valueOf() + '日');
+
+            if (chooseDate < now) {
+                $('#checked-time-solid span').html('活动日期不能小于今天');
+            }
+            else {
+                $('#checked-time-solid span').html('活动将开始于：' + event.month.valueOf() + '月' + event.day.valueOf() + '日');
+            }
+
             $('#checked-time-solid span').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
                 $(this).removeClass('animated').removeClass('swing');
             });
