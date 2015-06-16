@@ -29,7 +29,9 @@ function initPassCalendar(year, month) {
         }
     }
     else if (year == d.getFullYear() && month == d.getMonth() + 1) {
+        alert('aa')
         for (i = 1; i < d.getDate(); i++) {
+            alert(i);
             addPassStyel(i);
         }
     }
