@@ -631,6 +631,6 @@ class Angel_ApiController extends Angel_Controller_Action {
             $message = "用户信息获取失败!!";
         }
 
-        $this->_helper->json(array('data' => count($result), 'code' => $code));
+        $this->_helper->json(array('data' => $result, 'code' => $code));
     }
 } 
