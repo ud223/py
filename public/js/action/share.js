@@ -11,6 +11,7 @@ $(document).ready(function() {
     initBtnHome();
     initBtnFriend();
     initBtnAdd();
+    initBtnBack();
 })
 
 function initBtnHome() {
@@ -48,6 +49,14 @@ function initBtnShare() {
         var user_id = localStorage.getItem('user_id');
 
         location.href = '/share/'+ user_id;
+    })
+}
+
+//初始化后退按钮
+function initBtnBack() {
+    $('#pge-cover-back').tap(function() {
+        localStorage.setItem('share_id', '');
+        location.href = "/";
     })
 }
 

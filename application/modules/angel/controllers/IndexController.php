@@ -229,11 +229,15 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function addMeetAction() {
-        $this->_helper->layout->setLayout('detail');
+//        $this->_helper->layout->setLayout('detail');
+
+        $day = $this->getParam("day");
+
+        $this->view->day = $day;
     }
 
     public function viewMeetAction() {
-        $this->_helper->layout->setLayout('detail');
+//        $this->_helper->layout->setLayout('detail');
 
         $meetModel = $this->getModel('meet');
         $userModel = $this->getModel('user');
@@ -269,11 +273,11 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function pendingMeetAction() {
-        $this->_helper->layout->setLayout('detail');
+//        $this->_helper->layout->setLayout('detail');
     }
 
     public function voteMeetAction() {
-        $this->_helper->layout->setLayout('detail');
+//        $this->_helper->layout->setLayout('detail');
 
         $meetModel = $this->getModel('meet');
         $voteModel = $this->getModel('vote');
@@ -370,9 +374,10 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function shareMasterAction() {
         $this->_helper->layout->setLayout('main');
         $userModel = $this->getModel('user');
+        $meetModel = $this->getModel('meet');
 
         $proposer_id = $this->getParam('id');
-//        $user_id = $this->getParam('userid');
+        $meet_id = $this->getParam('meetid');
 
         $users = $userModel->getUserByOpenId($proposer_id);
 
@@ -382,13 +387,28 @@ class Angel_IndexController extends Angel_Controller_Action {
             break;
         }
 
+        $meet = $meetModel->getById($meet_id);
+
+        if ($meet->selected_date == "false") {
+            foreach ($meet->options_date as $d) {
+                $date = $d;
+
+                break;
+            }
+        }
+        else {
+            $date = $meet->selected_date;
+        }
+
         $this->view->appid = $this->app_id;
         $this->view->proposer_id = $proposer_id;
         $this->view->nickname = $user->nickname;
         $this->view->headimgurl = $user->headimgurl;
-//        $this->view->user_id = $user_id;
+        $this->view->day = $meet->day;
+        $this->view->date = $date;
         $this->view->proposer_id = $proposer_id;
         $this->view->title = $user->nickname . '的日程安排';
+        $this->view->meet_id = $meet_id;
     }
 
     public function calendarVisitorAction() {

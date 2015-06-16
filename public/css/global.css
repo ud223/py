@@ -11,12 +11,19 @@ input[type="date"] {
 	background: #FFF;
 	border: 1px solid #E2E2E2;
 }
+.pad-10 {
+    padding:10px;
+}
+.pad-15 {
+    padding:15px;
+}
 .datepicker.datepicker-inline {
 	width: 100%;
 }
 .table-condensed {
 	width: 100%;
 }
+
 /* 主要的模块样式 */
 
 .row-duotab {
@@ -321,7 +328,10 @@ textarea.inp-txt {
 	color: rgba(0, 0, 0, .6);
 }
 .calendar-td.selected {
-	background: #F0F0F0;
+	background: #444;
+}
+.calendar-td.selected * {
+    color:#FFF;
 }
 /* calendar (end) */
 
@@ -333,14 +343,12 @@ textarea.inp-txt {
 .gamerbod .ssimg {
 	width: 40px;
 	height: 40px;
-	position: absolute;
-	left: 15px;
-	top: 15px;
 	display: inline-block;
+    float:left;
 }
 .gamerbod .rdcts {
 	float: left;
-	margin-left: 55px;
+	margin-left: 15px;
 	margin-right: 80px;
 }
 .gamerbod .rdcrs {
@@ -370,6 +378,13 @@ textarea.inp-txt {
 .gamerbod.nmt {
 	margin-top:15px;
 }
+.meet_date {
+    padding:5px;
+    margin:0;
+    font-size:10px;
+    text-align:center;
+    border-bottom:1px solid #444;
+}
 .rowbtn-wp {
 	padding: 15px;
 }
@@ -383,9 +398,21 @@ textarea.inp-txt {
 	border-radius: 5px;
 	outline: none !important;
 }
-.rowbtn:active {
-	background: #444;
+
+.rowbtn.red {
+   background: #FF4C34;
+    color: #fff;
+    display: block;
+    height: 36px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    outline: none !important;
 }
+
+/*.rowbtn:active {*/
+	/*background: #444;*/
+/*}*/
 .rowbtn * {
 	color: #fff;
 }
@@ -397,12 +424,13 @@ textarea.inp-txt {
 	line-height: 50px;
 	text-align: center;
 }
+
 .mg-ttblk .tt {
 	font-size: 16px;
 }
 .mg-ttblk-i {
 	display: inline-block;
-	height: 30px;
+	height: 50px;
 	width: 70px;
 	line-height: 50px;
 	position: absolute;
@@ -417,7 +445,8 @@ textarea.inp-txt {
 .mg-listc {
 	/*display: none;*/
 	
-	background: #f0f0f0;
+	background: #333;
+    color:#FFF;
 	padding: 0;
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
 }
@@ -431,7 +460,7 @@ textarea.inp-txt {
 
 .mg-listc-blk {
 	background: transparent;
-	border-bottom: 1px solid #e4e4e4;
+	border-bottom: 1px solid #444;
 	display: block;
 	-webkit-tap-highlight-color: red;
 }
@@ -439,12 +468,11 @@ textarea.inp-txt {
 	background: rgba(0, 0, 0, .05);
 }
 .mg-listc-ni {
-	border-left: 1px solid rgba(0, 0, 0, .06);
-	margin-left: 30px;
-	padding: 0 30px 0 15px;
+	border-left: 5px solid #ffe240;
+	padding: 0 30px 0 0;
 }
 .mg-listc-pd {
-	padding: 15px;
+	padding: 10px 15px;
 }
 .mg-listc-pol {
 	text-align: center;
@@ -646,13 +674,14 @@ textarea.inp-txt {
 	width: 100%;
 	height: 100%;
 	z-index: 21;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 }
 #sharing-bds img {
 	width: 100%;
 }
+
 #letmejoin,
 #letmeleave {
 	width: auto;
@@ -715,6 +744,14 @@ textarea.inp-txt {
 	display: inline-block;
 	padding: 0 10px;
 }
+.let-join {
+    background:orange;
+    color:#FFF;
+    font-size:10px;
+    padding:2px 5px;
+    border-radius:100px;
+    margin-top:5px;
+}
 .p3icej .itm {
 	float: left;
 	width: 50%;
@@ -733,3 +770,19 @@ textarea.inp-txt {
 .p3jnid button:active {
 	background: #4CBF4C;
 }
+.share-the-day {
+    position:absolute;
+    right:15px;
+    top:50%;
+    margin-top:-10px;
+    font-size:20px;
+}
+/*#btn_join, #btn_leave {*/
+    /*display: none;*/
+    /*right:15px;*/
+    /*top:50%;*/
+    /*margin-top:-18px;*/
+    /*position:absolute;*/
+    /*width:auto !important;*/
+    /*line-height:normal;*/
+/*}*/

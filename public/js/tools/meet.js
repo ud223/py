@@ -11,30 +11,23 @@ function loadMeets(data, toUrl, day) {
     list.attr('day', day);
     list.addClass('node-list');
 
-    if (data.length == 0) {
-        if (is_share) {
-            return;
-        }
+    var meet_date = $('#day_'+ day).attr('month')+ "月" + day + "日 活动" ;
 
-        var node = $('#meet_add_model').clone(true);
+    list.find('.meet_date').html(meet_date);
 
-        node.find('.mg-listc-btt').html("当天没有活动安排");
-
-        node.tap(function() {
-            location.href = "/meet/add";
-        });
-
-        list.append(node);
-
-        $('#day_'+ day).parent().after(list);
-    }
-    else {
+    if (data.length > 0) {
         $.each(data, function () {
             var node = $('#meet_model').clone(true);
 
             node.find('.mg-listc-btt').html(this.meet_text);
 
             var meet_id = this.id;
+
+            if (cur_meet_id) {
+                if (meet_id == cur_meet_id) {
+                    node.find('.let-join').show();
+                }
+            }
 
             var users = "";
             var url = "";
@@ -51,7 +44,10 @@ function loadMeets(data, toUrl, day) {
                 url = toUrl + "/" + meet_id;
             }
             else {
-                url = "/meet/view/"+ meet_id;
+                if (this.seleted == 1)
+                    url = "/meet/view/"+ meet_id;
+                else
+                    url = "/meet/vote/"+meet_id;
             }
 
             node.tap(function() {
@@ -63,6 +59,25 @@ function loadMeets(data, toUrl, day) {
 
         $('#day_'+ day).parent().after(list);
     }
+
+    if (is_share) {
+        return;
+    }
+
+    var node = $('#meet_add_model').clone(true);
+
+    //if (data.length == 0)
+    //    node.find('.mg-listc-btt').html("当天没有活动安排");
+    //else
+    //    node.find('.mg-listc-btt').html("当天新增活动安排");
+
+    node.tap(function() {
+        location.href = "/meet/add/"+ day;
+    });
+
+    list.append(node);
+
+    $('#day_'+ day).parent().after(list);
 }
 
 function meetLoad(data) {
@@ -79,7 +94,11 @@ function meetLoad(data) {
         $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
     }
 
-    $(document).find('#address').html(data.address);
+    if (data.address)
+        $(document).find('#address').html(data.address);
+    else
+        $(document).find('#address').html("暂无地址");
+
     $(document).find('#remark').html(data.remark);
 
     $(document).find('.busr-lst').html("");

@@ -19,15 +19,15 @@
 <body ontouchstart="">
     <?php echo $this->layout()->content; ?>
     <div id="footerbar">
-        <div class="itm selected">
+        <div class="itm selected" id="btn_home" style="width: 50%">
             <i class="glyphicon glyphicon-home"></i>
             <div class="botlin"></div>
         </div>
-        <div class="itm md">
-            <i class="glyphicon glyphicon-user"></i>
-            <div class="botlin"></div>
-        </div>
-        <div class="itm add-cal" id="btn_add">
+<!--        <div class="itm md">-->
+<!--            <i class="glyphicon glyphicon-user"></i>-->
+<!--            <div class="botlin"></div>-->
+<!--        </div>-->
+        <div class="itm add-cal" id="btn_add" style="width: 50%">
             <i class="glyphicon glyphicon-plus"></i>
             <div class="botlin"></div>
         </div>
@@ -36,6 +36,7 @@
     <div style="display: none">
         <div id="mg-listc" >
             <div class="mg-listc">
+                <p class="meet_date"><p>
                 <div id="meet-list">
 
                 </div>
@@ -44,34 +45,30 @@
         <div id="meet_model" class="mg-listc-blk">
             <div class="mg-listc-ni">
                 <div class='mg-listc-pd'>
-                    <i class="glyphicon glyphicon-time mg-listc-pol"></i>
-                    <!--<div class="mg-listc-nw">
-                        <span>早上 + 午餐时间</span>
-                        <span class="mg-listc-tme">5:00AM - 13:00PM</span>
-                    </div>  聚会：去东冲游泳+烧烤  -->
                     <div class="mg-listc-btt"></div>
                     <div class="mg-listc-usrs clearfix">
-<!--                        <span class="sli"><img src="https://d3ui957tjb5bqd.cloudfront.net/images/users/21/216/216361/avatar-75-75.jpg?1431794597"/></span>-->
-<!--                        <span class="sli"><img src="https://d3ui957tjb5bqd.cloudfront.net/images/users/78/785/785751/avatar-50-50.jpg?1429437610"/></span>-->
-<!--                        <span class="sli"><img src="https://d13yacurqjgara.cloudfront.net/users/11867/avatars/mini/95017d34c19948a322f660a5e4e6f6ae.jpg?1419025083"/></span>-->
                     </div>
                     <div class="glyphicon glyphicon-chevron-right mg-listc-rarr"></div>
+                    <span class="let-join" style="display: none">邀您参加</span>
                 </div>
             </div>
         </div>
         <div id="meet_add_model" class="mg-listc-blk">
-            <div class="mg-listc-ni">
-                <div class='mg-listc-pd'>
-                    <i class="glyphicon glyphicon-time mg-listc-pol"></i>
-                    <div class="mg-listc-btt"></div>
-                    <div class="mg-listc-usrs clearfix">
-                        点击新增
-                    </div>
-                    <div class="glyphicon glyphicon-chevron-right mg-listc-rarr"></div>
-                </div>
+            <div class="pad-15">
+                 <button class="rowbtn mg-listc-btt" >新活动</button>
+            </div>
+        </div>
+        <div id="word_model" class="itm words">
+            <div>
+                <img class="uxer" src="https://d3ui957tjb5bqd.cloudfront.net/images/users/78/785/785751/avatar-50-50.jpg?1429437610" />
+                <span class="uune"></span>
+                <span class="untme"></span>
+            </div>
+            <div class="ctxx">
             </div>
         </div>
     </div>
+    <script src="<?php echo $this->jsPath("global.js"); ?>"></script>
 </body>
 </html>
 

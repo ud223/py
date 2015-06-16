@@ -24,7 +24,6 @@
             <div class="rdcfs">
 
             </div>
-
         </div>
         <div class="clear"></div>
     </div>
@@ -47,7 +46,7 @@
         <i class="glyphicon glyphicon-send"></i> 分享我的日历
     </button>
     <div class="clear-5"></div>
-    <button class="rowbtn" id="pending">
+    <button class="rowbtn" id="pending" style="display: none">
         <i class="glyphicon glyphicon-pending" ></i> 查看未确定活动安排
     </button>
 </div>
@@ -59,4 +58,5 @@
     var nickname = '<?php echo $this->nickname ?>';
     var headimgurl = '<?php echo $this->headimgurl ?>';
     var is_share = false;
+    var cur_meet_id = false;
 </script>

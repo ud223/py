@@ -76,7 +76,7 @@
 //			click : $.proxy(this.click, this)
 //		});
 
-        this.calendar = $(template.replace("%msg_today%", this.msg_today)).appendTo(this.element).tap($.proxy(this.click, this));
+        this.calendar = $(template.replace("%msg_today%", this.msg_today)).appendTo(this.element).tap($.proxy(this.tap, this));
 
         this.live_date = new Date();
 
@@ -90,16 +90,16 @@
         this.yn = mon.getFullYear();
 
         if (this.component) {
-            this.component.on('click', $.proxy(this.show, this));
+            this.component.tap($.proxy(this.show, this));
         } else {
-            this.element.on('click', $.proxy(this.show, this));
+            this.element.tap($.proxy(this.show, this));
         }
 
         this.renderCalendar(now);
 
         var context = this;
 
-        $('#to-last-month').click(function(){
+        $('#to-last-month').tap(function(){
             context.update_date('prv');
             var prv = new Date(context.yp, context.mm, 1);
             context.live_date = prv;
@@ -116,7 +116,7 @@
             initPassCalendar(context.yn, context.mm + 1);
         });
 
-        $('#to-next-month').click(function(){
+        $('#to-next-month').tap(function(){
             context.update_date('nxt');
             var nxt = new Date(context.yn, context.mm, 1);
             context.live_date = nxt;
@@ -278,7 +278,8 @@
         this.calendar.find('.calendar-header').append(_html);
     };
 
-    Plugin.prototype.click = function(e) {
+    //modify
+    Plugin.prototype.tap = function(e) {
 
         e.stopPropagation();
         e.preventDefault();

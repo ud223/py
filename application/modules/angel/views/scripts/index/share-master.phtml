@@ -8,10 +8,18 @@
 <script src="<?php echo $this->jsPath("entity/calendar.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("entity/meet.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("entity/user.js"); ?>"></script>
-<div class="big-box gamerbod nmt" style="padding: 15px">
-    <div class="wp relative">
+<style>
+    #footerbar {
+    display:none !important;
+    }
+</style>
+<div class="mg-ttblk fixed" style="padding: 10px">
+    <!-- 此处最多显示8个汉字 -->
+    <span class="tt" id="title"></span>
+    <span class="glyphicon glyphicon-chevron-left mg-ttblk-i left" id="pge-cover-back"></span>
+</div>
+<div class="big-box gamerbod nmt" style="padding: 15px;margin-top:65px;">
         <img class="ssimg" style="float:left" src="<?php echo $this->headimgurl ?>" />
-        <div style="clear: both">
         <div class="rdcts">
             <div class="rdcrs">
                 <span><?php echo $this->nickname ?></span>
@@ -20,7 +28,6 @@
             </div>
         </div>
         <div class="clear"></div>
-    </div>
 </div>
 <div class="big-box">
     <div class="mg-ttblk" style="background:#333;color:#FFF;border-radius:5px 5px 0 0;">
@@ -52,12 +59,13 @@
     document.title = '<?php echo $this->nickname?>' + "日程安排";
     var appid = '<?php echo $this->appid ?>';
     var proposer_id = '<?php echo $this->proposer_id ?>';
-//    var open_id = '<?php //echo $this->user_id ?>//';
-    var proposer_id = '<?php echo $this->proposer_id ?>';
+    var meet_day = '<?php echo $this->day ?>';
+    var curDate = '<?php echo $this->date ?>';
+    var cur_meet_id = '<?php echo $this->meet_id ?>';
     var is_share = true;
     $(document).ready(function(){
-
         var now = new Date();
+
         $('#real-calendar div').Calendar({
             'weekStart' : 1,
             'date' : now
@@ -66,7 +74,8 @@
 
             $('#jijj').html(load_date);
 
-            $('day_'+ event.year.valueOf()).addClass('selected');
+            $('.selected').removeClass('selected');
+            $('#day_'+ event.day.valueOf()).addClass('selected');
 
             var meetModel = new Meet();
 
@@ -74,8 +83,18 @@
 
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
-        //测试
-//        localStorage.clear();
+
+        if (meet_day) {
+            $('#day_'+ meet_day).addClass('selected');
+
+            var meetModel = new Meet();
+
+            var user_id = localStorage.getItem('user_id');
+            var strDate = curDate.split('-');
+
+            meetModel.Query(proposer_id, strDate[0], numDateCheck(strDate[1]),  numDateCheck(strDate[2]));
+        }
+
         var user_id = localStorage.getItem('user_id');
 
         if (!user_id) {

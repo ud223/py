@@ -1,6 +1,12 @@
 function loadWords(data) {
     $('#word-list').html('');
 
+    if (data.length == 0) {
+        $('#test-tt').html('暂无留言');
+
+        return;
+    }
+
     for (i = 0; i < data.length; i++) {
         var node = $('#word_model').clone(true);
 
