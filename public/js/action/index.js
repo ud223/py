@@ -1,5 +1,7 @@
 $(document).ready(function() {
     var now = new Date();
+    //分享跳转
+    hrefUrl();
 
     vaildUser();
     //加载日历
@@ -23,6 +25,16 @@ $(document).ready(function() {
     initBtnPending();
     queryPendingMeet();
 })
+
+function hrefUrl() {
+    var url = window.location.href;
+
+    var urls = url.split("#");
+
+    if (urls.length > 1) {
+        location.href = urls[1];
+    }
+}
 
 function loadCalendar() {
     var now = new Date();
@@ -99,9 +111,21 @@ function initBtnAdd() {
 
 function initBtnShare() {
     $("#share").tap(function () {
+        $('#sharing-bds').show();
+        $('#sharing-bds').tap(function(){
+            $('#sharing-bds').hide();
+        });
+
         var user_id = localStorage.getItem('user_id');
 
-        location.href = '/share/'+ user_id;
+        var url = window.location.href;
+        var param = '#/share/'+ user_id;
+
+        if (url.indexOf(param) < 0) {
+            url = url + param;
+        }
+
+        location.href = url;
     })
 }
 
