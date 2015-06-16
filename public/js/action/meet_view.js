@@ -9,7 +9,7 @@ $(document).ready(function() {
 
     initBtnShare(user_id);
     initBtnWord(user_id);
-    initBtnBack();
+    initBtnBack(user_id);
     initBtnCloseMeet(user_id);
     initBtnJoin(user_id);
 })
@@ -71,7 +71,7 @@ function initBtnWord(user_id) {
     });
 }
 //初始化后退按钮
-function initBtnBack() {
+function initBtnBack(user_id) {
     $('#pge-cover-back').html("返回"+ nickname +"的云步客");
 
     $('#pge-cover-back').tap(function() {
