@@ -12,20 +12,16 @@ $(document).ready(function() {
     initBtnFriend();
     initBtnAdd();
     initBtnBack();
-    alert(5);
     initBtnShareMeet(user_id);
-    alert(6);
 })
 
 function initBtnShareMeet(user_id) {
-    alert(0);
     $('.glyphicon-share').tap(function () {
         shareMeet(user_id);
     });
 }
 
 function shareMeet(user_id){
-    alert(1);
     $('#sharing-bds').show();
     $('#sharing-bds').tap(function(){
         $('#sharing-bds').hide();
