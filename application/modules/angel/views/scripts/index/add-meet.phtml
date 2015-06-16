@@ -7,11 +7,11 @@
 <script src="<?php echo $this->jsPath("entity/meet.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("action/meet_add.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("api/meet.js"); ?>"></script>
-<div class="mg-ttblk fixed">
-    <span class="tt">创建新活动</span>
+<div class="mg-ttblk fixed" style="padding: 10px">
+    <!-- 此处最多显示8个汉字 -->
+    <span class="tt" id="title"></span>
     <span class="glyphicon glyphicon-chevron-left mg-ttblk-i left" id="pge-cover-back"></span>
 <!--    <span class="glyphicon glyphicon-ok mg-ttblk-i right" id="pge-cover-save"></span>-->
-    <button class="rowbtn mg-ttblk-i right" id="pge-cover-save">保存</button>
 </div>
 <div class="big-box" style="margin-top:65px;">
     <div class="wp">
@@ -29,7 +29,6 @@
             </ul>
             <div style="padding:10px 10px;border:1px solid #E2E2E2;border-top:none;">
                 <div id="add-c-tab-1" class="selected tab-cont">
-                    <p id="checked-time-solid"><span>请在下方选择活动时间</span></p>
                     <div class="mg-ttblk">
                         <span class="tt" id="jijj">十二月 2015</span>
                         <span class="glyphicon glyphicon-menu-left mg-ttblk-i left" id="to-last-month"></span>
@@ -38,6 +37,7 @@
                     <div id="calendar-check-time">
                         <div></div>
                     </div>
+                    <p id="checked-time-solid"><span id="show_seletced_date">请在上方选择活动时间</span></p>
                 </div>
                 <div id="add-c-tab-2" class="tab-cont">
                     <p id="checked-time-range">
@@ -63,6 +63,9 @@
 <!--            <p class="inp-tt">活动描述</p>-->
             <textarea id="remark" style="display: none" class="inp-txt full"></textarea>
 <!--        </div>-->
+        <div class="glacker p33comts">
+            <button class="rowbtn"  id="pge-cover-save">保存</button>
+        </div>
     </div>
 </div>
 <input type="hidden" id="selected_date">
@@ -74,11 +77,13 @@
     描述：footerbar 不在该页显示，所以要加入这个style隐藏footerbar
 -->
 <style>
-    #footerbar {
-        display:none !important;
-    }
+    /*#footerbar {*/
+        /*display:none !important;*/
+    /*}*/
 </style>
 <script>
+    var day = '<?php echo $this->day ?>';
+
     $(document).ready(function(){
         var now = new Date();
         $('#calendar-check-time div').Calendar({
@@ -86,13 +91,25 @@
             'date' : now,
             'past_date' : new Date().valueOf()
         }).on('changeDay', function(event) {
+            var strDate = event.year.valueOf() + '-' + singleDateCheck(event.month.valueOf()) + '-' + singleDateCheck(event.day.valueOf());
+//            alert(strDate);
+            var chooseDate = new Date(strDate);
+
             $('#checked-time-solid span').addClass('animated swing');
-            $('#checked-time-solid span').html('活动将开始于：' + event.month.valueOf() + '月' + event.day.valueOf() + '日');
+
+            if (chooseDate < now) {
+                $('#checked-time-solid span').html('活动日期不能小于今天');
+            }
+            else {
+                $('#checked-time-solid span').html('活动将开始于：' + event.month.valueOf() + '月' + event.day.valueOf() + '日');
+            }
+
             $('#checked-time-solid span').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
                 $(this).removeClass('animated').removeClass('swing');
             });
         });
 
         initCalendarClick();
+        initDate();
     });
 </script>
