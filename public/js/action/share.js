@@ -1,14 +1,13 @@
 $(document).ready(function() {
-    alert(0);
     var cur_date = new Date();
     var user_id = localStorage.getItem('user_id');
-    alert(1);
+
     validUser(user_id);
-    alert(2);
+
     if (user_id == proposer_id) {
         switchSharingBds();
     }
-    alert(3);
+
     //初始化过期日历样式
     initPassCalendar(cur_date.getFullYear(), cur_date.getMonth() + 1);
     alert(4);
@@ -20,8 +19,9 @@ $(document).ready(function() {
 })
 
 function initPassCalendar(year, month) {
+    alert(1);
     var d = new Date();
-
+    alert(2);
     if (year < d.getFullYear()) {
         for (i = 1; i < 32; i++) {
             addPassStyel(i);
@@ -37,6 +37,7 @@ function initPassCalendar(year, month) {
             addPassStyel(i);
         }
     }
+    alert(3);
 }
 
 function initBtnHome() {
