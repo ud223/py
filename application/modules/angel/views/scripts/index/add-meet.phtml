@@ -91,7 +91,7 @@
             'date' : now,
             'past_date' : new Date().valueOf()
         }).on('changeDay', function(event) {
-            var strDate = event.year.valueOf() + '-' +event.month.valueOf() + '-' + event.day.valueOf();
+            var strDate = event.year.valueOf() + '-' + singleDateCheck(event.month.valueOf()) + '-' + singleDateCheck(event.day.valueOf());
             alert(strDate);
             var chooseDate = new Date(strDate);
 
