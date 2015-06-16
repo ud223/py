@@ -36,7 +36,12 @@ function shareMeet(user_id){
         $('#sharing-bds').hide();
     });
 
-    var share_url = window.location.href + "#/share/" + user_id +"/"+ meet_id;
+    var share_param = "#/share/" + user_id +"/"+ meet_id;
+    var share_url = window.location.href
+
+    if (share_url.indexOf(share_param) < 0) {
+        share_url = share_url + share_param;
+    }
 
     location.href = share_url;
 }
