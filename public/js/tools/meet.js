@@ -1,4 +1,5 @@
 function loadMeets(data, toUrl, day) {
+    var today = new Date();
     var list = $('#mg-listc').find('.mg-listc').clone(true);
     var old_day = $(document).find('.node-list').attr('day');
 
@@ -71,18 +72,15 @@ function loadMeets(data, toUrl, day) {
         return;
     }
 
-    var node = $('#meet_add_model').clone(true);
+    if (day >= today.getDate()) {
+        var node = $('#meet_add_model').clone(true);
 
-    //if (data.length == 0)
-    //    node.find('.mg-listc-btt').html("当天没有活动安排");
-    //else
-    //    node.find('.mg-listc-btt').html("当天新增活动安排");
+        node.tap(function() {
+            location.href = "/meet/add/"+ day;
+        });
 
-    node.tap(function() {
-        location.href = "/meet/add/"+ day;
-    });
-
-    list.append(node);
+        list.append(node);
+    }
 
     $('#day_'+ day).parent().after(list);
 }
