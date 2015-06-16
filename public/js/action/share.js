@@ -1,15 +1,17 @@
 $(document).ready(function() {
+    alert(0);
     var cur_date = new Date();
     var user_id = localStorage.getItem('user_id');
-
+    alert(1);
     validUser(user_id);
-
+    alert(2);
     if (user_id == proposer_id) {
         switchSharingBds();
     }
-
+    alert(3);
     //初始化过期日历样式
     initPassCalendar(cur_date.getFullYear(), cur_date.getMonth() + 1);
+    alert(4);
     //初始化按钮事件
     initBtnHome();
     initBtnFriend();
