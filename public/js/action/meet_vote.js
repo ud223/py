@@ -144,7 +144,7 @@ function loadThisMeet(user_id) {
 //加载用户已投票日期
 function loadMeetVoteDate(user_id) {
     var meet = new Meet();
-    alert(1);
+
     meet.getMeetDate(meet_id, user_id);
 }
 
