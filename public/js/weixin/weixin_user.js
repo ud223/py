@@ -39,7 +39,7 @@ function wx_Login(toUrl, fun_test_A, fun_test_B) {
         }
         alert(tmp_toUrl);
         var url = "http://cbook.test.angelhere.cn/reg?web_url=" + tmp_toUrl;
-
+        alert(url);
         location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid + "&redirect_uri=" + url + "&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
 
         return 1;
