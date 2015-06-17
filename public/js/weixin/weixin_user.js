@@ -29,7 +29,7 @@ function wx_Login(toUrl, fun_test_A, fun_test_B) {
                 var params = strUrl[1].split("#");
 
                 if (params.length > 1) {
-                    tmp_toUrl = tmp_toUrl + "#" + params[0];
+                    tmp_toUrl = tmp_toUrl + "#" + params[1];
                 }
             }
         }
