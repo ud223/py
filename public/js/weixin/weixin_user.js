@@ -18,7 +18,7 @@ function userLoginToMeet(meet_id) {
 
 function wx_Login(toUrl, fun_test_A, fun_test_B) {
     var env = validEnvironment();
-
+    alert(toUrl);
     //微信开发环境
     if (env == 1) {
         var tmp_toUrl = encodeURI(toUrl.split("?")[0]);
