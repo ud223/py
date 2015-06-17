@@ -19,4 +19,8 @@
             }
         });
     //}
+
+    $('body').on('click', '.act-detail-bd .cls', function(){
+        $('.act-detail-bd, .act-detail-cover').remove();
+    });
 })(jQuery);

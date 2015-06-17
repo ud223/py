@@ -145,6 +145,11 @@ textarea.inp-txt {
 .glacker p {
 	margin-bottom: 5px;
 }
+.glacker.gp {
+    border-bottom:1px solid #E2E2E2;
+    padding-bottom:10px;
+}
+
 .clear,
 .clear-5,
 .clear-10,
@@ -569,7 +574,7 @@ textarea.inp-txt {
 	overflow: auto;
 	padding-top: 50px;
 }
-.mg-ttblk.fixed {
+.mg-ttblk.fixed, .mg-ttblk.absolute {
 	background: #333;
 	position: fixed;
 	left: 0;
@@ -577,7 +582,10 @@ textarea.inp-txt {
 	width: 100%;
 	z-index: 2;
 }
-.mg-ttblk.fixed * {
+.mg-ttblk.absolute {
+    position:absolute;
+}
+.mg-ttblk.fixed *, .mg-ttblk.absolute * {
 	color: #FFF;
 }
 #pge-wps {
@@ -791,25 +799,25 @@ textarea.inp-txt {
     /*line-height:normal;*/
 /*}*/
 
+
 .miowobtn {
-    height:50px;
-    line-height:50px;
-    color:#FFF;
-    width:50px;
+    height:40px;
+    line-height:40px;
+    width:100%;
     display:inline-block;
-    background:#4CBF4C;
+    background:#ffe240;
+    color:#333;
     position:fixed;
-    left:50%;
-    bottom:25px;
+    left:0;
+    bottom:0;
     font-size:32px;
     font-weight:bold;
     border:none;
     padding:0;
     margin:0;
-    margin-left:-25px;
     top:auto;
     font-family: arial;
-    border-radius:100px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
 }
 .cbook-title-x1 {
     text-align:center;
