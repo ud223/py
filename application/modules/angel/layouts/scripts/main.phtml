@@ -18,11 +18,11 @@
     <script src="<?php echo $this->jsPath("action/common.js"); ?>"></script>
 </head>
 <body ontouchstart="">
-    <div class="mg-ttblk fixed" style="padding: 10px">
+    <div id="top-bar" class="mg-ttblk fixed" style="padding: 10px">
         <!-- 此处最多显示8个汉字 -->
-<!--        <span class="tt" id="title">我的云步客</span>-->
-<!--        <span class="glyphicon glyphicon-chevron-left mg-ttblk-i left" id="pge-cover-back"></span>-->
-<!--        <i id="btn_share" class="glyphicon glyphicon-share share-the-day"></i>-->
+        <span class="tt" id="title">我的云步客</span>-->
+        <span class="glyphicon glyphicon-chevron-left mg-ttblk-i left" id="pge-cover-back"></span>
+        <i id="btn_share" class="glyphicon glyphicon-share share-the-day"></i>
     </div>
     <?php echo $this->layout()->content; ?>
     <button id="btn_add" class="miowobtn">+</button>
