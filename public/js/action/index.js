@@ -40,7 +40,8 @@ function initShareParam() {
 function hrefUrl() {
     var url = window.location.href;
     var user_id = localStorage.getItem('user_id');
-    var urls = url.split("#");
+    var strUrl = url.replace("http://cbook.test.angelhere.cn/", "/");
+    var urls = strUrl.split("/");
 
     if (urls.length > 1) {
         if (user_id != urls[1]) {
