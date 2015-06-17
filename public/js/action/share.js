@@ -20,13 +20,13 @@ function initShareParam(user_id) {
     if (meet_id) {
         share_param = share_param + "/"+ meet_id;
     }
-
+    alert(4);
     var share_url = window.location.href
-
+    alert(5);
     if (share_url.indexOf(share_param) < 0) {
         share_url = share_url + share_param;
     }
-
+    alert(6);
     location.href = share_url;
 }
 
