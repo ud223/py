@@ -1,13 +1,16 @@
 $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
-    toShareUrl();
-    validUser(user_id)
-    loadThisMeet(user_id);
 
+    validUser(user_id)
+
+    toShareUrl(user_id);
+    initShareParam(user_id);
+
+    loadThisMeet(user_id);
     loadMeetVoteDate(user_id);
     loadProposerInfo(user_id);
 
-    initBtnShare(user_id);
+    initBtnShare();
     initBtnWord(user_id);
     initBtnBack(user_id);
     initBtnCloseMeet(user_id);
@@ -20,7 +23,7 @@ $(document).ready(function() {
     //}
 })
 
-function toShareUrl() {
+function toShareUrl(user_id) {
     var url = location.href;
 
     var strUrl = url.split("#");
@@ -30,27 +33,38 @@ function toShareUrl() {
     }
 }
 
-function initBtnShare(user_id) {
-    $('.glyphicon-share').tap(function () {
-        shareMeet(user_id);
-    });
-}
+function initShareParam(user_id) {
+    var user_id = localStorage.getItem('user_id');
+    var url = window.location.href;
 
-function shareMeet(user_id){
-    $('#sharing-bds').show();
-    $('#sharing-bds').tap(function(){
-        $('#sharing-bds').hide();
-    });
+    var urls = url.split("#");
 
-    var share_param = "#/share/" + user_id +"/"+ meet_id;
-    var share_url = window.location.href
-
-    if (share_url.indexOf(share_param) < 0) {
-        share_url = share_url + share_param;
+    if (urls.length < 2) {
+        location.href = urls +  "#/share/" + user_id +"/"+ meet_id;
     }
-
-    location.href = share_url;
 }
+
+//function initBtnShare(user_id) {
+//    $('.glyphicon-share').tap(function () {
+//        shareMeet(user_id);
+//    });
+//}
+//
+//function shareMeet(user_id){
+//    $('#sharing-bds').show();
+//    $('#sharing-bds').tap(function(){
+//        $('#sharing-bds').hide();
+//    });
+//
+//    var share_param = "#/share/" + user_id +"/"+ meet_id;
+//    var share_url = window.location.href
+//
+//    if (share_url.indexOf(share_param) < 0) {
+//        share_url = share_url + share_param;
+//    }
+//
+//    location.href = share_url;
+//}
 
 function validUser(user_id) {
     //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
