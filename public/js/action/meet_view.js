@@ -19,6 +19,10 @@ $(document).ready(function() {
 })
 
 function toShareUrl(user_id) {
+    if (user_id == proposer_id) {
+        return;
+    }
+
     var url = location.href;
 
     var strUrl = url.split("#");
