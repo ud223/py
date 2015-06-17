@@ -2,8 +2,8 @@ $(document).ready(function() {
     var now = new Date();
     //分享跳转
     hrefUrl();
-
     vaildUser();
+    initShareParam();
     //加载日历
     loadCalendar();
 
@@ -26,13 +26,26 @@ $(document).ready(function() {
     queryPendingMeet();
 })
 
-function hrefUrl() {
+function initShareParam() {
+    var user_id = localStorage.getItem('user_id');
     var url = window.location.href;
 
     var urls = url.split("#");
 
     if (urls.length > 1) {
-        location.href = urls[1];
+        location.href = urls + "#" + user_id;
+    }
+}
+
+function hrefUrl() {
+    var url = window.location.href;
+    var user_id = localStorage.getItem('user_id');
+    var urls = url.split("#");
+
+    if (urls.length > 1) {
+        if (user_id != urls[1]) {
+            location.href = "/share/"+ urls[1];
+        }
     }
 }
 
@@ -115,26 +128,6 @@ function initBtnAdd() {
         else {
             location.href = '/meet/add';
         }
-    })
-}
-
-function initBtnShare() {
-    $("#share").tap(function () {
-        $('#sharing-bds').show();
-        $('#sharing-bds').tap(function(){
-            $('#sharing-bds').hide();
-        });
-
-        var user_id = localStorage.getItem('user_id');
-
-        var url = window.location.href;
-        var param = '#/share/'+ user_id;
-
-        if (url.indexOf(param) < 0) {
-            url = url + param;
-        }
-
-        location.href = url;
     })
 }
 

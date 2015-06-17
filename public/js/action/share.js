@@ -6,27 +6,16 @@ $(document).ready(function() {
     //if (user_id == proposer_id) {
     //    switchSharingBds();
     //}
-
+    initShareParam(user_id);
     //初始化按钮事件
     initBtnHome();
     initBtnFriend();
     initBtnAdd();
     initBtnBack();
-    initBtnShareMeet(user_id);
+
 })
 
-function initBtnShareMeet(user_id) {
-    $('.glyphicon-share').tap(function () {
-        shareMeet(user_id);
-    });
-}
-
-function shareMeet(user_id){
-    $('#sharing-bds').show();
-    $('#sharing-bds').tap(function(){
-        $('#sharing-bds').hide();
-    });
-
+function initShareParam(user_id) {
     var share_param = "#/share/" + user_id +"/"+ meet_id;
     var share_url = window.location.href
 
