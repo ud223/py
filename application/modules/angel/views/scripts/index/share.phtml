@@ -37,6 +37,81 @@
         <i class="glyphicon glyphicon-send"></i> 分享我的日历
     </button>
 </div>
+
+<style>
+    .act-detail-cover {
+        position:fixed;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,.5);
+        z-index:20;
+        left:0;
+        top:0;
+    }
+    .act-detail-bd {
+        background:#FFF;
+        position:fixed;
+        z-index:21;
+        left:30px;
+        top:80px;
+        right:30px;
+        bottom:80px;
+    }
+    .act-detail-bd .wp {
+        padding:15px;
+        position:absolute;
+        top:50px;
+        bottom:0;
+        left:0;
+        right:0;
+        overflow: auto;
+    }
+</style>
+<div>
+    <div class="act-detail-cover"></div>
+    <div class="act-detail-bd">
+        <div class="mg-ttblk absolute">
+            <span class="tt" id="title">快来参加</span>
+            <span class="glyphicon glyphicon-remove mg-ttblk-i right cls"></span>
+        </div>
+        <div class="wp">
+            <div class="glacker gp">
+                <p class="inp-tt">活动时间</p>
+                <div class="p33i9plp label label-success">已确定时间</div>
+                <div class="lbke" id="selected_date">2015年6月15日</div>
+            </div>
+            <div class="glacker gp">
+                <p class="inp-tt">活动主题</p>
+                <label class="lbke" id="meet_text">你的技能</label>
+            </div>
+            <div class="glacker gp">
+                <p class="inp-tt">地点</p>
+                <label class="lbke" id="address">暂无地址</label>
+            </div>
+            <div class="glacker gp">
+                <p class="inp-tt">已同意参加的人</p>
+                <ul class="busr-lst"></ul>
+                <div class="clear"></div>
+            </div>
+            <div class="glacker p33comts gp">
+                <p id="test-tt" class="inp-tt words-ttt">暂无留言</p>
+                <div id="word-list"></div>
+                <p class="inp-tt" style="margin-top:5px;">发表留言</p>
+                <textarea id="word_text" class="inp-txt full"></textarea>
+                <button class="rowbtn" id="word_submit">提交</button>
+                <div class="clear-5"></div>
+                <!--            <button class="rowbtn" style="display: none" id="letmejoin">我加入</button>-->
+                <!--            <button class="rowbtn" style="display: none" id="letmeleave">我退出</button>-->
+                <!--            <div class="clear-5"></div>style="display: none" style="display: none"-->
+                <!--            <button class="rowbtn"  id="letmejoin">我加入</button>-->
+                <button class="rowbtn red" style="display: none" id="btn_leave">我退出</button>
+                <button class="rowbtn" style="display: none" id="btn_join">我加入</button>
+                <div class="clear-5"></div>
+                <button class="rowbtn red" style="margin-top: 50px;" id="close_meet">关闭活动</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     var appid = '<?php echo $this->appid ?>';
     var proposer_id = '<?php echo $this->user_id ?>';
