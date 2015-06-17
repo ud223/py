@@ -38,6 +38,7 @@ function wx_Login(toUrl, fun_test_A, fun_test_B) {
             }
         }
         alert(tmp_toUrl);
+        alert(1);
         var temp_toUrl = encodeURI(tmp_toUrl);
         var url = "http://cbook.test.angelhere.cn/reg?web_url=" + temp_toUrl;
         alert(url);
