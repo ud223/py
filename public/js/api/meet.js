@@ -246,7 +246,7 @@ function getMeetDate(meet_id, user_id) {
     var url = '/api/date/vote/get';
 
     var  data = { 'meet_id': meet_id, 'user_id': user_id};
-
+    alert(JSON.stringify(data));
     $.ajax({
         url: url,
         dataType: 'json',
