@@ -41,8 +41,7 @@ function hrefUrl() {
     var url = window.location.href;
     var user_id = localStorage.getItem('user_id');
     var urls = url.split("#");
-    alert(url);
-    alert(user_id);
+
     if (urls.length > 1) {
         if (user_id != urls[1]) {
             location.href = "/share/"+ urls[1];
