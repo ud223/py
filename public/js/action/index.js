@@ -32,7 +32,7 @@ function initShareParam() {
 
     var urls = url.split("#");
 
-    if (urls.length > 1) {
+    if (urls.length < 2) {
         location.href = urls + "#" + user_id;
     }
 }
