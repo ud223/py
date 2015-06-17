@@ -42,6 +42,8 @@ function hrefUrl() {
     var user_id = localStorage.getItem('user_id');
     var strUrl = url.replace("http://cbook.test.angelhere.cn/", "/");
     var urls = strUrl.split("/");
+    alert(strUrl);
+    alert(urls[1]);
 
     if (urls.length > 1) {
         if (user_id != urls[1]) {
