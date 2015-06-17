@@ -1,15 +1,10 @@
 $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
 
-    alert(0);
     validUser(user_id);
-
-    //if (user_id == proposer_id) {
-    //    switchSharingBds();
-    //}
     alert(1);
     initShareParam(user_id);
-    alert(3);
+
     //初始化按钮事件
     initBtnHome();
     initBtnFriend();
@@ -19,7 +14,13 @@ $(document).ready(function() {
 })
 
 function initShareParam(user_id) {
-    var share_param = "#/share/" + user_id +"/"+ meet_id;
+    alert(3);
+    var share_param = "#/share/" + user_id;
+
+    if (meet_id) {
+        share_param = share_param + "/"+ meet_id;
+    }
+
     var share_url = window.location.href
 
     if (share_url.indexOf(share_param) < 0) {
