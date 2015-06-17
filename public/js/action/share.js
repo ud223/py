@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     validUser(user_id);
 
-    initShareParam(user_id);
+    //initShareParam(user_id);
 
     //初始化按钮事件
     initBtnHome();
