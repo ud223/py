@@ -39,27 +39,27 @@ function initShareParam(user_id) {
     }
 }
 
-function initBtnShare() {
-    $('.glyphicon-share').tap(function () {
-       shareMeet();
-    });
-}
+//function initBtnShare() {
+//    $('.glyphicon-share').tap(function () {
+//       shareMeet();
+//    });
+//}
 
-function shareMeet(user_id){
-    $('#sharing-bds').show();
-    $('#sharing-bds').tap(function(){
-        $('#sharing-bds').hide();
-    });
-
-    //var share_param = "#/share/" + user_id +"/"+ meet_id;
-    //var share_url = window.location.href
-    //
-    //if (share_url.indexOf(share_param) < 0) {
-    //    share_url = share_url + share_param;
-    //}
-    //
-    //location.href = share_url;
-}
+//function shareMeet(user_id){
+//    $('#sharing-bds').show();
+//    $('#sharing-bds').tap(function(){
+//        $('#sharing-bds').hide();
+//    });
+//
+//    //var share_param = "#/share/" + user_id +"/"+ meet_id;
+//    //var share_url = window.location.href
+//    //
+//    //if (share_url.indexOf(share_param) < 0) {
+//    //    share_url = share_url + share_param;
+//    //}
+//    //
+//    //location.href = share_url;
+//}
 
 function validUser(user_id) {
     //如果从缓存和后台都没有获取到用户id，就重新登录再返回到这里
