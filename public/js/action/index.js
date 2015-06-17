@@ -49,14 +49,17 @@ function hrefUrl() {
 
     //判断链接是否带参数
     if (urls.length > 1) {
+        alert(1);
         //判断是否带分享参数
         if (urls[1].indexOf("#") > -1) {
+            alert(2);
             //判断是否包含微信识别代码
             if (urls[1].indexOf("?") > -1) {
+                alert(3);
                 param = urls[1].split("#")[1];
             }
             else {
-
+                alert(4);
                 param = urls[1];
             }
         }
