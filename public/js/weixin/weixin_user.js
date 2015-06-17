@@ -24,6 +24,10 @@ function wx_Login(toUrl, fun_test_A, fun_test_B) {
         var strUrl = toUrl.split("?");
         var tmp_toUrl = encodeURI(strUrl[0]);
 
+        if (tmp_toUrl == "http://cbook.test.angelhere.cn/") {
+            tmp_toUrl = "http://cbook.test.angelhere.cn"
+        }
+
         if (tmp_toUrl.indexOf("#") < 0) {
             if (strUrl.length > 1) {
                 var params = strUrl[1].split("#");
