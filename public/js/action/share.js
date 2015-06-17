@@ -1,12 +1,15 @@
 $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
 
+    alert(0);
     validUser(user_id);
 
     //if (user_id == proposer_id) {
     //    switchSharingBds();
     //}
+    alert(1);
     initShareParam(user_id);
+    alert(3);
     //初始化按钮事件
     initBtnHome();
     initBtnFriend();

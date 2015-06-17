@@ -55,7 +55,6 @@
 
 <script src="<?php echo $this->jsPath("action/share.js"); ?>"></script>
 <script>
-    alert(0);
     document.title = '<?php echo $this->nickname?>' + "日程安排";
     var appid = '<?php echo $this->appid ?>';
     var proposer_id = '<?php echo $this->proposer_id ?>';
@@ -63,7 +62,7 @@
     var curDate = '<?php echo $this->date ?>';
     var cur_meet_id = '<?php echo $this->meet_id ?>';
     var is_share = true;
-    alert(1);
+
     $(document).ready(function(){
         alert(2);
         var now = new Date();
