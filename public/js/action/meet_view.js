@@ -2,19 +2,23 @@ $(document).ready(function() {
     //localStorage.clear(); return;
 
     var user_id = localStorage.getItem('user_id');
-    toShareUrl();
+
     validUser(user_id)
+
+    toShareUrl(user_id);
+    initShareParam(user_id);
+
     loadThisMeet(user_id);
     loadProposerInfo(user_id);
 
-    initBtnShare(user_id);
+    initBtnShare();
     initBtnWord(user_id);
     initBtnBack(user_id);
     initBtnCloseMeet(user_id);
     initBtnJoin(user_id);
 })
 
-function toShareUrl() {
+function toShareUrl(user_id) {
     var url = location.href;
 
     var strUrl = url.split("#");
@@ -24,9 +28,20 @@ function toShareUrl() {
     }
 }
 
-function initBtnShare(user_id) {
+function initShareParam(user_id) {
+    var user_id = localStorage.getItem('user_id');
+    var url = window.location.href;
+
+    var urls = url.split("#");
+
+    if (urls.length < 2) {
+        location.href = urls +  "#/share/" + user_id +"/"+ meet_id;
+    }
+}
+
+function initBtnShare() {
     $('.glyphicon-share').tap(function () {
-       shareMeet(user_id);
+       shareMeet();
     });
 }
 
@@ -36,14 +51,14 @@ function shareMeet(user_id){
         $('#sharing-bds').hide();
     });
 
-    var share_param = "#/share/" + user_id +"/"+ meet_id;
-    var share_url = window.location.href
-
-    if (share_url.indexOf(share_param) < 0) {
-        share_url = share_url + share_param;
-    }
-
-    location.href = share_url;
+    //var share_param = "#/share/" + user_id +"/"+ meet_id;
+    //var share_url = window.location.href
+    //
+    //if (share_url.indexOf(share_param) < 0) {
+    //    share_url = share_url + share_param;
+    //}
+    //
+    //location.href = share_url;
 }
 
 function validUser(user_id) {
