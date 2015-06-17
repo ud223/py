@@ -242,6 +242,7 @@ function setMeetDate(meet_id, fun) {
 }
 
 function getMeetDate(meet_id, user_id) {
+    alert(3);
     var url = '/api/date/vote/get';
 
     var  data = { 'meet_id': meet_id, 'user_id': user_id};

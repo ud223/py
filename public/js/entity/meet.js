@@ -160,6 +160,7 @@ var Meet = function () {
     }
 
     obj.getMeetDate = function(meet_id, user_id) {
+        alert(2);
         getMeetDate(meet_id, user_id);
     }
 
