@@ -1,4 +1,5 @@
 function initBtnShare() {
+    alert(1);
     $("#btn_share").tap(function () {
         $('#sharing-bds').show();
         $('#sharing-bds').tap(function(){
