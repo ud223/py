@@ -26,7 +26,7 @@ function wx_Login(toUrl, fun_test_A, fun_test_B) {
         //    tmp_toUrl = "http://cbook.test.angelhere.cn"
         //}
         var tmp_toUrl = strUrl[0];
-        tmp_toUrl = tmp_toUrl.replace("http://cbook.test.angelhere.cn/", "/");
+        //tmp_toUrl = tmp_toUrl.replace("http://cbook.test.angelhere.cn/", "/");
 
         if (tmp_toUrl.indexOf("#") < 0) {
             if (strUrl.length > 1) {
