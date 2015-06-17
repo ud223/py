@@ -17,8 +17,8 @@ function initShareParam(user_id) {
     alert(3);
     var share_param = "#/share/" + user_id;
 
-    if (meet_id) {
-        share_param = share_param + "/"+ meet_id;
+    if (cur_meet_id) {
+        share_param = share_param + "/"+ cur_meet_id;
     }
     alert(4);
     var share_url = window.location.href
