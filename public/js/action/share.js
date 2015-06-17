@@ -2,7 +2,7 @@ $(document).ready(function() {
     var user_id = localStorage.getItem('user_id');
 
     validUser(user_id);
-    alert(1);
+
     initShareParam(user_id);
 
     //初始化按钮事件
@@ -10,23 +10,22 @@ $(document).ready(function() {
     initBtnFriend();
     initBtnAdd();
     initBtnBack();
-
+    initBtnShare();
 })
 
 function initShareParam(user_id) {
-    alert(3);
     var share_param = "#/share/" + user_id;
 
     if (cur_meet_id) {
         share_param = share_param + "/"+ cur_meet_id;
     }
-    alert(4);
+
     var share_url = window.location.href
-    alert(5);
+
     if (share_url.indexOf(share_param) < 0) {
         share_url = share_url + share_param;
     }
-    alert(6);
+
     location.href = share_url;
 }
 
@@ -88,13 +87,13 @@ function initBtnAdd() {
     })
 }
 
-function initBtnShare() {
-    $("#share").tap(function () {
-        var user_id = localStorage.getItem('user_id');
-
-        location.href = '/share/'+ user_id;
-    })
-}
+//function initBtnShare() {
+//    $("#share").tap(function () {
+//        var user_id = localStorage.getItem('user_id');
+//
+//        location.href = '/share/'+ user_id;
+//    })
+//}
 
 //初始化后退按钮
 function initBtnBack() {
