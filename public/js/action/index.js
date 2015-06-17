@@ -45,9 +45,27 @@ function hrefUrl() {
     alert(strUrl);
     alert(urls[1]);
 
+    var param = "";
+
+    //判断链接是否带参数
     if (urls.length > 1) {
+        //判断是否带分享参数
+        if (urls[1].indexOf("#") > -1) {
+            //判断是否包含微信识别代码
+            if (urls[1].indexOf("?") > -1) {
+                param = urls[1].split("#")[1];
+            }
+            else {
+
+                param = urls[1];
+            }
+        }
+    }
+
+
+    if (param != "") {
         if (user_id != urls[1]) {
-            location.href = "/share/"+ urls[1];
+            location.href = "/share/"+ param;
         }
     }
 }
