@@ -22,7 +22,7 @@ function wx_Login(toUrl, fun_test_A, fun_test_B) {
     //微信开发环境
     if (env == 1) {
         var tmp_toUrl = encodeURI(toUrl.split("?")[0]);
-
+        alert(tmp_toUrl);
         var url = "http://cbook.test.angelhere.cn/reg?web_url=" + tmp_toUrl;
 
         location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid + "&redirect_uri=" + url + "&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect";
