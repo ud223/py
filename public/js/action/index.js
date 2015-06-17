@@ -1,8 +1,9 @@
 $(document).ready(function() {
     var now = new Date();
+
+    vaildUser();
     //分享跳转
     hrefUrl();
-    vaildUser();
     initShareParam();
     //加载日历
     loadCalendar();
