@@ -57,15 +57,6 @@ function loadMeets(data, toUrl, day) {
 
             node.find('.mg-listc-usrs').html(users);
 
-            //if (toUrl) {
-            //    url = toUrl + "/" + meet_id;
-            //}
-            //else {
-            //    if (this.seleted == 1)
-            //        url = "/meet/view/"+ meet_id;
-            //    else
-            //        url = "/meet/vote/"+meet_id;
-            //}
             if (this.seleted == 1)
                 type = 1;
             else
@@ -101,8 +92,7 @@ function loadMeets(data, toUrl, day) {
 
 function loadMeetDetail(meet_id, type) {
     var user_id = localStorage.getItem('user_id');
-    alert(1);
-    alert(type);
+
     if (type == 1) {
         $('#view_word_text').val('');
         loadThisMeet(meet_id, user_id);

@@ -110,6 +110,9 @@
             });
         });
 
+        var tmp_month = now.getMonth() + 1;
+        $('#jijj').html(now.getFullYear() + '年' + tmp_month + '月');
+
         initCalendarClick();
         initDate();
     });
