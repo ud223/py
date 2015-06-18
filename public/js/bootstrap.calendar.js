@@ -107,7 +107,7 @@
 
             var m = context.mm + 1;
 
-            $('#jijj').html(context.yn + '-' + m + '月');
+            $('#jijj').html(context.yn + '年' + m + '月');
 
             if (context.yn == now.getFullYear() && context.mm == now.getMonth()) {
                 $('#day_'+ now.getDate()).addClass('today');
@@ -126,7 +126,7 @@
 
             var m = context.mm + 1;
 
-            $('#jijj').html(context.yn + '-' + m + '月');
+            $('#jijj').html(context.yn + '年' + m + '月');
 
             if (context.yn == now.getFullYear() && context.mm == now.getMonth()) {
                 $('#day_'+ now.getDate()).addClass('today');
