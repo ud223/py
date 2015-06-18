@@ -89,8 +89,9 @@ function loadCalendar() {
     });
 
     var tmp_month = now.getMonth() + 1;
-
+    alert(1);
     $('#jijj').html(now.getFullYear() + '年' + tmp_month + '月');
+    alert(2);
 }
 
 function vaildUser() {
