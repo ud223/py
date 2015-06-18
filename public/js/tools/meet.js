@@ -99,6 +99,7 @@ function loadMeetDetail(meet_id, type) {
         $('#show-meet-view').show();
     }
     else {
+        alert(1);
         $('#vote_word_text').val('');
         loadThisMeet(meet_id, user_id);
         $('#show-meet-vote').show();
