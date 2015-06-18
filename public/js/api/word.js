@@ -20,6 +20,9 @@ function addWord(user_id, word_text, meet_id) {
                 var word = new Word();
 
                 word.load(meet_id);
+
+                $('#view_word_text').val('');
+                $('#vote_word_text').val('');
             }
             else {
                 $.alertbox({ msg:response.data });
