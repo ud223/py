@@ -23,7 +23,7 @@ $(document).ready(function() {
     initBtnShare();
     initBtnPending();
     queryPendingMeet();
-    closeMeetDetail();
+    closeMeetView();
 })
 
 function initShareParam() {
@@ -90,12 +90,6 @@ function loadCalendar() {
     var tmp_month = now.getMonth() + 1;
 
     $('#jijj').html(now.getFullYear() + '年' + tmp_month + '月');
-}
-
-function closeMeetDetail() {
-    $('.glyphicon-remove').tap(function() {
-        $('#show-meet').hide();
-    })
 }
 
 function vaildUser() {

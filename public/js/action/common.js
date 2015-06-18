@@ -18,10 +18,15 @@ function initBtnShare() {
     })
 }
 
-
 function initBack() {
     $('#pge-cover-back').tap(function() {
         localStorage.setItem('share_id', '');
         location.href = "/";
+    })
+}
+
+function closeMeetView() {
+    $('.glyphicon-remove').tap(function() {
+        $('#show-meet-view').hide();
     })
 }

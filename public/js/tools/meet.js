@@ -99,8 +99,11 @@ function loadMeets(data, toUrl, day) {
     $('#day_'+ day).parent().after(list);
 }
 
-function loadMeetDetail(meet_id) {
-    $('#show-meet').show();
+function loadMeetDetail(meet_id, type) {
+    if (type == 1)
+        $('#show-meet-view').show();
+    else
+        $('#show-meet-vote').show();
 }
 
 function meetLoad(data) {
