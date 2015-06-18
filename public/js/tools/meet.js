@@ -2,6 +2,7 @@ function loadMeets(data, toUrl, day) {
     var today = new Date();
     var list = $('#mg-listc').find('.mg-listc').clone(true);
     var old_day = $(document).find('.node-list').attr('day');
+    var user_id = localStorage.getItem('user_id');
 
     $(document).find('.node-list').remove();
 
@@ -94,18 +95,16 @@ function loadMeetDetail(meet_id, type) {
     var user_id = localStorage.getItem('user_id');
 
     if (type == 1) {
+        cur_meet_id = meet_id;
         $('#view_word_text').val('');
         loadThisMeet(meet_id, user_id);
         $('#show-meet-view').show();
     }
     else {
-        alert(1);
+        cur_meet_id = meet_id;
         $('#vote_word_text').val('');
-        alert(2);
         loadThisMeet(meet_id, user_id);
-        alert(3);
         $('#show-meet-vote').show();
-        alert(4);
     }
 }
 

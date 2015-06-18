@@ -28,6 +28,7 @@ function initBack() {
 function closeMeetView() {
     $('.glyphicon-remove').tap(function() {
         $('#show-meet-view').hide();
+        $('#show-meet-vote').hide();
     })
 }
 
@@ -40,4 +41,30 @@ function loadThisMeet(meet_id, user_id) {
     var word = new Word();
 
     word.load(meet_id);
+}
+
+//初始化留言提交按钮事件
+function initBtnWord(user_id) {
+    $(document).on('click', '#view_word_submit', function () {
+        subitWord(1);
+    });
+
+    $(document).on('click', '#vote_word_submit', function () {
+        subitWord(2);
+    });
+}
+
+function subitWord(type) {
+    var word = new Word();
+    var user_id = localStorage.getItem('user_id');
+    
+    word.setMeet_Id(cur_meet_id);
+    word.setUser_Id(user_id);
+
+    if (type == 1)
+        word.setText($('#view_word_text').val());
+    else
+        word.setText($('#vote_word_text').val());
+
+    word.add();
 }
