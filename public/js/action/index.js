@@ -77,9 +77,6 @@ function loadCalendar() {
 
         //$('#jijj').html(load_date);
 
-        //$('.selected').removeClass('selected');
-        //$('#day_'+ event.day.valueOf()).addClass('selected');
-
         var meetModel = new Meet();
 
         var user_id = localStorage.getItem('user_id');

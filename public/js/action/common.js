@@ -16,6 +16,20 @@ function initBtnShare() {
         //
         //location.href = url;
     })
+
+    $("#view_meet_share").tap(function () {
+        $('#sharing-bds').show();
+        $('#sharing-bds').tap(function () {
+            $('#sharing-bds').hide();
+        });
+    });
+
+    $("#vote_meet_share").tap(function () {
+        $('#sharing-bds').show();
+        $('#sharing-bds').tap(function () {
+            $('#sharing-bds').hide();
+        });
+    });
 }
 
 function initBack() {
