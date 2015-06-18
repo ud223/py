@@ -29,6 +29,7 @@ function closeMeetView() {
     $('.glyphicon-remove').tap(function() {
         $('#show-meet-view').hide();
         $('#show-meet-vote').hide();
+        cur_meet_id = false;
     })
 }
 
@@ -57,7 +58,7 @@ function initBtnWord(user_id) {
 function subitWord(type) {
     var word = new Word();
     var user_id = localStorage.getItem('user_id');
-    
+
     word.setMeet_Id(cur_meet_id);
     word.setUser_Id(user_id);
 

@@ -17,7 +17,7 @@ $(document).ready(function() {
     //加载日程安排
     loadSchedule();
     //初始化按钮事件
-    //initBtnHome();
+    initBtnWord();
     initBtnFriend();
     initBtnAdd();
     initBtnShare();
@@ -120,13 +120,6 @@ function loadSchedule(user_id) {
     localStorage.setItem('schedule_user_id', user_id);
 
     getSchedule();
-}
-
-function initBtnHome() {
-    $(".glyphicon-home").tap(function () {
-        localStorage.setItem('share_id', '');
-        location.href = '/';
-    })
 }
 
 function initBtnFriend() {
