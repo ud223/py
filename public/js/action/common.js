@@ -1,10 +1,10 @@
 function initBtnShare() {
     $("#btn_share").tap(function () {
+        alert(1);
         $('#sharing-bds').show();
         $('#sharing-bds').tap(function(){
             $('#sharing-bds').hide();
         });
-
         //var user_id = localStorage.getItem('user_id');
         //
         //var url = window.location.href;
