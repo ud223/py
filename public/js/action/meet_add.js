@@ -54,13 +54,6 @@ function initSubmit() {
     })
 }
 
-function initBack() {
-    $('#pge-cover-back').tap(function() {
-        localStorage.setItem('share_id', '');
-        location.href = "/";
-    })
-}
-
 function initMeetType() {
     $('#add-tab-1').tap(function() {
         meet.select(true);
