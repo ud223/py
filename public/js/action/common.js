@@ -40,10 +40,13 @@ function initBack() {
 }
 
 function closeMeetView() {
+    var user_id = localStorage.getItem('user_id');
+
     $('.glyphicon-remove').tap(function() {
         $('#show-meet-view').hide();
         $('#show-meet-vote').hide();
         cur_meet_id = false;
+        removeMeetShareParam(user_id);
     })
 }
 
@@ -56,6 +59,32 @@ function loadThisMeet(meet_id, user_id) {
     var word = new Word();
 
     word.load(meet_id);
+}
+
+function initMeetShareParam(user_id, meet_id) {
+    var url = location.href;
+
+    if (url.indexOf("#") > -1) {
+        url = url.split("#")[0];
+    }
+
+    if (url.indexOf("?") > -1) {
+        url = url.split("?")[0]
+    }
+
+    url = url + "#" + user_id + "/" + meet_id;
+
+    location.href = url;
+}
+
+function removeMeetShareParam(user_id) {
+    var url = location.href;
+
+    url = url.split("#")[0];
+
+    url = url + "#" + user_id;
+
+    location.href = url;
 }
 
 //初始化留言提交按钮事件

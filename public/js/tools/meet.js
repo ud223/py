@@ -106,11 +106,12 @@ function loadMeetDetail(meet_id, type) {
         loadThisMeet(meet_id, user_id);
         $('#show-meet-vote').show();
     }
+
+    initMeetShareParam(meet_id, user_id);
 }
 
 function meetLoad(data) {
     $(document).find('#title').html(data.meet_text);
-
 
     if (data.selected_date == 'false') {
         $(document).find('#start_date').html(data.start_date);
