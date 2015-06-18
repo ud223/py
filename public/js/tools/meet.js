@@ -101,12 +101,14 @@ function loadMeets(data, toUrl, day) {
 
 function loadMeetDetail(meet_id, type) {
     var user_id = localStorage.getItem('user_id');
-
+    alert(type);
     if (type == 1) {
+        $('#view_word_text').val('');
         loadThisMeet(meet_id, user_id);
         $('#show-meet-view').show();
     }
     else {
+        $('#vote_word_text').val('');
         loadThisMeet(meet_id, user_id);
         $('#show-meet-vote').show();
     }
