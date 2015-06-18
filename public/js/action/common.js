@@ -18,6 +18,13 @@ function initBtnShare() {
         //location.href = url;
     })
 
+    $("#btn_share_calendar").tap(function () {
+        $('#sharing-bds').show();
+        $('#sharing-bds').tap(function () {
+            $('#sharing-bds').hide();
+        });
+    });
+
     $("#view_meet_share").tap(function () {
         $('#sharing-bds').show();
         $('#sharing-bds').tap(function () {
