@@ -101,8 +101,11 @@ function loadMeetDetail(meet_id, type) {
     else {
         alert(1);
         $('#vote_word_text').val('');
+        alert(2);
         loadThisMeet(meet_id, user_id);
+        alert(3);
         $('#show-meet-vote').show();
+        alert(4);
     }
 }
 
