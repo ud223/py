@@ -79,7 +79,7 @@ function initMeetShareParam(user_id, meet_id) {
     }
 
     url = url + "#" + user_id + "/" + meet_id;
-
+    alert(url);
     location.href = url;
 }
 
@@ -89,7 +89,7 @@ function removeMeetShareParam(user_id) {
     url = url.split("#")[0];
 
     url = url + "#" + user_id;
-
+    alert(url);
     location.href = url;
 }
 
