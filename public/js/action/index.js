@@ -40,16 +40,17 @@ function hrefUrl() {
     var url = window.location.href;
     var user_id = localStorage.getItem('user_id');
     var strUrl = url.replace("http://cbook.test.angelhere.cn/", "/");
+    alert(strUrl);
     var urls = strUrl.split("/");
     var param = "";
-
     //判断链接是否带参数
     if (urls.length > 1) {
+        alert(urls[1]);
         //判断是否带分享参数
         if (urls[1].indexOf("#") > -1) {
             //判断是否包含微信识别代码
             if (urls[1].indexOf("?") > -1) {
-                param = urls[1].split("#")[1];
+                param = urls[1].split("?")[1];
             }
             else {
                 param = urls[1];
