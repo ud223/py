@@ -6,7 +6,7 @@ $(document).ready(function() {
     //initShareParam(user_id);
 
     //初始化按钮事件
-    initBtnHome();
+    initBtnWord(user_id);
     initBtnFriend();
     initBtnAdd();
     initBtnBack();
