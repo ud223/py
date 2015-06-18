@@ -16,7 +16,10 @@ function addWord(user_id, word_text, meet_id) {
         method: 'post',
         success: function (response) {
             if (response.code == 200) {
-                location.reload();
+                //location.reload();
+                var word = new Word();
+
+                word.load(meet_id);
             }
             else {
                 $.alertbox({ msg:response.data });
