@@ -33,6 +33,7 @@ function loadMeets(data, toUrl, day) {
 
     if (data.length > 0) {
         $.each(data, function () {
+            var type = 1;
             var node = $('#meet_model').clone(true);
 
             node.find('.mg-listc-btt').html(this.meet_text);
@@ -56,18 +57,23 @@ function loadMeets(data, toUrl, day) {
 
             node.find('.mg-listc-usrs').html(users);
 
-            if (toUrl) {
-                url = toUrl + "/" + meet_id;
-            }
-            else {
-                if (this.seleted == 1)
-                    url = "/meet/view/"+ meet_id;
-                else
-                    url = "/meet/vote/"+meet_id;
-            }
+            //if (toUrl) {
+            //    url = toUrl + "/" + meet_id;
+            //}
+            //else {
+            //    if (this.seleted == 1)
+            //        url = "/meet/view/"+ meet_id;
+            //    else
+            //        url = "/meet/vote/"+meet_id;
+            //}
+            if (this.seleted == 1)
+                type = 1;
+            else
+                type = 2;
 
             node.tap(function() {
-                location.href = url;
+                //location.href = url;
+                loadMeetDetail(meet_id, type);
             });
 
             list.append(node);
@@ -91,6 +97,10 @@ function loadMeets(data, toUrl, day) {
     }
 
     $('#day_'+ day).parent().after(list);
+}
+
+function loadMeetDetail(meet_id) {
+    $('#show-meet').show();
 }
 
 function meetLoad(data) {
