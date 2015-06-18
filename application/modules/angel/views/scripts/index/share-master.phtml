@@ -13,13 +13,13 @@
     /*display:none !important;*/
     /*}*/
 </style>
-<div class="mg-ttblk fixed" style="padding: 10px">
-    <!-- 此处最多显示8个汉字 -->
-    <span class="tt" id="title">云步客</span>
-    <span class="glyphicon glyphicon-chevron-left mg-ttblk-i left" id="pge-cover-back"></span>
-    <span class="bak-tlable">返回<span>
-    <i id="btn_share" class="glyphicon glyphicon-share share-the-day"></i>
-</div>
+<!--<div class="mg-ttblk fixed" style="padding: 10px">-->
+<!--    <!-- 此处最多显示8个汉字 -->-->
+<!--    <span class="tt" id="title">云步客</span>-->
+<!--    <span class="glyphicon glyphicon-chevron-left mg-ttblk-i left" id="pge-cover-back"></span>-->
+<!--    <span class="bak-tlable">返回<span>-->
+<!--    <i id="btn_share" class="glyphicon glyphicon-share share-the-day"></i>-->
+<!--</div>-->
 <div class="cbook-title-x1">云步客</div>
 <div class="big-box gamerbod nmt" style="padding: 15px;margin-top:65px;">
         <img class="ssimg" style="float:left" src="<?php echo $this->headimgurl ?>" />
@@ -34,7 +34,7 @@
 </div>
 <div class="big-box">
     <div class="mg-ttblk" style="background:#333;color:#FFF;border-radius:5px 5px 0 0;">
-        <span class="tt" id="jijj">十二月 2015</span>
+        <span class="tt" id="jijj"></span>
         <span class="glyphicon glyphicon-menu-left mg-ttblk-i left" id="to-last-month"></span>
         <span class="glyphicon glyphicon-menu-right mg-ttblk-i right" id="to-next-month"></span>
     </div>
@@ -75,6 +75,10 @@
 
             meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
+
+        var tmp_month = now.getMonth() + 1;
+
+        $('#jijj').html(now.getFullYear() + '年' + tmp_month + '月');
 
         if (meet_day) {
             $('#day_'+ meet_day).addClass('selected');
