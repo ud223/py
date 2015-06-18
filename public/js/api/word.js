@@ -8,7 +8,7 @@ function addWord(user_id, word_text, meet_id) {
     var url = '/api/word/add';
 
     var  data = { 'user_id': user_id, 'word_text': word_text, 'meet_id': meet_id }
-
+    alert(JSON.stringify(data));
     $.ajax({
         url: url,
         dataType: 'json',
@@ -39,6 +39,7 @@ function queryWord(meet_id) {
         data: data,
         method: 'get',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载活动集合
                 loadWords(response.data);
