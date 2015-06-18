@@ -11,8 +11,6 @@ $(document).ready(function() {
     if (share_id) {
         localStorage.setItem('share_id', share_id);
     }
-    //初始化当前年月日到标题文本框
-    $('#jijj').html(now.getMonth() + 1 + "月-" + now.getFullYear() + "年");
 
     //初始化过期日历样式
     initPassCalendar(now.getFullYear(), now.getMonth() + 1);
