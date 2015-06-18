@@ -1,12 +1,17 @@
 <img style="position:absolute;top:-2000px;" src="<?php echo $this->headimgurl ?>">
+<script src="<?php echo $this->jsPath("weixin/share.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("weixin/weixin_user.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("tools/calendar.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("tools/String.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("tools/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("tools/word.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("api/calendar.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("api/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("api/user.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("api/word.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("entity/calendar.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("entity/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("entity/word.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("entity/user.js"); ?>"></script>
 <style>
     /*#footerbar {*/
@@ -49,6 +54,7 @@
 
     </div>
 </div>
+<script src="<?php echo $this->jsPath("action/common.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("action/share.js"); ?>"></script>
 <script>
     document.title = '<?php echo $this->nickname?>' + "日程安排";
