@@ -69,7 +69,7 @@ function hrefUrl() {
     //        }
     //    }
     ////}
-    //alert(param);
+    alert(param);
     if (param != "") {
         if (user_id != param) {
             location.href = "/share/"+ param;
