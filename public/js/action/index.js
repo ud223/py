@@ -35,6 +35,7 @@ function initShareParam() {
     if (urls.length < 2) {
         location.href = urls + "#" + user_id;
     }
+    alert(location.href);
 }
 
 function hrefUrl() {
