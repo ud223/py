@@ -71,15 +71,28 @@ function subitWord(type) {
 }
 
 //初始化关闭活动按钮
-function initBtnCloseMeet(user_id) {
+function initBtnCloseMeet(proposer_id, meet_id,  type) {
+    var user_id = localStorage.getItem('user_id');
+
     if (user_id == proposer_id) {
-        $('#close_meet').show();
+        if (type == 1) {
+            $('#view_close_meet').show();
 
-        $('#close_meet').tap(function() {
-            var meet = new Meet();
+            $('#view_close_meet').tap(function() {
+                var meet = new Meet();
 
-            meet.close(user_id, meet_id);
-        })
+                meet.close(user_id, meet_id);
+            })
+        }
+        else {
+            $('#vote_close_meet').show();
+
+            $('#vote_close_meet').tap(function() {
+                var meet = new Meet();
+
+                meet.close(user_id, meet_id);
+            })
+        }
     }
 }
 //初始化加入按钮

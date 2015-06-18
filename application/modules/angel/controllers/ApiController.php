@@ -229,7 +229,7 @@ class Angel_ApiController extends Angel_Controller_Action {
             $start_date = $result->options_date[0];
             $end_date = $result->options_date[$length - 1];
 
-            $data = array("meet_text"=>$result->meet_text, "start_date"=>$start_date, "end_date"=>$end_date, "selected_date"=>$result->selected_date, "year"=>$result->year, "month"=>$result->month, "day"=>$result->day,"address"=>$result->address, "remark"=>$result->remark, "users"=>$users, "proposer_id"=>$result->proposer_id);
+            $data = array("meet_id"=>$id, "meet_text"=>$result->meet_text, "start_date"=>$start_date, "end_date"=>$end_date, "selected_date"=>$result->selected_date, "year"=>$result->year, "month"=>$result->month, "day"=>$result->day,"address"=>$result->address, "remark"=>$result->remark, "users"=>$users, "proposer_id"=>$result->proposer_id);
 
 
             $this->_helper->json(array('data' => $data, 'code' => $code));

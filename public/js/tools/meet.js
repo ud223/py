@@ -124,6 +124,8 @@ function meetLoad(data) {
             $(document).find('#vote_address').html(data.address);
         else
             $(document).find('#vote_address').html("暂无地址");
+
+        initBtnCloseMeet(data.proposer_id, data.meet_id,  2);
     }
     else {
         $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
@@ -134,6 +136,8 @@ function meetLoad(data) {
             $(document).find('#view_address').html(data.address);
         else
             $(document).find('#view_address').html("暂无地址");
+
+        initBtnCloseMeet(data.proposer_id, data.meet_id,  1);
     }
 
     $(document).find('#remark').html(data.remark);
