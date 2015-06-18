@@ -52,24 +52,7 @@ function hrefUrl() {
             param = strUrl;
         }
     }
-    //alert(strUrl);
-    ////var urls = strUrl.split("/");
-    //var param = "";
-    ////判断链接是否带参数
-    ////if (urls.length > 1) {
-    //    alert(urls[1]);
-    //    //判断是否带分享参数
-    //    if (urls[1].indexOf("#") > -1) {
-    //        //判断是否包含微信识别代码
-    //        if (urls[1].indexOf("?") > -1) {
-    //            param = urls[1].split("?")[1];
-    //        }
-    //        else {
-    //            param = urls[1];
-    //        }
-    //    }
-    ////}
-    alert(param);
+
     if (param != "") {
         if (user_id != param) {
             location.href = "/share/"+ param;
