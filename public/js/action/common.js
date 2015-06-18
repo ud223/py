@@ -89,7 +89,7 @@ function removeMeetShareParam(user_id) {
     url = url.split("#")[0];
 
     url = url + "#" + user_id;
-
+    alert(url);
     location.href = url;
 }
 
