@@ -67,7 +67,7 @@ function loadThisMeet(meet_id, user_id) {
     word.load(meet_id);
 }
 
-function initMeetShareParam(user_id, meet_id) {
+function initMeetShareParam(meet_id, user_id) {
     var url = location.href;
 
     if (url.indexOf("#") > -1) {
@@ -79,7 +79,7 @@ function initMeetShareParam(user_id, meet_id) {
     }
 
     url = url + "#" + user_id + "/" + meet_id;
-    alert(url);
+
     location.href = url;
 }
 
@@ -89,7 +89,7 @@ function removeMeetShareParam(user_id) {
     url = url.split("#")[0];
 
     url = url + "#" + user_id;
-    alert(url);
+
     location.href = url;
 }
 
