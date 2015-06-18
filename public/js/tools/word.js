@@ -1,8 +1,8 @@
 function loadWords(data) {
-    $('#word-list').html('');
+    $('#view_word-list').html('');
 
     if (data.length == 0) {
-        $('#test-tt').html('暂无留言');
+        $('#view_test-tt').html('暂无留言');
 
         return;
     }
@@ -21,6 +21,31 @@ function loadWords(data) {
         node.find('.untme').html(date);
         node.find('.uxer').attr('src', data[i].user.headimgurl)
 
-        $('#word-list').append(node);
+        $('#view_word-list').append(node);
+    }
+
+    $('#vote_word-list').html('');
+
+    if (data.length == 0) {
+        $('#vote_test-tt').html('暂无留言');
+
+        return;
+    }
+
+    for (i = 0; i < data.length; i++) {
+        var node = $('#word_model').clone(true);
+
+        var date = data[i].date.date;
+
+        date = date.replace('-', '年');
+        date = date.replace('-', '月');
+        date = date.replace(' ', '日');
+
+        node.find('.ctxx').html(data[i].text);
+        node.find('.uune').html(data[i].user.nickname);
+        node.find('.untme').html(date);
+        node.find('.uxer').attr('src', data[i].user.headimgurl)
+
+        $('#vote_word-list').append(node);
     }
 }
