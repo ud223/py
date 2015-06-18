@@ -88,7 +88,7 @@ function loadCalendar() {
         meetModel.Query(user_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
     });
 
-    var tmp_month = now.getmonth() + 1;
+    var tmp_month = now.getMonth() + 1;
 
     $('#jijj').html(now.getFullYear() + '年' + tmp_month + '月');
 }
