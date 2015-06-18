@@ -111,22 +111,31 @@ function loadMeetDetail(meet_id, type) {
 
 function meetLoad(data) {
     $(document).find('#title').html(data.meet_text);
-    $(document).find('#meet_text').html(data.meet_text);
+
 
     if (data.selected_date == 'false') {
         $(document).find('#start_date').html(data.start_date);
         $(document).find('#end_date').html(data.end_date);
         $(document).find('#start_date').attr('start_date', data.start_date);
         $(document).find('#end_date').attr('end_date', data.end_date);
+
+        $(document).find('#vote_meet_text').html(data.meet_text);
+
+        if (data.address)
+            $(document).find('#vote_address').html(data.address);
+        else
+            $(document).find('#vote_address').html("暂无地址");
     }
     else {
         $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
-    }
 
-    if (data.address)
-        $(document).find('#address').html(data.address);
-    else
-        $(document).find('#address').html("暂无地址");
+        $(document).find('#view_meet_text').html(data.meet_text);
+
+        if (data.address)
+            $(document).find('#view_address').html(data.address);
+        else
+            $(document).find('#view_address').html("暂无地址");
+    }
 
     $(document).find('#remark').html(data.remark);
 
