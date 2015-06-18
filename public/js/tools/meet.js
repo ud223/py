@@ -101,6 +101,7 @@ function loadMeets(data, toUrl, day) {
 
 function loadMeetDetail(meet_id, type) {
     var user_id = localStorage.getItem('user_id');
+    alert(1);
     alert(type);
     if (type == 1) {
         $('#view_word_text').val('');
