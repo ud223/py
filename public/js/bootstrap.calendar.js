@@ -105,7 +105,7 @@
             context.live_date = prv;
             context.renderCalendar(prv);
 
-            $('#jijj').html(context.mm + 1 + '月-' + context.yn);
+            $('#jijj').html(context.yn + '-' + context.mm + 1 + '月');
 
             if (context.yn == now.getFullYear() && context.mm == now.getMonth()) {
                 $('#day_'+ now.getDate()).addClass('today');
@@ -130,7 +130,7 @@
 
             getSchedule();
 
-            initPassCalendar(context.yn, context.mm + 1);
+            initPassCalendar(context.yn + '-' + context.mm + 1 + '月');
         });
     };
 
