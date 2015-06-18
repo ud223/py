@@ -23,7 +23,6 @@ $(document).ready(function() {
     initBtnPending();
     queryPendingMeet();
     closeMeetView();
-    alert(location.href);
 })
 
 function initShareParam() {
@@ -57,7 +56,7 @@ function hrefUrl() {
             }
         }
     }
-
+    alert(param);
     if (param != "") {
         if (user_id != param) {
             location.href = "/share/"+ param;
