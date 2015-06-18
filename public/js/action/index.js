@@ -7,23 +7,32 @@ $(document).ready(function() {
     initShareParam();
     //加载日历
     loadCalendar();
-
+    alert(location.href);
     if (share_id) {
         localStorage.setItem('share_id', share_id);
     }
-
+    alert(location.href);
     //初始化过期日历样式
     initPassCalendar(now.getFullYear(), now.getMonth() + 1);
     //加载日程安排
     loadSchedule();
+    alert(location.href);
     //初始化按钮事件
     initBtnWord();
+    alert(location.href);
     initBtnFriend();
+    alert(location.href);
     initBtnAdd();
+    alert(location.href);
     initBtnShare();
+    alert(location.href);
     initBtnPending();
+
+    alert(location.href);
     queryPendingMeet();
+    alert(location.href);
     closeMeetView();
+    alert(location.href);
 })
 
 function initShareParam() {
@@ -35,7 +44,6 @@ function initShareParam() {
     if (urls.length < 2) {
         location.href = urls + "#" + user_id;
     }
-    alert(location.href);
 }
 
 function hrefUrl() {
