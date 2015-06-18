@@ -16,8 +16,10 @@
 <script src="<?php echo $this->jsPath("api/calendar.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("api/meet.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("api/user.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("api/word.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("entity/calendar.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("entity/meet.js"); ?>"></script>
+<script src="<?php echo $this->jsPath("entity/word.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("entity/user.js"); ?>"></script>
 <img id="share-headimg" style="position:absolute;top:-2000px;" src="<?php echo $this->headimgurl ?>">
 <div class="big-box gamerbod nmt" style="display: none">
@@ -57,7 +59,7 @@
         <i class="glyphicon glyphicon-pending" ></i> 查看未确定活动安排
     </button>
 </div>
-
+<script src="<?php echo $this->jsPath("action/common.js"); ?>"></script>
 <script src="<?php echo $this->jsPath("action/index.js"); ?>"></script>
 <script>
     var appid = '<?php echo $this->appid ?>';

@@ -30,3 +30,14 @@ function closeMeetView() {
         $('#show-meet-view').hide();
     })
 }
+
+//加载活动信息
+function loadThisMeet(meet_id, user_id) {
+    var meet = new Meet();
+
+    meet.load(user_id, meet_id);
+
+    var word = new Word();
+
+    word.load(meet_id);
+}

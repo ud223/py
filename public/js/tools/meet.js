@@ -100,10 +100,16 @@ function loadMeets(data, toUrl, day) {
 }
 
 function loadMeetDetail(meet_id, type) {
-    if (type == 1)
+    var user_id = localStorage.getItem('user_id');
+
+    if (type == 1) {
+        loadThisMeet(meet_id, user_id);
         $('#show-meet-view').show();
-    else
+    }
+    else {
+        loadThisMeet(meet_id, user_id);
         $('#show-meet-vote').show();
+    }
 }
 
 function meetLoad(data) {
