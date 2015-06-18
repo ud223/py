@@ -24,6 +24,7 @@ $(document).ready(function() {
     initBtnPending();
     queryPendingMeet();
     closeMeetView();
+    initBtnCloseMeet();
 })
 
 function initShareParam() {

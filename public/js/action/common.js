@@ -69,3 +69,148 @@ function subitWord(type) {
 
     word.add();
 }
+
+//初始化关闭活动按钮
+function initBtnCloseMeet(user_id) {
+    if (user_id == proposer_id) {
+        $('#close_meet').show();
+
+        $('#close_meet').tap(function() {
+            var meet = new Meet();
+
+            meet.close(user_id, meet_id);
+        })
+    }
+}
+//初始化加入按钮
+function initBtnJoin(user_id) {
+    if (users_id.indexOf(user_id) > -1)  {
+        if (user_id == proposer_id)
+            return;
+
+        $('#btn_leave').show();
+
+        $('#btn_leave').tap(function() {
+            var meet = new Meet();
+
+            meet.leave(user_id, meet_id);
+        })
+    }
+    else  {
+        $('#btn_join').show();
+
+        $('#btn_join').tap(function() {
+            var meet = new Meet();
+
+            meet.join(user_id, meet_id, afterJoin);
+        })
+    }
+}
+
+//初始化活动日期投票按钮
+function initVoteSubmit() {
+    $('#submit-vote').tap(function() {
+        var user_id = localStorage.getItem('user_id');
+
+        var meet = new Meet();
+        //如果是创建者,就跳过参加活动的环节
+        if (users_id.indexOf(user_id) > -1)  {
+            voteDate(true, "");
+        }
+        else {
+            //先参加活动,成功后再提交投票
+            meet.join(user_id, meet_id, voteDate) ;
+        }
+    });
+}
+
+function voteDate(data, msg) {
+    if (!data) {
+        //alert(msg);
+        return;
+    }
+
+    var user_id = localStorage.getItem('user_id');
+
+    var strFirst_date = $('#first_date').val();
+    var strSecond_date = $('#second_date').val();
+
+    //投票验证失败, return
+    if (!validDateRange())
+        return;
+
+    var meet = new Meet();
+
+    meet.vote(meet_id, strFirst_date, strSecond_date, user_id, clearVote);
+}
+
+//确认设置活动日期
+function initSetMeetDate(user_id) {
+    if (user_id == proposer_id && vote > 0) {
+        $('#close-vote').show();
+
+        $('#close-vote').tap(function () {
+            var meet = new Meet();
+
+            meet.setMeetDate(meet_id, setMeetSelectedDate);
+        });
+    }
+}
+
+function clearVote() {
+    location.reload();
+}
+
+function setVoteDate(first_date, second_date, isVote) {
+    if (isVote) {
+        $('#first_date').val(first_date);
+        $('#second_date').val(second_date);
+    }
+    else {
+        $('#submit-vote').show();
+        $('#ps_text').show();
+
+        initVoteSubmit();
+    }
+}
+
+function validDateRange() {
+    var strStart_date = $('#start_date').attr("start_date");
+    var strEnd_date = $('#end_date').attr("end_date");
+    var strFirst_date = $('#first_date').val();
+    var strSecond_date = $('#second_date').val();
+
+    var start_date = new Date(strStart_date);
+    var end_date = new Date(strEnd_date);
+
+    if (strFirst_date == '' && strSecond_date == '') {
+        $.alertbox({ msg:'投票日期不能都为空!' });
+
+        return false;
+    }
+
+    if (strFirst_date == '' && strSecond_date != '') {
+        strFirst_date = strSecond_date;
+    }
+
+    if (strFirst_date != '' && strSecond_date == '') {
+        strSecond_date = strFirst_date;
+    }
+
+    var first_date = new Date(strFirst_date);
+    var second_date = new Date(strSecond_date);
+
+    if (first_date > end_date || first_date < start_date) {
+        $.alertbox({ msg:'超出选择日期范围!' });
+
+        return false;
+    }
+
+    if (second_date > end_date || second_date < start_date) {
+        $.alertbox({ msg:'超出选择日期范围!' });
+
+        return false;
+    }
+
+    return true;
+}
