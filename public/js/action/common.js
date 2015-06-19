@@ -145,27 +145,43 @@ function initBtnCloseMeet(proposer_id, meet_id,  type) {
     }
 }
 //初始化加入按钮
-function initBtnJoin(user_id) {
+function initBtnJoin() {
+    var user_id = localStorage.getItem("user_id");
+
     if (users_id.indexOf(user_id) > -1)  {
-        if (user_id == proposer_id)
+        if (user_id == proposer_id) {
+            $('#btn_leave').hide();
+            $('#btn_join').hide();
+
             return;
+        }
 
         $('#btn_leave').show();
-
+        $('#btn_join').hide();
         $('#btn_leave').tap(function() {
             var meet = new Meet();
 
-            meet.leave(user_id, meet_id);
+            meet.leave(user_id, cur_meet_id);
         })
     }
     else  {
         $('#btn_join').show();
-
+        $('#btn_leave').hide();
         $('#btn_join').tap(function() {
             var meet = new Meet();
 
-            meet.join(user_id, meet_id, afterJoin);
+            meet.join(user_id, cur_meet_id, afterJoin);
         })
+    }
+}
+
+function afterJoin(data, msg) {
+    if (data) {
+        localStorage.setItem('share_id', '');
+        location.href = "/";
+    }
+    else {
+        //alert(msg);
     }
 }
 

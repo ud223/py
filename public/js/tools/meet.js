@@ -155,4 +155,6 @@ function meetLoad(data) {
     });
 
     $(document).find('.busr-lst').html(users_html);
+
+    initBtnJoin();
 }
