@@ -147,16 +147,17 @@ function initBtnCloseMeet(proposer_id, meet_id,  type) {
 //初始化加入按钮
 function initBtnJoin() {
     var user_id = localStorage.getItem("user_id");
-    alert(1);
+
     if (users_id.indexOf(user_id) > -1)  {
-        alert(2);
         if (user_id == proposer_id) {
             $('#btn_view_leave').hide();
             $('#btn_view_join').hide();
+            $('#vote_btn_leave').hide();
+            $('#vote_btn_join').hide();
 
             return;
         }
-        alert(3);
+
         $('#btn_view_leave').show();
         $('#btn_view_join').hide();
         $('#btn_view_leave').tap(function() {
@@ -164,9 +165,16 @@ function initBtnJoin() {
 
             meet.leave(user_id, cur_meet_id);
         })
+
+        $('#vote_btn_leave').show();
+        $('#vote_btn_join').hide();
+        $('#vote_btn_leave').tap(function() {
+            var meet = new Meet();
+
+            meet.leave(user_id, cur_meet_id);
+        })
     }
     else  {
-        alert(4);
         $('#btn_view_join').show();
         $('#btn_view_leave').hide();
         $('#btn_view_join').tap(function() {
@@ -174,6 +182,8 @@ function initBtnJoin() {
 
             meet.join(user_id, cur_meet_id, afterJoin);
         })
+        
+        $('#vote_btn_leave').hide();
     }
 }
 

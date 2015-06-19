@@ -144,7 +144,7 @@ function leaveMeet(user_id, meet_id) {
         method: 'post',
         success: function (response) {
             if (response.code == 200) {
-                location.reload();
+                location.href = "/";
             }
             else {
                 $.alertbox({ msg:response.data });
