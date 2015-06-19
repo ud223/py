@@ -1,5 +1,7 @@
+alert("load");
 function loadWords(data) {
-    $('#view_word-list').html('');
+    alert(0);
+    $('#view-word-list').html('');
     alert(1);
     alert(data.length);
     if (data.length == 0) {
@@ -27,7 +29,7 @@ function loadWords(data) {
         $('#view_word-list').append(node);
     }
 
-    $('#vote_word-list').html('');
+    $('#vote-word-list').html('');
 
     if (data.length == 0) {
         alert(4);
