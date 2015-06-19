@@ -345,6 +345,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             $meet = $meetModel->getById($meet_id);
 
             if ($meet->selected_date == "false") {
+                $tmp_type = 2;
                 foreach ($meet->options_date as $d) {
                     $date = $d;
 
@@ -359,6 +360,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             $this->view->day = $meet->day;
         }
         else {
+            $tmp_type = 1;
             $this->view->date = "";
             $this->view->day = "";
         }
@@ -371,6 +373,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->proposer_id = $proposer_id;
         $this->view->title = $user->nickname . '的日程安排';
         $this->view->meet_id = $meet_id;
+        $this->view->tmp_type = $tmp_type;
     }
 
     public function calendarVisitorAction() {

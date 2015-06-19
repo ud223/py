@@ -12,6 +12,8 @@ $(document).ready(function() {
     initBtnBack();
     initBtnShare();
     closeMeetView();
+
+    loadMeetDetail(cur_meet_id, tmp_type);
 })
 
 function initShareParam(user_id) {

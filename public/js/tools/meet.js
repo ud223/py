@@ -64,7 +64,6 @@ function loadMeets(data, toUrl, day) {
                 type = 2;
 
             node.tap(function() {
-                //location.href = url;
                 loadMeetDetail(meet_id, type);
             });
 
