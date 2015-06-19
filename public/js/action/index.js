@@ -188,11 +188,10 @@ function initCalendarClick(id, year, month, day) {
 }
 
 function loadUserInfo(data) {
-    alert(JSON.stringify(data));
     headimgurl = data.headimgurl;
     nickname = data.nickname;
 
-    document.title = nickname + "的日程安排";
+    document.title = nickname + "的云步客";
     $('#share-headimg').attr('src', headimgurl);
 }
 
