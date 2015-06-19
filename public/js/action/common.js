@@ -175,13 +175,13 @@ function initVoteSubmit() {
         alert(1);
         var user_id = localStorage.getItem('user_id');
         alert(2);
-        var meet = new Meet();
         //如果是创建者,就跳过参加活动的环节
         if (users_id.indexOf(user_id) > -1)  {
             alert(3);
             voteDate(true, "");
         }
         else {
+            var meet = new Meet();
             //先参加活动,成功后再提交投票
             meet.join(user_id, cur_meet_id, voteDate) ;
         }

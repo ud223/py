@@ -111,6 +111,7 @@ function loadMeetDetail(meet_id, type) {
 }
 
 function meetLoad(data) {
+    alert(JSON.stringify(data));
     $(document).find('#title').html(data.meet_text);
 
     if (data.selected_date == 'false') {
@@ -145,7 +146,7 @@ function meetLoad(data) {
 
     $(document).find('.busr-lst').html("");
     var users_html = "";
-
+    users_id = data.users_id;
     $.each(data.users, function() {
         var share_url = "/share/"+ this.openid;
 
