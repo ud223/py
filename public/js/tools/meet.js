@@ -122,7 +122,7 @@ function meetLoad(data) {
         $(document).find('#vote_meet_text').html(data.meet_text);
 
         if (data.address)
-            $(document).find('#vote_address').html(data.address);
+            $(document).find('#tab-vote-address').html(data.address);
         else {
             $(document).find('#tab-vote-address').hide();//.html("暂无地址");
         }
@@ -136,7 +136,7 @@ function meetLoad(data) {
         $(document).find('#view_meet_text').html(data.meet_text);
 
         if (data.address)
-            $(document).find('#view_address').html(data.address);
+            $(document).find('#tab-view_address').html(data.address);
         else
             $(document).find('#tab-view_address').hide();//html("暂无地址");
 
