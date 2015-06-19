@@ -4,7 +4,7 @@ $(document).ready(function() {
     validUser(user_id);
 
     //initShareParam(user_id);
-    alert(0);
+
     //初始化按钮事件
     initBtnWord(user_id);
     initBtnFriend();

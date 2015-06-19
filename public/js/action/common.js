@@ -85,13 +85,11 @@ function initMeetShareParam(meet_id, user_id) {
 
 function removeMeetShareParam(user_id) {
     var url = location.href;
-    alert(url);
+
     url = url.split("#")[0];
-    alert(url);
     url = url + "#" + user_id + "/none";
-    alert(url);
+
     location.href = url;
-    alert(location.href);
 }
 
 //初始化留言提交按钮事件
