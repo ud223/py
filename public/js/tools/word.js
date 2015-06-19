@@ -1,7 +1,7 @@
 
 function loadMeetWords(data) {
     $('#view-word-list').html('');
-    alert(data.length);
+
     if (data.length == 0) {
         $('#view-test-tt').html('');//.html('暂无留言');
         $('#view-word-list').hide();
@@ -27,7 +27,7 @@ function loadMeetWords(data) {
         node.find('.untme').html(date);
         node.find('.uxer').attr('src', data[i].user.headimgurl)
 
-        $('#view_word-list').append(node);
+        $('#view-word-list').append(node);
     }
 
     $('#vote-word-list').html('');
