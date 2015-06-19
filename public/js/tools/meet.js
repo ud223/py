@@ -134,7 +134,7 @@ function meetLoad(data) {
         $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
 
         $(document).find('#view_meet_text').html(data.meet_text);
-
+        alert(data.length);
         if (data.address)
             $(document).find('#tab-view_address').html(data.address);
         else
