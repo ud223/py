@@ -1,4 +1,3 @@
-alert("load");
 function loadWords(data) {
     alert(0);
     $('#view-word-list').html('');
