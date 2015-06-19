@@ -23,6 +23,7 @@ $(document).ready(function() {
     initBtnPending();
     queryPendingMeet();
     closeMeetView();
+    initVoteSubmit();
 })
 
 function initShareParam() {

@@ -61,6 +61,7 @@ function loadThisMeet(meet_id, user_id) {
     var meet = new Meet();
 
     meet.load(user_id, meet_id);
+    meet.getMeetDate(meet_id, user_id)
 
     var word = new Word();
 
