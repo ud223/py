@@ -122,7 +122,7 @@ function meetLoad(data) {
         $(document).find('#vote_meet_text').html(data.meet_text);
 
         if (data.address)
-            $(document).find('#tab-vote-address').html(data.address);
+            $(document).find('#vote_address').html(data.address);
         else {
             $(document).find('#tab-vote-address').hide();//.html("暂无地址");
         }
@@ -134,11 +134,14 @@ function meetLoad(data) {
         $(document).find('#selected_date').html(data.year + "年" + data.month + "月" + data.day + "日");
 
         $(document).find('#view_meet_text').html(data.meet_text);
-        alert(data.length);
-        if (data.address)
-            $(document).find('#tab-view_address').html(data.address);
-        else
+
+        if (data.address){
+            $(document).find('#view_address').html(data.address);
+        }
+        else {
+            alert(0);
             $(document).find('#tab-view_address').hide();//html("暂无地址");
+        }
 
         initBtnCloseMeet(data.proposer_id, data.meet_id,  1);
     }
