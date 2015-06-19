@@ -205,10 +205,10 @@ function voteDate(data, msg) {
 }
 
 //确认设置活动日期
-function initSetMeetDateisVote) {
+function initSetMeetDate(isVote) {
     var user_id = localStorage.getItem('user_id');
 
-    if (user_id == proposer_id && isVote > 0) {
+    if (user_id == proposer_id && vote > 0) {
         $('#close-vote').show();
 
         $('#close-vote').tap(function () {
