@@ -59,6 +59,7 @@
 <script>
     document.title = '<?php echo $this->nickname?>' + "日程安排";
     var appid = '<?php echo $this->appid ?>';
+    //分享人id
     var share_id = '<?php echo $this->proposer_id ?>';
     var meet_day = '<?php echo $this->day ?>';
     var curDate = '<?php echo $this->date ?>';
@@ -66,8 +67,7 @@
     var is_share = false;
     var users_id = "";
     var proposer_id = "";
-    //分享人id
-    var share_id = "";
+    var proposer_id = "";
 
     $(document).ready(function(){
         var now = new Date();
