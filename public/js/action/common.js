@@ -207,7 +207,9 @@ function voteDate(data, msg) {
 //确认设置活动日期
 function initSetMeetDate(isVote) {
     var user_id = localStorage.getItem('user_id');
-
+    alert(proposer_id);
+    alert(user_id);
+    alert(isVote);
     if (user_id == proposer_id && isVote > 0) {
         $('#close-vote').show();
 
