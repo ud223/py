@@ -214,7 +214,7 @@ function initSetMeetDate(isVote) {
         $('#close-vote').tap(function () {
             var meet = new Meet();
 
-            meet.setMeetDate(meet_id, setMeetSelectedDate);
+            meet.setMeetDate(cur_meet_id, setMeetSelectedDate);
         });
     }
 }
