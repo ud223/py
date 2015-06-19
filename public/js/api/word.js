@@ -46,6 +46,7 @@ function queryWord(meet_id) {
         method: 'get',
         success: function (response) {
             if (response.code == 200) {
+                alert(JSON.stringify(response));
                 //加载活动集合
                 loadMeetWords(response.data);
             }
