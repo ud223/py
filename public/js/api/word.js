@@ -49,7 +49,7 @@ function queryWord(meet_id) {
             if (response.code == 200) {
                 alert(99);
                 //加载活动集合
-                loadWords(response.data);
+                loadMeetWords(response.data);
                 alert(66);
             }
             else {

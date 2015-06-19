@@ -1,4 +1,4 @@
-function loadWords(data) {
+function loadMeetWords(data) {
     alert(0);
     $('#view-word-list').html('');
     alert(1);
