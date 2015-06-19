@@ -8,6 +8,10 @@ function loadMeetWords(data) {
 
         return;
     }
+    else {
+        $('#view-test-tt').html('留言');//.html('暂无留言');
+        $('#view_word-list').show();
+    }
 
     for (i = 0; i < data.length; i++) {
         var node = $('#word_model').clone(true);
@@ -33,6 +37,10 @@ function loadMeetWords(data) {
         $('#vote_word-list').hide();
 
         return;
+    }
+    else {
+        $('#vote-test-tt').html('留言');//.html('暂无留言');
+        $('#vote_word-list').show();
     }
 
     for (i = 0; i < data.length; i++) {
