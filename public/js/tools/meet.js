@@ -146,6 +146,8 @@ function meetLoad(data) {
     $(document).find('.busr-lst').html("");
     var users_html = "";
     users_id = data.users_id;
+    proposer_id = data.proposer_id;
+
     $.each(data.users, function() {
         var share_url = "/share/"+ this.openid;
 
