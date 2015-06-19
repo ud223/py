@@ -188,6 +188,7 @@ function initCalendarClick(id, year, month, day) {
 }
 
 function loadUserInfo(data) {
+    alert(JSON.stringify(data));
     headimgurl = data.headimgurl;
     nickname = data.nickname;
 
