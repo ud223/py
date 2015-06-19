@@ -4,13 +4,13 @@ function loadMeetWords(data) {
     alert(data.length);
     if (data.length == 0) {
         $('#view-test-tt').html('');//.html('暂无留言');
-        $('#view_word-list').hide();
+        $('#view-word-list').hide();
 
         return;
     }
     else {
         $('#view-test-tt').html('留言');//.html('暂无留言');
-        $('#view_word-list').show();
+        $('#view-word-list').show();
     }
 
     for (i = 0; i < data.length; i++) {
@@ -34,13 +34,13 @@ function loadMeetWords(data) {
 
     if (data.length == 0) {
         $('#vote-test-tt').html('');//.html('暂无留言');
-        $('#vote_word-list').hide();
+        $('#vote-word-list').hide();
 
         return;
     }
     else {
         $('#vote-test-tt').html('留言');//.html('暂无留言');
-        $('#vote_word-list').show();
+        $('#vote-word-list').show();
     }
 
     for (i = 0; i < data.length; i++) {
