@@ -1,7 +1,7 @@
 
 function loadMeetWords(data) {
     $('#view-word-list').html('');
-
+    alert(data.length);
     if (data.length == 0) {
         $('#view-test-tt').html('');//.html('暂无留言');
         $('#view_word-list').hide();
