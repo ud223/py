@@ -209,7 +209,6 @@ function initSetMeetDate(isVote) {
     var user_id = localStorage.getItem('user_id');
 
     if (user_id == proposer_id && isVote > 0) {
-        alert(1);
         $('#vote_close-vote').show();
 
         $('#vote_close-vote').tap(function () {
@@ -218,6 +217,10 @@ function initSetMeetDate(isVote) {
             meet.setMeetDate(cur_meet_id, setMeetSelectedDate);
         });
     }
+}
+
+function setMeetSelectedDate(meet_id) {
+    location.href = "/result/"+ meet_id;
 }
 
 function clearVote() {
