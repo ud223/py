@@ -1,11 +1,8 @@
 
 function loadMeetWords(data) {
-    alert(0);
     $('#view-word-list').html('');
-    alert(1);
-    alert(data.length);
+
     if (data.length == 0) {
-        alert(3);
         $('#view-test-tt').html('');//.html('暂无留言');
         $('#view_word-list').hide();
 
@@ -32,7 +29,6 @@ function loadMeetWords(data) {
     $('#vote-word-list').html('');
 
     if (data.length == 0) {
-        alert(4);
         $('#vote-test-tt').html('');//.html('暂无留言');
         $('#vote_word-list').hide();
 
