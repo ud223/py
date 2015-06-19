@@ -123,8 +123,10 @@ function meetLoad(data) {
 
         if (data.address)
             $(document).find('#vote_address').html(data.address);
-        else
-            $(document).find('#vote_address').hide();//.html("暂无地址");
+        else {
+            $(document).find('#tab-vote-address').hide();//.html("暂无地址");
+        }
+
 
         initBtnCloseMeet(data.proposer_id, data.meet_id,  2);
     }
@@ -136,7 +138,7 @@ function meetLoad(data) {
         if (data.address)
             $(document).find('#view_address').html(data.address);
         else
-            $(document).find('#view_address').hide();//html("暂无地址");
+            $(document).find('#tab-view_address').hide();//html("暂无地址");
 
         initBtnCloseMeet(data.proposer_id, data.meet_id,  1);
     }

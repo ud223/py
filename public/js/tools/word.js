@@ -4,7 +4,7 @@ function loadWords(data) {
     if (data.length == 0) {
         $('#view_test-tt').hide();//.html('暂无留言');
         $('#view_word-list').hide();
-
+        
         return;
     }
 
