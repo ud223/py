@@ -38,13 +38,14 @@ function queryWord(meet_id) {
     var url = '/api/word/get';
 
     var  data = { 'meet_id': meet_id }
-
+    alert(JSON.stringify(data));
     $.ajax({
         url: url,
         dataType: 'json',
         data: data,
         method: 'get',
         success: function (response) {
+            alert(JSON.stringify(response));
             if (response.code == 200) {
                 //加载活动集合
                 loadWords(response.data);

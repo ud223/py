@@ -62,11 +62,10 @@ function loadThisMeet(meet_id, user_id) {
 
     meet.load(user_id, meet_id);
     meet.getMeetDate(meet_id, user_id)
-    alert(1);
+
     var word = new Word();
-    alert(2);
+
     word.load(meet_id);
-    alert(3);
 }
 
 function initMeetShareParam(meet_id, user_id) {
