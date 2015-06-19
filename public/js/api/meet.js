@@ -27,7 +27,7 @@ function addMeet(start_date, end_date, selected_date, meet_text, address, remark
 function QueryMeet(user_id, year, month, day) {
     var url = '/api/meet/get';
 
-    var  data = { 'user_id': user_id, 'year': year, 'month': month, 'day': day }
+    var data = { 'user_id': user_id, 'year': year, 'month': month, 'day': day }
 
     $.ajax({
         url: url,
