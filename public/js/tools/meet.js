@@ -140,7 +140,7 @@ function meetLoad(data) {
         }
         else {
             alert(0);
-            $(document).find('#tab-view_address').hide();//html("暂无地址");
+            $(document).find('#tab-view-address').hide();//html("暂无地址");
         }
 
         initBtnCloseMeet(data.proposer_id, data.meet_id,  1);
