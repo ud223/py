@@ -52,7 +52,7 @@ var Word = function () {
     }
 
     obj.load = function (meet_id) {
-        alerlt(1);
+        alert(1);
         queryWord(meet_id);
         alert(2);
     }
