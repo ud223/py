@@ -172,12 +172,9 @@ function initBtnJoin(user_id) {
 //初始化活动日期投票按钮
 function initVoteSubmit() {
     $('#vote_submit-vote').tap(function() {
-        alert(1);
         var user_id = localStorage.getItem('user_id');
-        alert(2);
         //如果是创建者,就跳过参加活动的环节
         if (users_id.indexOf(user_id) > -1)  {
-            alert(3);
             voteDate(true, "");
         }
         else {
@@ -193,23 +190,24 @@ function voteDate(data, msg) {
         //alert(msg);
         return;
     }
-    alert(4);
-    var user_id = localStorage.getItem('user_id');
 
+    var user_id = localStorage.getItem('user_id');
     var strFirst_date = $('#first_date').val();
     var strSecond_date = $('#second_date').val();
-    alert(5);
+
     //投票验证失败, return
     if (!validDateRange())
         return;
-    alert(6);
+
     var meet = new Meet();
-    alert(7);
+
     meet.vote(cur_meet_id, strFirst_date, strSecond_date, user_id, clearVote);
 }
 
 //确认设置活动日期
-function initSetMeetDate(user_id) {
+function initSetMeetDate() {
+    var user_id = localStorage.getItem('user_id');
+
     if (user_id == proposer_id && vote > 0) {
         $('#close-vote').show();
 
@@ -229,6 +227,8 @@ function setVoteDate(first_date, second_date, isVote) {
     if (isVote) {
         $('#first_date').val(first_date);
         $('#second_date').val(second_date);
+
+        initSetMeetDate();
     }
     else {
         $('#vote_submit-vote').show();

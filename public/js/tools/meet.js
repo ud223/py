@@ -111,7 +111,6 @@ function loadMeetDetail(meet_id, type) {
 }
 
 function meetLoad(data) {
-    alert(JSON.stringify(data));
     $(document).find('#title').html(data.meet_text);
 
     if (data.selected_date == 'false') {
