@@ -197,9 +197,11 @@ function voteMeet(meet_id, date1, date2, user_id, fun) {
             if (response.code == 200) {
                 //alert(response.data);
 
-                if (fun) {
-                    fun();
-                }
+                //if (fun) {
+                //    fun();
+                //}
+                alert(2);
+                location.href = "/";
             }
             else {
                 //alert(response.data);
