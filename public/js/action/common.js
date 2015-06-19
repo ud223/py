@@ -94,7 +94,6 @@ function removeMeetShareParam(user_id) {
 
 //初始化留言提交按钮事件
 function initBtnWord(user_id) {
-    alert(1)
     $(document).on('click', '#view_word_submit', function () {
         subitWord(1);
     });
@@ -105,7 +104,6 @@ function initBtnWord(user_id) {
 }
 
 function subitWord(type) {
-    alert(2);
     var word = new Word();
     var user_id = localStorage.getItem('user_id');
 
