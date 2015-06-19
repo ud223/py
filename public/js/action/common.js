@@ -151,15 +151,15 @@ function initBtnJoin() {
     if (users_id.indexOf(user_id) > -1)  {
         alert(2);
         if (user_id == proposer_id) {
-            $('#btn_view_join').hide();
+            $('#btn_view_leave').hide();
             $('#btn_view_join').hide();
 
             return;
         }
         alert(3);
-        $('#btn_view_join').show();
+        $('#btn_view_leave').show();
         $('#btn_view_join').hide();
-        $('#btn_view_join').tap(function() {
+        $('#btn_view_leave').tap(function() {
             var meet = new Meet();
 
             meet.leave(user_id, cur_meet_id);
@@ -168,7 +168,7 @@ function initBtnJoin() {
     else  {
         alert(4);
         $('#btn_view_join').show();
-        $('#btn_view_join').hide();
+        $('#btn_view_leave').hide();
         $('#btn_view_join').tap(function() {
             var meet = new Meet();
 
