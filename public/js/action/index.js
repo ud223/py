@@ -38,6 +38,8 @@ function initShareParam() {
 
 function hrefUrl() {
     var url = window.location.href;
+    //去掉附属参数
+    var url = url.replace("/none", "");
     var user_id = localStorage.getItem('user_id');
     var urls = url.split("#");
     var param = "";
