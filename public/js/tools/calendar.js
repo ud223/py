@@ -17,7 +17,7 @@ function setCalendarOpt(data) {
     })
 }
 
-function getSchedule() {
+function getSchedule(uid) {
     var calendar = new Calendar();
 
     var user_id = localStorage.getItem('schedule_user_id');
