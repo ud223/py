@@ -105,6 +105,16 @@
             getSchedule();
             //初始化过期日历样式
             initPassCalendar(now.getFullYear(), now.getMonth() + 1);
+
+            //初始化按钮事件
+            initBtnWord(user_id);
+            initBtnFriend();
+            initBtnAdd();
+            initBtnBack();
+            initBtnShare();
+            closeMeetView();
+
+            loadMeetDetail(cur_meet_id, tmp_type);
         }
     });
 </script>

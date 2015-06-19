@@ -1,18 +1,22 @@
 $(document).ready(function() {
-    var user_id = localStorage.getItem('user_id');
-
-    validUser(user_id);
+    //var user_id = localStorage.getItem('user_id');
+    //
+    //validUser(user_id);
+    //
+    //if (!user_id) {
+    //    return;
+    //}
 
     //initShareParam(user_id);
-    //初始化按钮事件
-    initBtnWord(user_id);
-    initBtnFriend();
-    initBtnAdd();
-    initBtnBack();
-    initBtnShare();
-    closeMeetView();
-
-    loadMeetDetail(cur_meet_id, tmp_type);
+    ////初始化按钮事件
+    //initBtnWord(user_id);
+    //initBtnFriend();
+    //initBtnAdd();
+    //initBtnBack();
+    //initBtnShare();
+    //closeMeetView();
+    //
+    //loadMeetDetail(cur_meet_id, tmp_type);
 })
 
 function initShareParam(user_id) {
