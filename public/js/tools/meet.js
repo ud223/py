@@ -139,7 +139,6 @@ function meetLoad(data) {
             $(document).find('#view_address').html(data.address);
         }
         else {
-            alert(0);
             $(document).find('#tab-view-address').hide();//html("暂无地址");
         }
 
