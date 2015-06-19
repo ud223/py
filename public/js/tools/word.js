@@ -30,7 +30,7 @@ function loadWords(data) {
     if (data.length == 0) {
         $('#vote_test-tt').hide();//.html('暂无留言');
         $('#vote_word-list')..hide();
-        
+
         return;
     }
 
