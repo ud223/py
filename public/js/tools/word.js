@@ -3,7 +3,7 @@ function loadWords(data) {
 
     if (data.length == 0) {
         alert(3);
-        $('#view-test-tt').hide();//.html('暂无留言');
+        $('#view-test-tt').html('');//.html('暂无留言');
         $('#view_word-list').hide();
 
         return;
@@ -30,7 +30,7 @@ function loadWords(data) {
 
     if (data.length == 0) {
         alert(4);
-        $('#vote-test-tt').hide();//.html('暂无留言');
+        $('#vote-test-tt').html('');//.html('暂无留言');
         $('#vote_word-list')..hide();
 
         return;
