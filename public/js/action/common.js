@@ -205,10 +205,10 @@ function voteDate(data, msg) {
 }
 
 //确认设置活动日期
-function initSetMeetDate() {
+function initSetMeetDateisVote) {
     var user_id = localStorage.getItem('user_id');
 
-    if (user_id == proposer_id && vote > 0) {
+    if (user_id == proposer_id && isVote > 0) {
         $('#close-vote').show();
 
         $('#close-vote').tap(function () {
@@ -228,7 +228,7 @@ function setVoteDate(first_date, second_date, isVote) {
         $('#first_date').val(first_date);
         $('#second_date').val(second_date);
 
-        initSetMeetDate();
+        initSetMeetDate(isVote);
     }
     else {
         $('#vote_submit-vote').show();
