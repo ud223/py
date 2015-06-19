@@ -97,7 +97,7 @@ function loadMeetWords(data) {
     if (data.length == 0) {
         alert(4);
         $('#vote-test-tt').html('');//.html('暂无留言');
-        $('#vote_word-list')..hide();
+        $('#vote_word-list').hide();
 
         return;
     }
