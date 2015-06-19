@@ -59,11 +59,15 @@
 <script>
     document.title = '<?php echo $this->nickname?>' + "日程安排";
     var appid = '<?php echo $this->appid ?>';
-    var proposer_id = '<?php echo $this->proposer_id ?>';
+    var share_id = '<?php echo $this->proposer_id ?>';
     var meet_day = '<?php echo $this->day ?>';
     var curDate = '<?php echo $this->date ?>';
     var cur_meet_id = '<?php echo $this->meet_id ?>';
-    var is_share = true;
+    var is_share = false;
+    var users_id = "";
+    var proposer_id = "";
+    //分享人id
+    var share_id = "";
 
     $(document).ready(function(){
         var now = new Date();
@@ -79,7 +83,7 @@
 
             var user_id = localStorage.getItem('user_id');
 
-            meetModel.Query(proposer_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
+            meetModel.Query(share_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
         });
 
         var tmp_month = now.getMonth() + 1;
@@ -94,7 +98,7 @@
             var user_id = localStorage.getItem('user_id');
             var strDate = curDate.split('-');
 
-            meetModel.Query(proposer_id, strDate[0], numDateCheck(strDate[1]),  numDateCheck(strDate[2]));
+            meetModel.Query(share_id, strDate[0], numDateCheck(strDate[1]),  numDateCheck(strDate[2]));
         }
 
         var user_id = localStorage.getItem('user_id');
