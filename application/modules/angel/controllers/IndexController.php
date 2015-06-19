@@ -353,6 +353,7 @@ class Angel_IndexController extends Angel_Controller_Action {
                 }
             }
             else {
+                $tmp_type = 1;
                 $date = $meet->selected_date;
             }
 
@@ -360,7 +361,6 @@ class Angel_IndexController extends Angel_Controller_Action {
             $this->view->day = $meet->day;
         }
         else {
-            $tmp_type = 1;
             $this->view->date = "";
             $this->view->day = "";
         }

@@ -12,7 +12,8 @@ $(document).ready(function() {
     initBtnBack();
     initBtnShare();
     closeMeetView();
-
+    alert(cur_meet_id);
+    alert(tmp_type);
     loadMeetDetail(cur_meet_id, tmp_type);
 })
 
