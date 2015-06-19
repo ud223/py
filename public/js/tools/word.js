@@ -1,6 +1,6 @@
 function loadWords(data) {
     $('#view_word-list').html('');
-
+    alert(JSON.stringify(data));
     if (data.length == 0) {
         alert(3);
         $('#view-test-tt').html('');//.html('暂无留言');
