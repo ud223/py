@@ -2,7 +2,8 @@ function loadWords(data) {
     $('#view_word-list').html('');
 
     if (data.length == 0) {
-        $('#view_test-tt').html('暂无留言');
+        $('#view_test-tt').hide();//.html('暂无留言');
+        $('#view_word-list').hide();
 
         return;
     }
@@ -27,8 +28,9 @@ function loadWords(data) {
     $('#vote_word-list').html('');
 
     if (data.length == 0) {
-        $('#vote_test-tt').html('暂无留言');
-
+        $('#vote_test-tt').hide();//.html('暂无留言');
+        $('#vote_word-list')..hide();
+        
         return;
     }
 
