@@ -4,13 +4,15 @@ $(document).ready(function() {
     validUser(user_id);
 
     //initShareParam(user_id);
-
+    alert(1);
     //初始化按钮事件
     initBtnWord(user_id);
     initBtnFriend();
     initBtnAdd();
     initBtnBack();
+    alert(2);
     initBtnShare();
+    alert(3);
     closeMeetView();
     alert(cur_meet_id);
     alert(tmp_type);
