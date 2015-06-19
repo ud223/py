@@ -182,7 +182,7 @@ function initBtnJoin() {
 
             meet.join(user_id, cur_meet_id, afterJoin);
         })
-        
+
         $('#vote_btn_leave').hide();
     }
 }
