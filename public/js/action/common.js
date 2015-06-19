@@ -147,15 +147,16 @@ function initBtnCloseMeet(proposer_id, meet_id,  type) {
 //初始化加入按钮
 function initBtnJoin() {
     var user_id = localStorage.getItem("user_id");
-
+    alert(1);
     if (users_id.indexOf(user_id) > -1)  {
+        alert(2);
         if (user_id == proposer_id) {
             $('#btn_leave').hide();
             $('#btn_join').hide();
 
             return;
         }
-
+        alert(3);
         $('#btn_leave').show();
         $('#btn_join').hide();
         $('#btn_leave').tap(function() {
