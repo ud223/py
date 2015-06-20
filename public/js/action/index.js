@@ -74,7 +74,7 @@ function loadCalendar() {
 
         $('.touch-date-grid-color').removeClass('touch-date-grid-color');
 
-        $(this).addClass('touch-date-grid-color');
+        $("#day_"+ event.day.valueOf()).addClass('touch-date-grid-color');
 
         //$('#jijj').html(load_date);
 

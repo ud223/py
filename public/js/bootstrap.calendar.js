@@ -134,7 +134,7 @@
 
             getSchedule();
 
-            initPassCalendar(context.yn + '-' + context.mm + 1 + '月');
+            initPassCalendar(context.yn, context.mm + 1);
         });
     };
 
