@@ -154,7 +154,7 @@ function meetLoad(data) {
     $.each(data.users, function() {
         var share_url = "/share/"+ this.openid;
 
-        users_html = users_html + '<li><a href="'+ share_url +'"><img src="'+ this.headimgurl +'"/></a></li>';
+        users_html = users_html + '<li><img src="'+ this.headimgurl +'"/></li>';//<a href="'+ share_url +'"></a>
     });
 
     $(document).find('.busr-lst').html(users_html);
