@@ -833,3 +833,7 @@ textarea.inp-txt {
     margin:0;
     font-size:24px;
 }
+
+.touch-date-grid-color {
+    background:#F0F0F0;
+}

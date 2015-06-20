@@ -72,6 +72,10 @@ function loadCalendar() {
     }).on('changeDay', function(event) {
         var load_date = event.day.valueOf() + '-' + event.month.valueOf() + '-' + event.year.valueOf();
 
+        $('.touch-date-grid-color').removeClass('touch-date-grid-color');
+
+        $(this).addClass('touch-date-grid-color');
+
         //$('#jijj').html(load_date);
 
         var meetModel = new Meet();
@@ -80,6 +84,11 @@ function loadCalendar() {
 
         meetModel.Query(user_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
     });
+
+    //$('每个日子的class').on('touchstart', function(){
+    //    $('.touch-date-grid-color').removeClass('touch-date-grid-color');
+    //    $(this).addClass('touch-date-grid-color');
+    //});
 
     var tmp_month = now.getMonth() + 1;
 
@@ -145,33 +154,33 @@ function initBtnPending() {
     })
 }
 
-function initPassCalendar(year, month) {
-    var d = new Date();
-
-    if (year < d.getFullYear()) {
-        for (i = 1; i < 32; i++) {
-            addPassStyel(i);
-        }
-    }
-    else if (year == d.getFullYear() && month < d.getMonth() + 1) {
-        for (i = 1; i < 32; i++) {
-            addPassStyel(i);
-        }
-    }
-    else if (year == d.getFullYear() && month == d.getMonth() + 1) {
-        for (i = 1; i < d.getDate(); i++) {
-            addPassStyel(i);
-        }
-    }
-}
-
-function addPassStyel(day) {
-    var d = $('#day_'+ day);
-
-    if (d) {
-        $('#day_'+ day).addClass('past');
-    }
-}
+//function initPassCalendar(year, month) {
+//    var d = new Date();
+//
+//    if (year < d.getFullYear()) {
+//        for (i = 1; i < 32; i++) {
+//            addPassStyel(i);
+//        }
+//    }
+//    else if (year == d.getFullYear() && month < d.getMonth() + 1) {
+//        for (i = 1; i < 32; i++) {
+//            addPassStyel(i);
+//        }
+//    }
+//    else if (year == d.getFullYear() && month == d.getMonth() + 1) {
+//        for (i = 1; i < d.getDate(); i++) {
+//            addPassStyel(i);
+//        }
+//    }
+//}
+//
+//function addPassStyel(day) {
+//    var d = $('#day_'+ day);
+//
+//    if (d) {
+//        $('#day_'+ day).addClass('past');
+//    }
+//}
 
 
 function initCalendarClick(id, year, month, day) {
