@@ -110,6 +110,7 @@ function loadMeetDetail(meet_id, type) {
 }
 
 function meetLoad(data) {
+    document.title = nickname + "邀您参加活动";
     $(document).find('#title').html(data.meet_text);
 
     if (data.selected_date == 'false') {

@@ -49,6 +49,7 @@ function closeMeetView() {
     var user_id = localStorage.getItem('user_id');
 
     $('.glyphicon-remove').tap(function() {
+        document.title = nickname + "日程安排";
         $('#show-meet-view').hide();
         $('#show-meet-vote').hide();
         cur_meet_id = false;
