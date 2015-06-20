@@ -784,6 +784,10 @@ textarea.inp-txt {
     top:50%;
     margin-top:-10px;
     font-size:20px;
+    height: 50px;
+    line-height: 50px;
+    width: 50px;
+
 }
 
 .share-the-meet {
@@ -792,6 +796,10 @@ textarea.inp-txt {
     top:50%;
     margin-top:-10px;
     font-size:20px;
+    height: 50px;
+    line-height: 50px;
+    width: 50px;
+
 }
 
 .bak-tlable {
