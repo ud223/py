@@ -82,6 +82,8 @@ function loadCalendar() {
 
         var user_id = localStorage.getItem('user_id');
 
+        alert(user_id);
+
         meetModel.Query(user_id, event.year.valueOf(), event.month.valueOf(),  event.day.valueOf());
     });
 
