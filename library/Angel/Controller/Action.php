@@ -49,8 +49,8 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     /**
      * 对用户的各项状态进行检测 
      */
-    public function preDispatch() {
-        // 正常情况下的登录和注册地址
+//    public function preDispatch() {
+//        // 正常情况下的登录和注册地址
 //        $registerRoute = "register";
 //        $loginRoute = "login";
 //        $requestManage = ($this->request->controller == 'manage');
@@ -91,8 +91,8 @@ class Angel_Controller_Action extends Zend_Controller_Action {
 //                }
 //            }
 //        }
-
-        // 如果用户还没被激活，跳转到激活页
+//
+//        // 如果用户还没被激活，跳转到激活页
 //        if ($this->me) {
 //            if (!$this->me->isActivated()) {
 //                $router = Zend_Controller_Front::getInstance()->getRouter()->getCurrentRouteName();
@@ -101,7 +101,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
 //                }
 //            }
 //        }
-    }
+//    }
 
     protected function checkRememberMe() {
         $result = false;

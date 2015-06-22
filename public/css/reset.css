@@ -1,0 +1,112 @@
+* {
+	font-family: "arial", "microsoft yahei";
+}
+body {
+	background-color: #F0F0F0;
+	color:#293038;
+}
+a {
+}
+a:link {
+	
+}
+a:visited {
+	
+}
+a:hover {
+	text-decoration: none;
+}
+.form-control {
+	border:none;
+	box-shadow: none;
+	border-radius: 3px;
+}
+ul {
+	margin:0;
+	padding:0;
+}
+ul li {
+	padding:0;
+	margin:0;
+	list-style: none;
+}
+.dropdown-menu {
+	background:#f8f8f8;
+	border-radius:0 0 3px 3px;
+	border:none;
+	min-width: 135px;
+	margin:1px 0 0;
+}
+.dropdown-menu .divider {
+	margin: 5px 0;
+}
+.dropdown-menu>li>a {
+	padding:8px 20px;
+}
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+	background-color:#efefef;
+}
+.breadcrumb {
+	background-color:transparent;
+	margin:0;
+	padding:0;
+}
+.label {
+	padding-bottom:.2em;
+}
+.btn {
+	border:none;
+	outline: none !important;
+}
+.btn .glyphicon {
+	margin-right:6px;
+}
+.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+	border-bottom-width: 1px;
+}
+.table {
+	margin-bottom:0;
+}
+.mbtable {
+	margin-bottom:20px;
+}
+.mbtable th, .mbtable td {
+	text-align:center;
+}
+.mbtable>thead>tr>td, .table>thead>tr>th {
+	padding:20px 0;
+	background: linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
+	background: -o-linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
+	background: -ms-linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
+	background: -moz-linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
+	background: -webkit-linear-gradient(top , rgb(255, 255, 255) , rgb(240, 240, 240) 100%);
+
+}
+
+
+.pagination {
+	margin:0;
+}
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+	color:#ef614e;
+}
+.pagination>li>a, .pagination>li>span {
+	color:#394656;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+	background-color:#EF614E;
+	border-color:#EF614E;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+	font-family: "microsoft yahei";
+}
+.form-control {
+	border:1px solid #ccc;
+}
+textarea.form-control {
+	height:150px;
+}
+.datepicker.dropdown-menu {
+	background:#FFF;
+	border:1px solid rgba(0,0,0,0.15);
+}

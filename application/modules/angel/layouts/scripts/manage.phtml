@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/global-manage.css" />
+</head>
+
+<body>
+<div id="top">
+    <!--<div id="top-logo"></div>-->
+    <div id="top-logo-txt"></div>
+
+    <div class="dropdown" id="login-user">
+        <button class="ddlbtn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="/img/del-user.png" />
+            <p class="p2">Admin</p>
+            <p class="p1">
+                <label class="label label-warning">管理员</label>
+            </p>
+            <!--<span class="dn glyphicon glyphicon glyphicon-menu-down"></span>-->
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="glyphicon glyphicon-cog"></i> 帐号设置</a>
+            </li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="glyphicon glyphicon-off"></i> 注销</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="sidebar">
+    <p class="mp1">MENU</p>
+    <div class="ul">
+        <a href="user-list.html" class="li">
+            <div class="lt">
+                <span class="glyphicon glyphicon-user"></span>
+            </div>
+            <span class="rt">管理员管理</span>
+        </a>
+        <a href="marketing-list.html" class="li selected">
+            <div class="lt">
+                <span class="glyphicon glyphicon-fire"></span>
+            </div>
+            <span class="rt">新闻管理</span>
+        </a>
+        <a href="invitation-list.html" class="li">
+            <div class="lt">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </div>
+            <span class="rt">案例信息管理</span>
+        </a>
+        <a href="invitation-list.html" class="li">
+            <div class="lt">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </div>
+            <span class="rt">产品展示管理</span>
+        </a>
+        <a href="invitation-list.html" class="li">
+            <div class="lt">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </div>
+            <span class="rt">产品应用管理</span>
+        </a>
+        <a href="invitation-list.html" class="li">
+            <div class="lt">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </div>
+            <span class="rt">荣誉资质管理</span>
+        </a>
+        <a href="invitation-list.html" class="li">
+            <div class="lt">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </div>
+            <span class="rt">图片管理</span>
+        </a>
+        <a href="invitation-list.html" class="li">
+            <div class="lt">
+                <span class="glyphicon glyphicon-tasks"></span>
+            </div>
+            <span class="rt">联系我们管理</span>
+        </a>
+    </div>
+    <div id="side-tipment">
+        Management System
+        <br/>v1.0
+    </div>
+</div>
+<?php echo $this->layout()->content ?>
+<script src="/js/1.11.2.js"></script>
+<script src="/js/jquery-bootstrap.js"></script>
+<script src="js/global.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,356 @@
+#top {
+	height: 50px;
+	background: #438eb9;
+	/*box-shadow: 0 2px 3px rgba(0,0,0,.1);*/
+	
+	color: #FFF;
+	position: fixed;
+	width: 100%;
+	left: 0;
+	top: 0;
+	z-index: 4;
+}
+div {
+	position: relative;
+}
+/* 主要的模块样式 */
+
+.mblk {
+	padding: 15px;
+	border-bottom: 1px solid #E4E4E4;
+}
+.wb {
+	background: #FFF;
+}
+.txt-r {
+	text-align: right;
+}
+.txt-c {
+	text-align: center;
+}
+.txt-l {
+	text-align: left;
+}
+.widebtn {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+.fadetxt {
+	color: #aaa;
+	font-weight: normal;
+}
+.clear,
+.clear-5,
+.clear-10,
+.clear-15,
+.clear-20,
+.clear-30,
+.clear-50 {
+	clear: both;
+	display: block;
+	font-size: 0;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+.clear-5 {
+	height: 5px;
+}
+.clear-10 {
+	height: 10px;
+}
+.clear-15 {
+	height: 15px;
+}
+.clear-20 {
+	height: 20px;
+}
+.clear-30 {
+	height: 30px;
+}
+.clear-50 {
+	height: 50px;
+}
+/*#top-logo {
+	background:url(../img/logo-s.png) center center no-repeat;
+	height:50px;
+	width:50px;
+	display:inline-block;
+	float:left;
+}
+#top-logo:hover {
+	background-color:rgba(0,0,0,.1);
+}*/
+
+#top-logo-txt {
+	background: url(../img/logo-s.png) center center no-repeat #2e79a4;
+	color: #FFF;
+	display: inline-block;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+	height: 50px;
+	line-height: 50px;
+	width: 180px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+}
+#sidebar {
+	position: fixed;
+	left: 0;
+	top: 50px;
+	bottom: 0;
+	width: 180px;
+	background: #438eb9;
+	color: #FFF;
+	min-height: 300px;
+}
+#sidebar .ul .li {
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	font-size: 13px;
+	color: #FFF;
+	text-decoration: none;
+}
+#sidebar .ul .li.selected {
+	border-right: 4px solid #ffe13d !important;
+	background: #2e79a4 !important;
+}
+/*#sidebar .ul .li.nth {
+	background:#242b32;
+}*/
+
+#sidebar .ul .li:hover {
+	background: #3d87b1;
+}
+#sidebar .ul .li:hover * {
+	/*text-shadow:0 1px 5px rgba(0,0,0,.4);*/
+}
+#sidebar .ul .li .lt {
+	width: 50px;
+	float: left;
+	height: 100%;
+	line-height: 100%;
+	display: inline-block;
+	position: relative;
+}
+#sidebar .ul .li .lt .glyphicon {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	height: 100%;
+	line-height: 48px;
+	color: rgba(255, 255, 255, .5);
+}
+#sidebar .ul .li:hover .glyphicon {
+	color: #FFF;
+}
+#sidebar .ul .li .rt {} #sidebar .mp1 {
+	padding: 15px;
+	color: #FFF;
+	color: rgba(255, 255, 255, .4);
+	margin: 0;
+	border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+#side-tipment {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	padding: 20px 0;
+	color: #B4D9EF;
+	font-size: 12px;
+	text-align: center;
+}
+#login-user {
+	height: 50px;
+	line-height: 50px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	cursor: pointer;
+}
+#login-user img {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+#login-user .nname {
+	color: #FFF;
+}
+#login-user .dn {
+	position: absolute;
+	height: 12px;
+	width: 12px;
+	line-height: 12px;
+	font-size: 12px;
+	display: inline-block;
+	right: 18px;
+	top: 50%;
+	margin-top: -6px;
+	color: rgba(255, 255, 255, .5);
+}
+#login-user:hover .dn {
+	color: #FFF;
+}
+#login-user .ddlbtn {
+	background: #438cba;
+	display: block;
+	padding: 0 65px 0 15px;
+	margin: 0;
+	border: none;
+	border-left: 1px solid #599CC3;
+	width: 100%;
+	height: 100%;
+	outline: none;
+}
+#login-user .p1,
+#login-user .p2 {
+	font-size: 12px;
+	margin: 0;
+	line-height: 16px;
+}
+#login-user .p1 {
+	padding-top: 2px;
+	text-align: center;
+}
+#login-user .p1 .label {
+	cursor: pointer;
+}
+#login-user .p2 {
+	font-weight: bold;
+}
+#content {
+	margin-left: 180px;
+	margin-top: 50px;
+}
+.mtitle {
+	font-size: 24px;
+	position: relative;
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+}
+.mtitle .widebtn {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.lightgray {
+	color: #aaa;
+}
+.wsiz1 {
+	width: 474px;
+}
+.recd01-itm {
+	padding: 2px 25px;
+	background: #dfdfdf;
+	color: #aaa;
+	margin: 5px 0;
+	border-radius: 4px;
+	text-align: center;
+	width: 190px;
+}
+.recd01-itm:hover {
+	background: #d0d0d0;
+}
+#tichbar {
+	right: -200px;
+	top: 5px;
+	position: absolute;
+	width: 200px;
+	z-index: 1;
+	padding: 15px;
+	background: #FFF;
+	height: auto;
+	text-align: center;
+}
+/* excel table (START) */
+.exc-tab {
+	display: none;
+}
+.reexc-tab {
+	width: 100%;
+	border-right: 1px solid #E0E0E0;
+	margin-bottom: 20px;
+}
+.reexc-tab-wp-fix,
+.reexc-tab-wp-scroll {
+	float: left;
+}
+.reexc-tab-wp-fix {
+	width: 40%;
+}
+.reexc-tab-wp-scroll {
+	width: 60%;
+	overflow-x: scroll;
+}
+.reexc-tab-fix,
+.reexc-tab-scroll {
+	display: table;
+	border-collapse: collapse;
+}
+.reexc-tab-fix {
+	width: 100%;
+}
+.reexc-tab-scroll {} .reexc-tab-head,
+.reexc-tab-row {
+	display: table-row;
+}
+.reexc-tab .td {
+	display: table-cell;
+	border: 1px solid #E2E2E2;
+	height: 32px;
+	line-height: 32px;
+	overflow: hidden;
+	text-align: center;
+	padding: 0 10px;
+	min-width: 100px;
+}
+.reexc-tab-head .td {
+	height: 72px;
+	vertical-align: middle;
+	font-weight: bold;
+	background: linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
+	background: -o-linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
+	background: -ms-linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
+	background: -moz-linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
+	background: -webkit-linear-gradient(top, rgb(255, 255, 255), rgb(240, 240, 240) 100%);
+	padding: 0 15px;
+}
+.reexc-tab-row {
+	background: #FFF;
+}
+.reexc-tab-row:nth-child(odd) {
+	background: #F8F8F8;
+}
+/* excel table (END) */
+/* gray theme (START) */
+
+#sidebar {
+	background: #E0E0E0;
+	color: #131313;
+}
+#sidebar .ul .li {
+	color: #666;
+}
+#sidebar .ul .li .lt .glyphicon {
+	color: #666;
+}
+#sidebar .mp1 {
+	color: #aaa;
+}
+#sidebar .ul .li.selected {
+	background: #f0f0f0 !important;
+	border-color: #438eb9 !important;
+}
+#side-tipment {
+	color: #aaa;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+}
+#sidebar .ul .li:hover {
+	background: rgba(255, 255, 255, .25);
+}
+/* gray theme (END) */
