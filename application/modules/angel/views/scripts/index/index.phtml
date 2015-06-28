@@ -1,4 +1,3 @@
-<!-- 广告部分 -->
 <div id="cst-space">
     <div class="sid-bts lt"></div>
     <div class="sid-bts rt"></div>
@@ -165,30 +164,14 @@
                 </div>
 
                 <!-- 循环显示 -->
-                <div class="col-xs-6">
-                    <a href="#" class="poi-mwu">
-                        <div class="poi-vmi"></div>
-                        <p class="poi-mic">此处显示商品名称</p>
-                    </a>
-                </div>
-                <div class="col-xs-6">
-                    <a href="#" class="poi-mwu">
-                        <div class="poi-vmi"></div>
-                        <p class="poi-mic">此处显示商品名称</p>
-                    </a>
-                </div>
-                <div class="col-xs-6">
-                    <a href="#" class="poi-mwu">
-                        <div class="poi-vmi"></div>
-                        <p class="poi-mic">此处显示商品名称</p>
-                    </a>
-                </div>
-                <div class="col-xs-6">
-                    <a href="#" class="poi-mwu">
-                        <div class="poi-vmi"></div>
-                        <p class="poi-mic">此处显示商品名称</p>
-                    </a>
-                </div>
+                <?php foreach ($this->products as $p):?>
+                    <div class="col-xs-6">
+                        <a href="/product/<?php echo $p["id"] ?>" class="poi-mwu">
+                            <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
+                            <p class="poi-mic"><?php echo $p["name"] ?></p>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
         <div class="col-xs-3">

@@ -41,58 +41,55 @@ class Angel_Controller_Action extends Zend_Controller_Action {
         // some global variable
         $this->view->currency = $this->bootstrap_options['currency'];
         $this->view->currency_symbol = $this->bootstrap_options['currency_symbol'];
-        $this->view->title = $this->bootstrap_options['site']['name'];
-        $this->view->mobile_download_link_ios = $this->bootstrap_options['mobile_download_link']['ios'];
-        $this->view->mobile_download_link_android = $this->bootstrap_options['mobile_download_link']['android'];
     }
 
     /**
      * 对用户的各项状态进行检测 
      */
-//    public function preDispatch() {
-//        // 正常情况下的登录和注册地址
-//        $registerRoute = "register";
-//        $loginRoute = "login";
-//        $requestManage = ($this->request->controller == 'manage');
-//        if ($requestManage) {
-//            // 后台管理系统的登录和注册地址
-//            $registerRoute = "manage-register";
-//            $loginRoute = "manage-login";
-//        }
-//        $registerPath = $this->view->url(array(), $registerRoute);
-//        $loginPath = $this->view->url(array(), $loginRoute) . '?goto=' . $this->request->getRequestUri();
-//
-//        $auth = Zend_Auth::getInstance();
-//        if ($auth->hasIdentity()) {
-//            $user = $this->getModel('user')->getUserById($auth->getIdentity());
-//            if (!$user) {
-//                if (!in_array($this->request->getActionName(), $this->login_not_required)) {
-//                    $auth->clearIdentity();
-//                    $this->_redirect($loginPath);
-//                }
-//            } else {
-//                $this->me = new Angel_Me($user);
-//                $this->view->me = $this->me;
-//                if ($requestManage && $user->user_type != 'admin') {
-//                    $this->_redirect($this->view->url(array(), 'forbidden'));
-//                }
-//            }
-//        } else {
-//            if ($this->checkRememberMe() === true) {
-//                $user = $this->getModel('user')->getUserById($auth->getIdentity());
-//                $this->me = new Angel_Me($user);
-//                $this->view->me = $this->me;
-//                if ($requestManage && $user->user_type != 'admin') {
-//                    $this->_redirect($this->view->url(array(), 'forbidden'));
-//                }
-//            } else {
-//                if (!in_array($this->request->getActionName(), $this->login_not_required)) {
-//                    $this->_redirect($loginPath);
-//                }
-//            }
-//        }
-//
-//        // 如果用户还没被激活，跳转到激活页
+    public function preDispatch() {
+        // 正常情况下的登录和注册地址
+        $registerRoute = "register";
+        $loginRoute = "login";
+        $requestManage = ($this->request->controller == 'manage');
+        if ($requestManage) {
+            // 后台管理系统的登录和注册地址
+            $registerRoute = "manage-register";
+            $loginRoute = "manage-login";
+        }
+        $registerPath = $this->view->url(array(), $registerRoute);
+        $loginPath = $this->view->url(array(), $loginRoute) . '?goto=' . $this->request->getRequestUri();
+
+        $auth = Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            $user = $this->getModel('user')->getUserById($auth->getIdentity());
+            if (!$user) {
+                if (!in_array($this->request->getActionName(), $this->login_not_required)) {
+                    $auth->clearIdentity();
+                    $this->_redirect($loginPath);
+                }
+            } else {
+                $this->me = new Angel_Me($user);
+                $this->view->me = $this->me;
+                if ($requestManage && $user->user_type != 'admin') {
+                    $this->_redirect($this->view->url(array(), 'forbidden'));
+                }
+            }
+        } else {
+            if ($this->checkRememberMe() === true) {
+                $user = $this->getModel('user')->getUserById($auth->getIdentity());
+                $this->me = new Angel_Me($user);
+                $this->view->me = $this->me;
+                if ($requestManage && $user->user_type != 'admin') {
+                    $this->_redirect($this->view->url(array(), 'forbidden'));
+                }
+            } else {
+                if (!in_array($this->request->getActionName(), $this->login_not_required)) {
+                    $this->_redirect($loginPath);
+                }
+            }
+        }
+
+        // 如果用户还没被激活，跳转到激活页
 //        if ($this->me) {
 //            if (!$this->me->isActivated()) {
 //                $router = Zend_Controller_Front::getInstance()->getRouter()->getCurrentRouteName();
@@ -101,7 +98,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
 //                }
 //            }
 //        }
-//    }
+    }
 
     protected function checkRememberMe() {
         $result = false;
@@ -192,7 +189,6 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     }
 
     protected function userLogout($defaultRedirectRoute) {
-        echo 'logout';
         Zend_Auth::getInstance()->clearIdentity();
 
         $angel = $this->request->getCookie($this->bootstrap_options['cookie']['remember_me']);
@@ -204,7 +200,6 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     }
 
     protected function userRegister($defaultRedirectRoute, $pageTitle, $userType) {
-        echo 'reg';
         $errorMsg = "登录失败，请重试或联系管理员";
         if ($this->request->isPost()) {
             $msg = "注册成功!";
@@ -219,29 +214,14 @@ class Angel_Controller_Action extends Zend_Controller_Action {
 
             $username = $this->request->getParam('username');
             $password = $this->request->getParam('password');
-
-            //
-            $from = $this->request->getParam('from');
-            if ($from) {
-                $attribute = array('from' => $from);
-            }
-            //
-
             $age = 0;
-            $gender = 'male';
-
+            $gender = '男';
+            
             if ($userType == 'user') {
                 $age = $this->request->getParam('age');
                 $gender = $this->request->getParam('gender');
-                $name = $this->request->getParam('name');
-
-                if (substr($gender, 0, 1) == 1 || substr($gender, 0, 1) == 2) {
-                    $tmp = $gender;
-                    $gender = $age;
-                    $age = $tmp;
-                }
             }
-
+            
             $result = false;
 
             try {
@@ -254,9 +234,9 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                     $result = null;
 
                     if ($userType == 'user') {
-                        $result = $userModel->addUser($email, $password, $username, $age, $gender, $name, Zend_Session::getId(), false, $attribute);
+                        $result = $userModel->addUser($email, $password, $username,  $age, $gender, Zend_Session::getId(), false);
                     } else if ($userType == 'admin') {
-                        $result = $userModel->addManageUser($email, $password, Zend_Session::getId(), false);
+                        $result = $userModel->addManageUser($email, $password,  Zend_Session::getId(), false);
                     } else {
                         $error = "invalid request";
                     }
@@ -289,25 +269,12 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                                 if ($remember == 'on') {
                                     setcookie($this->bootstrap_options['cookie']['remember_me'], $userModel->getRememberMeValue($auth['msg'], $ip), time() + $this->bootstrap_options['token']['expiry']['remember_me'] * 60, '/', $this->bootstrap_options['site']['domain']);
                                 }
-
+                                
                                 $user = $userModel->getUserByEmail($email);
+                                
+                                // 跳转至兴趣设置页面
+                                $this->_redirect($this->view->url(array(), 'hobby') . '?register=success');//"uid"=> $user->id
 
-                                $go_url = $_SERVER["QUERY_STRING"];
-
-                                if (!$go_url) {
-                                    $go_url = '';
-                                }
-
-                                //如果是手机直接跳转到播放页面
-                                if ($this->isMobile()) {
-                                    $go_url = str_replace("goto=", "", $go_url);
-                                    $this->_redirect($go_url);
-                                } else {
-                                    if ($go_url)
-                                        $go_url = '?' . $go_url;
-                                    // 跳转至兴趣设置页面
-                                    $this->_redirect($this->view->url(array(), 'hobby') . $go_url);
-                                }
                             } else {
                                 $this->view->error = $errorMsg;
                             }
@@ -327,7 +294,6 @@ class Angel_Controller_Action extends Zend_Controller_Action {
     }
 
     protected function userLogin($defaultRedirectRoute, $pageTitle) {
-        echo 'login';
         $errorMsg = "登录失败，请重试或联系管理员";
         $code = 200;
         $uid = "";
@@ -373,17 +339,14 @@ class Angel_Controller_Action extends Zend_Controller_Action {
                     $url = $goto;
                 }
 
-                $errorMsg = "登录成功！";
+                $errorMsg = "success";
                 $uid = $auth["msg"];
             } else {
                 $code = 500;
-                $errorMsg = "登录失败！";
             }
 
             if ($this->getParam('format') == 'json') {
-                $user = $userModel->getById($uid);
-
-                $this->_helper->json(array('data' => $errorMsg, 'uid' => $uid, 'username' => $user->username, 'name' => $user->name, 'author' => $user->author, 'code' => $code));
+                $this->_helper->json(array('data' => $errorMsg, 'uid' => $uid, 'code' => $code));
             } else {
                 if ($code == 200) {
                     $this->_redirect($url);
@@ -402,23 +365,20 @@ class Angel_Controller_Action extends Zend_Controller_Action {
 
     protected function isMobile() {
         $mobile = array();
-        //
-        static $mobilebrowser_list = 'Mobile|iPhone|Android|WAP|NetFront|JAVA|OperasMini|UCWEB|WindowssCE|Symbian|Series|webOS|SonyEricsson|Sony|BlackBerry|Cellphone|dopod|Nokia|samsung|PalmSource|Xphone|Xda|Smartphone|PIEPlus|MEIZU|MIDP|CLDC';
-//        echo $_SERVER['HTTP_USER_AGENT']; exit;
+        static $mobilebrowser_list ='Mobile|iPhone|Android|WAP|NetFront|JAVA|OperasMini|UCWEB|WindowssCE|Symbian|Series|webOS|SonyEricsson|Sony|BlackBerry|Cellphone|dopod|Nokia|samsung|PalmSource|Xphone|Xda|Smartphone|PIEPlus|MEIZU|MIDP|CLDC';
         //note 获取手机浏览器
-        if (preg_match("/$mobilebrowser_list/i", $_SERVER['HTTP_USER_AGENT'], $mobile)) {
+        if(preg_match("/$mobilebrowser_list/i", $_SERVER['HTTP_USER_AGENT'], $mobile)) {
             return true;
-        } else {
-            if (preg_match('/(mozilla|chrome|safari|opera|m3gate|winwap|openwave)/i', $_SERVER['HTTP_USER_AGENT'])) {
+        }else{
+            if(preg_match('/(mozilla|chrome|safari|opera|m3gate|winwap|openwave)/i', $_SERVER['HTTP_USER_AGENT'])) {
                 return false;
-            } else {
-                if ($_GET['mobile'] === 'yes') {
+            }else{
+                if($_GET['mobile'] === 'yes') {
                     return true;
-                } else {
+                }else{
                     return false;
                 }
             }
         }
     }
-
 }

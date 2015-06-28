@@ -39,8 +39,8 @@ class Angel_Auth_Adapter_Mongo implements Zend_Auth_Adapter_Interface{
             }
             else{
                 $user = $user->getNext();
-                //if($user->password != crypt($this->_password, $user->salt))
-                if($user->password_src != $this->_password){
+                
+                if($user->password != crypt($this->_password, $user->salt)){
                     $code = Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID;
                     $messages[] = Angel_Exception_User::returnDetail(Angel_Exception_User::PASSWORD_INCORRECT);
                 }

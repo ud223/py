@@ -1,4 +1,4 @@
- <?php
+<?php
 
 /**
  * @author powerdream5
@@ -52,9 +52,9 @@ abstract class Angel_Model_AbstractModel {
     public function save($id, $data, $notFoundException = Exception, $exceptionMessage = "") {
         $result = false;
         if ($data) {
-
+            
             $target = $this->getById($id);
-
+            
             if (!$target) {
                 throw new $notFoundException($exceptionMessage);
             }
@@ -105,7 +105,7 @@ abstract class Angel_Model_AbstractModel {
 
     public function getByUser($user_id, $return_as_paginator = true, $condition = false) {
         $new_condition = array('owner.$id' => new MongoId($user_id));
-        if ($condition) {
+        if($condition) {
             $new_condition = array_merge($new_condition, $condition);
         }
         return $this->getBy($return_as_paginator, $new_condition);
@@ -113,8 +113,6 @@ abstract class Angel_Model_AbstractModel {
 
     public function getById($id) {
         $result = false;
-        if (!$id)
-            return $result;
         $obj = $this->_dm->createQueryBuilder($this->_document_class)
                 ->field('id')->equals($id)
                 ->getQuery()
@@ -143,7 +141,7 @@ abstract class Angel_Model_AbstractModel {
         }
         return $result;
     }
-
+    
     public function getOneBy($condition = false) {
         $query = $this->_dm->createQueryBuilder($this->_document_class);
         if (is_array($condition)) {
@@ -171,18 +169,6 @@ abstract class Angel_Model_AbstractModel {
         }
 
         return $models[$modelName];
-    }
-
-    public function getLikeQuery($parameters = array(), $options = array()) {
-        $query = $this->_dm->createQueryBuilder($this->_document_class);
-
-        foreach ($parameters as $field => $value) {
-            $query->field($field)->equals($value);
-        }
-
-        $result = $query->getQuery();
-
-        return $result;
     }
 
 }

@@ -1,0 +1,42 @@
+<div class="container breadc">
+    <div class="row">
+        <div class="col-xs-12">
+            <a href="#">首页</a>
+            <span class="xsplt">/</span>
+            <span class="xsexp"><?php echo $this->category ?></span>
+        </div>
+    </div>
+</div>
+
+<div class="container mb30">
+    <div class="row">
+        <div class="col-xs-3">
+            <ul class="sid-ul-lst">
+                <li class="selected">
+                    <a href="/category/all">
+                        全部
+                    </a>
+                </li>
+                <?php foreach ($this->categorys as $category): ?>
+                    <li>
+                        <a href="/category/<?php echo $category->id ?>">
+                            <?php echo $category->name ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <div class="col-xs-9">
+            <div>
+                <?php foreach ($this->products as $p): ?>
+                    <div class="gallsitm">
+                        <a href="/product/<?php echo $p["id"] ?>" class="imga" style="background-image:url(<?php echo $p["photo"] ?>)"></a>
+                        <a href="/product/<?php echo $p["id"] ?>" class="nmtt"><?php echo $p["name"] ?></a>
+                    </div>
+                <?php endforeach; ?>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

@@ -1,104 +1,103 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="zh-cn">
+    <head>
+        <title>普源后台管理系统</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="renderer" content="webkit">
+        <!-- Bootstrap -->
 
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/global-manage.css" />
-</head>
+        <link rel="stylesheet" href="<?php echo $this->cssPath("bootstrap.css"); ?>">
+        <link rel="stylesheet" href="<?php echo $this->cssPath("bootstrap.theme.css"); ?>">
+        <link href="<?php echo $this->cssPath("global.css"); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->cssPath("global.manage.css"); ?>" rel="stylesheet" type="text/css" />
 
-<body>
-<div id="top">
-    <!--<div id="top-logo"></div>-->
-    <div id="top-logo-txt"></div>
+        <script type="text/javascript" src="<?php echo $this->jsPath('jquery.1.10.2.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('bootstrap.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('plugin.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('share.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('qrcode.js'); ?>"></script>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+            <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <!-- Static navbar -->
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/manage">普源后台管理系统</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">专辑<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-special-list-home') ?>">专辑列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-special-create') ?>">添加专辑</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">产品<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-product-list-home') ?>">产品列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-product-create') ?>">添加产品</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">图片 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-photo-list-home') ?>">图片列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-photo-upload') ?>">添加图片</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-phototype-list-home') ?>">管理图片分类</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-category-list-home') ?>">分类列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-category-create') ?>">添加分类</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <?php if (isset($this->me)): ?>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="<?php echo $this->url(array(), 'manage-logout') ?>" title="<?php echo $this->me->getUser()->email ?>">你好 管理员, 安全退出 <i class="glyphicon glyphicon-off"></i></a></li>
+                        </ul>
+                    <?php else: ?>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="<?php echo $this->url(array(), 'manage-login') ?>">登录</a></li>
+                        </ul>
 
-    <div class="dropdown" id="login-user">
-        <button class="ddlbtn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="/img/del-user.png" />
-            <p class="p2">Admin</p>
-            <p class="p1">
-                <label class="label label-warning">管理员</label>
-            </p>
-            <!--<span class="dn glyphicon glyphicon glyphicon-menu-down"></span>-->
-        </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="glyphicon glyphicon-cog"></i> 帐号设置</a>
-            </li>
-            <li role="presentation" class="divider"></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="glyphicon glyphicon-off"></i> 注销</a>
-            </li>
-        </ul>
-    </div>
-</div>
-<div id="sidebar">
-    <p class="mp1">MENU</p>
-    <div class="ul">
-        <a href="user-list.html" class="li">
-            <div class="lt">
-                <span class="glyphicon glyphicon-user"></span>
-            </div>
-            <span class="rt">管理员管理</span>
-        </a>
-        <a href="marketing-list.html" class="li selected">
-            <div class="lt">
-                <span class="glyphicon glyphicon-fire"></span>
-            </div>
-            <span class="rt">新闻管理</span>
-        </a>
-        <a href="invitation-list.html" class="li">
-            <div class="lt">
-                <span class="glyphicon glyphicon-tasks"></span>
-            </div>
-            <span class="rt">案例信息管理</span>
-        </a>
-        <a href="invitation-list.html" class="li">
-            <div class="lt">
-                <span class="glyphicon glyphicon-tasks"></span>
-            </div>
-            <span class="rt">产品展示管理</span>
-        </a>
-        <a href="invitation-list.html" class="li">
-            <div class="lt">
-                <span class="glyphicon glyphicon-tasks"></span>
-            </div>
-            <span class="rt">产品应用管理</span>
-        </a>
-        <a href="invitation-list.html" class="li">
-            <div class="lt">
-                <span class="glyphicon glyphicon-tasks"></span>
-            </div>
-            <span class="rt">荣誉资质管理</span>
-        </a>
-        <a href="invitation-list.html" class="li">
-            <div class="lt">
-                <span class="glyphicon glyphicon-tasks"></span>
-            </div>
-            <span class="rt">图片管理</span>
-        </a>
-        <a href="invitation-list.html" class="li">
-            <div class="lt">
-                <span class="glyphicon glyphicon-tasks"></span>
-            </div>
-            <span class="rt">联系我们管理</span>
-        </a>
-    </div>
-    <div id="side-tipment">
-        Management System
-        <br/>v1.0
-    </div>
-</div>
-<?php echo $this->layout()->content ?>
-<script src="/js/1.11.2.js"></script>
-<script src="/js/jquery-bootstrap.js"></script>
-<script src="js/global.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
+                    <?php endif; ?>
 
-    });
-</script>
-</body>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
 
+
+        <div class="container">
+            <?php echo $this->layout()->content; ?>
+        </div> <!-- /container -->
+        <div class='marginbottom50px'>
+
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+            });
+        </script>
+    </body>
 </html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="<?php echo $this->cssPath("bootstrap.css"); ?>">
+    <link rel="stylesheet" href="<?php echo $this->cssPath("py_global.css"); ?>">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="<?php echo $this->jsPath('jquery-bootstrap.js'); ?>"></script>
+    <script src="<?php echo $this->jsPath('py_global.js'); ?>"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<!-- 公用的头部 -->
+<div id="topblock">
+    <div class="nnlne"></div>
+    <a href="#" class="logoc"></a>
+    <div class="bblne">
+        <a href="index.htm" class="citm selected">首页</a>
+        <a href="#" class="citm">关于普源</a>
+        <a href="#" class="citm">工程案例</a>
+        <a href="/category/all" class="citm">产品展示</a>
+        <a href="#" class="citm">产品应用</a>
+        <a href="#" class="citm">荣誉资质</a>
+        <a href="#" class="citm">新闻动态</a>
+        <a href="#" class="citm">联系我们</a>
+
+        <a href="#" class="citm swce selected">中文</a>
+        <a href="#" class="citm swce">English</a>
+    </div>
+</div>
+
+
+<!--
+    作者：vincedotnet@hotmail.com
+    时间：2015-06-21
+    描述：以下部分放入View中，开始
+-->
+<!-- 广告部分 -->
+<?php echo $this->layout()->content; ?>
+<!--
+    作者：vincedotnet@hotmail.com
+    时间：2015-06-21
+    描述：以上部分放入View中，结束
+-->
+
+
+<div id="footerblock">
+    <div class="container wp">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="xc00">
+                    <div class="xc01"></div>
+                    <div class="xc02">深圳普源特殊材料有限公司</div>
+                    <div class="xc03">shenzhen puyuan company ltd. limited</div>
+                </div>
+                <div class="xc04">
+                    <div>
+                        <span>办公地点： 深圳市南山区科技园高新园中区深南花园裙楼C座424</span>
+                    </div>
+                    <div>
+                        <span>办公电话： 0755-26966181</span><span>传真： 0755-26966181</span>
+                    </div>
+                    <div>
+                        <span>工厂地点： 惠州市惠阳区xxxx574号B栋112号</span>
+                    </div>
+                    <div>
+                        <span>办公电话： 0769-16321738</span><span>传真： 0769-16321739</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="xc05">
+                    <div class="xc06">
+                        深圳市普源新型材料有限公司 粤ICP备06108000号-1
+                    </div>
+                    <div class="xc07">
+                        Copyright 2015,ALL Rights Reserved pu-yuan.com
+                    </div>
+                    <div class="xc08">
+                        <!-- JiaThis Button BEGIN -->
+                        <div class="jiathis_style_32x32">
+                            <a class="jiathis_button_qzone"></a>
+                            <a class="jiathis_button_tsina"></a>
+                            <a class="jiathis_button_tqq"></a>
+                            <a class="jiathis_button_weixin"></a>
+                            <a class="jiathis_button_renren"></a>
+                            <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                            <a class="jiathis_counter_style"></a>
+                        </div>
+                        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+                        <!-- JiaThis Button END -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var singleWidth;
+    $('document').ready(function(){
+        singleWidth = $('.gall-itm').width();
+        var gi_c = 0;
+        $('.gall-itm').each(function(){
+            $(this).attr('index', gi_c);
+            gi_c++;
+        });
+        gi_c = 0;
+        $('#btc-lst .itm').each(function(){
+            $(this).attr('index', gi_c);
+            gi_c++;
+        });
+
+
+        var movfunc = function(obj){
+            var index = obj.attr('index');
+            var x = singleWidth * index * - 1;
+            $('#gall-list').animate({left: x}, 500);
+            $('#btc-lst .itm').removeClass('selected');
+            $('#cst-space .itm[index=' + index + ']').addClass('selected');
+        };
+        $('#cst-space .itm').click(function(){
+            movfunc($(this));
+
+            clearInterval($('body').data('auto-scroll-gall'));
+        });
+//				
+        var getNI = function(obj) {
+            var index = parseInt($('#btc-lst .itm.selected').attr('index'));
+            var nIndex = index - 1;
+            var mnd = $('#btc-lst .itm').length - 1;
+            if(nIndex < 0) {
+                nIndex = mnd;
+            }
+            if(obj.hasClass('rt')) {
+                nIndex = index + 1;
+                if(nIndex > mnd) {
+                    nIndex = 0;
+                }
+            }
+            return nIndex;
+        };
+        $('.sid-bts').click(function(){
+            var nIndex = getNI($(this));
+            movfunc($('#btc-lst .itm[index=' + nIndex + ']'));
+            clearInterval($('body').data('auto-scroll-gall'));
+        });
+
+        var intid = setInterval(function(){
+            var nIndex = getNI($('.sid-bts.rt'));
+            movfunc($('#btc-lst .itm[index=' + nIndex + ']'));
+        }, 5000);
+        $('body').data('auto-scroll-gall', intid);
+
+
+        var resizeGitm = function(){
+            $('.gall-itm').width($(window).width());
+            singleWidth = $('.gall-itm').width();
+
+            var nleft = $('#btc-lst .itm.selected').attr('index') * singleWidth * -1;
+            $('#gall-list').css('left', nleft);
+        };
+
+        resizeGitm();
+        $(window).resize(function(){
+            resizeGitm();
+        });
+    });
+</script>
+</body>
+</html>

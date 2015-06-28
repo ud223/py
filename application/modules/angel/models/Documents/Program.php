@@ -47,9 +47,6 @@ class Program extends AbstractDocument {
     
     /** @ODM\String */
     protected $captions; 
-    
-    /** @ODM\Int */
-    protected $count = 0;
 
     /**
      * 添加图片
