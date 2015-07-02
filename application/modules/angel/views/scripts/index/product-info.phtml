@@ -157,41 +157,55 @@
                 <div>
                     <p class="caro-tt">数据说明</p>
                     <ul class="data-ul">
-                        <li>
-                            <span class="col">宽度：</span>
-                            <span><?php echo $this->model->width ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">厚度：</span>
-                            <span><?php echo $this->model->thickness ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">长度：</span>
-                            <span><?php echo $this->model->height ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">款式：</span>
-                            <span><?php echo $this->model->style ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">上/下钢板厚度：</span>
-                            <span><?php echo $this->model->other_thickness ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">可用芯材：</span>
-                            <span><?php echo $this->model->steel_core ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">侧边封钢带：</span>
-                            <span><?php echo $this->model->steel_belt ?></span>
-                            <div class="clear"></div>
-                        </li>
+                        <?php if ($this->model->width): ?>
+                            <li>
+                                <span class="col">宽度：</span>
+                                <span><?php echo $this->model->width ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->thickness): ?>
+                            <li>
+                                <span class="col">厚度：</span>
+                                <span><?php echo $this->model->thickness ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->height): ?>
+                            <li>
+                                <span class="col">长度：</span>
+                                <span><?php echo $this->model->height ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->style): ?>
+                            <li>
+                                <span class="col">款式：</span>
+                                <span><?php echo $this->model->style ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->other_thickness): ?>
+                            <li>
+                                <span class="col">上/下钢板厚度：</span>
+                                <span><?php echo $this->model->other_thickness ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->steel_core): ?>
+                            <li>
+                                <span class="col">可用芯材：</span>
+                                <span><?php echo $this->model->steel_core ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->steel_belt): ?>
+                            <li>
+                                <span class="col">侧边封钢带：</span>
+                                <span><?php echo $this->model->steel_belt ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -250,41 +264,55 @@
                 <div>
                     <p class="caro-tt">DATA</p>
                     <ul class="data-ul">
-                        <li>
-                            <span class="col">Width：</span>
-                            <span><?php echo $this->model->width_en ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">Standard width：</span>
-                            <span><?php echo $this->model->thickness_en ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">Length：</span>
-                            <span><?php echo $this->model->height_en ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">style：</span>
-                            <span><?php echo $this->model->style_en ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">External/internal Facing Thickness：</span>
-                            <span><?php echo $this->model->other_thickness_en ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">Available core materials：</span>
-                            <span><?php echo $this->model->steel_core_en ?></span>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <span class="col">Lateral Sides：</span>
-                            <span><?php echo $this->model->steel_belt_en ?></span>
-                            <div class="clear"></div>
-                        </li>
+                        <?php if ($this->model->width_en): ?>
+                            <li>
+                                <span class="col">Width：</span>
+                                <span><?php echo $this->model->width_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->thickness_en): ?>
+                            <li>
+                                <span class="col">Standard width：</span>
+                                <span><?php echo $this->model->thickness_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->height_en): ?>
+                            <li>
+                                <span class="col">Length：</span>
+                                <span><?php echo $this->model->height_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->style_en): ?>
+                            <li>
+                                <span class="col">style：</span>
+                                <span><?php echo $this->model->style_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->other_thickness_en): ?>
+                            <li>
+                                <span class="col">External/internal Facing Thickness：</span>
+                                <span><?php echo $this->model->other_thickness_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->steel_core_en): ?>
+                            <li>
+                                <span class="col">Available core materials：</span>
+                                <span><?php echo $this->model->steel_core_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->steel_belt_en): ?>
+                            <li>
+                                <span class="col">Lateral Sides：</span>
+                                <span><?php echo $this->model->steel_belt_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
