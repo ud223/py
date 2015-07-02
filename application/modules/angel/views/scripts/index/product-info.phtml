@@ -121,7 +121,7 @@
             <div class="col-xs-12">
                 <a href="/">HOME</a>
                 <span class="xsplt">/</span>
-                <a href="/category/<?php echo $this->category_id ?>"><?php echo $this->category_en ?></a>
+                <a href="/product/list/<?php echo $this->category_id ?>"><?php echo $this->category_en ?></a>
                 <span class="xsplt">/</span>
                 <span class="xsexp"><?php echo $this->model->name_en ?></span>
             </div>
@@ -365,7 +365,7 @@
         })
 
         $(".header").find(".selected").removeClass("selected");
-        $(".header").find(".project").addClass("selected");
+        $(".header").find(".product").addClass("selected");
     })
 
     function photoSmallToBig(path) {
