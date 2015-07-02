@@ -1,0 +1,88 @@
+<style>
+    .ihlist {
+        cursor: pointer;
+    }
+    .ihlist .itm {
+        padding:20px;
+        border:1px solid #EEE;
+        margin-top:30px;
+        height: 180px;
+    }
+    .ihlist .itm:hover {
+        background: #478bd2;
+        border-color: #478bd2;
+    }
+    .ihlist .itm .btt {
+        font-size:18px;
+        margin-bottom:5px;
+        display:block;
+        color:#333;
+    }
+    .ihlist .itm .time {
+        color:#aaa;
+        font-size:12px;
+    }
+    .ihlist .itm:hover .btt {
+        color:#FFF;
+    }
+    .ihlist .itm:hover .time {
+        color:#FFF;
+        opacity: .5;
+    }
+</style>
+<div class="container breadc">
+    <div class="cn" style="display: noen">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">首页</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">新闻动态</span>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: noen">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">HOME</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">NEWS</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bjobanner">
+    PUYUAN NEWS
+</div>
+<div class="clear-10"></div>
+<div class="container">
+    <div class="cn" style="display: noen">
+        <div class="row">
+            <?php foreach ($this->resource as $r):?>
+                <div class="col-xs-4 ihlist" onclick="location.href='/news/detail/<?php echo $r["id"] ?>'">
+                    <div class="itm">
+                        <a class="btt" href="/news/detail/<?php echo $r["id"] ?>"><?php echo $r["title"] ?></a>
+                        <div class="time"><?php echo $r["date"] ?></div>
+                    </div>
+                </div>
+            <?php endforeach;?>
+        </div>
+    </div>
+    <div class="en" style="display: noen">
+        <div class="row">
+            <?php foreach ($this->resource as $r):?>
+                <div class="col-xs-4 ihlist" onclick="location.href='/news/detail/<?php echo $r["id"] ?>'">
+                    <div class="itm">
+                        <a class="btt" href="/news/detail/<?php echo $r["id"] ?>"><?php echo $r["title_en"] ?></a>
+                        <div class="time"><?php echo $r["date_en"] ?></div>
+                    </div>
+                </div>
+            <?php endforeach;?>
+        </div>
+    </div>
+</div>
+<div class="clear-50"></div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <?php   echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'news-list'));  ?>
+    </div>
+</div>

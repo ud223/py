@@ -105,111 +105,250 @@
     }
 </style>
 <div class="container breadc">
-    <div class="row">
-        <div class="col-xs-12">
-            <a href="/">首页</a>
-            <span class="xsplt">/</span>
-            <a href="/category/<?php echo $this->category_id ?>"><?php echo $this->category ?></a>
-            <span class="xsplt">/</span>
-            <span class="xsexp"><?php echo $this->model->name ?></span>
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">首页</a>
+                <span class="xsplt">/</span>
+                <a href="/category/<?php echo $this->category_id ?>"><?php echo $this->category ?></a>
+                <span class="xsplt">/</span>
+                <span class="xsexp"><?php echo $this->model->name ?></span>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">HOME</a>
+                <span class="xsplt">/</span>
+                <a href="/category/<?php echo $this->category_id ?>"><?php echo $this->category_en ?></a>
+                <span class="xsplt">/</span>
+                <span class="xsexp"><?php echo $this->model->name_en ?></span>
+            </div>
         </div>
     </div>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="col-xs-6">
-            <a href="#" id="bigc2-img-wp">
-                <img id="big-photo" src="<?php echo $this->first_photo?>" />
-            </a>
-            <div id="smal2-img-list">
-                <?php foreach ($this->photo as $p):?>
-                    <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm last small-photo"></a>
-                <?php endforeach;?>
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-6">
+                <a href="#" id="bigc2-img-wp">
+                    <img id="big-photo" style="width:500px; height: 302px" src="<?php echo $this->first_photo?>" />
+                </a>
+                <div id="smal2-img-list">
+                    <?php $c = 0;?>
+                    <?php foreach ($this->photo as $p):?>
+                        <?php if ($c == 4):?>
+                            <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo last"></a>
+                            <?php break;?>
+                        <?php else:?>
+                            <?php if ($c == 0):?>
+                                <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo selected"></a>
+                            <?php else: ?>
+                                <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo"></a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php $c++;?>
+                    <?php endforeach;?>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-6">
-            <a href="#" id="crni-tt"><?php echo $this->model->name ?></a>
-            <div>
-                <p class="caro-tt">数据说明</p>
-                <ul class="data-ul">
-                    <li>
-                        <span class="col">宽度：</span>
-                        <span><?php echo $this->model->width ?></span>
-                    </li>
-                    <li>
-                        <span class="col">厚度：</span>
-                        <span><?php echo $this->model->thickness ?></span>
-                    </li>
-                    <li>
-                        <span class="col">长度：</span>
-                        <span><?php echo $this->model->height ?></span>
-                    </li>
-                    <li>
-                        <span class="col">款式：</span>
-                        <span><?php echo $this->model->style ?></span>
-                    </li>
-                    <li>
-                        <span class="col">上/下钢板厚度：</span>
-                        <span><?php echo $this->model->other_thickness ?></span>
-                    </li>
-                    <li>
-                        <span class="col">可用芯材：</span>
-                        <span><?php echo $this->model->steel_core ?></span>
-                    </li>
-                    <li>
-                        <span class="col">侧边封钢带：</span>
-                        <span><?php echo $this->model->steel_belt ?></span>
-                    </li>
-                </ul>
+            <div class="col-xs-6">
+                <a href="#" id="crni-tt"><?php echo $this->model->name ?></a>
+                <div>
+                    <p class="caro-tt">数据说明</p>
+                    <ul class="data-ul">
+                        <li>
+                            <span class="col">宽度：</span>
+                            <span><?php echo $this->model->width ?></span>
+                        </li>
+                        <li>
+                            <span class="col">厚度：</span>
+                            <span><?php echo $this->model->thickness ?></span>
+                        </li>
+                        <li>
+                            <span class="col">长度：</span>
+                            <span><?php echo $this->model->height ?></span>
+                        </li>
+                        <li>
+                            <span class="col">款式：</span>
+                            <span><?php echo $this->model->style ?></span>
+                        </li>
+                        <li>
+                            <span class="col">上/下钢板厚度：</span>
+                            <span><?php echo $this->model->other_thickness ?></span>
+                        </li>
+                        <li>
+                            <span class="col">可用芯材：</span>
+                            <span><?php echo $this->model->steel_core ?></span>
+                        </li>
+                        <li>
+                            <span class="col">侧边封钢带：</span>
+                            <span><?php echo $this->model->steel_belt ?></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="clear-50"></div>
+            <div class="clear-50"></div>
 
-        <div class="col-xs-6">
-            <p class="caro-tt">详细描述</p>
-            <div class="caro-detail">
-                <p>
-                    <?php echo $this->model->description ?>
-                </p>
+            <div class="col-xs-6">
+                <p class="caro-tt">详产品特点</p>
+                <div class="caro-detail">
+                    <p>
+                        <?php echo $this->model->description ?>
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <p class="caro-tt">相关案例</p>
+                <div>
+                    <?php $c = 0; ?>
+                    <?php foreach ($this->cases as $c):?>
+                        <?php if ($c % 2 == 0) :?>
+                            <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name"]?></span></a>
+                        <?php else:?>
+                            <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name"]?></span></a>
+                        <?php endif;?>
+                    <?php endforeach;?>
+                </div>
+                <div class="clear"></div>
             </div>
         </div>
-        <div class="col-xs-6">
-            <p class="caro-tt">相关案例</p>
-            <div>
-                <a href="#" class="rela-cas" style="background-image: url(/img/l-09.jpg);"><span>超级摸板房</span></a>
-                <!--注意：此处如果是偶数，加上一个class"even"在rela-cas后面-->
-                <a href="#" class="rela-cas even" style="background-image: url(/img/l-10.jpg);"><span>超级摸板房</span></a>
-                <a href="#" class="rela-cas" style="background-image: url(/img/l-09.jpg);"><span>超级摸板房</span></a>
-                <a href="#" class="rela-cas even" style="background-image: url(/img/l-10.jpg);"><span>超级摸板房</span></a>
-                <a href="#" class="rela-cas" style="background-image: url(/img/l-09.jpg);"><span>超级摸板房</span></a>
-                <a href="#" class="rela-cas even" style="background-image: url(/img/l-10.jpg);"><span>超级摸板房</span></a>
-                <a href="#" class="rela-cas" style="background-image: url(/img/l-11.jpg);"><span>超级摸板房</span></a>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-6">
+                <a href="#" id="bigc2-img-wp">
+                    <img id="big-photo" style="width:500px; height: 302px" src="<?php echo $this->first_photo?>" />
+                </a>
+                <div id="smal2-img-list">
+                    <?php $c = 0;?>
+                    <?php foreach ($this->photo as $p):?>
+                        <?php if ($c == 4):?>
+                            <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo last"></a>
+                            <?php break;?>
+                        <?php else:?>
+                            <?php if ($c == 0):?>
+                                <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo selected"></a>
+                            <?php else: ?>
+                                <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo"></a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php $c++;?>
+                    <?php endforeach;?>
+                </div>
             </div>
-            <div class="clear"></div>
+            <div class="col-xs-6">
+                <a href="#" id="crni-tt"><?php echo $this->model->name_en ?></a>
+                <div>
+                    <p class="caro-tt">DATA</p>
+                    <ul class="data-ul">
+                        <li>
+                            <span class="col">Width：</span>
+                            <span><?php echo $this->model->width_en ?></span>
+                        </li>
+                        <li>
+                            <span class="col">Standard width：</span>
+                            <span><?php echo $this->model->thickness_en ?></span>
+                        </li>
+                        <li>
+                            <span class="col">Length：</span>
+                            <span><?php echo $this->model->height_en ?></span>
+                        </li>
+                        <li>
+                            <span class="col">style：</span>
+                            <span><?php echo $this->model->style_en ?></span>
+                        </li>
+                        <li>
+                            <span class="col">上/下钢板厚度：</span>
+                            <span><?php echo $this->model->other_thickness_en ?></span>
+                        </li>
+                        <li>
+                            <span class="col">Available core materials：</span>
+                            <span><?php echo $this->model->steel_core_en ?></span>
+                        </li>
+                        <li>
+                            <span class="col">侧边封钢带：</span>
+                            <span><?php echo $this->model->steel_belt_en ?></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="clear-50"></div>
+
+            <div class="col-xs-6">
+                <p class="caro-tt">Features</p>
+                <div class="caro-detail">
+                    <p>
+                        <?php echo $this->model->description_en ?>
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <p class="caro-tt">RELATED CASE</p>
+                <div>
+                    <?php $c = 0; ?>
+                    <?php foreach ($this->cases as $c):?>
+                        <?php if ($c % 2 == 0) :?>
+                            <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                        <?php else:?>
+                            <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                        <?php endif;?>
+                    <?php endforeach;?>
+                </div>
+                <div class="clear"></div>
+            </div>
         </div>
     </div>
 </div>
 
 <div id="themieothers">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="mneo-title">
-                    其他产品
-                    <div class="cline"></div>
+    <div class="cn" style="display: none">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="mneo-title">
+                        同类产品
+                        <div class="cline"></div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <?php $c = 0; ?>
+                    <?php foreach ($this->other_product as $p):?>
+                        <?php if ($c == 5): ?>
+                            <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas last" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name']?></span></a>
+                        <?php else:?>
+                            <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name']?></span></a>
+                        <?php endif;?>
+                        <?php $c++; ?>
+                    <?php endforeach;?>
+                    <div class="clear"></div>
                 </div>
             </div>
-            <div class="col-xs-12">
-                <!--此处最多放5个关联商品，即统一分类下其他产品-->
-                <a href="#" class="prod-rela-cas" style="background-image: url(/img/l-09.jpg);"><span>超级摸板房</span></a>
-                <a href="#" class="prod-rela-cas" style="background-image: url(/img/l-09.jpg);"><span>超级摸板房</span></a>
-                <a href="#" class="prod-rela-cas" style="background-image: url(/img/l-09.jpg);"><span>超级摸板房</span></a>
-                <a href="#" class="prod-rela-cas" style="background-image: url(/img/l-09.jpg);"><span>超级摸板房</span></a>
-                <!-- 注意：此处如果是最后一个（第5个）加上一个class:last -->
-                <a href="#" class="prod-rela-cas last" style="background-image: url(/img/l-09.jpg);"><span>超级摸板房</span></a>
-                <div class="clear"></div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="mneo-title">
+                        LIKE PRODUCTS
+                        <div class="cline"></div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <?php $c = 0; ?>
+                    <?php foreach ($this->other_product as $p):?>
+                        <?php if ($c == 5): ?>
+                            <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas last" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name_en']?></span></a>
+                        <?php else:?>
+                            <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name_en']?></span></a>
+                        <?php endif;?>
+                        <?php $c++; ?>
+                    <?php endforeach;?>
+                    <div class="clear"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -218,6 +357,9 @@
     $(document).ready(function() {
         $(".small-photo").click(function() {
             var path = $(this).css("background-image");
+
+            $(".selected").removeClass("selected");
+            $(this).addClass("selected");
 
             $("#big-photo").attr("src", photoSmallToBig(path));
         })

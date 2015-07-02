@@ -47,6 +47,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
      * 对用户的各项状态进行检测 
      */
     public function preDispatch() {
+//        echo $this->request->getActionName(); var_dump($this->login_not_required);exit;
         // 正常情况下的登录和注册地址
         $registerRoute = "register";
         $loginRoute = "login";
@@ -63,6 +64,7 @@ class Angel_Controller_Action extends Zend_Controller_Action {
         if ($auth->hasIdentity()) {
             $user = $this->getModel('user')->getUserById($auth->getIdentity());
             if (!$user) {
+
                 if (!in_array($this->request->getActionName(), $this->login_not_required)) {
                     $auth->clearIdentity();
                     $this->_redirect($loginPath);

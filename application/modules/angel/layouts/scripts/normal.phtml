@@ -12,6 +12,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="<?php echo $this->jsPath('jquery-bootstrap.js'); ?>"></script>
     <script src="<?php echo $this->jsPath('py_global.js'); ?>"></script>
+    <script src="<?php echo $this->jsPath('tools/String.js'); ?>"></script>
     <style>
 
     </style>
@@ -19,20 +20,37 @@
 <body>
 <!-- 公用的头部 -->
 <div id="topblock">
-    <div class="nnlne"></div>
-    <a href="#" class="logoc"></a>
-    <div class="bblne">
-        <a href="/" class="citm selected">首页</a>
-        <a href="#" class="citm">关于普源</a>
-        <a href="#" class="citm">工程案例</a>
-        <a href="/category/all" class="citm">产品展示</a>
-        <a href="#" class="citm">产品应用</a>
-        <a href="#" class="citm">荣誉资质</a>
-        <a href="#" class="citm">新闻动态</a>
-        <a href="#" class="citm">联系我们</a>
+    <div class="cn" style="display: none">
+        <div class="nnlne"></div>
+        <a href="#" class="logoc"></a>
+        <div class="bblne">
+            <a href="/" class="citm selected">首页</a>
+            <a href="/about" class="citm">关于普源</a>
+            <a href="/case/list" class="citm">工程案例</a>
+            <a href="/product/list/all" class="citm">产品展示</a>
+            <a href="#" class="citm">产品应用</a>
+            <a href="/awards" class="citm">荣誉资质</a>
+            <a href="/news/list" class="citm">新闻动态</a>
 
-        <a href="#" class="citm swce selected">中文</a>
-        <a href="#" class="citm swce">English</a>
+            <a href="javascript:void(0)" onclick="setLanguage('cn')" class="citm swce lt selected">中文</a>
+            <a href="javascript:void(0)" onclick="setLanguage('en')" class="citm swce">English</a>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="nnlne"></div>
+        <a href="#" class="logoc"></a>
+        <div class="bblne">
+            <a href="/" class="citm selected">HOME</a>
+            <a href="/about" class="citm">ABOUT US</a>
+            <a href="/case/list" class="citm">PROJECTS</a>
+            <a href="/product/list/all" class="citm">PRODUCTS</a>
+            <a href="#" class="citm">APPLICATION</a>
+            <a href="/awards" class="citm">Qualification & Certification</a>
+            <a href="/news/list" class="citm">NEWS</a>
+
+            <a href="javascript:void(0)" onclick="setLanguage('cn')" class="citm swce  lt ">中文</a>
+            <a href="javascript:void(0)" onclick="setLanguage('en')" class="citm swce selected">English</a>
+        </div>
     </div>
 </div>
 
@@ -52,58 +70,110 @@
 
 
 <div id="footerblock">
-    <div class="container wp">
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="xc00">
-                    <div class="xc01"></div>
-                    <div class="xc02">深圳普源特殊材料有限公司</div>
-                    <div class="xc03">shenzhen puyuan company ltd. limited</div>
+    <div class="cn" style="display: none">
+        <div class="container wp">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="xc00">
+                        <div class="xc01"></div>
+                        <div class="xc02">深圳普源特殊材料有限公司</div>
+                        <div class="xc03">shenzhen puyuan company ltd. limited</div>
+                    </div>
+                    <div class="xc04">
+                        <div>
+                            <span>办公地点： 深圳市南山区科技园高新园中区深南花园裙楼C座424</span>
+                        </div>
+                        <div>
+                            <span>办公电话： 0755-26966181</span><span>传真： 0755-26966181</span>
+                        </div>
+                        <div>
+                            <span>工厂地点： 惠州市惠阳区xxxx574号B栋112号</span>
+                        </div>
+                        <div>
+                            <span>工厂电话： 0769-16321738</span><span>传真： 0769-16321739</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="xc04">
-                    <div>
-                        <span>办公地点： 深圳市南山区科技园高新园中区深南花园裙楼C座424</span>
-                    </div>
-                    <div>
-                        <span>办公电话： 0755-26966181</span><span>传真： 0755-26966181</span>
-                    </div>
-                    <div>
-                        <span>工厂地点： 惠州市惠阳区xxxx574号B栋112号</span>
-                    </div>
-                    <div>
-                        <span>办公电话： 0769-16321738</span><span>传真： 0769-16321739</span>
+                <div class="col-xs-6">
+                    <div class="xc05">
+                        <div class="xc06">
+                            深圳市普源新型材料有限公司 粤ICP备06108000号-1
+                        </div>
+                        <div class="xc07">
+                            Copyright 2015,ALL Rights Reserved pu-yuan.com
+                        </div>
+                        <div class="xc08">
+                            <!-- JiaThis Button BEGIN -->
+                            <div class="jiathis_style_32x32">
+                                <a class="jiathis_button_qzone"></a>
+                                <a class="jiathis_button_tsina"></a>
+                                <a class="jiathis_button_tqq"></a>
+                                <a class="jiathis_button_weixin"></a>
+                                <a class="jiathis_button_renren"></a>
+                                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                                <a class="jiathis_counter_style"></a>
+                            </div>
+                            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+                            <!-- JiaThis Button END -->
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-6">
-                <div class="xc05">
-                    <div class="xc06">
-                        深圳市普源新型材料有限公司 粤ICP备06108000号-1
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="container wp">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="xc00">
+                        <div class="xc01"></div>
+                        <div class="xc02">深圳普源特殊材料有限公司</div>
+                        <div class="xc03">shenzhen puyuan company ltd. limited</div>
                     </div>
-                    <div class="xc07">
-                        Copyright 2015,ALL Rights Reserved pu-yuan.com
-                    </div>
-                    <div class="xc08">
-                        <!-- JiaThis Button BEGIN -->
-                        <div class="jiathis_style_32x32">
-                            <a class="jiathis_button_qzone"></a>
-                            <a class="jiathis_button_tsina"></a>
-                            <a class="jiathis_button_tqq"></a>
-                            <a class="jiathis_button_weixin"></a>
-                            <a class="jiathis_button_renren"></a>
-                            <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-                            <a class="jiathis_counter_style"></a>
+                    <div class="xc04">
+                        <div>
+                            <span>Office Location： ROOM 424 AREA C, PODIUM BUILDING SHENNAN GARDEN, NEW AND HI-TECH MIDZONE, SCIENCE & TECHNOLOGY PARK, NANSHAN DISTRICT, SHENZHEN</span>
                         </div>
-                        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-                        <!-- JiaThis Button END -->
+                        <div>
+                            <span>Office Tel： 0755-26966181</span><span>Fax： 0755-26966181</span>
+                        </div>
+                        <div>
+                            <span>Factory Location： KAIDAFA INDUSTRIAL ZONE, XIN WEI TOWN, HUIYANG DISTRICT, HUIZHOU CITY</span>
+                        </div>
+                        <div>
+                            <span>Factory Tel： 0769-16321738</span><span>Fax： 0769-16321739</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="xc05">
+                        <div class="xc06">
+                            深圳市普源新型材料有限公司 粤ICP备06108000号-1
+                        </div>
+                        <div class="xc07">
+                            Copyright 2015,ALL Rights Reserved pu-yuan.com
+                        </div>
+                        <div class="xc08">
+                            <!-- JiaThis Button BEGIN -->
+                            <div class="jiathis_style_32x32">
+                                <a class="jiathis_button_qzone"></a>
+                                <a class="jiathis_button_tsina"></a>
+                                <a class="jiathis_button_tqq"></a>
+                                <a class="jiathis_button_weixin"></a>
+                                <a class="jiathis_button_renren"></a>
+                                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                                <a class="jiathis_counter_style"></a>
+                            </div>
+                            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+                            <!-- JiaThis Button END -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
+<script type="text/javascript" src="<?php echo $this->jsPath('tools/language.js'); ?>"></script>
 <script>
     var singleWidth;
     $('document').ready(function(){

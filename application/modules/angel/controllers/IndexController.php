@@ -2,7 +2,7 @@
 
 class Angel_IndexController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('index', 'product', 'category', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
+    protected $login_not_required = array('index', 'about', 'error', 'result', 'case-list-home', 'case-list', 'case-info',  'product-info', 'news-list-home', 'news-list', 'news-detail', 'product-list-home', 'product-list', 'awards', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
 
     public function init() {
         $this->_helper->layout->setLayout('normal');
@@ -11,6 +11,10 @@ class Angel_IndexController extends Angel_Controller_Action {
 
     public function indexAction() {
         $productModel = $this->getModel('product');
+        $newsModel = $this->getModel('news');
+        $showModel = $this->getModel('show');
+        $aboutModel = $this->getModel('about');
+        $classiccase = $this->getModel('classiccase');
 
         $tmp_products = $productModel->getLastByCount("4");
 
@@ -34,8 +38,88 @@ class Angel_IndexController extends Angel_Controller_Action {
             $products[] = array("id"=>$p->id, "name"=>$p->name, "name_en"=>$p->name_en, "photo"=> $path);
         }
 
-//        var_dump($products); exit;
+        $tmp_news = $newsModel->getLastByCount("2");
 
+        $news = array();
+
+        foreach ($tmp_news as $n) {
+            if (count($n->photo)) {
+                try {
+                    if ($n->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'main');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $news[] = array("id"=>$n->id, "title"=>$n->title, "title_en"=>$n->title_en, "create_date"=>date_format($n->created_at, 'Y年m月d日'), "create_date_en"=>date_format($n->created_at, 'm/d/Y'), "photo"=>$path);
+        }
+
+        $tmp_show = $showModel->getAll(false);
+
+        $show = array();
+
+        foreach ($tmp_show as $n) {
+            if (count($n->photo)) {
+               foreach ($n->photo as $p) {
+                   $show[] =  "/photo/image/" . $p->name . $p->type;
+               }
+            }
+
+            break;
+        }
+
+        $tmp_about = $aboutModel->getLastByCount("1");
+
+        $about = array();
+
+        foreach ($tmp_about as $n) {
+            if (count($n->photo)) {
+                try {
+                    if ($n->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'small');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $about[] = array("id"=>$n->id, "simple_content"=>$n->simple_content,  "simple_content_en"=>$n->simple_content_en, "photo"=>$path);
+
+            break;
+        }
+
+        $tmp_case = $classiccase->getLastByCount("3");
+
+        $cases = array();
+
+        foreach ($tmp_case as $n) {
+            if (count($n->photo)) {
+                try {
+                    if ($n->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'small');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $cases[] = array("id"=>$n->id, "name"=>$n->name, "name_en"=>$n->name_en, "simple_content"=>$n->simple_content, "simple_content_en"=>$n->simple_content_en, "photo"=>$path);
+
+            break;
+        }
+
+        $this->view->cases = $cases;
+        $this->view->about = $about;
+        $this->view->show = $show;
+        $this->view->news = $news;
         $this->view->products = $products;
     }
 
@@ -141,16 +225,24 @@ class Angel_IndexController extends Angel_Controller_Action {
      * 前台产品处理
      *
      * ***********************************************************/
-    public function categoryListAction() {
+    public function productListAction() {
         $productModel = $this->getModel('product');
         $categoryModel = $this->getModel('category');
 
         $category_id = $this->getParam('category_id');
+        $page = $this->getParam('page');
 
-        $tmp_products = $productModel->getAll(false);
+        if (!$page) {
+            $page = 1;
+        }
+
+        $paginator = $productModel->getAll();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
         $products = array();
 
-        foreach ($tmp_products as $p) {
+        foreach ($paginator as $p) {
             $path = "";
 
             if ($category_id != "all" && $p->category_id != $category_id)
@@ -172,7 +264,12 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
 
         $this->view->products = $products;
+        $this->view->paginator = $paginator;
+
         $categorys = $categoryModel->getAll(false);
+
+        $this->view->category = "全部";
+        $this->view->category_en = "ALL";
 
         foreach ($categorys as $c) {
             if ($c->id == $category_id) {
@@ -184,6 +281,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             }
         }
 
+        $this->view->category_id = $category_id;
         $this->view->categorys = $categorys;
     }
 
@@ -191,6 +289,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $notFoundMsg = '未找到目标产品';
         $productModel = $this->getModel('product');
         $categoryModel = $this->getModel('category');
+        $classiccase = $this->getModel('classiccase');
 
         $id = $this->getParam('id');
 
@@ -238,8 +337,252 @@ class Angel_IndexController extends Angel_Controller_Action {
                     break;
                 }
             }
+
+            $cases = array();
+
+            $tmp_cases = $classiccase->getAll(false);
+
+            foreach ($tmp_cases as $c) {
+                foreach ($c->product as $p) {
+                    if ($p->id == $target->id) {
+                        $path = "";
+
+                        if (count($p->photo)) {
+                            try {
+                                if ($p->photo[0]->name) {
+                                    $path = $this->bootstrap_options['image.photo_path'];
+
+                                    $path = $this->view->photoImage($p->photo[0]->name . $p->photo[0]->type, 'main');
+                                }
+                            } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                                // 图片被删除的情况
+                            }
+                        }
+
+                        $cases[] = array("id"=>$c->id, "name"=>$c->name, "name_en"=>$c->name_en, "photo"=>$path);
+
+                        break;
+                    }
+                }
+            }
+
+            $this->view->cases = $cases;
+
+            $tmp_other_product = $productModel->getProductByCategory($target->category_id);
+
+            $other_product = array();
+
+            foreach ($tmp_other_product as $p) {
+                $path = "";
+
+                if (count($other_product) == 5) {
+                    break;
+                }
+
+                if ($p->id == $target->id) {
+                    continue;
+                }
+
+                if (count($p->photo)) {
+                    try {
+                        if ($p->photo[0]->name) {
+                            $path = $this->bootstrap_options['image.photo_path'];
+
+                            $path = $this->view->photoImage($p->photo[0]->name . $p->photo[0]->type, 'main');
+                        }
+                    } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                        // 图片被删除的情况
+                    }
+                }
+
+                $other_product[] = array("id"=>$p->id, "name"=>$p->name, "name_en"=>$p->name_en, "photo"=>$path);
+            }
+
+            $this->view->other_product = $other_product;
         } else {
             $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
         }
+    }
+
+    /***********************************************
+     * 案例处理代码
+     *
+     * *********************************************/
+    public function caseListAction() {
+        $classiccaseModel = $this->getModel('classiccase');
+
+        $page = $this->getParam('page');
+
+        if (!$page) {
+            $page = 1;
+        }
+
+        $paginator = $classiccaseModel->getAll();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
+        $cases = array();
+
+        foreach ($paginator as $p) {
+            $path = "";
+
+            if (count($p->photo)) {
+                try {
+                    if ($p->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($p->photo[0]->name . $p->photo[0]->type, 'main');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $cases[] = array("id"=>$p->id, "name"=>$p->name, "name_en"=>$p->name_en, "photo"=>$path);
+        }
+
+        $this->view->resource = $cases;
+        $this->view->paginator = $paginator;
+    }
+
+    public function caseInfoAction() {
+        $notFoundMsg = '未找到目标案例';
+        $productModel = $this->getModel('product');
+        $classiccaseModel = $this->getModel('classiccase');
+
+        $id = $this->getParam('id');
+
+        if ($id) {
+            $target = $classiccaseModel->getById($id);
+
+            if (!$target) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+
+            $this->view->model = $target;
+            $photo = $target->photo;
+
+            $path = "";
+
+            if (count($photo)) {
+                try {
+                    if ($photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($photo[0]->name . $photo[0]->type, 'main');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $this->view->first_photo = $path;
+
+            $products = array();
+            $count = 0;
+
+            foreach ($target->product as $p) {
+                if ($count == 6) {
+                    break;
+                }
+
+                $path = "";
+
+                if (count($p->photo)) {
+                    try {
+                        if ($p->photo[0]->name) {
+                            $path = $this->bootstrap_options['image.photo_path'];
+
+                            $path = $this->view->photoImage($p->photo[0]->name . $p->photo[0]->type, 'main');
+                        }
+                    } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                        // 图片被删除的情况
+                    }
+                }
+
+                $products[] = array("id"=>$p->id, "name"=>$p->name, "name_en"=>$p->name_en, "photo"=>$path);
+                $count++;
+            }
+//            var_dump(($products)); exit;
+            $this->view->products = $products;
+        } else {
+            $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+        }
+    }
+
+    /************************************************
+     * 网站新闻处理部分
+     *
+     * **********************************************/
+    public function newsListAction() {
+        $newsModel = $this->getModel('news');
+
+        $page = $this->getParam('page');
+
+        if (!$page) {
+            $page = 1;
+        }
+
+        $paginator = $newsModel->getAll();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
+        $resource = array();
+
+        foreach ($paginator as $p) {
+            $resource[] = array(
+                'id' => $p->id,
+                'title' => $p->title,
+                'title_en' => $p->title_en,
+                'date'=>date_format($p->created_at, "Y年m月d日"),
+                'date_en'=>date_format($p->created_at, "m/d/Y")
+            );
+        }
+
+        $this->view->resource = $resource;
+        $this->view->paginator = $paginator;
+    }
+
+    public function newsDetailAction() {
+        $notFoundMsg = '未找到目标新闻';
+        $newModel = $this->getModel('news');
+
+        $id = $this->getParam('id');
+
+        if ($id) {
+            $target = $newModel->getById($id);
+
+            if (!$target) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+
+            $this->view->model = $target;
+        } else {
+            $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+        }
+    }
+
+    /*******************************************************
+     * 其他action
+     *
+     * *****************************************************/
+    public function awardsAction() {
+
+    }
+
+    public function aboutAction() {
+        $aboutModel = $this->getModel('about');
+
+        $tmp_about = $aboutModel->getLastByCount("1");
+
+        $about = array();
+
+        foreach ($tmp_about as $n) {
+            $about[] = array("id"=>$n->id, "title"=>$n->title, "title_en"=>$n->title_en, "content"=>$n->content, "content_en"=>$n->content_en);
+
+            break;
+        }
+
+        $this->view->model = $about;
     }
 }

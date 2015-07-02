@@ -670,6 +670,623 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
+    /************************************************************
+     * 典型案例代码部分
+     *
+     * *********************************************************/
+    public function caseCreateAction() {
+        $classiccaseModel = $this->getModel('classiccase');
+        $productModel = $this->getModel('product');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+
+            $name = $this->getParam('name');
+            $name_en = $this->getParam('name_en');
+            $simple_content = $this->getParam('simple_content');
+            $simple_content_en = $this->getParam('simple_content_en');
+            $content = $this->getParam('content');
+            $content_en = $this->getParam('content_en');
+            $photo = $this->decodePhoto();
+            $product_id = $this->getParam('product');
+
+            $products = array();
+
+            $tmp_products = $productModel->getProductByIds($product_id);
+
+            if ($tmp_products) {
+                foreach ($tmp_products as $p) {
+                    $products[] = $p;
+                }
+            }
+
+            if (!$name || !$name_en) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=必须填写案例名称');
+            }
+            else {
+                try {
+                    $result = $classiccaseModel->addCase($name, $name_en, $simple_content, $simple_content_en, $content, $content_en, $photo, $products);
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                }
+                if ($result) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-case-list-home'));
+                } else {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+                }
+            }
+        } else {
+            $products = $productModel->getAll(false);
+
+            $this->view->products = $products;
+            $this->view->title = "创建新闻";
+        }
+    }
+
+    public function caseListAction() {
+        $classiccaseModel = $this->getModel('classiccase');
+
+        $page = $this->getParam('page');
+
+        if (!$page) {
+            $page = 1;
+        }
+
+        $paginator = $classiccaseModel->getAll();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
+        $resource = array();
+
+        foreach ($paginator as $r) {
+            $resource[] = array(
+                'id' => $r->id,
+                'name' => $r->name
+            );
+        }
+
+        $this->view->resource = $resource;
+        $this->view->title = "案例列表";
+        $this->view->paginator = $paginator;
+    }
+
+    public function caseSaveAction() {
+        $notFoundMsg = '未找到目标产品';
+        $classiccaseModel = $this->getModel('classiccase');
+        $productModel = $this->getModel('product');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+
+            $id = $this->request->getParam('id');
+            $name = $this->getParam('name');
+            $name_en = $this->getParam('name_en');
+            $simple_content = $this->getParam('simple_content');
+            $simple_content_en = $this->getParam('simple_content_en');
+            $content = $this->getParam('content');
+            $content_en = $this->getParam('content_en');
+            $photo = $this->decodePhoto();
+            $product_id = $this->getParam('product');
+
+            $products = array();
+
+            $tmp_products = $productModel->getProductByIds($product_id);
+
+            if ($tmp_products) {
+                foreach ($tmp_products as $p) {
+                    $products[] = $p;
+                }
+            }
+
+            if (!$name || !$name_en) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=必须填写案例名称');
+            }
+            else {
+                try {
+                    $result = $classiccaseModel->saveCase($id, $name, $name_en, $simple_content, $simple_content_en, $content, $content_en, $photo, $products);
+                } catch (Angel_Exception_News $e) {
+                    $error = $e->getDetail();
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                }
+            }
+
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-case-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑案例";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                $target = $classiccaseModel->getById($id);
+
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+
+                $this->view->model = $target;
+
+                $products_id = array();
+
+                foreach ($target->product as $p) {
+                    $products_id[] = $p->id;
+                }
+
+                $this->view->own_product = $products_id;
+
+                $products = $productModel->getAll(false);
+
+                $this->view->products = $products;
+
+                $photo = $target->photo;
+
+                if ($photo) {
+                    $saveObj = array();
+                    foreach ($photo as $p) {
+                        try {
+                            $name = $p->name;
+                        } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                            $this->view->imageBroken = true;
+                            continue;
+                        }
+                        $saveObj[$name] = $this->view->photoImage($p->name . $p->type, 'small');
+                        if (!$p->thumbnail) {
+                            $saveObj[$name] = $this->view->photoImage($p->name . $p->type);
+                        }
+                    }
+                    if (!count($saveObj))
+                        $saveObj = false;
+                    $this->view->photo = $saveObj;
+                }
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
+    }
+
+    public function caseRemoveAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $classiccaseModel = $this->getModel('classiccase');
+                $result = $classiccaseModel->remove($id);
+            }
+            echo $result;
+            exit;
+        }
+    }
+
+    /*************************************************************
+     * 新闻管理代码部分
+     *
+     * **********************************************************/
+    public function newsCreateAction() {
+        $newsModel = $this->getModel('news');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+
+            $title = $this->getParam('title');
+            $title_en = $this->getParam('title_en');
+            $content = $this->getParam('content');
+            $content_en = $this->getParam('content_en');
+            $photo = $this->decodePhoto();
+
+            if (!$title || !$title_en) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=必须填写新闻标题');
+            }
+            else {
+                try {
+                    $result = $newsModel->addNews($title, $title_en, $content, $content_en, $photo);
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                }
+                if ($result) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-news-list-home'));
+                } else {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+                }
+            }
+        } else {
+            $this->view->title = "创建新闻";
+        }
+    }
+
+    public function newsListAction() {
+        $newsModel = $this->getModel('news');
+
+        $page = $this->getParam('page');
+
+        if (!$page) {
+            $page = 1;
+        }
+
+        $paginator = $newsModel->getAll();
+        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setCurrentPageNumber($page);
+
+        $resource = array();
+
+        foreach ($paginator as $r) {
+            $resource[] = array(
+                'id' => $r->id,
+                'title' => $r->title
+            );
+        }
+
+        $this->view->resource = $resource;
+        $this->view->title = "新闻列表";
+        $this->view->paginator = $paginator;
+    }
+
+    public function newsRemoveAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $newsModel = $this->getModel('news');
+                $result = $newsModel->remove($id);
+            }
+            echo $result;
+            exit;
+        }
+    }
+
+    public function newsSaveAction() {
+        $notFoundMsg = '未找到目标产品';
+        $newsModel = $this->getModel('news');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+
+            $id = $this->request->getParam('id');
+            $title = $this->getParam('title');
+            $title_en = $this->getParam('title_en');
+            $content = $this->getParam('content');
+            $content_en = $this->getParam('content_en');
+            $photo = $this->decodePhoto();
+
+            try {
+                $result = $newsModel->saveNews($id, $title, $title_en, $content, $content_en, $photo);
+            } catch (Angel_Exception_News $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-news-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑新闻";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                $target = $newsModel->getById($id);
+
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+
+                $this->view->model = $target;
+
+                $photo = $target->photo;
+
+                if ($photo) {
+                    $saveObj = array();
+                    foreach ($photo as $p) {
+                        try {
+                            $name = $p->name;
+                        } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                            $this->view->imageBroken = true;
+                            continue;
+                        }
+                        $saveObj[$name] = $this->view->photoImage($p->name . $p->type, 'small');
+                        if (!$p->thumbnail) {
+                            $saveObj[$name] = $this->view->photoImage($p->name . $p->type);
+                        }
+                    }
+                    if (!count($saveObj))
+                        $saveObj = false;
+                    $this->view->photo = $saveObj;
+                }
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
+    }
+
+    /*********************************************************
+     * 展示图代码部分
+     *
+     * *******************************************************/
+    public function imageCreateAction() {
+        $showModel = $this->getModel('show');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+
+            $remark = $this->getParam('remark');
+            $remark_en = $this->getParam('remark_en');
+            $photo = $this->decodePhoto();
+
+            try {
+                $result = $showModel->addShow($remark, $remark_en, $photo);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-show-image-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            $this->view->title = "添加展示图片";
+        }
+    }
+
+    public function imageListAction() {
+        $showModel = $this->getModel('show');
+
+        $result = $showModel->getAll(false);
+
+        $resource = array();
+
+        foreach ($result as $p) {
+            $path = "";
+
+            if (count($p->photo)) {
+                try {
+                    if ($p->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($p->photo[0]->name . $p->photo[0]->type, 'main');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $resource[] = array(
+                'id' => $p->id,
+                'title' =>"首页展示图",
+                'photo'=>$path
+            );
+        }
+        $this->view->resource = $resource;
+        $this->view->title = "展示图片";
+    }
+
+    public function imageRemoveAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $showModel = $this->getModel('show');
+                $result = $showModel->remove($id);
+            }
+            echo $result;
+            exit;
+        }
+    }
+
+    public function imageSaveAction() {
+        $notFoundMsg = '未找到目标产品';
+        $showModel = $this->getModel('show');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+
+            $id = $this->request->getParam('id');
+            $remark = $this->getParam('remark');
+            $remark_en = $this->getParam('remark_en');
+            $photo = $this->decodePhoto();
+
+            try {
+                $result = $showModel->saveShow($id, $remark, $remark_en, $photo);
+            } catch (Angel_Exception_Show $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-show-image-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑展示图";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                $target = $showModel->getById($id);
+
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+
+                $this->view->model = $target;
+
+                $photo = $target->photo;
+
+                if ($photo) {
+                    $saveObj = array();
+                    foreach ($photo as $p) {
+                        try {
+                            $name = $p->name;
+                        } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                            $this->view->imageBroken = true;
+                            continue;
+                        }
+                        $saveObj[$name] = $this->view->photoImage($p->name . $p->type, 'small');
+                        if (!$p->thumbnail) {
+                            $saveObj[$name] = $this->view->photoImage($p->name . $p->type);
+                        }
+                    }
+                    if (!count($saveObj))
+                        $saveObj = false;
+                    $this->view->photo = $saveObj;
+                }
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
+    }
+
+    /************************************************************
+     * 公司简介代码
+     *
+     * **********************************************************/
+    public function aboutCreateAction() {
+        $aboutModel = $this->getModel('about');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+
+            $title = $this->getParam('title');
+            $title_en = $this->getParam('title_en');
+            $simple_content = $this->getParam('simple_content');
+            $simple_content_en = $this->getParam('simple_content_en');
+            $content = $this->getParam('content');
+            $content_en = $this->getParam('content_en');
+            $photo = $this->decodePhoto();
+
+            try {
+                $result = $aboutModel->addAbout($title, $title_en, $content, $content_en, $simple_content, $simple_content_en, $photo);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-about-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            $this->view->title = "创建公司简介";
+        }
+    }
+
+    public function aboutListAction() {
+        $aboutModel = $this->getModel('about');
+
+        $paginator = $aboutModel->getAll(false);
+
+        $resource = array();
+
+        foreach ($paginator as $r) {
+            $resource[] = array(
+                'id' => $r->id,
+                'title' => $r->title
+            );
+        }
+
+        $this->view->resource = $resource;
+        $this->view->title = "公司简介";
+    }
+
+    public function aboutRemoveAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $aboutModel = $this->getModel('news');
+                $result = $aboutModel->remove($id);
+            }
+            echo $result;
+            exit;
+        }
+    }
+
+    public function aboutSaveAction() {
+        $notFoundMsg = '未找到公司简介';
+        $aboutModel = $this->getModel('about');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+
+            $id = $this->request->getParam('id');
+            $title = $this->getParam('title');
+            $title_en = $this->getParam('title_en');
+            $simple_content = $this->getParam('simple_content');
+            $simple_content_en = $this->getParam('simple_content_en');
+            $content = $this->getParam('content');
+            $content_en = $this->getParam('content_en');
+            $photo = $this->decodePhoto();
+
+            try {
+                $result = $aboutModel->saveAbout($id, $title, $title_en, $content, $content_en, $simple_content, $simple_content_en, $photo);
+            } catch (Angel_Exception_About $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-about-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑公司简介";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                $target = $aboutModel->getById($id);
+
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+
+                $this->view->model = $target;
+
+                $photo = $target->photo;
+
+                if ($photo) {
+                    $saveObj = array();
+                    foreach ($photo as $p) {
+                        try {
+                            $name = $p->name;
+                        } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                            $this->view->imageBroken = true;
+                            continue;
+                        }
+                        $saveObj[$name] = $this->view->photoImage($p->name . $p->type, 'small');
+                        if (!$p->thumbnail) {
+                            $saveObj[$name] = $this->view->photoImage($p->name . $p->type);
+                        }
+                    }
+                    if (!count($saveObj))
+                        $saveObj = false;
+                    $this->view->photo = $saveObj;
+                }
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
+    }
 
     /********************************************************
      * 其他代码action部分

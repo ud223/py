@@ -1,28 +1,28 @@
 body {
-	background: #FFF;
-	font-size: 14px;
-	font-family: microsoft yahei;
-	color: #333;
+    background: #FFF;
+    font-size: 14px;
+    font-family: microsoft yahei;
+    color: #333;
 }
 div {
-	position: relative;
+    position: relative;
 }
 button {
-	font-family: "microsoft yahei";
+    font-family: "microsoft yahei";
 }
 a {
-	color: #478bd2;
-	text-decoration: none;
+    color: #478bd2;
+    text-decoration: none;
 }
 a:hover {
-	color: #266ab0;
-	text-decoration: none;
+    color: #266ab0;
+    text-decoration: none;
 }
 .container {
-	width: 1100px;
+    width: 1100px;
 }
 .h10px {
-	height: 10px;
+    height: 10px;
 }
 .clear,
 .clear-5,
@@ -31,335 +31,386 @@ a:hover {
 .clear-20,
 .clear-30,
 .clear-50 {
-	clear: both;
-	display: block;
-	font-size: 0;
-	overflow: hidden;
-	visibility: hidden;
-	width: 0;
-	height: 0;
+    clear: both;
+    display: block;
+    font-size: 0;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
 }
 .clear-5 {
-	height: 5px;
+    height: 5px;
 }
 .clear-10 {
-	height: 10px;
+    height: 10px;
 }
 .clear-15 {
-	height: 15px;
+    height: 15px;
 }
 .clear-20 {
-	height: 20px;
+    height: 20px;
 }
 .clear-30 {
-	height: 30px;
+    height: 30px;
 }
 .clear-50 {
-	height: 50px;
+    height: 50px;
 }
 .pad-b-30 {
-	padding-bottom: 30px;
+    padding-bottom: 30px;
 }
 .pad-t-30 {
-	padding-top: 30px;
+    padding-top: 30px;
 }
 .pad-b-20 {
-	padding-bottom: 20px;
+    padding-bottom: 20px;
 }
 .pad-t-20 {
-	padding-top: 20px;
+    padding-top: 20px;
 }
 .pad-30 {
-	padding: 30px;
+    padding: 30px;
 }
 .pad-15 {
-	padding: 15px;
+    padding: 15px;
 }
 .pad-10 {
-	padding: 10px;
+    padding: 10px;
 }
 .tc {
-	text-align: center !important;
+    text-align: center !important;
 }
 .trt {
-	text-align: right !important;
+    text-align: right !important;
 }
 .lf {
-	float: left;
+    float: left;
 }
 .rf {
-	float: right;
+    float: right;
 }
 .font12px {
-	font-size: 12px;
+    font-size: 12px;
 }
 #topblock {
-	height: 120px;
-	border-bottom:1px solid rgba(0,0,0,.12);
+    height: 120px;
+    border-bottom:1px solid rgba(0,0,0,.12);
 }
 #topblock .nnlne {
-	height: 40px;
-	background: url(../img/toplne.jpg) right top repeat-y;
-	width: 100%;
+    height: 40px;
+    background: url(../img/toplne.jpg) right top repeat-y;
+    width: 100%;
 }
 #topblock .bblne {
-	height: 80px;
-	line-height: 80px;
-	padding-left: 250px;
-	font-size: 18px;
-	overflow: hidden;
-	text-align: center;
+    height: 80px;
+    line-height: 80px;
+    padding-left: 250px;
+    font-size: 18px;
+    overflow: hidden;
+    text-align: center;
 }
 #topblock .bblne .citm {
-	margin-right: 5px;
-	padding: 5px 10px;
-	border-radius: 5px;
-	text-decoration: none !important;
+    margin-right: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none !important;
 }
 #topblock .bblne .citm:hover {
-	background: #F8F8F8;
+    background: #F8F8F8;
 }
 #topblock .bblne .citm.selected {
-	background: #478bd2;
-	color: #FFF;
+    background: #478bd2;
+    color: #FFF;
 }
 #topblock .bblne .citm.swce {
-	color: #aaa;
+    color: #aaa;
 }
 #topblock .bblne .citm.swce.selected {
-	background: #aaa;
-	color: #FFF;
-	cursor: text;
+    background: #aaa;
+    color: #FFF;
+    cursor: text;
 }
 #topblock .logoc {
-	background: url(../img/logoi.png);
-	width: 190px;
-	height: 100px;
-	display: block;
-	position: absolute;
-	left: 30px;
-	top: 20px;
+    background: url(../img/logoi.png);
+    width: 190px;
+    height: 100px;
+    display: block;
+    position: absolute;
+    left: 30px;
+    top: 20px;
 }
 #cst-space {
-	background: #FFF;
-	height: 480px;
+    background: #FFF;
+    height: 480px;
 }
 #cst-space #gall-wp {
-	height: 100%;
-	margin: auto;
-	overflow: hidden;
+    height: 100%;
+    margin: auto;
+    overflow: hidden;
 }
 #cst-space #gall-list {
-	height: 100%;
-	position: absolute;
-	top: 0;
-	width: 200000px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 200000px;
 }
 #cst-space .gall-itm {
-	float: left;
-	width: 100%;
-	height: 100%;
-	position: relative;
-	background-position: center center;
-	overflow: hidden;
+    float: left;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-position: center center;
+    overflow: hidden;
 }
 #btc-lst {
-	height: 8px;
-	text-align: center;
-	position: absolute;
-	bottom: 50px;
-	width: 100%;
-	z-index: 11;
+    height: 8px;
+    text-align: center;
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    z-index: 11;
 }
 #btc-lst .itm {
-	display: inline-block;
-	height: 8px;
-	width: 70px;
-	background: #FFF;
-	cursor: pointer;
-	margin: 0 2px;
-	box-shadow: 0 0 5px rgba(0, 0, 0, .35);
-	border-radius: 10px;
+    display: inline-block;
+    height: 8px;
+    width: 70px;
+    background: #FFF;
+    cursor: pointer;
+    margin: 0 2px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .35);
+    border-radius: 10px;
 }
 #btc-lst .itm:hover {
-	background: #EEE;
+    background: #EEE;
 }
 #btc-lst .itm.selected {
-	background: #478bd2 !important;
+    background: #478bd2 !important;
 }
 .sid-bts {
-	background: url(../img/ltb.png) center -120px;
-	cursor: pointer;
-	width: 60px;
-	height: 120px;
-	position: absolute;
-	left: 20px;
-	top: 50%;
-	margin-top: -60px;
-	z-index: 11;
+    background: url(../img/ltb.png) center -120px;
+    cursor: pointer;
+    width: 60px;
+    height: 120px;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    margin-top: -60px;
+    z-index: 11;
 }
 .sid-bts.lt:hover {
-	background-color: rgba(0, 0, 0, .05);
+    background-color: rgba(0, 0, 0, .05);
 }
 .sid-bts.rt {
-	background-position: center -360px;
-	left: auto;
-	right: 20px;
+    background-position: center -360px;
+    left: auto;
+    right: 20px;
 }
 .sid-bts.rt:hover {
-	background-color: rgba(0, 0, 0, .05);
+    background-color: rgba(0, 0, 0, .05);
 }
 #footerblock {
-	background: url(../img/btbg.jpg) center top repeat;
-	height: 460px;
-	color: #FFF;
+    background: url(../img/btbg.jpg) center top repeat;
+    height: 460px;
+    color: #FFF;
 }
 #footerblock .wp {
-	padding-top: 230px;
+    padding-top: 230px;
 }
 .xc00 {
-	padding-left: 80px;
+    padding-left: 80px;
 }
 .xc01 {
-	background: url(../img/bt-sm-logoi.png);
-	width: 50px;
-	height: 50px;
-	display: inline-block;
-	position: absolute;
-	left: 0;
-	top: 0;
+    background: url(../img/bt-sm-logoi.png);
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 .xc02 {
-	font-size: 22px;
+    font-size: 22px;
 }
 .xc03 {
-	font-size: 16px;
-	opacity: .7;
+    font-size: 16px;
+    opacity: .7;
 }
 .xc04 {
-	font-size: 14px;
-	line-height: 30px;
-	padding-top: 20px;
+    font-size: 14px;
+    line-height: 30px;
+    padding-top: 20px;
 }
 .xc04 span {
-	margin-right: 20px;
+    margin-right: 20px;
 }
 .xc05 {
-	line-height: 25px;
+    line-height: 25px;
 }
 .xc06 {
-	font-size: 16px;
+    font-size: 16px;
 }
 .xc07 {
-	padding-bottom: 20px;
-	border-bottom: 1px solid rgba(255, 255, 255, .3);
-	margin-bottom:20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, .3);
+    margin-bottom:20px;
 }
 .duatitle {
-	border-bottom:2px solid #d0d0d0;
-	padding-top:10px;
-	margin-bottom:20px;
+    border-bottom:2px solid #d0d0d0;
+    padding-top:10px;
+    margin-bottom:20px;
 }
 .duatitle .inner {
-	color:#478bd2;
-	border-bottom:2px solid #478bd2;
-	margin-bottom:-2px;
-	display:inline-block;
-	padding:8px 0;
-	font-size: 18px;
+    color:#478bd2;
+    border-bottom:2px solid #478bd2;
+    margin-bottom:-2px;
+    display:inline-block;
+    padding:8px 0;
+    font-size: 18px;
 }
 .duatitle .smore {
-	position:absolute;
-	right:0;
-	top:50%;
-	font-size:12px;
-	margin-top:-4px;
-	color:#aaa;
+    position:absolute;
+    right:0;
+    top:50%;
+    font-size:12px;
+    margin-top:-4px;
+    color:#aaa;
 }
 .breadc {
-	padding-top:20px;
-	padding-bottom:20px;
-	font-size:16px;
+    padding-top:20px;
+    padding-bottom:20px;
+    font-size:16px;
 }
 .xsplt {
-	color:#aaa;
-	margin:0 5px;
+    color:#aaa;
+    margin:0 5px;
 }
 .xsexp {
-	color:#aaa;
+    color:#aaa;
 }
 #themieothers {
-	background:#F0F0F0;
-	margin-bottom:30px;
+    background:#F0F0F0;
+    margin-bottom:30px;
 }
 .mneo-title {
-	padding:30px 0 35px 0;
-	font-size:32px;
-	text-align:center;
-	position:relative;
+    padding:30px 0 35px 0;
+    font-size:32px;
+    text-align:center;
+    position:relative;
 }
 .mneo-title .cline {
-	background: #333;
-	width:60px;
-	height:1px;
-	bottom:-5px;
-	left:50%;
-	margin-left:-30px;
+    background: #333;
+    width:60px;
+    height:1px;
+    bottom:-5px;
+    left:50%;
+    margin-left:-30px;
 }
 .sid-ul-lst {
-	margin:0;
-	padding:0;
-	box-shadow: 0 0 5px rgba(0,0,0,.12);
-	border-radius:5px;
-	overflow: hidden;
+    margin:0;
+    padding:0;
+    box-shadow: 0 0 5px rgba(0,0,0,.12);
+    border-radius:5px;
+    overflow: hidden;
 }
 .sid-ul-lst li {
-	list-style: none;
-	padding:0;
-	border-bottom:1px solid #F0F0F0;
+    list-style: none;
+    padding:0;
+    border-bottom:1px solid #F0F0F0;
 }
 .sid-ul-lst li a {
-	text-decoration: none !important;
-	font-size: 16px;
-	display:block;
-	padding:15px 25px;
-	border-right:4px solid transparent;
+    text-decoration: none !important;
+    font-size: 16px;
+    display:block;
+    padding:15px 25px;
+    border-right:4px solid transparent;
 }
 .sid-ul-lst li a:hover {
-	border-color: #478bd2;
+    border-color: #478bd2;
 }
 .sid-ul-lst li.selected {
-	border-color: #478bd2;
+    border-color: #478bd2;
 }
 .sid-ul-lst li.selected a {
-	border-color: #478bd2;
-	background:#478bd2 !important;
-	color:#FFF;
+    border-color: #478bd2;
+    background:#478bd2 !important;
+    color:#FFF;
 }
 .mb30 {
-	margin-bottom:30px;
+    margin-bottom:30px;
 }
 .gallsitm {
-	display:inline-block;
-	width:250px;
-	margin-bottom:20px;
-	float:left;
-	margin-right: 22.5px;
+    display:inline-block;
+    width:250px;
+    margin-bottom:20px;
+    float:left;
+    margin-right: 22.5px;
 }
 .gallsitm.last {
-	margin-right:0;
+    margin-right:0;
 }
 .gallsitm .imga {
-	background-size: cover;
-	background-position: center center;
-	background-repeat: no-repeat;
-	display:block;
-	width:100%;
-	height:180px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display:block;
+    width:100%;
+    height:180px;
 }
 .gallsitm .nmtt {
-	font-size: 16px;
-	margin:10px 0;
-	display: block;
-	text-align: center;
+    font-size: 16px;
+    margin:10px 0;
+    display: block;
+    text-align: center;
+}
+/* 追加内容 -------------------------------*/
+.ttinbg {
+    color:#FFF;
+    font-size:32px;
+    margin-bottom:10px;
+}
+.ttinbg2 {
+    color:#FFF;
+    font-size:16px;
+    width:280px;
+}
+.sub0-ejii {
+    padding:0 0 180px 0;
+    background:url(../img/awards.jpg) center top no-repeat;
+    background-size:cover;
+    background-attachment: fixed;
+}
+.sub0-ejii .breadc {
+    margin-bottom:50px;
+    border-bottom:1px solid rgba(255,255,255,.25);
+}
+.sub0-ejii .breadc a {
+    color:#FFF;
+}
+.sub0-ejii .breadc .xsplt, .sub0-ejii .breadc .xsexp {
+    color:#FFF;
+    opacity:.5;
+}
+
+.vxxr4e img {
+    margin:40px 77.5px 0 0;
+    box-shadow: 0 0 15px rgba(0,0,0,.5);
+    float:left;
+}
+.vxxr4e img.end {
+    margin-right:0;
+}
+#topblock .swce.lt {
+    margin-left:40px;
+}
+.bjobanner {
+    background: url(../img/1433318724.jpg) center top no-repeat;
+    background-attachment: fixed;
+    padding:40px 0;
+    color:#FFF;
+    font-size:32px;
+    text-align: center;
+    font-weight: bold;
+    font-family: arial;
+    text-shadow: 0 0 15px rgba(0,0,0,.5);
 }

@@ -11,29 +11,11 @@
     </div>
     <div id="gall-wp">
         <div id="gall-list">
-            <div class="gall-itm" style="background-image:url(/img/gg/01.jpg)">
+            <?php foreach ($this->show as $s):?>
+                <div class="gall-itm" style="background-image:url(<?php echo $s?>)">
 
-            </div>
-
-            <div class="gall-itm" style="background-image:url(/img/gg/02.jpg)">
-
-            </div>
-
-            <div class="gall-itm" style="background-image:url(/img/gg/03.jpg)">
-
-            </div>
-
-            <div class="gall-itm" style="background-image:url(/img/gg/04.jpg)">
-
-            </div>
-
-            <div class="gall-itm" style="background-image:url(/img/gg/05.jpg)">
-
-            </div>
-
-            <div class="gall-itm" style="background-image:url(/img/gg/06.jpg)">
-
-            </div>
+               </div>
+            <?php endforeach;?>
         </div>
     </div>
 </div>
@@ -119,86 +101,136 @@
     }
 </style>
 <div class="container poi00">
-    <div class="row">
-        <div class="col-xs-9">
-            <div class="row">
-                <div class="col-xs-5">
-                    <div class="duatitle">
-                        <div class="inner">公司介绍</div>
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <div class="duatitle">
+                            <div class="inner">公司介绍</div>
+                        </div>
+                        <div class="duacontent">
+                            <img id="poi02" style="width:290px;height: 147px" src="<?php echo $this->about[0]['photo']?>"  />
+                            <p class="poi01"><?php echo $this->about[0]['simple_content']?></p>
+                        </div>
                     </div>
-                    <div class="duacontent">
-                        <img id="poi02" src="img/l-01.jpg"  />
-                        <p class="poi01">此处填写本公司的介绍文字内容此处填写本公
-                            司的介绍文字内容此处填写本公司的介绍文字
-                            内容此处填写本公司的介绍文字内容此处填写
-                            本公司的介绍文字内容</p>
+                    <div class="col-xs-7">
+                        <div class="duatitle">
+                            <div class="inner">新闻动态</div>
+                            <a href="/news/list" class='smore'>+ 查看更多</a>
+                        </div>
+                        <div class="duacontent">
+                            <?php foreach ($this->news as $n):?>
+                                <div class="poi03">
+                                    <img src="<?php echo $n['photo']?>" class="icx" />
+                                    <a href="/news/detail/<?php echo $n['id'] ?>" class="tt"><?php echo $n['title'] ?></a>
+                                    <div class="subt"><?php echo $n['create_date'] ?></div>
+                                    <a href="/news/detail/<?php echo $n['id'] ?>" class="rbsubt">查看详细 &gt;</a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xs-7">
-                    <div class="duatitle">
-                        <div class="inner">新闻动态</div>
-                        <a href="#" class='smore'>+ 查看更多</a>
-                    </div>
-                    <div class="duacontent">
-                        <div class="poi03">
-                            <img src="img/l-02.jpg" class="icx" />
-                            <a href="#" class="tt">阳江核电站外墙项目竣工</a>
-                            <div class="subt">2015年 6月7日</div>
-                            <a href="#" class="rbsubt">查看详细 &gt;</a>
-                        </div>
-                        <div class="poi03">
-                            <img src="img/l-03.jpg" class="icx" />
-                            <a href="#" class="tt">比亚迪车间正式投入使用比亚迪车间正式投入使用</a>
-                            <div class="subt">2015年 6月7日</div>
-                            <a href="#" class="rbsubt">查看详细 &gt;</a>
+                <div class="clear-10"></div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="duatitle">
+                            <div class="inner">推荐产品</div>
                         </div>
                     </div>
+
+                    <!-- 循环显示 -->
+                    <?php foreach ($this->products as $p):?>
+                        <div class="col-xs-6">
+                            <a href="/product/info/<?php echo $p["id"] ?>" class="poi-mwu">
+                                <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
+                                <p class="poi-mic"><?php echo $p["name"] ?></p>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-            <div class="clear-10"></div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="duatitle">
-                        <div class="inner">推荐产品</div>
-                    </div>
+            <div class="col-xs-3">
+                <div class="duatitle">
+                    <div class="inner">优秀案例</div>
                 </div>
-
-                <!-- 循环显示 -->
-                <?php foreach ($this->products as $p):?>
-                    <div class="col-xs-6">
-                        <a href="/product/<?php echo $p["id"] ?>" class="poi-mwu">
-                            <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
-                            <p class="poi-mic"><?php echo $p["name"] ?></p>
-                        </a>
-                    </div>
-                <?php endforeach; ?>
+                <div class="duacontent">
+                    <?php foreach ($this->cases as $p):?>
+                        <div class="poi04">
+                            <a href="/case/info/<?php echo $p["id"] ?>" class="lnk"><img class="icx" src="<?php echo $p["photo"] ?>" /></a>
+                            <a href="/case/info/<?php echo $p["id"] ?>" class="tt"><?php echo $p["name"] ?></a>
+                            <p class="ct">
+                                <?php echo $p["simple_content"] ?>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
-        <div class="col-xs-3">
-            <div class="duatitle">
-                <div class="inner">优秀案例</div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <div class="duatitle">
+                            <div class="inner">Company Profile</div>
+                        </div>
+                        <div class="duacontent">
+                            <img id="poi02" style="width:290px;height: 147px" src="<?php echo $this->about[0]['photo']?>"  />
+                            <p class="poi01"><?php echo $this->about[0]['simple_content_en']?></p>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="duatitle">
+                            <div class="inner">News</div>
+                            <a href="/news/list" class='smore'>+ More</a>
+                        </div>
+                        <div class="duacontent">
+                            <?php foreach ($this->news as $n):?>
+                                <div class="poi03">
+                                    <img src="<?php echo $n['photo']?>" class="icx" />
+                                    <a href="/news/detail/<?php echo $n['id'] ?>" class="tt"><?php echo $n['title_en'] ?></a>
+                                    <div class="subt"><?php echo $n['create_date_en'] ?></div>
+                                    <a href="/news/detail/<?php echo $n['id'] ?>" class="rbsubt">Detail &gt;</a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear-10"></div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="duatitle">
+                            <div class="inner">Recommend Products </div>
+                        </div>
+                    </div>
+
+                    <!-- 循环显示 -->
+                    <?php foreach ($this->products as $p):?>
+                        <div class="col-xs-6">
+                            <a href="/product/info/<?php echo $p["id"] ?>" class="poi-mwu">
+                                <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
+                                <p class="poi-mic"><?php echo $p["name_en"] ?></p>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
-            <div class="duacontent">
-                <div class="poi04">
-                    <a href="#" class="lnk"><img class="icx" src="img/l-04.jpg" /></a>
-                    <a href="#" class="tt">阳江核电站外墙项目竣工</a>
-                    <p class="ct">
-                        此处填写该案例的简单介绍此处填写该案例的简单介绍
-                    </p>
+            <div class="col-xs-3">
+                <div class="duatitle">
+                    <div class="inner">Classic Case</div>
                 </div>
-                <div class="poi04">
-                    <a href="#" class="lnk"><img class="icx" src="img/l-05.jpg" /></a>
-                    <a href="#" class="tt">深圳艺展中心</a>
-                    <p class="ct">
-                        此处填写该案例的简单介绍此处填写该案例的简单介绍
-                    </p>
-                </div>
-                <div class="poi04">
-                    <a href="#" class="lnk"><img class="icx" src="img/l-06.jpg" /></a>
-                    <a href="#" class="tt">简易活动房</a>
-                    <p class="ct">
-                        此处填写该案例的简单介绍此处填写该案例的简单介绍
-                    </p>
+                <div class="duacontent">
+                    <?php foreach ($this->cases as $p):?>
+                        <div class="poi04">
+                            <a href="/case/info/<?php echo $p["id"] ?>" class="lnk"><img class="icx" src="<?php echo $p["photo"] ?>" /></a>
+                            <a href="/case/info/<?php echo $p["id"] ?>" class="tt"><?php echo $p["name_en"] ?></a>
+                            <p class="ct">
+                                <?php echo $p["simple_content_en"] ?>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

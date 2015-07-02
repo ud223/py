@@ -19,8 +19,24 @@ class Angel_Model_Product extends Angel_Model_AbstractModel {
         return $result;
     }
 
+    public function getProductByCategory($category_id) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('category_id')->equals($category_id)->sort('created_at', -1);
+
+        $result = $query->getQuery();
+
+        return $result;
+    }
+
     public function getLastByCount($count) {
         $query = $this->_dm->createQueryBuilder($this->_document_class)->sort('created_at', -1)->limit($count)->skip(0);
+
+        $result = $query->getQuery();
+
+        return $result;
+    }
+
+    public function getProductByIds($product_id) {
+        $query = $this->_dm->createQueryBuilder($this->_document_class)->field('id')->in($product_id)->sort('created_at', -1);
 
         $result = $query->getQuery();
 

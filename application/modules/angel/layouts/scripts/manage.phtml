@@ -13,7 +13,12 @@
         <link href="<?php echo $this->cssPath("global.css"); ?>" rel="stylesheet" type="text/css" />
         <link href="<?php echo $this->cssPath("global.manage.css"); ?>" rel="stylesheet" type="text/css" />
 
-        <script type="text/javascript" src="<?php echo $this->jsPath('jquery.1.10.2.min.js'); ?>"></script>
+<!--        <script type="text/javascript" src="--><?php //echo $this->jsPath('jquery.1.10.2.min.js'); ?><!--"></script>-->
+        <script type="text/javascript" src="/umeditor/third-party/jquery.min.js"></script>
+        <link  type="text/css" rel="stylesheet" href="/umeditor/themes/default/css/umeditor.css">
+        <script type="text/javascript" charset="utf-8" src="/umeditor/umeditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="/umeditor/umeditor.min.js"></script>
+        <script type="text/javascript" src="/umeditor/lang/zh-cn/zh-cn.js"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('bootstrap.min.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('plugin.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
@@ -46,6 +51,34 @@
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo $this->url(array(), 'manage-product-list-home') ?>">产品列表</a></li>
                                 <li><a href="<?php echo $this->url(array(), 'manage-product-create') ?>">添加产品</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">典型案例<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-case-list-home') ?>">产品案例</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-case-create') ?>">添加案例</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">新闻<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-news-list-home') ?>">新闻列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-news-create') ?>">添加新闻</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">公司简介 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-about-list-home') ?>">公司简介列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-about-create') ?>">添加公司简介</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">展示图片 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-show-image-list-home') ?>">展示图片列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-show-image-create') ?>">添加展示图片</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
