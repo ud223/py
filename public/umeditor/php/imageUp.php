@@ -22,8 +22,8 @@
     /**
      * 返回数据
      */
-    if($callback) {
-        echo '<script>'.$callback.'('.json_encode($info).')</script>';
-    } else {
-        echo json_encode($info);
-    }
+//    if($callback) {
+//        echo '<script>'.$callback.'('.json_encode($info).')</script>';
+//    } else {
+//        echo json_encode($info);
+//    }
