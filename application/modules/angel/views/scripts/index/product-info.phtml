@@ -133,7 +133,7 @@
         <div class="row">
             <div class="col-xs-6">
                 <a href="#" id="bigc2-img-wp">
-                    <img id="big-photo" style="width:500px; height: 302px" src="<?php echo $this->first_photo?>" />
+                    <img class="big-photo" style="width:500px; height: 302px" src="<?php echo $this->first_photo?>" />
                 </a>
                 <div id="smal2-img-list">
                     <?php $c = 0;?>
@@ -219,7 +219,7 @@
         <div class="row">
             <div class="col-xs-6">
                 <a href="#" id="bigc2-img-wp">
-                    <img id="big-photo" style="width:500px; height: 302px" src="<?php echo $this->first_photo?>" />
+                    <img class="big-photo" style="width:500px; height: 302px" src="<?php echo $this->first_photo?>" />
                 </a>
                 <div id="smal2-img-list">
                     <?php $c = 0;?>
@@ -358,12 +358,10 @@
         $(".small-photo").click(function() {
             var path = $(this).css("background-image");
 
-            $(".selected").removeClass("selected");
+            $("col-xs-6").find(".selected").removeClass("selected");
             $(this).addClass("selected");
-
-            alert(path);
-
-            $("#big-photo").attr("src", photoSmallToBig(path));
+            
+            $(".big-photo").attr("src", photoSmallToBig(path));
         })
 
         $(".header").find(".selected").removeClass("selected");
