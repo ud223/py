@@ -358,9 +358,9 @@
         $(".small-photo").click(function() {
             var path = $(this).css("background-image");
 
-            $("col-xs-6").find(".selected").removeClass("selected");
+            $(".col-xs-6").find(".selected").removeClass("selected");
             $(this).addClass("selected");
-            
+
             $(".big-photo").attr("src", photoSmallToBig(path));
         })
 
