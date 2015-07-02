@@ -737,7 +737,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             $products = $productModel->getAll(false);
 
             $this->view->products = $products;
-            $this->view->title = "创建新闻";
+            $this->view->title = "创建案例";
         }
     }
 
