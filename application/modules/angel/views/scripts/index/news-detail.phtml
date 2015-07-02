@@ -32,7 +32,7 @@
             <div class="col-xs-12">
                 <a href="/">Home</a>
                 <span class="xsplt">/</span>
-                <a href="/news/list">NEWS</a>
+                <a href="/news/list">News</a>
                 <span class="xsplt">/</span>
                 <span class="xsexp"><?php echo $this->model->title_en ?></span>
             </div>
@@ -46,6 +46,9 @@
                 <h1><?php echo $this->model->title ?></h1>
                 <div class="suuex"><?php echo date_format($this->model->created_at, 'Y年m月d日')?></div>
                 <div class="cont">
+                    <div style="width: 100%; text-align: center">
+                        <img src="<?php echo $this->first_photo?>">
+                    </div>
                     <?php echo $this->model->content ?>
                 </div>
             </div>
@@ -55,6 +58,10 @@
                 <h1><?php echo $this->model->title_en ?></h1>
                 <div class="suuex"><?php echo date_format($this->model->created_at, 'm/d/Y')?></div>
                 <div class="cont">
+                    <div style="width: 100%; text-align: center">
+                        <img src="<?php echo $this->first_photo?>">
+                    </div>
+
                     <?php echo $this->model->content_en ?>
                 </div>
             </div>

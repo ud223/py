@@ -274,7 +274,6 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         foreach ($categorys as $c) {
             if ($c->id == $category_id) {
-                $this->view->category_id = $c->id;
                 $this->view->category = $c->name;
                 $this->view->category_en = $c->name_en;
 
@@ -566,6 +565,31 @@ class Angel_IndexController extends Angel_Controller_Action {
             }
 
             $this->view->model = $target;
+            $photo = $target->photo;
+            $first_photo = false;
+
+            if ($photo) {
+                $saveObj = array();
+                foreach ($photo as $p) {
+                    try {
+                        $name = $p->name;
+                    } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                        $this->view->imageBroken = true;
+                        continue;
+                    }
+
+                    if (!$first_photo) {
+                        $first_photo = $this->view->photoImage($p->name . $p->type);
+                    }
+
+                    $saveObj[] = $this->view->photoImage($p->name . $p->type, 'main');
+                }
+                if (!count($saveObj))
+                    $saveObj = false;
+                $this->view->photo = $saveObj;
+            }
+
+            $this->view->first_photo = $first_photo;
         } else {
             $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
         }

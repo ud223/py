@@ -228,18 +228,20 @@
                 </div>
             </div>
             <div class="col-xs-6">
-                <p class="caro-tt">相关案例</p>
-                <div>
-                    <?php $c = 0; ?>
-                    <?php foreach ($this->cases as $c):?>
-                        <?php if ($c % 2 == 0) :?>
-                            <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name"]?></span></a>
-                        <?php else:?>
-                            <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name"]?></span></a>
-                        <?php endif;?>
-                    <?php endforeach;?>
-                </div>
-                <div class="clear"></div>
+                <?php if (count($this->cases) > 0):?>
+                    <p class="caro-tt">相关案例</p>
+                    <div>
+                        <?php $c = 0; ?>
+                        <?php foreach ($this->cases as $c):?>
+                            <?php if ($c % 2 == 0) :?>
+                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name"]?></span></a>
+                            <?php else:?>
+                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name"]?></span></a>
+                            <?php endif;?>
+                        <?php endforeach;?>
+                    </div>
+                    <div class="clear"></div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -294,7 +296,7 @@
                         <?php endif; ?>
                         <?php if ($this->model->style_en): ?>
                             <li>
-                                <span class="col">style：</span>
+                                <span class="col">Style：</span>
                                 <span><?php echo $this->model->style_en ?></span>
                                 <div class="clear"></div>
                             </li>
@@ -342,72 +344,76 @@
                 </div>
             </div>
             <div class="col-xs-6">
-                <p class="caro-tt">RELATED CASE</p>
-                <div>
-                    <?php $c = 0; ?>
-                    <?php foreach ($this->cases as $c):?>
-                        <?php if ($c % 2 == 0) :?>
-                            <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
-                        <?php else:?>
-                            <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
-                        <?php endif;?>
-                    <?php endforeach;?>
-                </div>
-                <div class="clear"></div>
+                <?php if (count($this->cases) > 0):?>
+                    <p class="caro-tt">Related Case</p>
+                    <div>
+                        <?php $c = 0; ?>
+                        <?php foreach ($this->cases as $c):?>
+                            <?php if ($c % 2 == 0) :?>
+                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                            <?php else:?>
+                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                            <?php endif;?>
+                        <?php endforeach;?>
+                    </div>
+                    <div class="clear"></div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
 
 <div id="themieothers">
-    <div class="cn" style="display: none">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="mneo-title">
-                        同类产品
-                        <div class="cline"></div>
+    <?php if (count($this->other_product) > 0):?>
+        <div class="cn" style="display: none">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="mneo-title">
+                            同类产品
+                            <div class="cline"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-12">
-                    <?php $c = 0; ?>
-                    <?php foreach ($this->other_product as $p):?>
-                        <?php if ($c == 5): ?>
-                            <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas last" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name']?></span></a>
-                        <?php else:?>
-                            <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name']?></span></a>
-                        <?php endif;?>
-                        <?php $c++; ?>
-                    <?php endforeach;?>
-                    <div class="clear"></div>
+                    <div class="col-xs-12">
+                        <?php $c = 0; ?>
+                        <?php foreach ($this->other_product as $p):?>
+                            <?php if ($c == 5): ?>
+                                <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas last" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name']?></span></a>
+                            <?php else:?>
+                                <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name']?></span></a>
+                            <?php endif;?>
+                            <?php $c++; ?>
+                        <?php endforeach;?>
+                        <div class="clear"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="en" style="display: none">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="mneo-title">
-                        LIKE PRODUCTS
-                        <div class="cline"></div>
+        <div class="en" style="display: none">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="mneo-title">
+                            Related  Products
+                            <div class="cline"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-12">
-                    <?php $c = 0; ?>
-                    <?php foreach ($this->other_product as $p):?>
-                        <?php if ($c == 5): ?>
-                            <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas last" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name_en']?></span></a>
-                        <?php else:?>
-                            <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name_en']?></span></a>
-                        <?php endif;?>
-                        <?php $c++; ?>
-                    <?php endforeach;?>
-                    <div class="clear"></div>
+                    <div class="col-xs-12">
+                        <?php $c = 0; ?>
+                        <?php foreach ($this->other_product as $p):?>
+                            <?php if ($c == 5): ?>
+                                <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas last" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name_en']?></span></a>
+                            <?php else:?>
+                                <a href="/product/info/<?php echo $p['id']?>" class="prod-rela-cas" style="background-image: url(<?php echo $p['photo']?>);"><span><?php echo $p['name_en']?></span></a>
+                            <?php endif;?>
+                            <?php $c++; ?>
+                        <?php endforeach;?>
+                        <div class="clear"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
