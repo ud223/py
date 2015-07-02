@@ -116,7 +116,7 @@ class Angel_IndexController extends Angel_Controller_Action {
             break;
         }
 
-//        var_dump($profile); exit;
+        var_dump($cases); exit;
         $this->view->cases = $cases;
         $this->view->profile = $profile;
         $this->view->show = $show;
