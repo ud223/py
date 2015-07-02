@@ -70,13 +70,21 @@
         <div class="row">
             <div class="col-xs-3">
                 <ul class="sid-ul-lst">
-                    <li class="selected">
+                    <?php if ($this->category_id == "all"):?>
+                        <li class="selected">
+                    <?php else: ?>
+                        <li>
+                    <?php endif; ?>
                         <a href="/product/list/all">
                             All
                         </a>
                     </li>
                     <?php foreach ($this->categorys as $category): ?>
-                        <li>
+                        <?php if ($category->id == $this->category_id):?>
+                            <li class="selected">
+                        <?php else: ?>
+                            <li>
+                        <?php endif; ?>
                             <a href="/product/list/<?php echo $category->id ?>">
                                 <?php echo $category->name_en ?>
                             </a>

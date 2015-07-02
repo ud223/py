@@ -46,7 +46,7 @@
                 <h1><?php echo $this->model->title ?></h1>
                 <div class="suuex"><?php echo date_format($this->model->created_at, 'Y年m月d日')?></div>
                 <div class="cont">
-                    <div style="width: 100%; text-align: center">
+                    <div style="width: 100%; text-align: center; margin:20px 0;">
                         <img src="<?php echo $this->first_photo?>">
                     </div>
                     <?php echo $this->model->content ?>
