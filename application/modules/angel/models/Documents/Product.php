@@ -60,6 +60,14 @@ class Product extends AbstractDocument{
     /** @ODM\String */
     protected $steel_belt_en;
 
+    //安装结构
+    /** @ODM\String */
+    protected $structure;
+
+    //安装结构
+    /** @ODM\String */
+    protected $structure_en;
+
     /** @ODM\String */
     protected $description;
 

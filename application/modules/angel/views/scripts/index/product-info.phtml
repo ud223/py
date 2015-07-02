@@ -206,6 +206,13 @@
                                 <div class="clear"></div>
                             </li>
                         <?php endif; ?>
+                        <?php if ($this->model->structure): ?>
+                            <li>
+                                <span class="col">安装结构：</span>
+                                <span><?php echo $this->model->structure ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -310,6 +317,13 @@
                             <li>
                                 <span class="col">Lateral Sides：</span>
                                 <span><?php echo $this->model->steel_belt_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->structure_en): ?>
+                            <li>
+                                <span class="col">Structural joint：</span>
+                                <span><?php echo $this->model->structure_en ?></span>
                                 <div class="clear"></div>
                             </li>
                         <?php endif; ?>
