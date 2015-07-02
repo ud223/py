@@ -16,7 +16,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $profileModel = $this->getModel('companyprofile');
         $classiccase = $this->getModel('classiccase');
 
-        $tmp_products = $productModel->getLastByCount("4");
+        $tmp_products = $productModel->getAll(false);
 
         $products = array();
 
