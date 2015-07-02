@@ -112,11 +112,8 @@ class Angel_IndexController extends Angel_Controller_Action {
             }
 
             $cases[] = array("id"=>$n->id, "name"=>$n->name, "name_en"=>$n->name_en, "simple_content"=>$n->simple_content, "simple_content_en"=>$n->simple_content_en, "photo"=>$path);
-
-            break;
         }
-
-        var_dump($cases); exit;
+        
         $this->view->cases = $cases;
         $this->view->profile = $profile;
         $this->view->show = $show;
