@@ -354,6 +354,7 @@
                             <?php else:?>
                                 <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
                             <?php endif;?>
+                            <?php $c++; ?>
                         <?php endforeach;?>
                     </div>
                     <div class="clear"></div>
