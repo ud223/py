@@ -363,6 +363,9 @@
 
             $("#big-photo").attr("src", photoSmallToBig(path));
         })
+
+        $(".header").find(".selected").removeClass("selected");
+        $(".header").find(".project").addClass("selected");
     })
 
     function photoSmallToBig(path) {

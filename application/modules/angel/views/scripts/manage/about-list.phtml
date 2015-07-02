@@ -46,7 +46,7 @@
 </style>
 <h1 class="page-title"><?php echo $this->title ?></h1>
 <div class="btb">
-    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-about-create') ?>">创建新闻</a>
+    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-about-create') ?>">创建关于我们</a>
 </div>
 <div class="row">
     <?php
@@ -75,8 +75,8 @@
 </div>
 <script type="text/javascript">
     (function($) {
-        $('.remove-news').click(function() {
-            removeObject($(this), '<?php echo $this->url(array(), 'manage-news-remove') ?>');
+        $('.remove-about').click(function() {
+            removeObject($(this), '<?php echo $this->url(array(), 'manage-about-remove') ?>');
         });
     })(jQuery);
 </script>

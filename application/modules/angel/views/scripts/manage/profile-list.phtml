@@ -46,7 +46,7 @@
 </style>
 <h1 class="page-title"><?php echo $this->title ?></h1>
 <div class="btb">
-    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-news-create') ?>">创建典型案例</a>
+    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-profile-create') ?>">创建公司简介</a>
 </div>
 <div class="row">
     <?php
@@ -57,13 +57,13 @@
             <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
             <div class="wp">
                 <p style="text-align:right">
-                    <button type="button" class="btn btn-danger btn-sm remove-case">删除</button>
+                    <button type="button" class="btn btn-danger btn-sm remove-profile">删除</button>
                 </p>
                 <div class='pwp'>
-                    <p><?php echo $p['name'] ?></p>
+                    <p><?php echo $p['title'] ?></p>
                 </div>
                 <div class="btn-group">
-                    <a href="<?php echo $this->url(array(id => $p["id"]), 'manage-case-save') ?>" class="btn btn-info btn-sm">编辑</a>
+                    <a href="<?php echo $this->url(array(id => $p["id"]), 'manage-profile-save') ?>" class="btn btn-info btn-sm">编辑</a>
                 </div>
             </div>
         </div>
@@ -73,15 +73,10 @@
         <?php endif; ?>
     <?php endforeach; ?>
 </div>
-<div class="row">
-    <div class="col-md-12 text-center">
-        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-product-list'));  ?>
-    </div>
-</div>
 <script type="text/javascript">
     (function($) {
-        $('.remove-case').click(function() {
-            removeObject($(this), '<?php echo $this->url(array(), 'manage-case-remove') ?>');
+        $('.remove-profile').click(function() {
+            removeObject($(this), '<?php echo $this->url(array(), 'manage-profile-remove') ?>');
         });
     })(jQuery);
 </script>

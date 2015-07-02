@@ -110,8 +110,8 @@
                             <div class="inner">公司介绍</div>
                         </div>
                         <div class="duacontent">
-                            <img id="poi02" style="width:290px;height: 147px" src="<?php echo $this->about[0]['photo']?>"  />
-                            <p class="poi01"><?php echo $this->about[0]['simple_content']?></p>
+                            <a href="/profile"><img id="poi02" style="width:290px;height: 147px" src="<?php echo $this->profile[0]['photo']?>"  /></a>
+                            <a href="/profile"><p class="poi01"><?php echo $this->profile[0]['simple_content']?></p></a>
                         </div>
                     </div>
                     <div class="col-xs-7">
@@ -177,8 +177,8 @@
                             <div class="inner">Company Profile</div>
                         </div>
                         <div class="duacontent">
-                            <img id="poi02" style="width:290px;height: 147px" src="<?php echo $this->about[0]['photo']?>"  />
-                            <p class="poi01"><?php echo $this->about[0]['simple_content_en']?></p>
+                            <img id="poi02" style="width:290px;height: 147px" src="<?php echo $this->profile[0]['photo']?>"  />
+                            <p class="poi01"><?php echo $this->profile[0]['simple_content_en']?></p>
                         </div>
                     </div>
                     <div class="col-xs-7">
@@ -236,3 +236,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".header").find(".selected").removeClass("selected");
+        $(".header").find(".home").addClass("selected");
+    });
+</script>

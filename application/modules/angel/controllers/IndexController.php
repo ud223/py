@@ -2,7 +2,7 @@
 
 class Angel_IndexController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('index', 'about', 'error', 'result', 'case-list-home', 'case-list', 'case-info',  'product-info', 'news-list-home', 'news-list', 'news-detail', 'product-list-home', 'product-list', 'awards', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
+    protected $login_not_required = array('index', 'about', 'profile',  'error', 'result', 'case-list-home', 'case-list', 'case-info',  'product-info', 'news-list-home', 'news-list', 'news-detail', 'product-list-home', 'product-list', 'awards', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
 
     public function init() {
         $this->_helper->layout->setLayout('normal');
@@ -13,7 +13,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $productModel = $this->getModel('product');
         $newsModel = $this->getModel('news');
         $showModel = $this->getModel('show');
-        $aboutModel = $this->getModel('about');
+        $profileModel = $this->getModel('companyprofile');
         $classiccase = $this->getModel('classiccase');
 
         $tmp_products = $productModel->getLastByCount("4");
@@ -72,11 +72,11 @@ class Angel_IndexController extends Angel_Controller_Action {
             break;
         }
 
-        $tmp_about = $aboutModel->getLastByCount("1");
+        $tmp_profile = $profileModel->getLastByCount("1");
 
-        $about = array();
+        $profile = array();
 
-        foreach ($tmp_about as $n) {
+        foreach ($tmp_profile as $n) {
             if (count($n->photo)) {
                 try {
                     if ($n->photo[0]->name) {
@@ -89,7 +89,7 @@ class Angel_IndexController extends Angel_Controller_Action {
                 }
             }
 
-            $about[] = array("id"=>$n->id, "simple_content"=>$n->simple_content,  "simple_content_en"=>$n->simple_content_en, "photo"=>$path);
+            $profile[] = array("id"=>$n->id, "simple_content"=>$n->simple_content,  "simple_content_en"=>$n->simple_content_en, "photo"=>$path);
 
             break;
         }
@@ -116,8 +116,9 @@ class Angel_IndexController extends Angel_Controller_Action {
             break;
         }
 
+//        var_dump($profile); exit;
         $this->view->cases = $cases;
-        $this->view->about = $about;
+        $this->view->profile = $profile;
         $this->view->show = $show;
         $this->view->news = $news;
         $this->view->products = $products;
@@ -568,6 +569,22 @@ class Angel_IndexController extends Angel_Controller_Action {
      * *****************************************************/
     public function awardsAction() {
 
+    }
+
+    public function profileAction() {
+        $profileModel = $this->getModel('companyprofile');
+
+        $tmp_profile = $profileModel->getLastByCount("1");
+
+        $profile = array();
+
+        foreach ($tmp_profile as $n) {
+            $profile[] = array("id"=>$n->id, "title"=>$n->title, "title_en"=>$n->title_en, "content"=>$n->content, "content_en"=>$n->content_en);
+
+            break;
+        }
+
+        $this->view->model = $profile;
     }
 
     public function aboutAction() {

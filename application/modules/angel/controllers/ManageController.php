@@ -1156,6 +1156,142 @@ class Angel_ManageController extends Angel_Controller_Action {
      * 公司简介代码
      *
      * **********************************************************/
+    public function profileCreateAction() {
+        $profileModel = $this->getModel('companyprofile');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+
+            $title = $this->getParam('title');
+            $title_en = $this->getParam('title_en');
+            $simple_content = $this->getParam('simple_content');
+            $simple_content_en = $this->getParam('simple_content_en');
+            $content = $this->getParam('content');
+            $content_en = $this->getParam('content_en');
+            $photo = $this->decodePhoto();
+
+            try {
+                $result = $profileModel->addAbout($title, $title_en, $content, $content_en, $simple_content, $simple_content_en, $photo);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-profile-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            $this->view->title = "创建公司简介";
+        }
+    }
+
+    public function profileListAction() {
+        $profileModel = $this->getModel('companyprofile');
+
+        $paginator = $profileModel->getAll(false);
+
+        $resource = array();
+
+        foreach ($paginator as $r) {
+            $resource[] = array(
+                'id' => $r->id,
+                'title' => $r->title
+            );
+        }
+
+        $this->view->resource = $resource;
+        $this->view->title = "公司简介";
+    }
+
+    public function profileRemoveAction() {
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $id = $this->getParam('id');
+            if ($id) {
+                $profileModel = $this->getModel('companyprofile');
+                $result = $profileModel->remove($id);
+            }
+            echo $result;
+            exit;
+        }
+    }
+
+    public function profileSaveAction() {
+        $notFoundMsg = '未找到公司简介';
+        $profileModel = $this->getModel('companyprofile');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+
+            $id = $this->request->getParam('id');
+            $title = $this->getParam('title');
+            $title_en = $this->getParam('title_en');
+            $simple_content = $this->getParam('simple_content');
+            $simple_content_en = $this->getParam('simple_content_en');
+            $content = $this->getParam('content');
+            $content_en = $this->getParam('content_en');
+            $photo = $this->decodePhoto();
+
+            try {
+                $result = $profileModel->saveAbout($id, $title, $title_en, $content, $content_en, $simple_content, $simple_content_en, $photo);
+            } catch (Angel_Exception_About $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-profile-list-home'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑公司简介";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                $target = $profileModel->getById($id);
+
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+
+                $this->view->model = $target;
+
+                $photo = $target->photo;
+
+                if ($photo) {
+                    $saveObj = array();
+                    foreach ($photo as $p) {
+                        try {
+                            $name = $p->name;
+                        } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                            $this->view->imageBroken = true;
+                            continue;
+                        }
+                        $saveObj[$name] = $this->view->photoImage($p->name . $p->type, 'small');
+                        if (!$p->thumbnail) {
+                            $saveObj[$name] = $this->view->photoImage($p->name . $p->type);
+                        }
+                    }
+                    if (!count($saveObj))
+                        $saveObj = false;
+                    $this->view->photo = $saveObj;
+                }
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
+    }
+
+    /************************************************************
+     * 关于我们代码
+     *
+     * **********************************************************/
     public function aboutCreateAction() {
         $aboutModel = $this->getModel('about');
 
@@ -1181,7 +1317,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
         } else {
-            $this->view->title = "创建公司简介";
+            $this->view->title = "创建关于我们";
         }
     }
 
@@ -1200,7 +1336,7 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
 
         $this->view->resource = $resource;
-        $this->view->title = "公司简介";
+        $this->view->title = "关于我们";
     }
 
     public function aboutRemoveAction() {
@@ -1209,7 +1345,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             // POST METHOD
             $id = $this->getParam('id');
             if ($id) {
-                $aboutModel = $this->getModel('news');
+                $aboutModel = $this->getModel('about');
                 $result = $aboutModel->remove($id);
             }
             echo $result;
@@ -1218,7 +1354,7 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
 
     public function aboutSaveAction() {
-        $notFoundMsg = '未找到公司简介';
+        $notFoundMsg = '未找到关于我们信息';
         $aboutModel = $this->getModel('about');
 
         if ($this->request->isPost()) {
@@ -1249,7 +1385,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $this->view->title = "编辑公司简介";
+            $this->view->title = "编辑关于我们";
 
             $id = $this->request->getParam("id");
 
