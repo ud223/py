@@ -557,11 +557,25 @@ class Angel_ManageController extends Angel_Controller_Action {
         $resource = array();
 
         foreach ($paginator as $r) {
+            $path = "";
+
+            if (count($r->photo)) {
+                try {
+                    if ($r->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($r->photo[0]->name . $r->photo[0]->type, 'small');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
             $resource[] = array(
                 'id' => $r->id,
                 'name' => $r->name,
-                'name_en'=>$r->name_en//,
-//                'photo' => $r->cover_path
+                'name_en'=>$r->name_en,
+                'photo' => $path
             );
         }
 
