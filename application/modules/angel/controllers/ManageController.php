@@ -1039,7 +1039,7 @@ class Angel_ManageController extends Angel_Controller_Action {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
             }
         } else {
-            $this->view->title = "添加展示图片";
+            $this->view->title = "添加幻灯片图片";
         }
     }
 
@@ -1067,12 +1067,12 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             $resource[] = array(
                 'id' => $p->id,
-                'title' =>"首页展示图",
+                'title' =>"首页幻灯片",
                 'photo'=>$path
             );
         }
         $this->view->resource = $resource;
-        $this->view->title = "展示图片";
+        $this->view->title = "幻灯片图片";
     }
 
     public function imageRemoveAction() {
@@ -1117,7 +1117,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
         } else {
             // GET METHOD
-            $this->view->title = "编辑展示图";
+            $this->view->title = "编辑幻灯片";
 
             $id = $this->request->getParam("id");
 
