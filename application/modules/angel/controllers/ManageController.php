@@ -510,6 +510,8 @@ class Angel_ManageController extends Angel_Controller_Action {
             $steel_core_en = $this->getParam('steel_core_en');
             $steel_belt = $this->getParam('steel_belt');
             $steel_belt_en = $this->getParam('steel_belt_en');
+            $structure = $this->getParam('structure');
+            $structure_en = $this->getParam('structure_en');
             $description = $this->getParam('description');
             $description_en = $this->getParam('description_en');
             $photo = $this->decodePhoto();
@@ -523,7 +525,7 @@ class Angel_ManageController extends Angel_Controller_Action {
             }
             else {
                 try {
-                    $result = $productModel->addProduct($name, $name_en, $width, $width_en, $thickness, $thickness_en, $height, $height_en, $style, $style_en, $other_thickness, $other_thickness_en, $steel_core, $steel_core_en, $steel_belt, $steel_belt_en, $description, $description_en, $photo, $category_id);
+                    $result = $productModel->addProduct($name, $name_en, $width, $width_en, $thickness, $thickness_en, $height, $height_en, $style, $style_en, $other_thickness, $other_thickness_en, $steel_core, $steel_core_en, $steel_belt, $steel_belt_en,  $structure, $structure_en, $description, $description_en, $photo, $category_id);
                 } catch (Exception $e) {
                     $error = $e->getMessage();
                 }
@@ -608,13 +610,15 @@ class Angel_ManageController extends Angel_Controller_Action {
             $steel_core_en = $this->getParam('steel_core_en');
             $steel_belt = $this->getParam('steel_belt');
             $steel_belt_en = $this->getParam('steel_belt_en');
+            $structure = $this->getParam('structure');
+            $structure_en = $this->getParam('structure_en');
             $description = $this->getParam('description');
             $description_en = $this->getParam('description_en');
             $photo = $this->decodePhoto();
             $category_id = $this->getParam('category_id');
 
             try {
-                $result = $productModel->saveProduct($id, $name, $name_en, $width, $width_en, $thickness, $thickness_en, $height, $height_en, $style, $style_en, $other_thickness, $other_thickness_en, $steel_core, $steel_core_en, $steel_belt, $steel_belt_en, $description, $description_en, $photo, $category_id);
+                $result = $productModel->saveProduct($id, $name, $name_en, $width, $width_en, $thickness, $thickness_en, $height, $height_en, $style, $style_en, $other_thickness, $other_thickness_en, $steel_core, $steel_core_en, $steel_belt, $steel_belt_en, $structure, $structure_en, $description, $description_en, $photo, $category_id);
             } catch (Angel_Exception_Product $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {
