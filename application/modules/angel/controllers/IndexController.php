@@ -2,7 +2,7 @@
 
 class Angel_IndexController extends Angel_Controller_Action {
 
-    protected $login_not_required = array('index', 'about', 'profile',  'error', 'result', 'case-list-home', 'case-list', 'case-info',  'product-info', 'news-list-home', 'news-list', 'news-detail', 'product-list-home', 'product-list', 'awards', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
+    protected $login_not_required = array('index', 'about', 'profile', 'application', 'error', 'result', 'case-list-home', 'case-list', 'case-info',  'product-info', 'news-list-home', 'news-list', 'news-detail', 'product-list-home', 'product-list', 'awards', 'login', 'register', 'email-validation', 'is-email-can-be-used', 'forgot-password');
 
     public function init() {
         $this->_helper->layout->setLayout('normal');
