@@ -350,9 +350,9 @@
                         <?php $c = 1; ?>
                         <?php foreach ($this->cases as $c):?>
                             <?php if ($c % 2 == 0) :?>
-                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?><?php echo $c?></span></a>
                             <?php else:?>
-                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?><?php echo $c?></span></a>
                             <?php endif;?>
                             <?php $c++; ?>
                         <?php endforeach;?>
