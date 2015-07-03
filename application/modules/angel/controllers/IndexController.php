@@ -82,7 +82,7 @@ class Angel_IndexController extends Angel_Controller_Action {
                     if ($n->photo[0]->name) {
                         $path = $this->bootstrap_options['image.photo_path'];
 
-                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'small');
+                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'main');
                     }
                 } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
                     // 图片被删除的情况
