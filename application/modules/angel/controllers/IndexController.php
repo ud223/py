@@ -339,22 +339,24 @@ class Angel_IndexController extends Angel_Controller_Action {
 
             $tmp_cases = $classiccase->getAll(false);
 
-            foreach ($tmp_cases as $c) {
-                foreach ($c->product as $t) {
-                    if ($t->id == $target->id) {
+            foreach ($tmp_cases as $casae) {
+                foreach ($casae->product as $product) {
+                    if ($product->id == $target->id) {
                         $case_path = "";
 
-                        if (count($t->photo)) {
+                        if (count($casae->photo)) {
                             try {
-                                if ($t->photo[0]->name) {
+                                if ($casae->photo[0]->name) {
                                     $case_path = $this->bootstrap_options['image.photo_path'];
 
-                                    $case_path = $this->view->photoImage($t->photo[0]->name . $t->photo[0]->type, 'main');
+                                    $case_path = $this->view->photoImage($casae->photo[0]->name . $casae->photo[0]->type, 'small');
                                 }
                             } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
                                 // 图片被删除的情况
                             }
                         }
+
+//                        exit($case_path);
 
                         $cases[] = array("id"=>$c->id, "name"=>$c->name, "name_en"=>$c->name_en, "photo"=>$case_path);
 
