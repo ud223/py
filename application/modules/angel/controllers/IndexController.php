@@ -617,18 +617,46 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function aboutAction() {
-        $aboutModel = $this->getModel('about');
+//        $aboutModel = $this->getModel('about');
+//
+//        $tmp_about = $aboutModel->getLastByCount("1");
+//
+//        $about = array();
+//
+//        foreach ($tmp_about as $n) {
+//            $about[] = array("id"=>$n->id, "title"=>$n->title, "title_en"=>$n->title_en, "content"=>$n->content, "content_en"=>$n->content_en);
+//
+//            break;
+//        }
+//
+//        $this->view->model = $about;
 
-        $tmp_about = $aboutModel->getLastByCount("1");
+        $profileModel = $this->getModel('companyprofile');
 
-        $about = array();
+        $tmp_profile = $profileModel->getLastByCount("1");
 
-        foreach ($tmp_about as $n) {
-            $about[] = array("id"=>$n->id, "title"=>$n->title, "title_en"=>$n->title_en, "content"=>$n->content, "content_en"=>$n->content_en);
+        $profile = array();
+
+        foreach ($tmp_profile as $n) {
+            $path = "";
+
+            if (count($n->photo)) {
+                try {
+                    if ($n->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'main');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $profile[] = array("id"=>$n->id, "title"=>$n->title, "title_en"=>$n->title_en, "content"=>$n->content, "content_en"=>$n->content_en, "photo"=>$path);
 
             break;
         }
 
-        $this->view->model = $about;
+        $this->view->model = $profile;
     }
 }
