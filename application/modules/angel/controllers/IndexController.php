@@ -340,16 +340,16 @@ class Angel_IndexController extends Angel_Controller_Action {
             $tmp_cases = $classiccase->getAll(false);
 
             foreach ($tmp_cases as $c) {
-                foreach ($c->product as $p) {
-                    if ($p->id == $target->id) {
+                foreach ($c->product as $t) {
+                    if ($t->id == $target->id) {
                         $path = "";
 
-                        if (count($p->photo)) {
+                        if (count($t->photo)) {
                             try {
-                                if ($p->photo[0]->name) {
+                                if ($t->photo[0]->name) {
                                     $path = $this->bootstrap_options['image.photo_path'];
 
-                                    $path = $this->view->photoImage($p->photo[0]->name . $p->photo[0]->type, 'main');
+                                    $path = $this->view->photoImage($t->photo[0]->name . $t->photo[0]->type, 'main');
                                 }
                             } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
                                 // 图片被删除的情况
