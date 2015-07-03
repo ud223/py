@@ -358,7 +358,7 @@ class Angel_IndexController extends Angel_Controller_Action {
 
 //                        exit($case_path);
 
-                        $cases[] = array("id"=>$c->id, "name"=>$c->name, "name_en"=>$c->name_en, "photo"=>$case_path);
+                        $cases[] = array("id"=>$casae->id, "name"=>$casae->name, "name_en"=>$casae->name_en, "photo"=>$case_path);
 
                         break;
                     }
