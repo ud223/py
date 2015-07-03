@@ -347,7 +347,7 @@
                 <?php if (count($this->cases) > 0):?>
                     <p class="caro-tt">Related Case</p>
                     <div>
-                        <?php $c = 0; ?>
+                        <?php $c = 1; ?>
                         <?php foreach ($this->cases as $c):?>
                             <?php if ($c % 2 == 0) :?>
                                 <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
