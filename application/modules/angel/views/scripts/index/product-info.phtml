@@ -119,9 +119,9 @@
     <div class="en" style="display: none">
         <div class="row">
             <div class="col-xs-12">
-                <a href="/">Home</a>
+                <a href="/?language=en">Home</a>
                 <span class="xsplt">/</span>
-                <a href="/product/list/<?php echo $this->category_id ?>"><?php echo $this->category_en ?></a>
+                <a href="/product/list/<?php echo $this->category_id ?>?language=en"><?php echo $this->category_en ?></a>
                 <span class="xsplt">/</span>
                 <span class="xsexp"><?php echo $this->model->name_en ?></span>
             </div>
@@ -249,7 +249,7 @@
     <div class="en" style="display: none">
         <div class="row">
             <div class="col-xs-6">
-                <a href="#" id="bigc2-img-wp">
+                <a href="javascript:void(0)" id="bigc2-img-wp">
                     <img class="big-photo" style="width:500px; height: 302px" src="<?php echo $this->first_photo?>" />
                 </a>
                 <div id="smal2-img-list">
@@ -351,9 +351,9 @@
                         <?php $n = 1; ?>
                         <?php foreach ($this->cases as $c):?>
                             <?php if ($n % 2 == 0) :?>
-                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                                <a href="/case/info/<?php echo $c["id"]?>?language=en" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
                             <?php else:?>
-                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                                <a href="/case/info/<?php echo $c["id"]?>?language=en" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
                             <?php endif;?>
                             <?php $n++; ?>
                         <?php endforeach;?>

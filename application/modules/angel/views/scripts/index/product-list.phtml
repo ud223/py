@@ -11,7 +11,7 @@
     <div class="en" style="display: noen">
         <div class="row">
             <div class="col-xs-12">
-                <a href="/">Home</a>
+                <a href="/?language=en">Home</a>
                 <span class="xsplt">/</span>
                 <span class="xsexp"><?php echo $this->category_en ?></span>
             </div>
@@ -75,7 +75,7 @@
                     <?php else: ?>
                         <li>
                     <?php endif; ?>
-                        <a href="/product/list/all">
+                        <a href="/product/list/all?language=en">
                             All
                         </a>
                     </li>
@@ -85,7 +85,7 @@
                         <?php else: ?>
                             <li>
                         <?php endif; ?>
-                            <a href="/product/list/<?php echo $category->id ?>">
+                            <a href="/product/list/<?php echo $category->id ?>?language=en">
                                 <?php echo $category->name_en ?>
                             </a>
                         </li>
@@ -96,8 +96,8 @@
                 <div>
                     <?php foreach ($this->products as $p): ?>
                         <div class="gallsitm">
-                            <a href="/product/info/<?php echo $p["id"] ?>" class="imga" style="background-image:url(<?php echo $p["photo"] ?>)"></a>
-                            <a href="/product/info/<?php echo $p["id"] ?>" class="nmtt"><?php echo $p["name_en"] ?></a>
+                            <a href="/product/info/<?php echo $p["id"] ?>?language=en" class="imga" style="background-image:url(<?php echo $p["photo"] ?>)"></a>
+                            <a href="/product/info/<?php echo $p["id"] ?>?language=en" class="nmtt"><?php echo $p["name_en"] ?></a>
                         </div>
                     <?php endforeach; ?>
 

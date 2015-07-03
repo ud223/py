@@ -43,7 +43,7 @@
     <div class="en" style="display: noen">
         <div class="row">
             <div class="col-xs-12">
-                <a href="/">Home</a>
+                <a href="/?language=en">Home</a>
                 <span class="xsplt">/</span>
                 <span class="xsexp">NEWS</span>
             </div>
@@ -70,9 +70,9 @@
     <div class="en" style="display: noen">
         <div class="row">
             <?php foreach ($this->resource as $r):?>
-                <div class="col-xs-4 ihlist" onclick="location.href='/news/detail/<?php echo $r["id"] ?>'">
+                <div class="col-xs-4 ihlist" onclick="location.href='/news/detail/<?php echo $r["id"] ?>?language=en'">
                     <div class="itm">
-                        <a class="btt" href="/news/detail/<?php echo $r["id"] ?>"><?php echo $r["title_en"] ?></a>
+                        <a class="btt" href="/news/detail/<?php echo $r["id"] ?>?language=en"><?php echo $r["title_en"] ?></a>
                         <div class="time"><?php echo $r["date_en"] ?></div>
                     </div>
                 </div>

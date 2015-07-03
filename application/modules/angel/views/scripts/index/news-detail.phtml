@@ -30,9 +30,9 @@
     <div class="en" style="display: noen">
         <div class="row">
             <div class="col-xs-12">
-                <a href="/">Home</a>
+                <a href="/?language=en">Home</a>
                 <span class="xsplt">/</span>
-                <a href="/news/list">News</a>
+                <a href="/news/list?language=en">News</a>
                 <span class="xsplt">/</span>
                 <span class="xsexp"><?php echo $this->model->title_en ?></span>
             </div>
@@ -61,7 +61,6 @@
                     <div style="width: 100%; text-align: center; margin:20px 0;">
                         <img src="<?php echo $this->first_photo?>">
                     </div>
-
                     <?php echo $this->model->content_en ?>
                 </div>
             </div>
