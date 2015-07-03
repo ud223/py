@@ -125,7 +125,7 @@
                         <div class="duacontent">
                             <?php foreach ($this->news as $n):?>
                                 <div class="poi03">
-                                    <img src="<?php echo $n['photo']?>" class="icx" />
+                                    <a href="/news/detail/<?php echo $n['id'] ?>"><img src="<?php echo $n['photo']?>" class="icx" /></a>
                                     <a href="/news/detail/<?php echo $n['id'] ?>" class="tt"><?php echo $n['title'] ?></a>
                                     <div class="subt"><?php echo $n['create_date'] ?></div>
                                     <a href="/news/detail/<?php echo $n['id'] ?>" class="rbsubt">查看详细 &gt;</a>
@@ -191,7 +191,7 @@
                         <div class="duacontent">
                             <?php foreach ($this->news as $n):?>
                                 <div class="poi03">
-                                    <img src="<?php echo $n['photo']?>" class="icx" />
+                                    <a href="/news/detail/<?php echo $n['id'] ?>"><img src="<?php echo $n['photo']?>" class="icx" /></a>
                                     <a href="/news/detail/<?php echo $n['id'] ?>?language=en" class="tt"><?php echo $n['title_en'] ?></a>
                                     <div class="subt"><?php echo $n['create_date_en'] ?></div>
                                     <a href="/news/detail/<?php echo $n['id'] ?>?language=en" class="rbsubt">Detail &gt;</a>
