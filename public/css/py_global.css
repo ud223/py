@@ -162,6 +162,8 @@ a:hover {
     position: relative;
     background-position: center center;
     overflow: hidden;
+    background-repeat: no-repeat;
+    background-color: #333;
 }
 #btc-lst {
     height: 8px;
