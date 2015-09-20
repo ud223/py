@@ -152,7 +152,7 @@
                                 </a>
                             </div>
                         <?php endif; ?>
-                        <?php $i = $i + 1; ?>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -172,7 +172,7 @@
                                 </p>
                             </div>
                         <?php endif; ?>
-                        <?php $i = $i + 1; ?>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -217,13 +217,17 @@
                     </div>
 
                     <!-- 循环显示 -->
+                    <?php $i = 0; ?>
                     <?php foreach ($this->products as $p):?>
-                        <div class="col-xs-6">
-                            <a href="/product/info/<?php echo $p["id"] ?>?language=en" class="poi-mwu">
-                                <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
-                                <p class="poi-mic"><?php echo $p["name_en"] ?></p>
-                            </a>
-                        </div>
+                        <?php if($i<=2):?>
+                            <div class="col-xs-4">
+                                <a href="/product/info/<?php echo $p["id"] ?>?language=en" class="poi-mwu">
+                                    <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
+                                    <p class="poi-mic"><?php echo $p["name_en"] ?></p>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -232,14 +236,18 @@
                     <div class="inner">Classic Case</div>
                 </div>
                 <div class="duacontent">
+                    <?php $i = 0; ?>
                     <?php foreach ($this->cases as $p):?>
-                        <div class="poi04">
-                            <a href="/case/info/<?php echo $p["id"] ?>?language=en" class="lnk"><img class="icx" src="<?php echo $p["photo"] ?>" /></a>
-                            <a href="/case/info/<?php echo $p["id"] ?>?language=en" class="tt"><?php echo $p["name_en"] ?></a>
-                            <p class="ct">
-                                <?php echo $p["simple_content_en"] ?>
-                            </p>
-                        </div>
+                        <?php if($i<=1):?>
+                            <div class="poi04">
+                                <a href="/case/info/<?php echo $p["id"] ?>?language=en" class="lnk"><img class="icx" src="<?php echo $p["photo"] ?>" /></a>
+                                <a href="/case/info/<?php echo $p["id"] ?>?language=en" class="tt"><?php echo $p["name_en"] ?></a>
+                                <p class="ct">
+                                    <?php echo $p["simple_content_en"] ?>
+                                </p>
+                            </div>
+                        <?php endif; ?>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 </div>
             </div>
