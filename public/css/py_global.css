@@ -94,17 +94,17 @@ a:hover {
     font-size: 12px;
 }
 #topblock {
-    height: 120px;
+    height: 100px;
     border-bottom: 1px solid rgba(0, 0, 0, .12);
 }
 #topblock .nnlne {
-    height: 40px;
+    height: 30px;
     background: url(../img/toplne.jpg) right top repeat-y;
     width: 100%;
 }
 #topblock .bblne {
-    height: 80px;
-    line-height: 80px;
+    height: 70px;
+    line-height: 70px;
     padding-left: 250px;
     font-size: 18px;
     overflow: hidden;
