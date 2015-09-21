@@ -718,23 +718,24 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
             }
 
-            if (count($tmp_products) == 0) {
+            if (count($products) == 0) {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=案例必须包含一个产品'); exit;
             }
-
-            if (!$name || !$name_en) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=必须填写案例名称');
-            }
             else {
-                try {
-                    $result = $classiccaseModel->addCase($name, $name_en, $simple_content, $simple_content_en, $content, $content_en, $photo, $products);
-                } catch (Exception $e) {
-                    $error = $e->getMessage();
+                if (!$name || !$name_en) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=必须填写案例名称');
                 }
-                if ($result) {
-                    $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-case-list-home'));
-                } else {
-                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+                else {
+                    try {
+                        $result = $classiccaseModel->addCase($name, $name_en, $simple_content, $simple_content_en, $content, $content_en, $photo, $products);
+                    } catch (Exception $e) {
+                        $error = $e->getMessage();
+                    }
+                    if ($result) {
+                        $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-case-list-home'));
+                    } else {
+                        $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+                    }
                 }
             }
         } else {
@@ -801,27 +802,28 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
             }
 
-            if (count($tmp_products) == 0) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=案例必须包含一个产品'); exit;
-            }
-
-            if (!$name || !$name_en) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=必须填写案例名称');
+            if (count($products) == 0) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=案例必须包含一个产品');
             }
             else {
-                try {
-                    $result = $classiccaseModel->saveCase($id, $name, $name_en, $simple_content, $simple_content_en, $content, $content_en, $photo, $products);
-                } catch (Angel_Exception_News $e) {
-                    $error = $e->getDetail();
-                } catch (Exception $e) {
-                    $error = $e->getMessage();
+                if (!$name || !$name_en) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=必须填写案例名称');
                 }
-            }
+                else {
+                    try {
+                        $result = $classiccaseModel->saveCase($id, $name, $name_en, $simple_content, $simple_content_en, $content, $content_en, $photo, $products);
+                    } catch (Angel_Exception_News $e) {
+                        $error = $e->getDetail();
+                    } catch (Exception $e) {
+                        $error = $e->getMessage();
+                    }
+                }
 
-            if ($result) {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-case-list-home'));
-            } else {
-                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+                if ($result) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-case-list-home'));
+                } else {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+                }
             }
         } else {
             // GET METHOD
