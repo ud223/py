@@ -417,7 +417,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
 
         $paginator = $classiccaseModel->getAll();
-        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setItemCountPerPage(16);//$this->bootstrap_options['default_page_size']
         $paginator->setCurrentPageNumber($page);
 
         $cases = array();
