@@ -17,9 +17,9 @@
                 <div class="clear-5"></div>
                 <?php foreach ($this->products as $p):?>
                     <?php if (in_array($p->id, $this->own_product)):?>
-                        <input name="product[]" type="checkbox" value="<?php echo $p->id?>" checked="checked" />
+                        <input name="product[]" type="checkbox" value="<?php echo $p->id?>" checked="checked" /><?php echo $p->name?>
                     <?php else:?>
-                        <input name="product[]" type="checkbox" value="<?php echo $p->id?>" />
+                        <input name="product[]" type="checkbox" value="<?php echo $p->id?>" /><?php echo $p->name?>
                     <?php endif;?>
                 <?php endforeach;?>
             </div>
