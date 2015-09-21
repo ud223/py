@@ -718,6 +718,10 @@ class Angel_ManageController extends Angel_Controller_Action {
                 }
             }
 
+            if (count($tmp_products) == 0) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=案例必须包含一个产品'); exit;
+            }
+
             if (!$name || !$name_en) {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=必须填写案例名称');
             }
@@ -795,6 +799,10 @@ class Angel_ManageController extends Angel_Controller_Action {
                 foreach ($tmp_products as $p) {
                     $products[] = $p;
                 }
+            }
+
+            if (count($tmp_products) == 0) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=案例必须包含一个产品'); exit;
             }
 
             if (!$name || !$name_en) {
