@@ -142,7 +142,7 @@ a:hover {
 }
 #cst-space {
     background: #FFF;
-    height: 480px;
+    height: 360px;
 }
 #cst-space #gall-wp {
     height: 100%;
@@ -175,13 +175,13 @@ a:hover {
 }
 #btc-lst .itm {
     display: inline-block;
-    height: 8px;
-    width: 70px;
+    height: 12px;
+    width: 12px;
     background: #FFF;
     cursor: pointer;
     margin: 0 2px;
     box-shadow: 0 0 5px rgba(0, 0, 0, .35);
-    border-radius: 10px;
+    border-radius: 15px;
 }
 #btc-lst .itm:hover {
     background: #EEE;
