@@ -710,11 +710,13 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             $products = array();
 
-            $tmp_products = $productModel->getProductByIds($product_id);
+            if ($product_id) {
+                $tmp_products = $productModel->getProductByIds($product_id);
 
-            if ($tmp_products) {
-                foreach ($tmp_products as $p) {
-                    $products[] = $p;
+                if ($tmp_products) {
+                    foreach ($tmp_products as $p) {
+                        $products[] = $p;
+                    }
                 }
             }
 
@@ -794,11 +796,13 @@ class Angel_ManageController extends Angel_Controller_Action {
 
             $products = array();
 
-            $tmp_products = $productModel->getProductByIds($product_id);
+            if ($product_id) {
+                $tmp_products = $productModel->getProductByIds($product_id);
 
-            if ($tmp_products) {
-                foreach ($tmp_products as $p) {
-                    $products[] = $p;
+                if ($tmp_products) {
+                    foreach ($tmp_products as $p) {
+                        $products[] = $p;
+                    }
                 }
             }
 
