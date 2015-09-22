@@ -33,7 +33,7 @@ class Angel_IndexController extends Angel_Controller_Action {
     public function indexAction() {
         $productModel = $this->getModel('product');
         $newsModel = $this->getModel('news');
-//        $showModel = $this->getModel('show');
+        $showModel = $this->getModel('show');
         $profileModel = $this->getModel('companyprofile');
         $classiccase = $this->getModel('classiccase');
 
@@ -78,21 +78,21 @@ class Angel_IndexController extends Angel_Controller_Action {
 
             $news[] = array("id"=>$n->id, "title"=>$n->title, "title_en"=>$n->title_en, "create_date"=>date_format($n->created_at, 'Y年m月d日'), "create_date_en"=>date_format($n->created_at, 'm/d/Y'), "photo"=>$path);
         }
-//
-//        $tmp_show = $showModel->getAll(false);
-//
-//        $show = array();
-//
-//        foreach ($tmp_show as $n) {
-//            if (count($n->photo)) {
-//               foreach ($n->photo as $p) {
-//                   $show[] =  "/photo/image/" . $p->name . $p->type;
-//               }
-//            }
-//
-//            break;
-//        }
-//
+
+        $tmp_show = $showModel->getAll(false);
+
+        $show = array();
+
+        foreach ($tmp_show as $n) {
+            if (count($n->photo)) {
+               foreach ($n->photo as $p) {
+                   $show[] =  "/photo/image/" . $p->name . $p->type;
+               }
+            }
+
+            break;
+        }
+
         $tmp_profile = $profileModel->getLastByCount("1");
 
         $profile = array();
@@ -137,7 +137,7 @@ class Angel_IndexController extends Angel_Controller_Action {
 
         $this->view->cases = $cases;
         $this->view->profile = $profile;
-//        $this->view->show = $show;
+        $this->view->show = $show;
         $this->view->news = $news;
         $this->view->products = $products;
     }
