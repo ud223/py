@@ -115,6 +115,7 @@ a:hover {
     padding: 5px 10px;
     border-radius: 5px;
     text-decoration: none !important;
+    font-weight:bold;
 }
 #topblock .bblne .citm:hover {
     background: #F8F8F8;
@@ -167,27 +168,34 @@ a:hover {
 }
 #btc-lst {
     height: 8px;
-    text-align: center;
+    text-align: right;
     position: absolute;
     bottom: 50px;
     width: 100%;
     z-index: 11;
+    box-sizing: border-box;
+    padding-right:50px;
+
 }
 #btc-lst .itm {
     display: inline-block;
-    height: 12px;
-    width: 12px;
+    height: 24px;
+    line-height:24px;
+    width: 24px;
     background: #FFF;
     cursor: pointer;
     margin: 0 2px;
     box-shadow: 0 0 5px rgba(0, 0, 0, .35);
     border-radius: 15px;
+    text-align: center;
+    color:#478bd2;
 }
 #btc-lst .itm:hover {
     background: #EEE;
 }
 #btc-lst .itm.selected {
     background: #478bd2 !important;
+    color:#FFF;
 }
 .sid-bts {
     background: url(../img/ltb.png) center -120px;
@@ -322,6 +330,7 @@ a:hover {
     list-style: none;
     padding: 0;
     border-bottom: 1px solid #F0F0F0;
+    font-weight:bold;
 }
 .sid-ul-lst li a {
     text-decoration: none !important;
@@ -360,7 +369,7 @@ a:hover {
     background-repeat: no-repeat;
     display: block;
     width: 100%;
-    height: 180px;
+    height: 150px;
 }
 .gallsitm .nmtt {
     font-size: 16px;
