@@ -31,115 +31,115 @@ class Angel_IndexController extends Angel_Controller_Action {
     }
 
     public function indexAction() {
-//        $productModel = $this->getModel('product');
-//        $newsModel = $this->getModel('news');
-        $showModel = $this->getModel('show');
-//        $profileModel = $this->getModel('companyprofile');
-//        $classiccase = $this->getModel('classiccase');
-//
-//        $tmp_products = $productModel->getAll(false);//getLastByCount("4");
-//
-//        $products = array();
-//
-//        foreach ($tmp_products as $p) {
-//            $path = "";
-//
-//            if (count($p->photo)) {
-//                try {
-//                    if ($p->photo[0]->name) {
-//                        $path = $this->bootstrap_options['image.photo_path'];
-//
-//                        $path = $this->view->photoImage($p->photo[0]->name . $p->photo[0]->type, 'main');
-//                    }
-//                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
-//                    // 图片被删除的情况
-//                }
-//            }
-//
-//            $products[] = array("id"=>$p->id, "name"=>$p->name, "name_en"=>$p->name_en, "photo"=> $path);
-//        }
-//
-//        $tmp_news = $newsModel->getLastByCount("2");
-//
-//        $news = array();
-//
-//        foreach ($tmp_news as $n) {
-//            if (count($n->photo)) {
-//                try {
-//                    if ($n->photo[0]->name) {
-//                        $path = $this->bootstrap_options['image.photo_path'];
-//
-//                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'main');
-//                    }
-//                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
-//                    // 图片被删除的情况
-//                }
-//            }
-//
-//            $news[] = array("id"=>$n->id, "title"=>$n->title, "title_en"=>$n->title_en, "create_date"=>date_format($n->created_at, 'Y年m月d日'), "create_date_en"=>date_format($n->created_at, 'm/d/Y'), "photo"=>$path);
-//        }
-//
-        $tmp_show = $showModel->getAll(false);
-//
-        $show = array();
+        $productModel = $this->getModel('product');
+        $newsModel = $this->getModel('news');
+//        $showModel = $this->getModel('show');
+        $profileModel = $this->getModel('companyprofile');
+        $classiccase = $this->getModel('classiccase');
 
-        foreach ($tmp_show as $n) {
-            if (count($n->photo)) {
-               foreach ($n->photo as $p) {
-                   $show[] =  "/photo/image/" . $p->name . $p->type;
-               }
+        $tmp_products = $productModel->getAll(false);//getLastByCount("4");
+
+        $products = array();
+
+        foreach ($tmp_products as $p) {
+            $path = "";
+
+            if (count($p->photo)) {
+                try {
+                    if ($p->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($p->photo[0]->name . $p->photo[0]->type, 'main');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
             }
 
-            break;
+            $products[] = array("id"=>$p->id, "name"=>$p->name, "name_en"=>$p->name_en, "photo"=> $path);
+        }
+
+        $tmp_news = $newsModel->getLastByCount("2");
+
+        $news = array();
+
+        foreach ($tmp_news as $n) {
+            if (count($n->photo)) {
+                try {
+                    if ($n->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'main');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $news[] = array("id"=>$n->id, "title"=>$n->title, "title_en"=>$n->title_en, "create_date"=>date_format($n->created_at, 'Y年m月d日'), "create_date_en"=>date_format($n->created_at, 'm/d/Y'), "photo"=>$path);
         }
 //
-//        $tmp_profile = $profileModel->getLastByCount("1");
+//        $tmp_show = $showModel->getAll(false);
 //
-//        $profile = array();
+//        $show = array();
 //
-//        foreach ($tmp_profile as $n) {
+//        foreach ($tmp_show as $n) {
 //            if (count($n->photo)) {
-//                try {
-//                    if ($n->photo[0]->name) {
-//                        $path = $this->bootstrap_options['image.photo_path'];
-//
-//                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, '');
-//                    }
-//                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
-//                    // 图片被删除的情况
-//                }
+//               foreach ($n->photo as $p) {
+//                   $show[] =  "/photo/image/" . $p->name . $p->type;
+//               }
 //            }
-//
-//            $profile[] = array("id"=>$n->id, "simple_content"=>$n->simple_content,  "simple_content_en"=>$n->simple_content_en, "photo"=>$path);
 //
 //            break;
 //        }
 //
-//        $tmp_case = $classiccase->getLastByCount("3");
-//
-//        $cases = array();
-//
-//        foreach ($tmp_case as $n) {
-//            if (count($n->photo)) {
-//                try {
-//                    if ($n->photo[0]->name) {
-//                        $path = $this->bootstrap_options['image.photo_path'];
-//
-//                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'main');
-//                    }
-//                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
-//                    // 图片被删除的情况
-//                }
-//            }
-//
-//            $cases[] = array("id"=>$n->id, "name"=>$n->name, "name_en"=>$n->name_en, "simple_content"=>$n->simple_content, "simple_content_en"=>$n->simple_content_en, "photo"=>$path);
-//        }
-//
-//        $this->view->cases = $cases;
-//        $this->view->profile = $profile;
-        $this->view->show = $show;
-//        $this->view->news = $news;
-//        $this->view->products = $products;
+        $tmp_profile = $profileModel->getLastByCount("1");
+
+        $profile = array();
+
+        foreach ($tmp_profile as $n) {
+            if (count($n->photo)) {
+                try {
+                    if ($n->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, '');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $profile[] = array("id"=>$n->id, "simple_content"=>$n->simple_content,  "simple_content_en"=>$n->simple_content_en, "photo"=>$path);
+
+            break;
+        }
+
+        $tmp_case = $classiccase->getLastByCount("3");
+
+        $cases = array();
+
+        foreach ($tmp_case as $n) {
+            if (count($n->photo)) {
+                try {
+                    if ($n->photo[0]->name) {
+                        $path = $this->bootstrap_options['image.photo_path'];
+
+                        $path = $this->view->photoImage($n->photo[0]->name . $n->photo[0]->type, 'main');
+                    }
+                } catch (Doctrine\ODM\MongoDB\DocumentNotFoundException $e) {
+                    // 图片被删除的情况
+                }
+            }
+
+            $cases[] = array("id"=>$n->id, "name"=>$n->name, "name_en"=>$n->name_en, "simple_content"=>$n->simple_content, "simple_content_en"=>$n->simple_content_en, "photo"=>$path);
+        }
+
+        $this->view->cases = $cases;
+        $this->view->profile = $profile;
+//        $this->view->show = $show;
+        $this->view->news = $news;
+        $this->view->products = $products;
     }
 
     /***************************************************************
