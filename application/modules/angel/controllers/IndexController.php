@@ -64,7 +64,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         $news = array();
 
         foreach ($tmp_news as $n) {
-            if (count($n->photo)) {
+            if ($n->photo && count($n->photo)) {
                 try {
                     if ($n->photo[0]->name) {
                         $path = $this->bootstrap_options['image.photo_path'];
