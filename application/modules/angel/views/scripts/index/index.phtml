@@ -116,6 +116,30 @@
     <div class="cn" style="display: none">
         <div class="row">
             <div class="col-xs-9">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="duatitle">
+                            <div class="inner">最新产品</div>
+                        </div>
+                    </div>
+                    <!-- 循环显示 -->
+                    <?php $i = 0; ?>
+                    <?php foreach ($this->products as $p):?>
+                        <?php if($i<=2):?>
+                            <div class="col-xs-4">
+                                <a href="/product/info/<?php echo $p["id"] ?>" class="poi-mwu">
+                                    <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
+                                    <p class="poi-mic"><?php echo $p["name"] ?></p>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="clear-10"></div>
+
                 <div class="row">
                     <div class="col-xs-5">
                         <div class="duatitle">
@@ -143,27 +167,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="clear-10"></div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="duatitle">
-                            <div class="inner">推荐产品</div>
-                        </div>
-                    </div>
-                    <!-- 循环显示 -->
-                    <?php $i = 0; ?>
-                    <?php foreach ($this->products as $p):?>
-                        <?php if($i<=2):?>
-                            <div class="col-xs-4">
-                                <a href="/product/info/<?php echo $p["id"] ?>" class="poi-mwu">
-                                    <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
-                                    <p class="poi-mic"><?php echo $p["name"] ?></p>
-                                </a>
-                            </div>
-                        <?php endif; ?>
-                        <?php $i++; ?>
-                    <?php endforeach; ?>
-                </div>
+                
             </div>
             <div class="col-xs-3">
                 <div class="duatitle">
@@ -190,6 +194,29 @@
     <div class="en" style="display: none">
         <div class="row">
             <div class="col-xs-9">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="duatitle">
+                            <div class="inner">New Products</div>
+                        </div>
+                    </div>
+
+                    <!-- 循环显示 -->
+                    <?php $i = 0; ?>
+                    <?php foreach ($this->products as $p):?>
+                        <?php if($i<=2):?>
+                            <div class="col-xs-4">
+                                <a href="/product/info/<?php echo $p["id"] ?>?language=en" class="poi-mwu">
+                                    <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
+                                    <p class="poi-mic"><?php echo $p["name_en"] ?></p>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                </div>
+                <div class="clear-10"></div>
                 <div class="row">
                     <div class="col-xs-5">
                         <div class="duatitle">
@@ -216,28 +243,6 @@
                             <?php endforeach; ?>
                         </div>
                     </div>
-                </div>
-                <div class="clear-10"></div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="duatitle">
-                            <div class="inner">Recommend Products </div>
-                        </div>
-                    </div>
-
-                    <!-- 循环显示 -->
-                    <?php $i = 0; ?>
-                    <?php foreach ($this->products as $p):?>
-                        <?php if($i<=2):?>
-                            <div class="col-xs-4">
-                                <a href="/product/info/<?php echo $p["id"] ?>?language=en" class="poi-mwu">
-                                    <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
-                                    <p class="poi-mic"><?php echo $p["name_en"] ?></p>
-                                </a>
-                            </div>
-                        <?php endif; ?>
-                        <?php $i++; ?>
-                    <?php endforeach; ?>
                 </div>
             </div>
             <div class="col-xs-3">
