@@ -48,11 +48,18 @@
             </div>
             <div class="col-xs-9">
                 <div>
+                    <?php $c = 1; ?>
                     <?php foreach ($this->products as $p): ?>
-                        <div class="gallsitm">
+                        <?php if ($c % 3 == 0 ) :?>
+                            <div class="gallsitm last">
+                        <?php else :?>
+                            <div class="gallsitm">
+                        <?php endif; ?>
                             <a href="/product/info/<?php echo $p["id"] ?>" class="imga" style="background-image:url(<?php echo $p["photo"] ?>)"></a>
                             <a href="/product/info/<?php echo $p["id"] ?>" class="nmtt"><?php echo $p["name"] ?></a>
                         </div>
+
+                        <?php $c++; ?>
                     <?php endforeach; ?>
 
                 </div>
