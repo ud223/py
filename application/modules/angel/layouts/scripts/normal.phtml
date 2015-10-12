@@ -74,30 +74,35 @@
         <div class="container wp">
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="xc00">
+                    <div class="xc00" style="height:50px;">
                         <div class="xc01"></div>
-                        <div class="xc02">深圳普源特殊材料有限公司</div>
-                        <div class="xc03">shenzhen puyuan company ltd. limited</div>
+                        <div class="xc02 bt-company-cn">深圳普源特殊材料有限公司</div>
+                        <div class="xc03"></div>
                     </div>
                     <div class="xc04">
                         <div>
-                            <span>办公地点： 深圳市南山区科技园高新园中区深南花园裙楼C座424</span>
+                            <div style="display:inline-block;">销售热线： <span class="bt-saletel-cn"></span></div><div style="display:inline-block;">传真： <span class="bt-fax-cn"></span></div>
                         </div>
                         <div>
-                            <span>办公电话： 0755-26966181</span><span>传真： 0755-26966181</span>
+                            <div>公司地址： <span class="bt-companyaddress-cn"></span></div>
                         </div>
                         <div>
-                            <span>工厂地点： 惠州市惠阳区xxxx574号B栋112号</span>
+                            <div>惠州工厂地址： <span class="bt-huizhoufaddress-cn"></span></div>
                         </div>
                         <div>
-                            <span>工厂电话： 0769-16321738</span><span>传真： 0769-16321739</span>
+                            <div>广州工厂地址： <span class="bt-guangzhoufaddress-cn"></span></div>
+                        </div>
+                        <div>
+                            <div>邮箱： <span class="bt-email-cn"></span></div>
                         </div>
                     </div>
+
+
                 </div>
                 <div class="col-xs-6">
                     <div class="xc05">
                         <div class="xc06">
-                            深圳市普源新型材料有限公司 粤ICP备06108000号-1
+                            粤ICP备06108000号-1
                         </div>
                         <div class="xc07">
                             Copyright 2015,ALL Rights Reserved pu-yuan.com
@@ -125,30 +130,33 @@
         <div class="container wp">
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="xc00">
+                    <div class="xc00" style="height:50px;">
                         <div class="xc01"></div>
-                        <div class="xc02">深圳普源特殊材料有限公司</div>
-                        <div class="xc03">shenzhen puyuan company ltd. limited</div>
+                        <div class="xc02 bt-company-en"></div>
+                        <div class="xc03"></div>
                     </div>
                     <div class="xc04">
                         <div>
-                            <span>Office Location： Room 424 Area C, Podium Building ShenNan Garden, New And HI-TECH Midzone, Science & Technology Park, NanShan District, ShenZhen</span>
+                            <div style="display:inline-block;">Sale tel： <span class="bt-saletel-en"></span></div><div style="display:inline-block;">Fax： <span class="bt-fax-en"></span></div>
                         </div>
                         <div>
-                            <span>Office Tel： 0755-26966181</span><span>Fax： 0755-26966181</span>
+                            <div>Company address： <span class="bt-companyaddress-en"></span></div>
                         </div>
                         <div>
-                            <span>Factory Location： Kaidafa Industrial Zone, Xin Wei Town, HuiYang District, HuiZhou City</span>
+                            <div>Huizhou Factory Location： <span class="bt-huizhoufaddress-en"></span></div>
                         </div>
                         <div>
-                            <span>Factory Tel： 0769-16321738</span><span>Fax： 0769-16321739</span>
+                            <div>Guangzhou Factory Location： <span class="bt-guangzhoufaddress-en"></span></div>
+                        </div>
+                        <div>
+                            <div>Email： <span class="bt-email-en"></span></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-6">
                     <div class="xc05">
                         <div class="xc06">
-                            深圳市普源新型材料有限公司 粤ICP备06108000号-1
+                            粤ICP备06108000号-1
                         </div>
                         <div class="xc07">
                             Copyright 2015,ALL Rights Reserved pu-yuan.com
@@ -243,6 +251,30 @@
         $(window).resize(function(){
             resizeGitm();
         });
+
+
+        $.ajax({
+            url:'/contact?type=json',
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                $('.bt-company-cn').text(response.name);
+                $('.bt-company-en').text(response.name_en);
+                $('.bt-companyaddress-cn').text(response.company_address);
+                $('.bt-companyaddress-en').text(response.company_address_en);
+                $('.bt-huizhoufaddress-cn').text(response.factory_address_1);
+                $('.bt-huizhoufaddress-en').text(response.factory_address_1_en);
+                $('.bt-guangzhoufaddress-cn').text(response.factory_address_2);
+                $('.bt-guangzhoufaddress-en').text(response.factory_address_2_en);
+                $('.bt-fax-cn').text(response.fax);
+                $('.bt-fax-en').text(response.fax);
+                $('.bt-saletel-cn').text(response.sale_tel);
+                $('.bt-saletel-en').text(response.sale_tel);
+                $('.bt-email-cn').text(response.email);
+                $('.bt-email-en').text(response.email);
+            }
+        });
+
     });
 </script>
 </body>

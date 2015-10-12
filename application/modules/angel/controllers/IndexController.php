@@ -705,7 +705,12 @@ class Angel_IndexController extends Angel_Controller_Action {
 
             $target = $contactModel->getById($id);
 
-            $this->view->model = $target;
+            if($this->request->getParam("type") == 'json') {
+                $this->_helper->json($target);
+            } else {
+                $this->view->model = $target;
+            }
+
         }
     }
 }

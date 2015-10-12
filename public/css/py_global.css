@@ -221,7 +221,7 @@ a:hover {
 }
 #footerblock {
     background: url(../img/btbg.jpg) center top repeat;
-    height: 460px;
+    height: 550px;
     color: #FFF;
 }
 #footerblock .wp {
@@ -269,6 +269,12 @@ a:hover {
     border-bottom: 2px solid #d0d0d0;
     padding-top: 10px;
     margin-bottom: 20px;
+}
+.bt-company-cn, .bt-company-en {
+    line-height:50px;
+}
+.bt-company-en {
+    font-size:16px;
 }
 .duatitle .inner {
     color: #478bd2;
