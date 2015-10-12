@@ -19,6 +19,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         'product-list-home',
         'product-list',
         'awards',
+        'contact',
         'login',
         'register',
         'email-validation',
@@ -681,5 +682,30 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
 
         $this->view->model = $profile;
+    }
+
+    public function contactAction() {
+        $contactModel = $this->getModel('contact');
+
+        $result = $contactModel->getAll(false);
+
+        $count = count($result);
+
+        if ($count == 0) {
+
+        }
+        else {
+            $id = null;
+
+            foreach ($result as $r) {
+                $id = $r->id;
+
+                break;
+            }
+
+            $target = $contactModel->getById($id);
+
+            $this->view->model = $target;
+        }
     }
 }

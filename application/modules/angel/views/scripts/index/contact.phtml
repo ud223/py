@@ -1,0 +1,70 @@
+<style>
+    h1 {
+        font-size:24px;
+    }
+    .suuex {
+        color:#aaa;
+        font-size:14px;
+        padding-bottom:20px;
+        margin-bottom:20px;
+        border-bottom:1px solid #E2E2E2;
+    }
+    .cont {
+        line-height: 28px;
+        font-size: 16px;
+        color:#888;
+    }
+</style>
+<div class="container breadc">
+    <div class="cn" style="display: noen">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">首页</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">联系我们</span>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: noen">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/?language=en">Home</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">Contact</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="cn" style="display: noen">
+            <div class="col-xs-12">
+                <h1>公司名称<?php echo $this->model->name ?></h1>
+                <div class="suuex">销售电话<?php echo $this->model->sale_tel?></div>
+                <div class="suuex">传真<?php echo $this->model->fax?></div>
+                <div class="suuex">电子邮箱<?php echo $this->model->email?></div>
+                <div class="suuex">公司地址<?php echo $this->model->company_address?></div>
+                <div class="suuex">惠州工厂地址<?php echo $this->model->factory_address_1?></div>
+                <div class="suuex">广州工厂地址<?php echo $this->model->factory_address_2?></div>
+            </div>
+        </div>
+        <div class="en" style="display: noen">
+            <div class="col-xs-12">
+                <h1>公司名称（英文）<?php echo $this->model->name_en ?></h1>
+                <div class="suuex">销售电话（英文）<?php echo $this->model->sale_tel?></div>
+                <div class="suuex">传真（英文）<?php echo $this->model->fax?></div>
+                <div class="suuex">电子邮箱（英文）<?php echo $this->model->email?></div>
+                <div class="suuex">公司地址（英文）<?php echo $this->model->company_address_en ?></div>
+                <div class="suuex">惠州工厂地址（英文）<?php echo $this->model->factory_address_1_en ?></div>
+                <div class="suuex">广州工厂地址（英文）<?php echo $this->model->factory_address_2_en ?></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear-50"></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".header").find(".selected").removeClass("selected");
+        $(".header").find(".contact").addClass("selected");
+    });
+</script>

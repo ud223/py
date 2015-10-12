@@ -1710,4 +1710,128 @@ class Angel_ManageController extends Angel_Controller_Action {
         }
     }
 
+    /*********************************************************
+     *联系我们
+     *
+     * ******************************************************/
+    public function contactCreateAction() {
+        $contactModel = $this->getModel('contact');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+            $name = $this->request->getParam('name');
+            $name_en = $this->request->getParam('name_en');
+            $sale_tel = $this->request->getParam('sale_tel');
+            $fax = $this->request->getParam('fax');
+            $email = $this->request->getParam('email');
+            $company_address = $this->request->getParam('company_address');
+            $company_address_en = $this->request->getParam('company_address_en');
+            $factory_address_1 = $this->request->getParam('factory_address_1');
+            $factory_address_1_en = $this->request->getParam('factory_address_1_en');
+            $factory_address_2 = $this->request->getParam('factory_address_2');
+            $factory_address_2_en = $this->request->getParam('factory_address_2_en');
+
+            if (!$name) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=请输入公司名称'); exit;
+            }
+
+            if (!$name_en) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=请输入公司英文名称'); exit;
+            }
+
+            try {
+                $result = $contactModel->addContact($name, $name_en, $sale_tel, null, $fax, null, $company_address, $company_address_en, $factory_address_1, $factory_address_1_en, $factory_address_2, $factory_address_2_en, $email, null);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-index'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            $result = $contactModel->getAll(false);
+
+            $count = count($result);
+
+            if ($count == 0) {
+                $this->view->title = "创建联系我们";
+            }
+            else {
+                $id = null;
+
+                foreach ($result as $r) {
+                    $id = $r->id;
+
+                    break;
+                }
+
+                $this->_redirect("/manage/contact/save/". $id);
+            }
+        }
+    }
+
+    public function contactSaveAction() {
+        $notFoundMsg = '未找到联系我们';
+        $contactModel = $this->getModel('contact');
+
+        if ($this->request->isPost()) {
+            $result = 0;
+            // POST METHOD
+
+            $id = $this->request->getParam('id');
+            // POST METHOD
+            $name = $this->request->getParam('name');
+            $name_en = $this->request->getParam('name_en');
+            $sale_tel = $this->request->getParam('sale_tel');
+            $fax = $this->request->getParam('fax');
+            $email = $this->request->getParam('email');
+            $company_address = $this->request->getParam('company_address');
+            $company_address_en = $this->request->getParam('company_address_en');
+            $factory_address_1 = $this->request->getParam('factory_address_1');
+            $factory_address_1_en = $this->request->getParam('factory_address_1_en');
+            $factory_address_2 = $this->request->getParam('factory_address_2');
+            $factory_address_2_en = $this->request->getParam('factory_address_2_en');
+
+            if (!$name) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=请输入公司名称'); exit;
+            }
+
+            if (!$name_en) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=请输入公司英文名称'); exit;
+            }
+
+            try {
+                $result = $contactModel->saveContact($id, $name, $name_en, $sale_tel, null, $fax, null, $company_address, $company_address_en, $factory_address_1, $factory_address_1_en, $factory_address_2, $factory_address_2_en, $email, null);
+            } catch (Angel_Exception_Contact $e) {
+                $error = $e->getDetail();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+
+            if ($result) {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?redirectUrl=' . $this->view->url(array(), 'manage-index'));
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $error);
+            }
+        } else {
+            // GET METHOD
+            $this->view->title = "编辑专辑";
+
+            $id = $this->request->getParam("id");
+
+            if ($id) {
+                $target = $contactModel->getById($id);
+
+                if (!$target) {
+                    $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+                }
+
+                $this->view->model = $target;
+            } else {
+                $this->_redirect($this->view->url(array(), 'manage-result') . '?error=' . $notFoundMsg);
+            }
+        }
+    }
 }
