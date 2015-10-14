@@ -652,6 +652,23 @@ a:hover {
     text-align: right;
 }
 .xsde2d {
-    padding:15px 0;
-    border-bottom:1px solid #E2E2E2;
+    padding:10px 15px;
+    box-sizing: border-box;
+}
+.uiwiei {
+    background:#478bd2;
+    color:#FFF;
+    margin:0 0 5px 0;
+    padding:15px;
+}
+.kkcowi {
+
+}
+.kkcowi .l {
+    display:inline-block;
+    width:30%;
+}
+.kkcowi strong {
+    display:inline-block;
+    width:70%;
 }

@@ -25,3 +25,12 @@
 .data-ul li {
     font-size:14px;
 }
+.kkcowi .l {
+    display:inline-block;
+    width:45%;
+    vertical-align: top;
+}
+.kkcowi strong {
+    display:inline-block;
+    width:55%;
+}
