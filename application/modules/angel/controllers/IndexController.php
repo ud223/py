@@ -559,12 +559,25 @@ class Angel_IndexController extends Angel_Controller_Action {
         $resource = array();
 
         foreach ($paginator as $p) {
+
+            $photo = $p->photo;
+            $first_photo = false;
+
+            if ($photo) {
+                foreach ($photo as $px) {
+                    $first_photo = $this->view->photoImage($px->name . $px->type);
+                }
+            }
+
             $resource[] = array(
                 'id' => $p->id,
                 'title' => $p->title,
                 'title_en' => $p->title_en,
+                'subtitle' => $p->subtitle,
+                'subtitle_en' => $p->subtitle_en,
                 'date'=>date_format($p->created_at, "Y年m月d日"),
-                'date_en'=>date_format($p->created_at, "m/d/Y")
+                'date_en'=>date_format($p->created_at, "m/d/Y"),
+                'photo' => $first_photo
             );
         }
 
