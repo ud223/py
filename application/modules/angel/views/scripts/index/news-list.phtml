@@ -72,24 +72,22 @@
                 </div>
 
 
-
-<!--                <div class="col-xs-4 ihlist" onclick="">-->
-<!--                    <div class="itm">-->
-<!--                        <a class="btt" href="/news/detail/--><?php //echo $r["id"] ?><!--">--><?php //echo $r["title"] ?><!--</a>-->
-<!--                        <div class="time">--><?php //echo $r["date"] ?><!--</div>-->
-<!--                    </div>-->
-<!--                </div>-->
             <?php endforeach;?>
         </div>
     </div>
     <div class="en" style="display: none">
         <div class="row">
             <?php foreach ($this->resource as $r):?>
-                <div class="col-xs-4 ihlist" onclick="location.href='/news/detail/<?php echo $r["id"] ?>?language=en'">
-                    <div class="itm">
-                        <a class="btt" href="/news/detail/<?php echo $r["id"] ?>?language=en"><?php echo $r["title_en"] ?></a>
-                        <div class="time"><?php echo $r["date_en"] ?></div>
+                <div style="display:block;border-bottom:1px solid #E2E2E2;padding:15px 0 15px 250px;min-height:160px;">
+                    <a href="/news/detail/<?php echo $r["id"] ?>?language=en" style="display:block;position:absolute;left:15px;top:15px;width:180px;height:120px;background:url(<?php echo $r['photo'] ?>) center center no-repeat;background-size: cover;">
+                    </a>
+                    <a href="/news/detail/<?php echo $r["id"] ?>?language=en" style="font-size:24px;">
+                        <?php echo $r["title_en"] ?>
+                    </a>
+                    <div style="font-size:16px;color:#aaa;">
+                        <?php echo $r["subtitle_en"] ?>
                     </div>
+                    <div style="margin-top:10px;font-size:12px;color:#fff;background:#ccc;display:inline-block;padding:2px 5px;border-radius:4px;"><?php echo $r["date_en"] ?></div>
                 </div>
             <?php endforeach;?>
         </div>
