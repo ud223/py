@@ -68,7 +68,6 @@
     描述：以上部分放入View中，结束
 -->
 
-
 <div id="footerblock">
     <div class="cn" style="display: none">
         <div class="container wp">
@@ -76,24 +75,24 @@
                 <div class="col-xs-6">
                     <div class="xc00" style="height:50px;">
                         <div class="xc01"></div>
-                        <div class="xc02 bt-company-cn">深圳普源特殊材料有限公司</div>
+                        <div class="xc02 bt-company-cn"><?php echo $this->contact->name; ?></div>
                         <div class="xc03"></div>
                     </div>
                     <div class="xc04">
                         <div>
-                            <div style="display:inline-block;">销售热线： <span class="bt-saletel-cn"></span></div><div style="display:inline-block;">传真： <span class="bt-fax-cn"></span></div>
+                            <div style="display:inline-block;">销售热线： <span class="bt-saletel-cn"><?php echo $this->contact->sale_tel; ?></span></div><div style="display:inline-block;">传真： <span class="bt-fax-cn"><?php echo $this->contact->fax; ?></span></div>
                         </div>
                         <div>
-                            <div>公司地址： <span class="bt-companyaddress-cn"></span></div>
+                            <div>公司地址： <span class="bt-companyaddress-cn"><?php echo $this->contact->company_address; ?></span></div>
                         </div>
                         <div>
-                            <div>惠州工厂地址： <span class="bt-huizhoufaddress-cn"></span></div>
+                            <div>惠州工厂地址： <span class="bt-huizhoufaddress-cn"><?php echo $this->contact->factory_address_1; ?></span></div>
                         </div>
                         <div>
-                            <div>广州工厂地址： <span class="bt-guangzhoufaddress-cn"></span></div>
+                            <div>广州工厂地址： <span class="bt-guangzhoufaddress-cn"><?php echo $this->contact->factory_address_2; ?></span></div>
                         </div>
                         <div>
-                            <div>邮箱： <span class="bt-email-cn"></span></div>
+                            <div>邮箱： <span class="bt-email-cn"><?php echo $this->contact->email; ?></span></div>
                         </div>
                     </div>
 
@@ -132,24 +131,24 @@
                 <div class="col-xs-6">
                     <div class="xc00" style="height:50px;">
                         <div class="xc01"></div>
-                        <div class="xc02 bt-company-en"></div>
+                        <div class="xc02 bt-company-en"><?php echo $this->contact->name_en; ?></div>
                         <div class="xc03"></div>
                     </div>
                     <div class="xc04">
                         <div>
-                            <div style="display:inline-block;">Sale tel： <span class="bt-saletel-en"></span></div><div style="display:inline-block;">Fax： <span class="bt-fax-en"></span></div>
+                            <div style="display:inline-block;">Sale tel： <span class="bt-saletel-en"><?php echo $this->contact->sale_tel; ?></span></div><div style="display:inline-block;">Fax： <span class="bt-fax-en"><?php echo $this->contact->fax; ?></span></div>
                         </div>
                         <div>
-                            <div>Company address： <span class="bt-companyaddress-en"></span></div>
+                            <div>Company address： <span class="bt-companyaddress-en"><?php echo $this->contact->company_address_en; ?></span></div>
                         </div>
                         <div>
-                            <div>Huizhou Factory Location： <span class="bt-huizhoufaddress-en"></span></div>
+                            <div>Huizhou Factory Location： <span class="bt-huizhoufaddress-en"><?php echo $this->contact->factory_address_1_en; ?></span></div>
                         </div>
                         <div>
-                            <div>Guangzhou Factory Location： <span class="bt-guangzhoufaddress-en"></span></div>
+                            <div>Guangzhou Factory Location： <span class="bt-guangzhoufaddress-en"><?php echo $this->contact->factory_address_2_en; ?></span></div>
                         </div>
                         <div>
-                            <div>Email： <span class="bt-email-en"></span></div>
+                            <div>Email： <span class="bt-email-en"><?php echo $this->contact->email; ?></span></div>
                         </div>
                     </div>
                 </div>
@@ -253,27 +252,27 @@
         });
 
 
-        $.ajax({
-            url:'/contact?type=json',
-            dataType: 'json',
-            success: function(response) {
-                console.log(response);
-                $('.bt-company-cn').text(response.name);
-                $('.bt-company-en').text(response.name_en);
-                $('.bt-companyaddress-cn').text(response.company_address);
-                $('.bt-companyaddress-en').text(response.company_address_en);
-                $('.bt-huizhoufaddress-cn').text(response.factory_address_1);
-                $('.bt-huizhoufaddress-en').text(response.factory_address_1_en);
-                $('.bt-guangzhoufaddress-cn').text(response.factory_address_2);
-                $('.bt-guangzhoufaddress-en').text(response.factory_address_2_en);
-                $('.bt-fax-cn').text(response.fax);
-                $('.bt-fax-en').text(response.fax);
-                $('.bt-saletel-cn').text(response.sale_tel);
-                $('.bt-saletel-en').text(response.sale_tel);
-                $('.bt-email-cn').text(response.email);
-                $('.bt-email-en').text(response.email);
-            }
-        });
+//        $.ajax({
+//            url:'/contact?type=json',
+//            dataType: 'json',
+//            success: function(response) {
+//                console.log(response);
+//                $('.bt-company-cn').text(response.name);
+//                $('.bt-company-en').text(response.name_en);
+//                $('.bt-companyaddress-cn').text(response.company_address);
+//                $('.bt-companyaddress-en').text(response.company_address_en);
+//                $('.bt-huizhoufaddress-cn').text(response.factory_address_1);
+//                $('.bt-huizhoufaddress-en').text(response.factory_address_1_en);
+//                $('.bt-guangzhoufaddress-cn').text(response.factory_address_2);
+//                $('.bt-guangzhoufaddress-en').text(response.factory_address_2_en);
+//                $('.bt-fax-cn').text(response.fax);
+//                $('.bt-fax-en').text(response.fax);
+//                $('.bt-saletel-cn').text(response.sale_tel);
+//                $('.bt-saletel-en').text(response.sale_tel);
+//                $('.bt-email-cn').text(response.email);
+//                $('.bt-email-en').text(response.email);
+//            }
+//        });
 
     });
 </script>
