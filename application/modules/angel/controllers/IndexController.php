@@ -142,19 +142,19 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->news = $news;
         $this->view->products = $products;
 
-
-        $contactModel = $this->getModel('contact');
-        $result = $contactModel->getAll(false);
-        $count = count($result);
-        if ($count > 0) {
-            $id = null;
-            foreach ($result as $r) {
-                $id = $r->id;
-                break;
-            }
-            $target = $contactModel->getById($id);
-            $this->view->contact = $target;
-        }
+//
+//        $contactModel = $this->getModel('contact');
+//        $result = $contactModel->getAll(false);
+//        $count = count($result);
+//        if ($count > 0) {
+//            $id = null;
+//            foreach ($result as $r) {
+//                $id = $r->id;
+//                break;
+//            }
+//            $target = $contactModel->getById($id);
+//            $this->view->contact = $target;
+//        }
     }
 
     /***************************************************************
