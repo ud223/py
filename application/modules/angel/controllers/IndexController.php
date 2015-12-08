@@ -271,7 +271,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
 
         $paginator = $productModel->getAll();
-        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setItemCountPerPage(9);
         $paginator->setCurrentPageNumber($page);
 
         $products = array();
