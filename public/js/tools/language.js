@@ -55,10 +55,12 @@ $(document).ready(function() {
         $(".en-select").addClass("selected");
 
         loadjscssfile("/css/py_global_en.css","css");
+        document.title = 'Shenzhen Puyuan New Materials Co. Ltd';
     }
     else {
         $(".en").hide();
         $(".cn").show();
         $(".cn-select").addClass("selected");
+        document.title = '深圳市普源新型材料有限公司';
     }
 });
