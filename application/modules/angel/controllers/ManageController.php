@@ -911,13 +911,15 @@ class Angel_ManageController extends Angel_Controller_Action {
             $content = $this->getParam('content');
             $content_en = $this->getParam('content_en');
             $photo = $this->decodePhoto();
+            $subtitle = $this->getParam('subtitle');
+            $subtitle_en = $this->getParam('subtitle_en');
 
             if (!$title || !$title_en) {
                 $this->_redirect($this->view->url(array(), 'manage-result') . '?error=必须填写新闻标题');
             }
             else {
                 try {
-                    $result = $newsModel->addNews($title, $title_en, $content, $content_en, $photo);
+                    $result = $newsModel->addNews($title, $title_en, $content, $content_en, $photo, $subtitle, $subtitle_en);
                 } catch (Exception $e) {
                     $error = $e->getMessage();
                 }
@@ -974,7 +976,7 @@ class Angel_ManageController extends Angel_Controller_Action {
     }
 
     public function newsSaveAction() {
-        $notFoundMsg = '未找到目标产品';
+        $notFoundMsg = '未找到目标新闻';
         $newsModel = $this->getModel('news');
 
         if ($this->request->isPost()) {
@@ -986,10 +988,12 @@ class Angel_ManageController extends Angel_Controller_Action {
             $title_en = $this->getParam('title_en');
             $content = $this->getParam('content');
             $content_en = $this->getParam('content_en');
+            $subtitle = $this->getParam('subtitle');
+            $subtitle_en = $this->getParam('subtitle_en');
             $photo = $this->decodePhoto();
 
             try {
-                $result = $newsModel->saveNews($id, $title, $title_en, $content, $content_en, $photo);
+                $result = $newsModel->saveNews($id, $title, $title_en, $content, $content_en, $photo, $subtitle, $subtitle_en);
             } catch (Angel_Exception_News $e) {
                 $error = $e->getDetail();
             } catch (Exception $e) {

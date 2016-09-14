@@ -10,6 +10,10 @@ class News extends AbstractDocument {
 
     /** @ODM\String */
     protected $title_en;
+    /** @ODM\String */
+    protected $subtitle;
+    /** @ODM\String */
+    protected $subtitle_en;
 
     /** @ODM\String */
     protected $content;

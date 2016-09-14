@@ -221,7 +221,7 @@ a:hover {
 }
 #footerblock {
     background: url(../img/btbg.jpg) center top repeat;
-    height: 460px;
+    height: 550px;
     color: #FFF;
 }
 #footerblock .wp {
@@ -269,6 +269,12 @@ a:hover {
     border-bottom: 2px solid #d0d0d0;
     padding-top: 10px;
     margin-bottom: 20px;
+}
+.bt-company-cn, .bt-company-en {
+    line-height:50px;
+}
+.bt-company-en {
+    font-size:16px;
 }
 .duatitle .inner {
     color: #478bd2;
@@ -424,7 +430,7 @@ a:hover {
 .bjobanner {
     background: url(../img/1433318724.jpg) center top no-repeat;
     background-attachment: fixed;
-    padding: 40px 0;
+    padding: 20px 0;
     color: #FFF;
     font-size: 32px;
     text-align: center;
@@ -644,4 +650,25 @@ a:hover {
 .famlines.t4 span {
     top:25px;
     text-align: right;
+}
+.xsde2d {
+    padding:10px 15px;
+    box-sizing: border-box;
+}
+.uiwiei {
+    background:#478bd2;
+    color:#FFF;
+    margin:0 0 5px 0;
+    padding:15px;
+}
+.kkcowi {
+
+}
+.kkcowi .l {
+    display:inline-block;
+    width:30%;
+}
+.kkcowi strong {
+    display:inline-block;
+    width:70%;
 }

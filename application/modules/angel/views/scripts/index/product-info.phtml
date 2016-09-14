@@ -373,7 +373,6 @@
 
             $(".col-xs-6").find(".selected").removeClass("selected");
             $(this).addClass("selected");
-
             $(".big-photo").attr("src", photoSmallToBig(path));
         })
 
@@ -382,6 +381,6 @@
     })
 
     function photoSmallToBig(path) {
-        return  path = path.replace("url(", "").replace(")", "").replace("_160", "");
+        return  path = path.replace("url(", "").replace(")", "").replace("_160", "").replace('\"', '').replace('\"', '').replace('\'', '').replace('\'', '');
     }
 </script>

@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-
+    <title>彩钢板-广东彩钢夹心板-夹心彩钢板-岩棉板-彩钢瓦-防火A级板房-深圳市普源新型材料有限公司</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="<?php echo $this->cssPath("bootstrap.css"); ?>">
     <link rel="stylesheet" href="<?php echo $this->cssPath("py_global.css"); ?>">
@@ -13,9 +12,15 @@
     <script src="<?php echo $this->jsPath('jquery-bootstrap.js'); ?>"></script>
     <script src="<?php echo $this->jsPath('py_global.js'); ?>"></script>
     <script src="<?php echo $this->jsPath('tools/String.js'); ?>"></script>
-    <style>
-
-    </style>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?b7e12a1f5f95d231a1838c8cb9282714";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </head>
 <body>
 <!-- 公用的头部 -->
@@ -68,39 +73,44 @@
     描述：以上部分放入View中，结束
 -->
 
-
 <div id="footerblock">
     <div class="cn" style="display: none">
         <div class="container wp">
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="xc00">
+                    <div class="xc00" style="height:50px;">
                         <div class="xc01"></div>
-                        <div class="xc02">深圳普源特殊材料有限公司</div>
-                        <div class="xc03">shenzhen puyuan company ltd. limited</div>
+                        <div class="xc02 bt-company-cn"><?php echo $this->contact->name; ?></div>
+                        <div class="xc03"></div>
                     </div>
                     <div class="xc04">
                         <div>
-                            <span>办公地点： 深圳市南山区科技园高新园中区深南花园裙楼C座424</span>
+                            <div style="display:inline-block;">销售热线： <?php echo $this->contact->sale_tel; ?> &nbsp;&nbsp;传真：<?php echo $this->contact->fax; ?></div>
                         </div>
                         <div>
-                            <span>办公电话： 0755-26966181</span><span>传真： 0755-26966181</span>
+                            <div>公司地址： <span class="bt-companyaddress-cn"><?php echo $this->contact->company_address; ?></span></div>
                         </div>
                         <div>
-                            <span>工厂地点： 惠州市惠阳区xxxx574号B栋112号</span>
+                            <div>惠州工厂地址： <span class="bt-huizhoufaddress-cn"><?php echo $this->contact->factory_address_1; ?></span></div>
                         </div>
                         <div>
-                            <span>工厂电话： 0769-16321738</span><span>传真： 0769-16321739</span>
+                            <div>广州工厂地址： <span class="bt-guangzhoufaddress-cn"><?php echo $this->contact->factory_address_2; ?></span></div>
+                        </div>
+                        <div>
+                            <div>邮箱： <span class="bt-email-cn"><?php echo $this->contact->email; ?></span></div>
                         </div>
                     </div>
+
+
                 </div>
                 <div class="col-xs-6">
                     <div class="xc05">
-                        <div class="xc06">
-                            深圳市普源新型材料有限公司 粤ICP备06108000号-1
-                        </div>
+<!--                        <div class="xc06">-->
+<!--                            粤ICP备06108000号-1-->
+<!--                        </div>-->
                         <div class="xc07">
-                            Copyright 2015,ALL Rights Reserved pu-yuan.com
+                            <div>Copyright &copy; 2015 深圳市普源新型材料有限公司  版权所有</div>
+                            <div>粤ICP备15109783号-1</div>
                         </div>
                         <div class="xc08">
                             <!-- JiaThis Button BEGIN -->
@@ -125,33 +135,37 @@
         <div class="container wp">
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="xc00">
+                    <div class="xc00" style="height:50px;">
                         <div class="xc01"></div>
-                        <div class="xc02">深圳普源特殊材料有限公司</div>
-                        <div class="xc03">shenzhen puyuan company ltd. limited</div>
+                        <div class="xc02 bt-company-en"><?php echo $this->contact->name_en; ?></div>
+                        <div class="xc03"></div>
                     </div>
                     <div class="xc04">
                         <div>
-                            <span>Office Location： Room 424 Area C, Podium Building ShenNan Garden, New And HI-TECH Midzone, Science & Technology Park, NanShan District, ShenZhen</span>
+                            <div style="display:inline-block;">Sale tel： <?php echo $this->contact->sale_tel; ?>&nbsp;&nbsp;Fax： <?php echo $this->contact->fax; ?></div>
                         </div>
                         <div>
-                            <span>Office Tel： 0755-26966181</span><span>Fax： 0755-26966181</span>
+                            <div>Company address： <span class="bt-companyaddress-en"><?php echo $this->contact->company_address_en; ?></span></div>
                         </div>
                         <div>
-                            <span>Factory Location： Kaidafa Industrial Zone, Xin Wei Town, HuiYang District, HuiZhou City</span>
+                            <div>Huizhou Factory Location： <span class="bt-huizhoufaddress-en"><?php echo $this->contact->factory_address_1_en; ?></span></div>
                         </div>
                         <div>
-                            <span>Factory Tel： 0769-16321738</span><span>Fax： 0769-16321739</span>
+                            <div>Guangzhou Factory Location： <span class="bt-guangzhoufaddress-en"><?php echo $this->contact->factory_address_2_en; ?></span></div>
+                        </div>
+                        <div>
+                            <div>Email： <span class="bt-email-en"><?php echo $this->contact->email; ?></span></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-6">
                     <div class="xc05">
-                        <div class="xc06">
-                            深圳市普源新型材料有限公司 粤ICP备06108000号-1
-                        </div>
+<!--                        <div class="xc06">-->
+<!--                            粤ICP备06108000号-1-->
+<!--                        </div>-->
                         <div class="xc07">
-                            Copyright 2015,ALL Rights Reserved pu-yuan.com
+                            <div>Copyright &copy; 2015 Shenzhen Puyuan New Materials Co. Ltd</div>
+                            <div>粤ICP备15109783号-1</div>
                         </div>
                         <div class="xc08">
                             <!-- JiaThis Button BEGIN -->
@@ -243,6 +257,30 @@
         $(window).resize(function(){
             resizeGitm();
         });
+
+
+//        $.ajax({
+//            url:'/contact?type=json',
+//            dataType: 'json',
+//            success: function(response) {
+//                console.log(response);
+//                $('.bt-company-cn').text(response.name);
+//                $('.bt-company-en').text(response.name_en);
+//                $('.bt-companyaddress-cn').text(response.company_address);
+//                $('.bt-companyaddress-en').text(response.company_address_en);
+//                $('.bt-huizhoufaddress-cn').text(response.factory_address_1);
+//                $('.bt-huizhoufaddress-en').text(response.factory_address_1_en);
+//                $('.bt-guangzhoufaddress-cn').text(response.factory_address_2);
+//                $('.bt-guangzhoufaddress-en').text(response.factory_address_2_en);
+//                $('.bt-fax-cn').text(response.fax);
+//                $('.bt-fax-en').text(response.fax);
+//                $('.bt-saletel-cn').text(response.sale_tel);
+//                $('.bt-saletel-en').text(response.sale_tel);
+//                $('.bt-email-cn').text(response.email);
+//                $('.bt-email-en').text(response.email);
+//            }
+//        });
+
     });
 </script>
 </body>

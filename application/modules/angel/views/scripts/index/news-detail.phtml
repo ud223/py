@@ -16,7 +16,7 @@
     }
 </style>
 <div class="container breadc">
-    <div class="cn" style="display: noen">
+    <div class="cn" style="display: none">
         <div class="row">
             <div class="col-xs-12">
                 <a href="/">首页</a>
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="en" style="display: noen">
+    <div class="en" style="display: none">
         <div class="row">
             <div class="col-xs-12">
                 <a href="/?language=en">Home</a>
@@ -41,7 +41,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="cn" style="display: noen">
+        <div class="cn" style="display: none">
             <div class="col-xs-12">
                 <h1><?php echo $this->model->title ?></h1>
                 <div class="suuex"><?php echo date_format($this->model->created_at, 'Y年m月d日')?></div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="en" style="display: noen">
+        <div class="en" style="display: none">
             <div class="col-xs-12">
                 <h1><?php echo $this->model->title_en ?></h1>
                 <div class="suuex"><?php echo date_format($this->model->created_at, 'm/d/Y')?></div>

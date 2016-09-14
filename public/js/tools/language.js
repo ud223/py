@@ -55,10 +55,12 @@ $(document).ready(function() {
         $(".en-select").addClass("selected");
 
         loadjscssfile("/css/py_global_en.css","css");
+        document.title = 'Color plate - Guangdong Sandwich panels - Color steel sandwich - Rock wool board - Steel tile - A fireproof board - Shenzhen Puyuan New Materials Co. Ltd';
     }
     else {
         $(".en").hide();
         $(".cn").show();
         $(".cn-select").addClass("selected");
+        document.title = '彩钢板-广东彩钢夹心板-夹心彩钢板-岩棉板-彩钢瓦-防火A级板房-深圳市普源新型材料有限公司';
     }
 });

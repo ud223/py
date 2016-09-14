@@ -9,16 +9,16 @@
 class Angel_Model_News extends Angel_Model_AbstractModel {
     protected $_document_class = '\Documents\News';
 
-    public  function addNews($title, $title_en, $content, $content_en, $photo) {
-        $data = array("title"=>$title, "title_en"=>$title_en, "content"=>$content, "content_en"=>$content_en, "photo"=>$photo);
+    public  function addNews($title, $title_en, $content, $content_en, $photo, $subtitle, $subtitle_en) {
+        $data = array("title"=>$title, "title_en"=>$title_en, "content"=>$content, "content_en"=>$content_en, "photo"=>$photo, "subtitle"=>$subtitle, "subtitle_en"=>$subtitle_en);
 
         $result = $this->add($data);
 
         return $result;
     }
 
-    public function saveNews($id, $title, $title_en, $content, $content_en, $photo) {
-        $data = array("title"=>$title, "title_en"=>$title_en, "content"=>$content, "content_en"=>$content_en, "photo"=>$photo);
+    public function saveNews($id, $title, $title_en, $content, $content_en, $photo, $subtitle, $subtitle_en) {
+        $data = array("title"=>$title, "title_en"=>$title_en, "content"=>$content, "content_en"=>$content_en, "photo"=>$photo, "subtitle"=>$subtitle, "subtitle_en"=>$subtitle_en);
 
         $result = $this->save($id, $data);
 

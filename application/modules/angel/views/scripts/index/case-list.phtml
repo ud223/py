@@ -1,5 +1,5 @@
 <div class="container breadc">
-    <div class="cn" style="display: noen">
+    <div class="cn" style="display: none">
         <div class="row">
             <div class="col-xs-12">
                 <a href="/">首页</a>
@@ -8,7 +8,7 @@
             </div>
         </div>
     </div>
-    <div class="en" style="display: noen">
+    <div class="en" style="display: none">
         <div class="row">
             <div class="col-xs-12">
                 <a href="/?language=en">Home</a>
@@ -20,7 +20,7 @@
 </div>
 
 <div class="container mb30">
-    <div class="cn" style="display: noen">
+    <div class="cn" style="display: none">
         <div class="row">
             <style>
                 .gallsitm {
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="en" style="display: noen">
+    <div class="en" style="display: none">
         <div class="row">
             <style>
                 .gallsitm {
@@ -75,7 +75,7 @@
                         <?php $c ++; ?>
                         <?php if ($c % 4 == 0): ?>
                             <div class="gallsitm last">
-                                <a href="/case/info/<?php echo $p["id"]?>?language=en" class="imga" style="background-image:url(<?php echo $p["path"]?>)"></a>
+                                <a href="/case/info/<?php echo $p["id"]?>?language=en" class="imga" style="background-image:url(<?php echo $p["photo"]?>)"></a>
                                 <a href="/case/info/<?php echo $p["id"]?>?language=en" class="nmtt"><?php echo $p["name_en"] ?></a>
                             </div>
                             <div class="clear"></div>

@@ -141,6 +141,20 @@ class Angel_IndexController extends Angel_Controller_Action {
         $this->view->show = $show;
         $this->view->news = $news;
         $this->view->products = $products;
+
+//
+//        $contactModel = $this->getModel('contact');
+//        $result = $contactModel->getAll(false);
+//        $count = count($result);
+//        if ($count > 0) {
+//            $id = null;
+//            foreach ($result as $r) {
+//                $id = $r->id;
+//                break;
+//            }
+//            $target = $contactModel->getById($id);
+//            $this->view->contact = $target;
+//        }
     }
 
     /***************************************************************
@@ -257,7 +271,7 @@ class Angel_IndexController extends Angel_Controller_Action {
         }
 
         $paginator = $productModel->getAll();
-        $paginator->setItemCountPerPage($this->bootstrap_options['default_page_size']);
+        $paginator->setItemCountPerPage(9);
         $paginator->setCurrentPageNumber($page);
 
         $products = array();
@@ -559,12 +573,25 @@ class Angel_IndexController extends Angel_Controller_Action {
         $resource = array();
 
         foreach ($paginator as $p) {
+
+            $photo = $p->photo;
+            $first_photo = false;
+
+            if ($photo) {
+                foreach ($photo as $px) {
+                    $first_photo = $this->view->photoImage($px->name . $px->type);
+                }
+            }
+
             $resource[] = array(
                 'id' => $p->id,
                 'title' => $p->title,
                 'title_en' => $p->title_en,
+                'subtitle' => $p->subtitle,
+                'subtitle_en' => $p->subtitle_en,
                 'date'=>date_format($p->created_at, "Y年m月d日"),
-                'date_en'=>date_format($p->created_at, "m/d/Y")
+                'date_en'=>date_format($p->created_at, "m/d/Y"),
+                'photo' => $first_photo
             );
         }
 
@@ -705,7 +732,12 @@ class Angel_IndexController extends Angel_Controller_Action {
 
             $target = $contactModel->getById($id);
 
-            $this->view->model = $target;
+            if($this->request->getParam("type") == 'json') {
+                $this->_helper->json($target);
+            } else {
+                $this->view->model = $target;
+            }
+
         }
     }
 }

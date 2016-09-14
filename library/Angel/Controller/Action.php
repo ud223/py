@@ -41,6 +41,20 @@ class Angel_Controller_Action extends Zend_Controller_Action {
         // some global variable
         $this->view->currency = $this->bootstrap_options['currency'];
         $this->view->currency_symbol = $this->bootstrap_options['currency_symbol'];
+
+
+        $contactModel = $this->getModel('contact');
+        $result = $contactModel->getAll(false);
+        $count = count($result);
+        if ($count > 0) {
+            $id = null;
+            foreach ($result as $r) {
+                $id = $r->id;
+                break;
+            }
+            $target = $contactModel->getById($id);
+            $this->view->contact = $target;
+        }
     }
 
     /**
